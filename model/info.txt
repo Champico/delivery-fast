@@ -1,0 +1,4 @@
+> > M O D E L < <
+
+En la seccion de model van los archivos que se conectan directamente a la base de datos y realizan
+las operaciones de CRUD

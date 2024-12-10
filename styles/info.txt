@@ -1,0 +1,3 @@
+> > S T Y L E S < <
+
+En la seccion de styles van todos los archivos tipo "Cascading Style Sheet" ( CSS )

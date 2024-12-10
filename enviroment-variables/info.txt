@@ -1,0 +1,4 @@
+> > E N V I R O M E N T  V A R I A B L E S < <
+
+En la seccion de variables de entorno va el archivo .env que contiene variablers de configuración global
+en entorno de desarollo

@@ -39,6 +39,10 @@ body {
     object-position: right;
 }
 
+#container-logo img{
+    width: 100px;
+}
+
 .container-form {
     flex: 1;
     display: flex;

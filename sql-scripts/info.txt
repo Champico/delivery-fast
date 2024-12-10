@@ -1,0 +1,3 @@
+> > S Q L - S C R I P T S < <
+
+En la seccion de sql scripts van los archivos .sql para crear y consultar la base de datos en mysql.

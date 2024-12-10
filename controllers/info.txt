@@ -1,0 +1,6 @@
+> > C O N T R O L L E R S < <
+
+En la seccion de controlers van los archivos que reciben los datos o peticiones desde la vista
+Aqui se validan que cumplan con las reglas del negocio
+Posteriormente si lo necesitan llaman a los archivos de model, el cual sólo se encarga de hacer
+las operaciones crud, no valida datos.
