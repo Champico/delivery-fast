@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="Layer_1"
+   data-name="Layer 1"
+   version="1.1"
+   viewBox="0 0 280 280"
+   sodipodi:docname="dimensiones.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview23"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:zoom="2.7214286"
+     inkscape:cx="149.00262"
+     inkscape:cy="142.20472"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Layer_1" />
+  <defs
+     id="defs2">
+    <rect
+       x="-36.745407"
+       y="214.59318"
+       width="76.430446"
+       height="37.847769"
+       id="rect23" />
+    <style
+       id="style1">
+      .cls-1 {
+        fill: #333;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #c7b29e;
+      }
+
+      .cls-3 {
+        fill: #8c5d25;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-5 {
+        fill: #dda053;
+      }
+
+      .cls-8 {
+        stroke: silver;
+        stroke-dasharray: 0 0 4 4;
+      }
+
+      .cls-8, .cls-9 {
+        fill: none;
+      }
+
+      .cls-9 {
+        stroke: #b9b9b9;
+        stroke-linecap: round;
+      }
+
+      .cls-6 {
+        fill: #fff;
+      }
+
+      .cls-7 {
+        fill: #aa782e;
+      }
+    </style>
+    <linearGradient
+       id="linear-gradient"
+       x1="141.6"
+       y1="160.8"
+       x2="349.4"
+       y2="14.9"
+       gradientTransform="translate(0 282) scale(1 -1)"
+       gradientUnits="userSpaceOnUse">
+      <stop
+         offset="0"
+         stop-color="#351c14"
+         stop-opacity="0"
+         id="stop1" />
+      <stop
+         offset="1"
+         stop-color="#351c14"
+         id="stop2" />
+    </linearGradient>
+    <rect
+       x="-36.745407"
+       y="214.59319"
+       width="76.430443"
+       height="37.847771"
+       id="rect23-0" />
+    <rect
+       x="-36.745407"
+       y="214.59319"
+       width="76.430443"
+       height="37.847771"
+       id="rect23-4" />
+  </defs>
+  <g
+     id="g6">
+    <g
+       id="g5">
+      <path
+         class="cls-7"
+         d="M117.7,112.8L27.3,76.4l-.6,82.8,90.6,36.4.6-82.8h-.2Z"
+         id="path2" />
+      <path
+         class="cls-3"
+         d="M117.7,112.8l90.6-36.4-.6,82.8-90.6,36.4.6-82.8Z"
+         id="path3" />
+      <path
+         class="cls-4"
+         d="M117.7,112.8l90.6-36.4-.6,82.8-90.6,36.4.6-82.8Z"
+         id="path4" />
+      <path
+         class="cls-5"
+         d="M27.3,76.4l90.6,36.4,90.6-36.4-90.8-36.4L27.3,76.4Z"
+         id="path5" />
+      <path
+         class="cls-2"
+         d="M80.6,97.8l-17.2-6.9v16.9l17.2,6.9v-16.9Z"
+         id="path6" />
+      <path
+         class="cls-6"
+         d="M154.1,54.4l-90.6,36.4,17.2,6.9,90.4-36.4-17-6.9Z"
+         id="path7" />
+    </g>
+    <g
+       id="g4">
+      <g
+         id="g1">
+        <path
+           class="cls-8"
+           d="M11.2,197.1l65.2,26.3"
+           id="path18" />
+        <path
+           class="cls-9"
+           d="M5,193.1l1.4,3.2"
+           id="path19" />
+        <path
+           class="cls-9"
+           d="M5,193.1l3.3-1"
+           id="path20" />
+        <path
+           class="cls-9"
+           d="M82.7,226.5l-1.5-3.1"
+           id="path21" />
+        <path
+           class="cls-9"
+           d="M82.7,226.6l-3.3,1.1"
+           id="path22" />
+        <text
+           xml:space="preserve"
+           id="text23"
+           style="font-size:16px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect23);display:inline;fill:#292929;fill-opacity:1"
+           transform="rotate(23.929118,16.792279,325.87443)"><tspan
+             x="-36.746094"
+             y="229.19104"
+             id="tspan3"><tspan
+               style="font-family:Roboto;-inkscape-font-specification:Roboto"
+               id="tspan1">LARGO</tspan></tspan></text>
+      </g>
+      <g
+         id="g3">
+        <path
+           class="cls-9"
+           d="M238,69.8l-2.1,2.8"
+           id="path13" />
+        <path
+           class="cls-9"
+           d="M238,69.8l2.5,2.5"
+           id="path14" />
+        <path
+           class="cls-9"
+           d="M238.2,161l2.1-2.8"
+           id="path15" />
+        <path
+           class="cls-9"
+           d="M238.2,161.1l-2.5-2.5"
+           id="path16" />
+        <line
+           class="cls-8"
+           x1="238.1"
+           y1="75.7"
+           x2="238.1"
+           y2="153.1"
+           id="line16" />
+        <text
+           xml:space="preserve"
+           id="text23-8"
+           style="font-size:16px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect23-4);display:inline;fill:#292929;fill-opacity:1"
+           transform="rotate(0.21622991,28177.416,74270.808)"><tspan
+             x="-36.746094"
+             y="229.19104"
+             id="tspan5"><tspan
+               style="font-family:Roboto;-inkscape-font-specification:Roboto"
+               id="tspan4">ALTO</tspan></tspan></text>
+      </g>
+      <g
+         id="g2">
+        <path
+           class="cls-9"
+           d="M213.9,201.3l-3.2-1.3"
+           id="path8" />
+        <path
+           class="cls-9"
+           d="M213.9,201.3l-1.7,3"
+           id="path9" />
+        <path
+           class="cls-9"
+           d="M143.4,228.1l3.5.4"
+           id="path10" />
+        <path
+           class="cls-9"
+           d="M143.4,228.1l.8-3.4"
+           id="path11" />
+        <line
+           class="cls-8"
+           x1="151.2"
+           y1="224.7"
+           x2="207.3"
+           y2="203.1"
+           id="line11" />
+        <text
+           xml:space="preserve"
+           id="text23-9"
+           style="font-size:16px;text-align:start;writing-mode:lr-tb;direction:ltr;white-space:pre;shape-inside:url(#rect23-0);display:inline;fill:#292929;fill-opacity:1"
+           transform="rotate(-22.232237,97.105335,-276.80589)"><tspan
+             x="-36.746094"
+             y="229.19104"
+             id="tspan7"><tspan
+               style="font-family:Roboto;-inkscape-font-specification:Roboto"
+               id="tspan6">ANCHO</tspan></tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>

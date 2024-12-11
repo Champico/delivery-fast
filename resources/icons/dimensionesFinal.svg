@@ -1,0 +1,77 @@
+<svg data-name="Layer 1" version="1.1" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <style>.cls-1 {
+        fill: #333;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4, .cls-5, .cls-6, .cls-7 {
+        stroke-width: 0px;
+      }
+
+      .cls-2 {
+        fill: #c7b29e;
+      }
+
+      .cls-3 {
+        fill: #8c5d25;
+      }
+
+      .cls-4 {
+        fill: url(#linear-gradient);
+      }
+
+      .cls-5 {
+        fill: #dda053;
+      }
+
+      .cls-8 {
+        stroke: silver;
+        stroke-dasharray: 0 0 4 4;
+      }
+
+      .cls-8, .cls-9 {
+        fill: none;
+      }
+
+      .cls-9 {
+        stroke: #b9b9b9;
+        stroke-linecap: round;
+      }
+
+      .cls-6 {
+        fill: #fff;
+      }
+
+      .cls-7 {
+        fill: #aa782e;
+      }</style>
+  <linearGradient id="linear-gradient" x1="141.6" x2="349.4" y1="160.8" y2="14.9" gradientTransform="translate(0 282) scale(1 -1)" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#351c14" stop-opacity="0" offset="0"/>
+   <stop stop-color="#351c14" offset="1"/>
+  </linearGradient>
+ </defs>
+ <path class="cls-7" d="M117.7,112.8L27.3,76.4l-.6,82.8,90.6,36.4.6-82.8h-.2Z"/>
+ <path class="cls-3" d="M117.7,112.8l90.6-36.4-.6,82.8-90.6,36.4.6-82.8Z"/>
+ <path class="cls-4" d="M117.7,112.8l90.6-36.4-.6,82.8-90.6,36.4.6-82.8Z"/>
+ <path class="cls-5" d="m27.3 76.4 90.6 36.4 90.6-36.4-90.8-36.4-90.4 36.4z"/>
+ <path class="cls-2" d="m80.6 97.8-17.2-6.9v16.9l17.2 6.9v-16.9z"/>
+ <path class="cls-6" d="m154.1 54.4-90.6 36.4 17.2 6.9 90.4-36.4-17-6.9z"/>
+ <path class="cls-8" d="m11.2 197.1 65.2 26.3"/>
+ <path class="cls-9" d="m5 193.1 1.4 3.2"/>
+ <path class="cls-9" d="m5 193.1 3.3-1"/>
+ <path class="cls-9" d="m82.7 226.5-1.5-3.1"/>
+ <path class="cls-9" d="m82.7 226.6-3.3 1.1"/>
+ <text transform="rotate(23.929 16.792 325.87)" style="fill:#292929;font-size:16px;shape-inside:url(#rect23);white-space:pre" xml:space="preserve"><tspan x="-36.746094" y="229.19104"><tspan style="font-family:Roboto">LARGO</tspan></tspan></text>
+ <path class="cls-9" d="m238 69.8-2.1 2.8"/>
+ <path class="cls-9" d="m238 69.8 2.5 2.5"/>
+ <path class="cls-9" d="m238.2 161 2.1-2.8"/>
+ <path class="cls-9" d="m238.2 161.1-2.5-2.5"/>
+ <line class="cls-8" x1="238.1" x2="238.1" y1="75.7" y2="153.1"/>
+ <text transform="rotate(.21623 28177 74271)" style="fill:#292929;font-size:16px;shape-inside:url(#rect23-4);white-space:pre" xml:space="preserve"><tspan x="-36.746094" y="229.19104"><tspan style="font-family:Roboto">ALTO</tspan></tspan></text>
+ <path class="cls-9" d="m213.9 201.3-3.2-1.3"/>
+ <path class="cls-9" d="m213.9 201.3-1.7 3"/>
+ <path class="cls-9" d="M143.4,228.1l3.5.4"/>
+ <path class="cls-9" d="M143.4,228.1l.8-3.4"/>
+ <line class="cls-8" x1="151.2" x2="207.3" y1="224.7" y2="203.1"/>
+ <text transform="rotate(-22.232 97.105 -276.81)" style="fill:#292929;font-size:16px;shape-inside:url(#rect23-0);white-space:pre" xml:space="preserve"><tspan x="-36.746094" y="229.19104"><tspan style="font-family:Roboto">ANCHO</tspan></tspan></text>
+</svg>
