@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Fast</title>
-    <link rel="stylesheet" href="styles/login-style.css">
+    <link rel="stylesheet" href="/styles/login-style.css">
 
 </head>
 <body>
@@ -13,13 +13,13 @@
             <img class="img-login" src="resources/img/avion-login.webp" alt="Air Plane Login Image">
         </div>
         <div class="container-form">
-            <div id="container-logo"><img src="resources/brand/logotipo/logotipo-original.png"></img></div>
+            <div class="container-logo"><img class="dfast-logo" src="resources/brand/logotipo/logotipo-original.svg"></div>
             <form id="login-form" class="form-class">
-                <label class="label-form" for="">Número del personal</label>
-                <input class="input-form" type="number" name="numero-personal" id="numero-personal" placeholder="000000000000000">
+                <label class="label-form" for="numero-personal">Número del personal</label>
+                <input class="input-form" required type="number" name="numero-personal" id="numero-personal" placeholder="000000000000000">
 
-                <label class="label-form" for="">Contraseña</label>
-                <input class="input-form" type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+                <label class="label-form" for="contraseña">Contraseña</label>
+                <input class="input-form" required type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
                 
                 <button class="button-form" type="submit">Iniciar Sesión</button>
 

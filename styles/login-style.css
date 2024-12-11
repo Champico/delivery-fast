@@ -16,7 +16,7 @@ body {
 .container {
     display: flex;
     width: 800px;
-    height: 500px;
+    height: 600px;
     background-color: #ffffff;
     border-radius: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -98,4 +98,22 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
+}
+
+.container-logo{
+    display: flex;
+    justify-content:center;
+    margin: 0px;
+    padding: 0px;
+}
+
+.dfast-logo{
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    object-fit: contain;
+}
+
+.form-class{
+    margin: 10px;
 }

@@ -1,0 +1,189 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;    
+}
+
+header{
+    background-color: #FFAC13;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.container-logo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: auto;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    flex: 1;
+}
+
+.logo-extendido{
+    width: 420px;
+    filter: brightness(0) invert(1);
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu{
+    display: flex;
+    align-items: center;
+}
+
+.menu-icon{
+    width: 50px;
+    padding: 5px;
+    cursor: pointer;
+    filter: invert(100%);
+}
+
+.user-info-container{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    color: white;
+}
+
+.user-rol{
+    font-family: 'Roboto';
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+.user-logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit:cover;
+    background-color: #f5f5f5;
+    padding: 2px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.container-body{
+    background-color: #f5f5f5;
+    display: flex;
+    flex: 1;
+    height: 100%;
+}
+
+.card{
+    width: 200px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
+    margin-bottom:2px ;
+}
+
+.new-shupment-btn{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.1s ease;
+    box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+.new-shupment-btn:hover{
+    background-color: #ECEBEB;
+}
+
+.new-shuptment-img{
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    object-fit: contain;
+    padding: 0px;
+    margin-right: 10px;
+}
+li, .list-title{
+    list-style: none;
+    color: #cfcfcf;
+    font-family: 'Roboto';
+    margin: 2px;
+    display: flex;
+    align-items: center;
+}
+
+.module-shupment ul{
+    list-style: none;
+    padding: 0;
+}
+
+.li-content{
+    margin-bottom: 3px;
+    padding: 10px;
+    text-align: start;
+    width: 170px;
+    display: flex;
+    align-items: center;
+}
+
+.li-content:hover{
+    background-color: #ECEBEB;
+    border-radius: 10px;
+}
+
+.a-li-content{
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+.icon-li{
+    margin-right: 10px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    text-align:start;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-menu{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.module-packet{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content{
+    background-color: white;
+    margin:20px;
+    border-radius: 20px;
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+
+}
