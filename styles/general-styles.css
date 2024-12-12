@@ -18,7 +18,7 @@
     como el encabezado, el menu lateral y los contenedores basicos
     
     Estructura del archivo:
-    - Global
+    - Global variables
     - Header
     - Main section
     - Sidebar
@@ -26,11 +26,18 @@
 */
 
 
+
+
+
 /*__________________________________________________  
         
-            G   L   O   B   A   L 
+        G L O B A L  V A R I A B L E S 
 ____________________________________________________ 
 */
+:root {
+    --brand-orange-color: #FFAC13;; /* Color principal */
+    --orange-color-higth-contrast: #dd9000; /* Color principal con mayor contraste con la letra blanca */
+}
 
 * {
     box-sizing: border-box;
@@ -54,7 +61,7 @@ ____________________________________________________
 
 /* Fondo de la barra superior */
 header{
-    background-color: #FFAC13;
+    background-color: var(--orange-color-higth-contrast);
     padding: 10px;
     display: flex;
     align-items: center;
@@ -155,7 +162,7 @@ ____________________________________________________
 
 /* Contenedor del menu lateral*/
 .sidebar-menu-container{
-    min-width: 200px;
+    width: 215px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -305,17 +312,24 @@ ____________________________________________________
     flex: 1;
     padding: 20px;
     margin: 0px;
+    overflow-y: scroll;
 }
 
 /* Titulo de sección*/
 .title-section{
     display: flex;
-    font-size: 46px;
+    font-size: 40px;
     margin-bottom: 20px;
     font-family: 'Roboto', sans-serif;
     font-weight: normal;
     color:#373737;
 }
+
+/*__________________________________________________  
+         
+            H  O  M  E    P  A  G  E  
+____________________________________________________ 
+*/
 
 /* Sección de envíos*/
 .shupment-home-content{
@@ -328,6 +342,122 @@ ____________________________________________________
 
 
 
+/*__________________________________________________  
+         
+        N  E  W     S  H  U  P  M  E  N  T  
+____________________________________________________ 
+*/
+
+/* Seccion de nuevo envío */
+.new-shupment-page-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Header de pagina de nuevo envío*/
+.new-shupment-page-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Wizard */
+.new-shupment-wizard{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Paso del wizard: Contenedor*/
+.wizard-step-container {
+    position: relative;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Paso del wizard */
+.wizard-step{
+    /* Forma */
+    height: 60px;
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 15% 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Estilo */
+    background: #ffffff;
+    transition: filter 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    font-size: 19px;
+    font-weight: 200;
+    color: #504E4E;
+    cursor: pointer;
+
+    /* Posicionamiento */
+    position: relative;
+    z-index: 3;
+}
+
+/* Segundo paso del wizar de los datos del paquete*/
+.ws-datos-envio{
+    width: 235px;
+    left: 0px;
+}
+
+/* Segundo paso del wizar de los datos del paquete*/
+.ws-datos-paquete{
+    width: 235px;
+    left: -18px;
+}
+
+/* Tercer paso del wizard de los datos del pago */
+.ws-datos-pago{
+    width: 235px;
+    left: -36px;
+}
+
+/*  Paso del wizard: Seleccionado*/
+.wizard-step-selected{
+    background-color: #FFD79A;
+}
+
+/* Paso del wizard: Mouse encima */
+.wizard-step:hover{
+    filter: brightness(0.9);
+}
+
+/* Paso del wizard: Contendor sombra */
+.wizard-step-container::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 15% 50%);
+    background: rgba(0, 0, 0, 0.25);
+    filter: blur(4px);
+    z-index: 1;
+}
+
+/* Primer paso: sombra*/
+.wsc-datos-envio::before{
+    left: 0px;
+}
+
+/* Segundo paso: sombra*/
+.wsc-datos-paquete::before{
+    left: -18px;
+}
+
+/* Tercer paso: : sombra */
+.wsc-datos-pago::before{
+    left: -36px;
+}
 
 
 

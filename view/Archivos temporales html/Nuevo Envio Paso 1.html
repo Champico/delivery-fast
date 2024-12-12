@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styleS/general-styles.css">
+    <link rel="stylesheet" href="../../styles/tables-styles.css">
+    <link rel="stylesheet" href="../../styles/forms-styles.css">
+
+    <title>DELIVERY FAST</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-menu">
+            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
+        </nav>
+        <div class="container-logo">
+            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
+                alt="Delivery Fast Logo Header">
+        </div>
+        <div class="user-info-container">
+            <h1 class="user-rol">COLABORADOR SUCURSAL 1</h1>
+            <img class="user-logo" src="../../resources/icons/perfil-icon.svg" alt="Profile Picture">
+        </div>
+    </header>
+
+
+    <main class="main-container">
+
+        <aside class="sidebar-menu-container">
+            <div class="sidebar-card module-create">
+                <button class="new-shupment-btn">
+                    <img class="new-shupment-btn-icon" src="../../resources/icons/nuevoFinal.svg"
+                        alt="crear nuevo envio">
+                    Nuevo envío
+                </button>
+            </div>
+
+            <div class="sidebar-card module-shupment">
+                <p class="list-title">Modulo envíos</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/inicio.svg" alt="">
+                            Inicio</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                            Buscar envíos</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/caja-registradora.svg" alt="">
+                            Ingresos</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card module-packet">
+                <p class="list-title">Modulo paquetes</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/buscar-envioFinal.svg" alt="">
+                            Paquetes</a></li>
+                </ul>
+
+            </div>
+
+            <div class="sidebar-card module-empty"></div>
+        </aside>
+
+        <section class="content-section">
+
+            <div class="new-shupment-page-header">
+                <h1 class="title-section">Nuevo envío</h1>
+                    <Button class="button btn-siguiente">Siguiente</Button>
+            </div>
+
+
+            <div class="new-shupment-wizard">
+                <div class="wizard-step-container wsc-datos-envio">
+                    <div class="wizard-step wizard-step-selected ws-datos-envio">
+                        <span class="newStepButtonLabel">Datos de envío</span>
+                    </div>
+                </div>
+                <div class="wizard-step-container wsc-datos-paquete">
+                    <div class="wizard-step ws-datos-paquete">
+                        <span class="newStepButtonLabel">Datos de paquete</span>
+                    </div>
+                </div>
+                <div class="wizard-step-container wsc-datos-pago">
+                    <div class="wizard-step ws-datos-pago">
+                        <span class="newStepButtonLabel">Datos de pago</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="new-shupment-page-content">
+
+                <!-- Sección Enviar desde -->
+                <div class="form-card form-sender">
+                    <h2 class="form-title">Enviar desde</h2>
+                    <form class="form">
+                        <div class="form-group">
+                            <label class="input-label" for="nombre-remitente">Nombre*</label>
+                            <input class="input" type="text" id="nombre-remitente"
+                                placeholder="Ingrese el nombre completo del remitente">
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="cp-remitente">Código postal*</label>
+                                <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="estado-remitente">Estado*</label>
+                                <input class="input" type="text" id="estado-remitente">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="ciudad-remitente">Ciudad*</label>
+                                <input class="input" type="text" id="ciudad-remitente">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="colonia-remitente">Colonia*</label>
+                                <input class="input" type="text" id="colonia-remitente">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label" for="calle-remitente">Calle*</label>
+                            <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente">
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="noext-remitente">No. ext*</label>
+                                <input class="input" type="text" id="noext-remitente">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="noint-remitente">No. int</label>
+                                <input class="input" type="text" id="noint-remitente">
+                            </div>
+                            <div class="form-group"> </div>
+                            <div class="form-group"> </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="correo-remitente">Correo</label>
+                                <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="telefono-remitente">Teléfono</label>
+                                <input class="input" type="text" id="telefono-remitente">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Sección Para -->
+                <div class="form-card form-recipient">
+                    <h2 class="form-title">Para</h2>
+                    <form>
+                        <div class="form-group">
+                            <label class="input-label" for="nombre-destinatario">Nombre*</label>
+                            <input class="input" type="text" id="nombre-destinatario"
+                                placeholder="Ingrese el nombre completo del destinatario">
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="cp-destinatario">Código postal*</label>
+                                <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="estado-destinatario">Estado*</label>
+                                <input class="input" type="text" id="estado-destinatario">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="ciudad-destinatario">Ciudad*</label>
+                                <input class="input" type="text" id="ciudad-destinatario">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="colonia-destinatario">Colonia*</label>
+                                <input class="input" type="text" id="colonia-destinatario">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label" for="calle-destinatario">Calle*</label>
+                            <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente">
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="noext-destinatario">No. ext*</label>
+                                <input class="input" type="text" id="noext-destinatario">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="noint-destinatario">No. int</label>
+                                <input class="input" type="text" id="noint-destinatario">
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="correo-destinatario">Correo</label>
+                                <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com">
+                            </div>
+                            <div class="form-group">
+                                <label class="input-label" for="telefono-destinatario">Teléfono</label>
+                                <input class="input" type="text" id="telefono-destinatario">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label" for="referencias">Referencias</label>
+                            <textarea class="textarea" id="referencias" rows="3"
+                                placeholder="Breve descripción del lugar de destino..."></textarea>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </section>
+    </main>
+</body>
+
+</html>
