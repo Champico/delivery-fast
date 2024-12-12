@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styles/general-styles.css">
+    <link rel="stylesheet" href="../../styles/tables-styles.css">
+    <link rel="stylesheet" href="../../styles/forms-styles.css">
+
+    <title>DELIVERY FAST</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-menu">
+            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
+        </nav>
+        <div class="container-logo">
+            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
+                alt="Delivery Fast Logo Header">
+        </div>
+        <div class="user-info-container">
+            <h1 class="user-rol">ADMINISTRADOR SUCURSAL 1</h1>
+            <img class="user-logo" src="../../resources/icons/perfil-icon.svg" alt="Profile Picture">
+        </div>
+    </header>
+
+
+    <main class="main-container">
+
+        <aside class="sidebar-menu-container">
+            <div class="sidebar-card module-create">
+                <button class="new-shupment-btn">
+                    <img class="new-shupment-btn-icon" src="../../resources/icons/nuevoFinal.svg"
+                        alt="crear nuevo envio">
+                    Nuevo envío
+                </button>
+            </div>
+
+            <div class="sidebar-card module-shupment">
+                <p class="list-title">Modulo envíos</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/inicio.svg" alt="">
+                            Inicio</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                            Buscar envíos</a></li>
+                    
+                </ul>
+            </div>
+            
+            <div class="sidebar-card module-packet">
+                <p class="list-title">Modulo paquetes</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/buscar-envioFinal.svg" alt="">
+                            Paquetes</a></li>
+                </ul>
+
+            </div>
+
+            <div class="sidebar-card module-admin">
+                <p class="list-title">Modulo administracion</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/editar.svg" alt="">
+                            Usuarios</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/informacion.svg" alt="">
+                            Acerca de</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/grafico-de-barras.svg" alt="">
+                            Reportes</a></li>       
+                </ul>
+            </div>
+        </aside>
+
+        <section class="content-section">
+            <h1 class="title-section">Informacion Sucursal</h1>
+            <div class="shupment-home-content info-details-content">
+                
+                    <form class="form" id="form-info-branch">
+                        <div class="form-group section1">
+                            <label class="input-label about-titles-labels" for="nombre-info">Nombre*</label>
+                            <input class="input" type="text" id="nombre-info"
+                                placeholder="Nombre de la sucursal">
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group section2">
+                                <label class="input-label about-titles-labels" for="cp-info">Código postal*</label>
+                                <input class="input" type="text" id="cp-info" placeholder="Ej. 91140">
+                            </div>
+                            <div class="form-group section3">
+                                <label class="input-label about-titles-labels" for="estado-info">Estado*</label>
+                                <input class="input" type="text" id="estado-info">
+                            </div>
+                            <div class="form-group section4">
+                                <label class="input-label about-titles-labels" for="ciudad-info">Ciudad*</label>
+                                <input class="input" type="text" id="ciudad-info">
+                            </div>
+                            <div class="form-group section5">
+                                <label class="input-label about-titles-labels" for="colonia-info">Colonia*</label>
+                                <input class="input" type="text" id="colonia-info">
+                            </div>
+                        </div>
+                        <div class="form-inline">
+
+                            <div class="form-group">
+                                <label class="input-label about-titles-labels" for="calle-info">Calle*</label>
+                                <input class="input" type="text" id="calle-info" placeholder="Ingrese el domicilio del remitente">
+                            </div>
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label class="input-label about-titles-labels" for="noext-info">No. ext*</label>
+                                    <input class="input" type="text" id="noext-info">
+                                </div>
+                                <div class="form-group">
+                                    <label class="input-label about-titles-labels" for="noint-info">No. int</label>
+                                    <input class="input" type="text" id="noint-info">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label about-titles-labels">Datos de Contacto</label>
+                                <div class="form-inline">
+
+                                    <div class="form-group">
+                                        <label class="input-label about-titles-labels" for="correo-remitente">Correo</label>
+                                        <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="input-label about-titles-labels" for="telefono-remitente">Teléfono</label>
+                                        <input class="input" type="text" id="telefono-remitente">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group about-button-container">
+                            <button class="button" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            
+        </section>
+    </main>
+</body>
+
+</html>

@@ -20,8 +20,8 @@
     - Buttons
     - Inputs
     - Forms
-    - New shupment Sender Form
-    - New shupment Recipient Form
+    - New shipment Sender Form
+    - New shipment Recipient Form
       
 */
 
@@ -122,7 +122,9 @@ ____________________________________________________
   color: #222222;
 }
 
-
+.about-titles-labels{
+  font-size: 24px;
+}
 
 
 

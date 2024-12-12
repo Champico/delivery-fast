@@ -163,7 +163,7 @@ ____________________________________________________
 /* Contenedor del menu lateral*/
 .sidebar-menu-container{
     width: 215px;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     padding:0;
@@ -201,15 +201,11 @@ ____________________________________________________
 }
 
 /* Modulo de administracion*/
-.module-admin{
+.module-empty, .module-admin{
     display: flex;
     flex-direction: column;
-}
-
-.module-empty{
     flex: 1;
 }
-
 /* Estilo de las listas dentro del menu*/
 .cardSideBar ul{
     list-style: none;
@@ -338,6 +334,7 @@ ____________________________________________________
     width: 100%;
     height: 100vh;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
 
@@ -459,6 +456,20 @@ ____________________________________________________
     left: -36px;
 }
 
+/*__________________________________________________  
+         
+        I N F O  C O N T A I N E R
+____________________________________________________ 
+*/
+
+.info-details-content{
+    padding: 30px;
+}
+
+.about-button-container{
+    display: flex;
+    justify-content: end;
+}
 
 
 
