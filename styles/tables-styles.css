@@ -39,6 +39,7 @@ ____________________________________________________
     transition: all 0.3s ease;
 }
 
+
 .filter-selects:focus{
     outline: none;
     box-shadow: 0 0 5px rgba(252, 163, 17, 0.5);

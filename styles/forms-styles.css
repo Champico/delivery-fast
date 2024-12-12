@@ -40,7 +40,7 @@ ____________________________________________________
   min-width: 180px;
   border-radius: 10px;
   border: none;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto';
   font-size: 20px;
   font-weight: 300;
   color: #ffffff;
@@ -122,9 +122,6 @@ ____________________________________________________
   color: #222222;
 }
 
-.about-titles-labels{
-  font-size: 24px;
-}
 
 
 
@@ -187,4 +184,58 @@ ____________________________________________________
 
 .form-sender, .form-recipient{
   max-width: 800px;
+}
+
+
+/*__________________________________________________  
+         
+       N E W  S T A T U S  I N F O   F  O  R  M 
+____________________________________________________ 
+*/
+
+.new-section1{
+  gap: 50px;
+}
+
+.label-new-info-status{
+  font-size: 24px;
+}
+.status-selects{
+  background-color: #fff;
+  color: #333;
+  border-radius: 8px;
+  font-size: 12px;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  height: 34px;
+  width: 300px;
+
+}
+
+.input-new-info-status{
+  font-size: 12px;
+  color: #333;
+  padding: 8px 12px;
+  border-radius: 8px;
+  width: 900px;
+}
+
+.txta-input-new-notes{
+  height: 100px;
+}
+.new-section1 .input[type="text"] {
+  width: 400px;
+}
+
+.ship-titles{
+  font-size: 28px;
+}
+
+.ship-subtitle{
+  font-size: 24px;
+}
+
+.ship-info-text,.-text{ 
+  font-size: 16px;
+  padding: 0px;
 }

@@ -40,6 +40,7 @@ ____________________________________________________
 }
 
 * {
+    font-family: 'Roboto';
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -200,7 +201,7 @@ ____________________________________________________
     flex-direction: column;
 }
 
-/* Modulo de administracion*/
+/* Modulo de empty y administracion*/
 .module-empty, .module-admin{
     display: flex;
     flex-direction: column;
@@ -472,11 +473,27 @@ ____________________________________________________
 }
 
 
+/*_______________________________________________________________________________  
+         
+        S H I P M E N T  I N F O  D E T A I L S  C O N T A I N E R  S T Y L E S
+_________________________________________________________________________________
+*/
 
+.title-container,.edit-status-shipment,.shipping-information{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    gap: 20px;
+}
 
+.shipping-information{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
 
-
-
-
+.container-p-span-info p{
+    margin: 5px;
+    margin-left: 0px;
+}
 
 
