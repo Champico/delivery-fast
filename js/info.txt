@@ -1,7 +1,3 @@
 > > J A V A  S C R I P T  F I L E S < <
 
-En la seccion de view van todos los archivos tipo "Javascript" ( JS )
-
-
-Los archivos de esta seccion permiten controlar el comportamiento de la interfaz grafica y
-permiten hacer llamadas al lado del servidor para obtener los datos para posteriormente mostrarlos
+En esta sección van todos los archivos tipo "Javascript" ( .JS )

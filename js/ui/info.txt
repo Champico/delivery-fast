@@ -1,0 +1,3 @@
+> > U I  S C R I P T  F I L E S < <
+
+En esta sección van los archivos que manejan la interfaz de usuario

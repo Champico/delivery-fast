@@ -1,0 +1,9 @@
+> > J A V A  S C R I P T  F I L E S < <
+
+En esta sección van los archivos que manejan los datos que permanecen mientras se ejecuta la aplicación:
+
+Es decir:
+- El estado de la app
+- El estado del usuario
+- Los datos temporales dentro de las tablas
+- Los datos de los formularios
