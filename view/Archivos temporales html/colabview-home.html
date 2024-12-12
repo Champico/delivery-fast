@@ -1,63 +1,80 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styleS/general-styles.css">
+    <link rel="stylesheet" href="../../styles/tables-styles.css">
+    <link rel="stylesheet" href="../../styles/forms-styles.css">
+
     <title>DELIVERY FAST</title>
-    <link rel="stylesheet" href="/styles/colabview-style.css">
 </head>
+
 <body>
+
     <header>
         <nav class="nav-menu">
-            <img class="menu-icon" src="/resources/icons/menu.svg" alt="Menu Icon Header">
+            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
         </nav>
         <div class="container-logo">
-            <img class="logo-extendido" src="/resources/brand/logotipo/logotipo-extendido.svg" alt="Delivery Fast Logo Header">
+            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
+                alt="Delivery Fast Logo Header">
         </div>
         <div class="user-info-container">
             <h1 class="user-rol">COLABORADOR SUCURSAL 1</h1>
-            <img class="user-logo" src="/resources/icons/perfil-icon.svg" alt="Profile Picture">
+            <img class="user-logo" src="../../resources/icons/perfil-icon.svg" alt="Profile Picture">
         </div>
     </header>
+
+
     <main class="main-container">
-        <aside class="sidebar-menu">
-            <div class="card module-create">
+
+        <aside class="sidebar-menu-container">
+            <div class="sidebar-card module-create">
                 <button class="new-shupment-btn">
-                    <img class="new-shuptment-img" src="/resources/icons/nuevoFinal.svg" alt="crear nuevo envio">
+                    <img class="new-shupment-btn-icon" src="../../resources/icons/nuevoFinal.svg"
+                        alt="crear nuevo envio">
                     Nuevo envío
                 </button>
             </div>
-            <div class="card module-shupment">
+
+            <div class="sidebar-card module-shupment">
                 <p class="list-title">Modulo envíos</p>
-                <li>
-                    <ul>
-                        <li class="li-content"><a class="a-li-content" href="#">
-                            <img class="icon-li" src="/resources/icons/inicio.svg" alt="">
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/inicio.svg" alt="">
                             Inicio</a></li>
-                        <li class="li-content"><a class="a-li-content" href="#">
-                            <img class="icon-li" src="/resources/icons/lupa.svg" alt="">
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
                             Buscar envíos</a></li>
-                        <li class="li-content"><a class="a-li-content" href="#">
-                            <img class="icon-li" src="/resources/icons/caja-registradora.svg" alt="">
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/caja-registradora.svg" alt="">
                             Ingresos</a></li>
-                    </ul>
-                </li>
+                </ul>
             </div>
-            <div class="card module-packet">
+            
+            <div class="sidebar-card module-packet">
                 <p class="list-title">Modulo paquetes</p>
-                <li>
-                    <ul>
-                        <li class="li-content"><a class="a-li-content" href="#">
-                            <img class="icon-li" src="/resources/icons/buscar-envioFinal.svg" alt="">
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/buscar-envioFinal.svg" alt="">
                             Paquetes</a></li>
-                    </ul>
-                </li>
+                </ul>
+
             </div>
+
+            <div class="sidebar-card module-empty"></div>
         </aside>
+
         <section class="content-section">
-            <h1 class="section-title-shupment">Envíos</h1>
-            <div class="shupment-content">
+            <h1 class="title-section">Envíos</h1>
+            <div class="shupment-home-content">
                 <div class="filter-container">
                     <select class="filter-selects" name="tipo" id="tipo">
                         <option value="Tipo" disabled selected>Tipo</option>
@@ -79,7 +96,7 @@
                         <option value="No">No</option>
                     </select>
                     <button class="btnClean">
-                        <img class=filter-btnClean src="/resources/icons/tacho-de-reciclaje.svg" alt="">
+                        <img class=filter-btnClean src="../../resources/icons/tacho-de-reciclaje.svg" alt="">
                     </button>
                 </div>
                 <div class="table-container">
@@ -104,8 +121,9 @@
                                 <td>Express</td>
                                 <td>Veracruz, Veracruz</td>
                                 <td><button class="btnClean">
-                                    <img class=filter-btnClean src="/resources/icons/tacho-de-reciclaje.svg" alt="">
-                                </button></td>
+                                        <img class=filter-btnClean src="../../resources/icons/tacho-de-reciclaje.svg"
+                                            alt="">
+                                    </button></td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox"></td>
@@ -115,8 +133,9 @@
                                 <td>Express</td>
                                 <td>Puebla, Puebla</td>
                                 <td><button class="btnClean">
-                                    <img class=filter-btnClean src="/resources/icons/tacho-de-reciclaje.svg" alt="">
-                                </button></td>
+                                        <img class=filter-btnClean src="../../resources/icons/tacho-de-reciclaje.svg"
+                                            alt="">
+                                    </button></td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox"></td>
@@ -126,8 +145,9 @@
                                 <td>Express</td>
                                 <td>Guadalajara, Jalisco</td>
                                 <td><button class="btnClean">
-                                    <img class=filter-btnClean src="/resources/icons/tacho-de-reciclaje.svg" alt="">
-                                </button></td>
+                                        <img class=filter-btnClean src="../../resources/icons/tacho-de-reciclaje.svg"
+                                            alt="">
+                                    </button></td>
                             </tr>
                             <tr>
                                 <td><input type="checkbox"></td>
@@ -137,14 +157,16 @@
                                 <td>Express</td>
                                 <td>Tijuana, Baja California</td>
                                 <td><button class="btnClean">
-                                    <img class=filter-btnClean src="/resources/icons/tacho-de-reciclaje.svg" alt="">
-                                </button></td>
+                                        <img class=filter-btnClean src="../../resources/icons/tacho-de-reciclaje.svg"
+                                            alt="">
+                                    </button></td>
                             </tr>
                         </tbody>
-                    </table>  
+                    </table>
                 </div>
             </div>
         </section>
     </main>
 </body>
+
 </html>

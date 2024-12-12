@@ -1,0 +1,341 @@
+/**
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+   | |   ____  _____ _     _____     _______ ______   __  _____ _    ____ _____   ____ _______   ___     _____   | |  
+   | |  |  _ \| ____| |   |_ _\ \   / / ____|  _ \ \ / / |  ___/ \  / ___|_   _| / ___|_   _\ \ / / |   | ____|  | |  
+   | |  | | | |  _| | |    | | \ \ / /|  _| | |_) \ V /  | |_ / _ \ \___ \ | |   \___ \ | |  \ V /| |   |  _|    | |  
+   | |  | |_| | |___| |___ | |  \ V / | |___|  _ < | |   |  _/ ___ \ ___) || |    ___) || |   | | | |___| |___   | |  
+   | |  |____/|_____|_____|___|  \_/  |_____|_| \_\|_|   |_|/_/   \_\____/ |_|   |____/ |_|   |_| |_____|_____|  | |  
+   | |                                                                                                           | |  
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+
+    Nombre del archivo: general-styles.css
+    
+    Descripcion: El siguiente archivo contiene los estilos generales de la aplicación "Delivery Fast",
+    como el encabezado, el menu lateral y los contenedores basicos
+    
+    Estructura del archivo:
+    - Global
+    - Header
+    - Main section
+    - Sidebar
+    - Content section
+*/
+
+
+/*__________________________________________________  
+        
+            G   L   O   B   A   L 
+____________________________________________________ 
+*/
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;    
+}
+
+
+/*__________________________________________________  
+         
+        H    E   A   D   E   R  
+____________________________________________________ 
+*/
+
+/* Fondo de la barra superior */
+header{
+    background-color: #FFAC13;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Contenedor del logo de la empresa*/
+.container-logo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: auto;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    flex: 1;
+}
+
+/* Logo de la empresa*/
+.logo-extendido{
+    width: 420px;
+    filter: brightness(0) invert(1);
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor del icono del menu*/
+.nav-menu{
+    display: flex;
+    align-items: center;
+}
+
+/* Icono del menu*/
+.menu-icon{
+    width: 50px;
+    padding: 5px;
+    cursor: pointer;
+    filter: invert(100%);
+}
+
+/* Contenedor de la informacion del usuario*/
+.user-info-container{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    color: white;
+}
+
+/* Texto de informacion del usuario*/
+.user-rol{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+/* Icono de perfil de usuario*/
+.user-logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit:cover;
+    background-color: #f5f5f5;
+    padding: 2px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+/*__________________________________________________  
+         
+        M  A  I  N    S  E  C  T  I  O  N  
+____________________________________________________ 
+*/
+
+/* Contenedor principal, abajo del header*/
+.main-container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+
+
+/*__________________________________________________  
+         
+            S   I   D   E   B   A   R   
+____________________________________________________ 
+*/
+
+/* Contenedor del menu lateral*/
+.sidebar-menu-container{
+    min-width: 200px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding:0;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Sección/Modulo dentro del menu */
+.sidebar-card{
+    width: 215px;
+    background-color: #ffffff;
+    padding: 15px;
+    flex-direction: column;
+    margin-bottom:2px ;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Modulo del boton de crear nuevio envio*/
+.module-create{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modulo de envios*/
+.module-shupment{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modulo de paquetes */
+.module-packet{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modulo de administracion*/
+.module-admin{
+    display: flex;
+    flex-direction: column;
+}
+
+.module-empty{
+    flex: 1;
+}
+
+/* Estilo de las listas dentro del menu*/
+.cardSideBar ul{
+    list-style: none;
+    padding: 0;
+}
+
+/* Boton de crear nuevo envío*/
+.new-shupment-btn{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    padding: 0 10px 0 3px; /* TOP RIGTH BOTTOM LEFT*/
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.1s ease;
+    box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.4);
+}
+
+/* Boton de crear nuevo envío con el mouse encima */
+.new-shupment-btn:hover{
+    background-color: #ECEBEB;
+}
+
+/* Imagen del boton de crear nuevo envío*/
+.new-shupment-btn-icon{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: contain;
+    padding: 0px;
+    margin-right: 10px;
+}
+
+/* Titulo de seccion/Modulo del menu*/
+.list-title{
+    color: #cfcfcf;
+    font-family: 'Roboto', sans-serif;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* Elemento/Item de el menu*/
+.sidebar-item-li{
+    list-style: none;
+    margin-bottom: 3px;
+    padding: 10px;
+    text-align: start;
+    width: 170px;
+    display: flex;
+    align-items: center;
+}
+
+/* Elemento/Item del menu con el mouse encima*/
+.sidebar-item-li:hover{
+    background-color: #ECEBEB;
+    border-radius: 10px;
+}
+
+/* Elemento/item link del menu */
+.sidebar-item-a{
+    font-family: 'Roboto', sans-serif;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+/* Icono de cada elemento*/
+.sidebar-item-icon{
+    margin-right: 10px;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    text-align:start;
+    display: flex;
+    align-items: center;
+}
+
+
+
+
+
+
+/*__________________________________________________  
+         
+        C O N T E N T   S E C T I O N  
+____________________________________________________ 
+*/
+
+/* Seccion de contenido */
+.content-section{
+    flex: 1;
+    padding: 20px;
+    margin: 0px;
+}
+
+/* Titulo de sección*/
+.title-section{
+    display: flex;
+    font-size: 46px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    color:#373737;
+}
+
+/* Sección de envíos*/
+.shupment-home-content{
+    background-color: white;
+    border-radius: 20px;
+    width: 100%;
+    height: 100vh;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
