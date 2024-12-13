@@ -1,4 +1,12 @@
+* {
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
 .body-modal {
+    background-color: #f5f5f5;
     font-family: 'Roboto';
     margin: 0;
     padding: 0;
@@ -18,7 +26,7 @@
 
 .modal-content {
     background-color: #fff;
-    width: 500px;
+    width: 800px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -57,7 +65,7 @@
 }
 
 .form-group-modal input,
-.form-group-modal select {
+.form-group-modal select, .textarea-modal{
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -68,11 +76,14 @@
 
 
 .form-group-modal input:focus,
-.form-group-modal select:focus {
+.form-group-modal select:focus,.textarea-modal {
     outline: none;
 }
 
-/* Botones */
+.textarea-modal{
+    height: 100px;
+}
+
 .button-group-modal {
     display: flex;
     justify-content: space-between;
@@ -116,6 +127,20 @@ button.create:hover {
 .form-inline-modal{
     display: flex;
     width: 100%;
-    gap: 50px;
+    gap: 20px;
+  }
+
+.title-modal-info-contac{
+    display: block;
+    margin-bottom: 5px;
+    background-color: transparent;
+    
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.form-inline-modal .form-group-modal {
+    flex: 1;
   }
   

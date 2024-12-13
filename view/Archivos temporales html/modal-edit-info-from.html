@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar desde</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styles/modal-user-styles.css">
+
+
+</head>
+<body class="body-modal">
+    <div id="userModal" class="modal">
+        <div class="modal-content">
+            <div class="head-title-modal-container">    
+                <h2 class="title-modal-user">Enviar desde</h2>
+            </div>
+            <form class="form-container-modal">
+                <div class="form-group-modal">
+                    <label for="name-colab">Nombre*</label>
+                    <input class="input-modal" type="text" id="name-colab" placeholder="Nombre completo del colaborador" required>
+                </div>
+
+                <div class="form-inline-modal">
+                    <div class="form-group-modal">
+                        <label for="cp-modal">Codigo postal*</label>
+                        <input class="input-modal" type="text" id="cp-modal" placeholder="Ej. 91140" required>
+                    </div>
+                    <div class="form-group-modal">
+                        <label for="estate-modal">Estado*</label>
+                        <input class="input-modal" type="text" id="estate-modal" required>
+                    </div>
+                    <div class="form-group-modal">
+                        <label for="city-modal">Ciudad*</label>
+                        <input class="input-modal" type="text" id="city-modal" required>
+                    </div>
+                    <div class="form-group-modal">
+                        <label for="col-modal">Colonia*</label>
+                        <input class="input-modal" type="text" id="col-modal" required>
+                    </div>
+                </div>
+
+
+                <div class="form-inline-modal">
+
+                    <div class="form-group-modal">
+                        <label for="street-modal">Calle*</label>
+                        <input class="input-modal " type="text" id="street-modal" placeholder="Ingrese el domicilio remitente" required>
+                    </div>
+                        
+                        <div class="form-group-modal">
+                            <label for="no-ext-modal">No.ext*</label>
+                            <input class="input-modal" type="text" id="no-ext-modal" required>
+                        </div>
+                        <div class="form-group-modal">
+                            <label for="no-int-modal">No.int</label>
+                            <input class="input-modal" type="text" id="no-int-modal" required>
+                        </div>
+                    
+                </div>
+                
+                
+                <div class="form-inline-modal">
+                    <div class="form-group-modal">
+                        <h1 class="title-modal-info-contac">Datos de Contacto</>
+                            <div class="form-inline-modal">
+                                <div class="form-group-modal">
+                                    <label for="email-contac">Correo</label>
+                                    <input class="input-modal" type="email" id="email-contac" placeholder="example@dominio.com">
+                                </div>
+                                <div class="form-group-modal">
+                                    <label for="phone-contac">Teléfono</label>
+                                    <input class="input-modal" type="tel" id="phone-contac" placeholder="Teléfono">
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                
+                <div class="button-group-modal">
+                    <button type="submit" class="create">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
