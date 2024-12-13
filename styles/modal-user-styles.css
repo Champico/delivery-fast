@@ -1,0 +1,121 @@
+.body-modal {
+    font-family: 'Roboto';
+    margin: 0;
+    padding: 0;
+}
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content {
+    background-color: #fff;
+    width: 500px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.head-title-modal-container {
+    text-align: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.title-modal-user {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.form-container-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group-modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group-modal label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #333;
+}
+
+.form-group-modal input,
+.form-group-modal select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+.form-group-modal input:focus,
+.form-group-modal select:focus {
+    outline: none;
+}
+
+/* Botones */
+.button-group-modal {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+button.cancel {
+    background-color: #f44336;
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.3s ease;
+}
+
+button.cancel:hover {
+    background-color: #d32f2f;
+}
+
+button.create {
+    background-color: #ffa500;
+    color: #fff;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    transition: background-color 0.3s ease;
+}
+
+button.create:hover {
+    background-color: #e69500;
+}
+  
+.form-inline-modal{
+    display: flex;
+    width: 100%;
+    gap: 50px;
+  }
+  

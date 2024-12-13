@@ -172,6 +172,7 @@ ____________________________________________________
 }
 
 
+
 /* Sección/Modulo dentro del menu */
 .sidebar-card{
     width: 215px;
@@ -207,6 +208,12 @@ ____________________________________________________
     flex-direction: column;
     flex: 1;
 }
+
+.last-module{
+    height: 100vh;
+    flex: 1;
+}
+
 /* Estilo de las listas dentro del menu*/
 .cardSideBar ul{
     list-style: none;
