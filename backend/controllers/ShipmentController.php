@@ -76,7 +76,15 @@ class ShipmentController
 
 
     private function calcular_costo($peso, $largo, $ancho, $alto){
-        
+    /* > LOGICA PARA CREAR UN ENVIO CONTROLLER <
+    
+    Pre-condición: Datos con el formato correcto de peso, largo, ancho y alto
+
+    Pasos:
+        - Verificar las reglas de negocio para crear costos. Checar el archivo Terminos y condiciones para Costos.txt
+        - Retornar un ticket
+    */
+
     }
 
     private function calcular_distancia($lat1, $lon1, $lat2, $lon2)

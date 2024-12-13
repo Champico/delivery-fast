@@ -1,6 +1,6 @@
--- -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+-- ----------------------------------------------------------------------
 --  S C R I P T  P A R A  C R E A R  L A  B A S E  D E  D A T O S 
--- -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
+-- ----------------------------------------------------------------------
 
 -- Creación de la base de datos
 DROP DATABASE IF EXISTS DeliveryFast;
@@ -177,6 +177,19 @@ CREATE TABLE ticket (
     FOREIGN KEY (guia) REFERENCES envios(guia)
 );
 
+
+
+
+
+
+
+
+
+
+-- ----------------------------------------------------------------------
+--               V      I    S     T     A     S 
+-- ----------------------------------------------------------------------
+
 -- Vista con datos del envío completo
 DROP VIEW IF EXISTS Datos_Completos_Envio;
 CREATE VIEW Datos_Completos_Envio AS 
@@ -256,59 +269,11 @@ ON c.guia = e.guia;
 
 
 
--- -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
---       D  A  T  O  S   C  O  N  S  T  A  N  T  E  S  
--- -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -   -
 
--- Tabla de horario
-DROP TABLE IF EXISTS Horario;
-CREATE TABLE Horario (
-    numero_sucursal CHAR(5) NOT NULL,
-    dia ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo') NOT NULL,
-    hora_apertura TIME NOT NULL,
-    hora_cierre TIME NOT NULL,
 
-    FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal),
-    PRIMARY KEY (numero_sucursal, dia)
-);
-
-DROP TABLE IF EXISTS Tipo_Servicio;
-CREATE TABLE Tipo_Servicio (
-    nombre VARCHAR(30) PRIMARY KEY,
-    sobrepeso DECIMAL(10, 2) NOT NULL,
-    largo_amp DECIMAL(10, 2) NOT NULL,
-    ancho_amp DECIMAL(10, 2) NOT NULL,
-    alto_amp DECIMAL(10, 2) NOT NULL
-);
-
-DROP TABLE IF EXISTS Zonas;
-CREATE TABLE Zonas (
-    nombre VARCHAR(30) PRIMARY KEY,
-    distancia_min INT NOT NULL,
-    distancia_max INT NOT NULL
-);
-
-INSERT INTO Zonas (nombre, distancia_min) VALUES
-("Zona 1", 0, 250)
-("Zona 2", 251, 500)
-("Zona 3", 501, 1,000)
-("Zona 4", 1001, 1500)
-("Zona 5", 1501, 2000)
-("Zona 6", 2001, 2001)
-("Zona 7", 2001, 999999);
-
-DROP TABLE IF EXISTS Costo;
-CREATE TABLE Costo (
-    servicio VARCHAR(30) NOT NULL,
-    zona VARCHAR(30) NOT NULL,
-    precio DECIMAL(10, 2) NOT NULL,
-    medida_aumento_peso DECIMAL(10, 2) NOT NULL,
-    precio_aumento DECIMAL(10, 2) NOT NULL,
-    PRIMARY KEY (servicio, zona),
-    FOREIGN KEY (servicio) REFERENCES tipo_servicio(nombre),
-    FOREIGN KEY (zona) REFERENCES zonas(nombre)
-);
-
+-- ----------------------------------------------------------------------
+--          F   U   N   C   I   O   N   E   S  
+-- ----------------------------------------------------------------------
 
 DELIMITER //
 
@@ -351,3 +316,130 @@ BEGIN
 END; //
 
 DELIMITER ;
+
+
+
+
+
+
+
+
+-- ----------------------------------------------------------------------
+--          D  A  T  O  S   C  O  N  S  T  A  N  T  E  S  
+-- ----------------------------------------------------------------------
+
+-- Configuración global
+DROP TABLE IF EXISTS Configuracion_global;
+CREATE TABLE Configuracion_global(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+	const_peso_volumetrico INT,
+	peso_maximo DECIMAL(10,2),
+	largo_maximo DECIMAL(10,2),
+	alto_maximo DECIMAL(10,2),
+	ancho_maximo DECIMAL(10,2)
+);
+
+-- Insertar datos 
+INSERT INTO Configuracion_global(const_peso_volumetrico, peso_maximo, largo_maximo, alto_maximo, ancho_maximo) VALUES
+(6000, 69, 200, 150, 200);
+
+-- Tabla de horario
+DROP TABLE IF EXISTS Horario;
+CREATE TABLE Horario (
+    numero_sucursal CHAR(5) NOT NULL,
+    dia ENUM('Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo') NOT NULL,
+    hora_apertura TIME NOT NULL,
+    hora_cierre TIME NOT NULL,
+
+    FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal),
+    PRIMARY KEY (numero_sucursal, dia)
+);
+
+-- Crear tabla de tipo de servicio
+DROP TABLE IF EXISTS Tipo_Servicio;
+CREATE TABLE Tipo_Servicio (
+    nombre VARCHAR(30) PRIMARY KEY,
+    sobrepeso DECIMAL(10, 2) NOT NULL
+);
+
+-- Insertar datos de tipo de servicio
+INSERT INTO Tipo_Servicio (nombre, sobrepeso) VALUES
+    ('Express', 3),
+    ('Dia siguiente', 3),
+    ('2-5 Dias', 3),
+    ('Terrestre', 5);
+
+-- Crear tabla de zonas
+DROP TABLE IF EXISTS Zonas;
+CREATE TABLE Zonas (
+    nombre VARCHAR(30) PRIMARY KEY,
+    distancia_min INT NOT NULL,
+    distancia_max INT NOT NULL
+);
+
+-- Insertar datos de zonas
+INSERT INTO Zonas (nombre, distancia_min, distancia_max) VALUES
+("Zona 1", 0, 250),
+("Zona 2", 251, 500),
+("Zona 3", 501, 1000),
+("Zona 4", 1001, 1500),
+("Zona 5", 1501, 2000),
+("Zona 6", 2001, 2001),
+("Zona 7", 2001, 999999);
+
+-- Crear tabla de calculo de precios
+DROP TABLE IF EXISTS Precios;
+CREATE TABLE Precios (
+    servicio VARCHAR(30) NOT NULL,
+    zona VARCHAR(30) NOT NULL,
+    precio DECIMAL(10, 2) NOT NULL,
+    medida_aumento_peso DECIMAL(10, 2) NOT NULL,
+    precio_aumento DECIMAL(10, 2) NOT NULL,
+    PRIMARY KEY (servicio, zona),
+    FOREIGN KEY (servicio) REFERENCES tipo_servicio(nombre),
+    FOREIGN KEY (zona) REFERENCES zonas(nombre)
+);
+
+-- Insertar datos en la tabla Costo
+INSERT INTO Precios (servicio, zona, precio, medida_aumento_peso, precio_aumento) VALUES
+    -- Zona 1
+    ('Express', 'Zona 1', 300, 0.1, 40),
+    ('Dia siguiente', 'Zona 1', 260, 0.1, 34),
+    ('2-5 Dias', 'Zona 1', 220, 0.1, 28),
+    ('Terrestre', 'Zona 1', 180, 0.1, 5),
+
+    -- Zona 2
+    ('Express', 'Zona 2', 330, 0.1, 50),
+    ('Dia siguiente', 'Zona 2', 290, 0.1, 44),
+    ('2-5 Dias', 'Zona 2', 250, 0.1, 38),
+    ('Terrestre', 'Zona 2', 210, 0.1, 10),
+
+    -- Zona 3
+    ('Express', 'Zona 3', 360, 0.1, 40),
+    ('Dia siguiente', 'Zona 3', 320, 0.1, 34),
+    ('2-5 Dias', 'Zona 3', 280, 0.1, 28),
+    ('Terrestre', 'Zona 3', 240, 0.1, 15),
+
+    -- Zona 4
+    ('Express', 'Zona 4', 390, 0.1, 50),
+    ('Dia siguiente', 'Zona 4', 350, 0.1, 44),
+    ('2-5 Dias', 'Zona 4', 310, 0.1, 38),
+    ('Terrestre', 'Zona 4', 270, 0.1, 20),
+
+    -- Zona 5
+    ('Express', 'Zona 5', 420, 0.1, 60),
+    ('Dia siguiente', 'Zona 5', 380, 0.1, 54),
+    ('2-5 Dias', 'Zona 5', 340, 0.1, 48),
+    ('Terrestre', 'Zona 5', 300, 0.1, 25),
+
+    -- Zona 6
+    ('Express', 'Zona 6', 450, 0.1, 70),
+    ('Dia siguiente', 'Zona 6', 410, 0.1, 64),
+    ('2-5 Dias', 'Zona 6', 370, 0.1, 58),
+    ('Terrestre', 'Zona 6', 330, 0.1, 30),
+
+    -- Zona 7
+    ('Express', 'Zona 7', 490, 0.1, 80),
+    ('Dia siguiente', 'Zona 7', 440, 0.1, 74),
+    ('2-5 Dias', 'Zona 7', 400, 0.1, 68),
+    ('Terrestre', 'Zona 7', 360, 0.1, 35);

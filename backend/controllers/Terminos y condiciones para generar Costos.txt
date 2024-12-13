@@ -1,0 +1,124 @@
+__| |___________________________________________________________________________________________________________| |__
+__   ___________________________________________________________________________________________________________   __
+  | |                                                                                                           | |  
+  | |  ____ ___  ____ _____ ___  ____    ____  _____ _     _____     _______ ______   __  _____ _    ____ _____ | |  
+  | | / ___/ _ \/ ___|_   _/ _ \/ ___|  |  _ \| ____| |   |_ _\ \   / / ____|  _ \ \ / / |  ___/ \  / ___|_   _|| |  
+  | || |  | | | \___ \ | || | | \___ \  | | | |  _| | |    | | \ \ / /|  _| | |_) \ V /  | |_ / _ \ \___ \ | |  | |  
+  | || |__| |_| |___) || || |_| |___) | | |_| | |___| |___ | |  \ V / | |___|  _ < | |   |  _/ ___ \ ___) || |  | |  
+  | | \____\___/|____/ |_| \___/|____/  |____/|_____|_____|___|  \_/  |_____|_| \_\|_|   |_|/_/   \_\____/ |_|  | |  
+__| |___________________________________________________________________________________________________________| |__
+__   ___________________________________________________________________________________________________________   __
+  | |                                                                                                           | |  
+
+Indice
+1. Acerca de los Servicios
+2. Acerca de las zonas
+3. Acerca de los sobrepesos
+4. Acerca de el peso volumetrico
+5. Acerca de los precios
+
+
+Contenido
+
+1. Acerca de los servicios
+Delivery cuenta con 4 tipos de servicio dependiendo de la urgencia del envío
+> Express - Se manda el mismo dia si aun no ha salido el envio
+> Dia siguiente - Se manda el dia siguiente
+> 2-5 Dias - Se envia de 2 a 5 días habiles según disponiblidad
+> Terrestre - Se envía cuando se pueda
+
+
+2. Acerca de las zonas
+Se clasifican las distancias dependiendo la distancias.
+Tabla de zonas y rango de kilometros
+
+Zona   | desde(km) | hasta(km) |
+_______|___________|___________|
+Zona 1 |   0       |   250     |
+Zona 2 |   251     |   500     |
+Zona 3 |   501     |   1000    |
+Zona 4 |   1001    |   1500    |
+Zona 5 |   1501    |   2000    |
+Zona 6 |   2001    |   2001    |
+Zona 7 |   2001    |   999999  |
+
+
+3. Acerca de los sobrepesos
+Se cobra una gúia básica si el paquete pesa hasta cierto peso amparado, posteriormente cada kilo se cobra un extra
+Aqui la tabla de los pesos amparados:
+
+              | Peso max     | Medida de aumento |
+              | amparado(kg) | de sobrepeso (kg) |
+______________|______________|___________________|
+Express       |       1      |      0.1 - 1      |
+Dia siguiente |       1      |      0.1 - 1      |
+2-5 Dias      |       1      |      0.1 - 1      |
+Terrestre     |       5      |      0.1 - 1      |
+
+
+4. Peso volumetrico
+Si paquete es ligero pero muy grande se calcula el peso voumetrico con la formula
+LADO X ALTO X ANCHO / CONTANTE_PESO_VOLUMETRICO
+Para este caso la constante es de 6000
+Si el resultado es mayor al peso se cobrara el sobrepeso volumetrico
+
+
+5. Acerca de los precios
+El precio de la guía y el sobrepeso se calcula dependiendo de la zona y el tipo de servicio de acuerdo a las siguientes tablas:
+
+              | Precio Guía   | Precio por medida  |
+    Zona 1    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      300      |         40         |
+Dia siguiente |      260      |         34         |
+2-5 Dias      |      220      |         28         |
+Terrestre     |      180      |         5          |
+
+
+              | Precio Guía   | Precio por medida  |
+    Zona 2    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      330      |         50         |
+Dia siguiente |      290      |         44         |
+2-5 Dias      |      250      |         38         |
+Terrestre     |      210      |         10         |
+
+              | Precio Guía   | Precio por medida  |
+    Zona 3    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      360      |         40         |
+Dia siguiente |      320      |         34         |
+2-5 Dias      |      280      |         28         |
+Terrestre     |      240      |         15         |
+
+              | Precio Guía   | Precio por medida  |
+    Zona 4    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      390      |         50         |
+Dia siguiente |      350      |         44         |
+2-5 Dias      |      310      |         38         |
+Terrestre     |      270      |         20         |
+
+              | Precio Guía   | Precio por medida  |
+    Zona 5    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      420      |         60         |
+Dia siguiente |      380      |         54         |
+2-5 Dias      |      340      |         48         |
+Terrestre     |      300      |         25         |
+
+              | Precio Guía   | Precio por medida  |
+    Zona 6    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      450      |         70         |
+Dia siguiente |      410      |         64         |
+2-5 Dias      |      370      |         58         |
+Terrestre     |      330      |         30         |
+
+              | Precio Guía   | Precio por medida  |
+    Zona 7    | amparado(mxn) | de sobrepeso (mxn) |
+______________|_______________|____________________|
+Express       |      490      |         80         |
+Dia siguiente |      440      |         74         |
+2-5 Dias      |      400      |         68         |
+Terrestre     |      360      |         35         |
