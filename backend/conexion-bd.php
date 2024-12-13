@@ -5,7 +5,6 @@
 try {
     loadEnv(__DIR__ . '/config/.env');
     $conexionBD = createConexionDB();
-    echo "<p>BD Conectada correctamente </p>";
 } catch (Exception $e) {
     $msg = $e->getMessage();
     if($msg == 'ENV_ERROR'){
@@ -46,11 +45,6 @@ function createConexionDB()
     $nombreBD = getenv('DATABASE_NAME');
     $usuario = getenv('DATABASE_USER');
     $password = getenv('DATABASE_PASSWORD');
-
-    echo "Query correcta: $direccion";
-    echo "Query correcta: $nombreBD";
-    echo "Query correcta: $usuario";
-    echo "Query correcta: $password";
 
     if (!$direccion || !$nombreBD || !$usuario || !$password) {
         throw new Exception("BD_ERROR");

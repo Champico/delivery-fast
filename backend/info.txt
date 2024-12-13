@@ -1,0 +1,36 @@
+ _____                                                                                             _____ 
+( ___ )-------------------------------------------------------------------------------------------( ___ )
+ |   |                                                                                             |   | 
+ |   |  ____    _    ____ _  _______ _   _ ____          ____ ___  _   _        ____  _   _ ____   |   | 
+ |   | | __ )  / \  / ___| |/ / ____| \ | |  _ \        / ___/ _ \| \ | |      |  _ \| | | |  _ \  |   | 
+ |   | |  _ \ / _ \| |   | ' /|  _| |  \| | | | |      | |  | | | |  \| |      | |_) | |_| | |_) | |   | 
+ |   | | |_) / ___ \ |___| . \| |___| |\  | |_| |      | |__| |_| | |\  |      |  __/|  _  |  __/  |   | 
+ |   | |____/_/   \_\____|_|\_\_____|_| \_|____/        \____\___/|_| \_|      |_|   |_| |_|_|     |   | 
+ |___|                                                                                             |___| 
+(_____)-------------------------------------------------------------------------------------------(_____)
+
+En la carpeta de backend se encuentran todos los archivos que manejan la logica del lado del servidor
+
+!Importante
+Todas las solicitudes http(GET, POST, PUT, DELETE) hechas a archivos de la carpeta backend seran redirigidas al archivo index.php
+
+!Nota para los desarolladores
+Si estas ejecutando esto en un ambiente local con XAMPP en windows debes realizar los siguiente:
+
+1. Abre el archivo C:\xampp\apache\conf\httpd.conf
+2. Busca la linea: #LoadModule rewrite_module modules/mod_rewrite.so
+3. Si esta comentada (#) descomentala
+4. En el mismo archivo busca la sección <Directory "C:/xampp/htdocs">
+5. Asgurarse que tenga la siguiente configuración:
+
+<Directory "C:/xampp/htdocs">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+
+6.
+
+
+
+
