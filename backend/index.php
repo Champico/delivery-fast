@@ -26,6 +26,11 @@ switch($resource){
         include_once 'routes/usersRoutes.php';
         break;
 
+    case 'auth':
+        include_once 'routes/authRoutes.php';
+        break;
+        
+
     default:
         http_response_code(404);
         echo json_encode(['message' => "Recurso no encontrado en raiz el recurso solicitad es $resource"]);
