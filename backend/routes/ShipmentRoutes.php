@@ -2,26 +2,29 @@
 // delivery-fast/backend/routes/shipmentRoutes.php
 
 include_once(__DIR__ . '/../controllers/shipmentController.php');
+include_once(__DIR__ . '/../models/ShipmentModel.php');
+include_once(__DIR__ . '/../config/conexion-bd.php');
 
+$shipmentController = new ShipmentController(new ShipmentModel($conexionDB));
 
 switch ($method) {
     case 'GET':
         if ($action) {
-            ShipmentController::getShipment($action);
+            $shipmentController->get($action);
         } else {
-            ShipmentController::getShipments();
+            $shipmentController->getAll();
         }
         break;
     case 'POST':
-        ShipmentController::createShipment();
+        $shipmentController->create();
         break;
 
     case 'PUT':
-        ShipmentController::updateShipment($action);
+        $shipmentController->update($action);
         break;
 
     case 'DELETE':
-        ShipmentController::deleteShipment($action);
+        $shipmentController->delete($action);
         break;
 
     default:

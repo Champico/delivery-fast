@@ -1,10 +1,9 @@
 <?php
-// Delivery-Fast/backend/conexion-bd.php
+$conexionDB = null;
 
-//Obtener conexion a la base de datos
 try {
-    loadEnv(__DIR__ . '/config/.env');
-    $conexionBD = createConexionDB();
+    loadEnv(__DIR__ . '/.env');
+    $conexionDB = createConexionDB();
 } catch (Exception $e) {
     $msg = $e->getMessage();
     if($msg == 'ENV_ERROR'){
@@ -14,6 +13,7 @@ try {
     }
 }
 
+loadEnv(__DIR__ . '/.env');
 
 // Funcion para cargar el archivo .env
 function loadEnv($file)
@@ -58,3 +58,4 @@ function createConexionDB()
 
     return $conexionBD;
 }
+?>
