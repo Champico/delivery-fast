@@ -1,0 +1,52 @@
+Nombre del proyecto: Delivery Fast
+Sistema operativo del servidor: Windows 11
+Dirección: 127.0.0.1
+Puerto: 80
+Tecnologías: PHP, MySQL, HTML, JS, CSS
+
+Estructura de carpetas:
+
+> htdocs (Carpeta de XAMPP)
+	> delivery-fast (carpeta raíz del proyecto)
+		> backend
+			> config
+				.env
+				conexion-bd.php
+			> controllers
+				ShipmentController.php
+			> middlewares
+				ValidateJsonMiddleware.php
+			> models
+				ShipmentModel.php
+			> routes
+				ShipmentRoutes.php
+				UserRoutes.php
+			> schemas
+				ShipmentSchema.php
+			.htaccess
+			index.php
+		> js
+			> api
+			> bussines
+			> data
+			> ui
+			> utils
+			login.js
+			index.js
+		> resources
+			> brand
+			> icons
+			> img
+			> svg
+		> sql-scripts
+			Script Creacion DeliveryFast.sql
+			Script Insertar Datos de Prueba DeliveryFast.sql
+		> styles
+			forms-styles.css
+			general-styles.css 
+			login-styles.css 
+			tables-styles.css 
+		> view
+			app.html
+		.gitignore
+		login.html

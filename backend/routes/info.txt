@@ -1,0 +1,3 @@
+> > R O U T E S  < <
+
+En la seccion de model van los archivos que redirigen la API REST
