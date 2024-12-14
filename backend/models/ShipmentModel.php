@@ -12,7 +12,7 @@ class ShipmentModel
 
     public function getAll()
     {
-        $sql = "SELECT * FROM Sucursales";
+        $sql = "SELECT * FROM Envios_general";
 
         try {
             $result = $this->conexionDB->query($sql);
@@ -179,10 +179,10 @@ class ShipmentModel
         }
     }
 
-    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo, $seguro, $conductor_asignado)
+    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado)
     {
         try {
-            $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,tipo,seguro,conductor_asignado)
+            $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado)
                        VALUES (?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param(
@@ -195,7 +195,7 @@ class ShipmentModel
                 $alto,
                 $ancho,
                 $contenido,
-                $tipo,
+                $tipo_servicio,
                 $seguro,
                 $conductor_asignado
             );
@@ -205,7 +205,7 @@ class ShipmentModel
         }
     }
 
-    private function insertContacto($guia, $tipo, $nombre_completo, $correo, $telefono, $calle, $numero_ext, $numero_int, $colonia, $cp, $ciudad, $referencias, $estado)
+    private function insertContacto($guia, $tipo_cliente, $nombre_completo, $correo, $telefono, $calle, $numero_ext, $numero_int, $colonia, $cp, $ciudad, $referencias, $estado)
     {
         try {
             $query = "INSERT INTO Contactos (guia, tipo, nombre_completo, correo, telefono, calle, numero_ext, numero_int, colonia, cp, ciudad, referencias, estado)
@@ -214,7 +214,7 @@ class ShipmentModel
             $stmt->bind_param(
                 "ssssssssssssi",
                 $guia,
-                $tipo,
+                $tipo_cliente,
                 $nombre_completo,
                 $correo,
                 $telefono,

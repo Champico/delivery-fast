@@ -16,7 +16,14 @@ class ShipmentController
 
     public function getAll()
     {
-        echo json_encode(['message' => 'Lista de envíos'], JSON_UNESCAPED_UNICODE);
+        try{
+            $envios = $this->shipmentModel->getAll();
+            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
+        }catch(Exception $e){
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+
     }
 
     public function get($guia)
@@ -37,11 +44,11 @@ class ShipmentController
     */
 
         $data = validateJsonMiddleware();
-        $data2 = ShipmentSchema::validateNewShipmentSchema($data);
+        $error = ShipmentSchema::validateNewShipmentSchema($data);
 
-        if (isset($data2->error)) {
+        if ($error && sizeof($error) > 0) {
             http_response_code(422);
-            echo json_encode($data2->error);
+            echo json_encode($error, JSON_UNESCAPED_UNICODE);
             exit();
         }
 
@@ -51,7 +58,7 @@ class ShipmentController
                 $data['costo'] = $data['ticket']['total'];
             }catch(Exception $e){
                 http_response_code(422);
-                echo json_encode($e);
+                echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
                 exit();
             }
 
@@ -63,7 +70,7 @@ class ShipmentController
             echo json_encode($newShipment);
         } catch (Exception $e) {
             http_response_code(404);
-            echo json_encode(['error' => 'Error al crear el envío' . $e], JSON_UNESCAPED_UNICODE);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
         }
 
     }

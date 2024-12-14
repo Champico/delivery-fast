@@ -18,7 +18,7 @@ CREATE TABLE Envios (
     alto DECIMAL(10, 2),
     ancho DECIMAL(10, 2),
     contenido VARCHAR(255),
-    tipo VARCHAR(50),
+    servicio VARCHAR(50),
     seguro BOOLEAN NOT NULL,
     conductor_asignado CHAR(6)
   );
@@ -209,7 +209,7 @@ SELECT
     e.alto,
     e.ancho,
     e.contenido,
-    e.tipo,
+    e.servicio,
     e.seguro,
     e.conductor_asignado,
 
@@ -268,6 +268,36 @@ INNER JOIN (
     WHERE r.tipo = 'Remitente' AND d.tipo = 'Destinatario'
 ) AS c
 ON c.guia = e.guia;
+
+
+-- Vista con datos del envío reducidas
+DROP VIEW IF EXISTS Envios_General;
+CREATE VIEW Envios_General AS
+SELECT 
+    e.guia, 
+    e.folio,
+    e.servicio,
+    c.nombre_completo AS destinatario,
+    c.ciudad AS ciudad_destino,
+    ef.nombre AS estado_destino,
+    ep.estatus
+FROM Entidades_Federativas AS ef
+INNER JOIN Contactos AS c 
+    ON c.estado = ef.id_entidad 
+INNER JOIN Envios AS e 
+    ON e.guia = c.guia
+INNER JOIN (
+    SELECT ep1.guia, ep1.estatus
+    FROM Estatus_Paquete AS ep1
+    WHERE ep1.fecha_cambio = (
+        SELECT MAX(ep2.fecha_cambio)
+        FROM Estatus_Paquete AS ep2
+        WHERE ep2.guia = ep1.guia
+    )
+) AS ep 
+    ON e.guia = ep.guia
+WHERE c.tipo = 'Destinatario';
+
 
 
 
