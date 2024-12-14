@@ -16,6 +16,7 @@ Indice
 3. Acerca de los sobrepesos
 4. Acerca de el peso volumetrico
 5. Acerca de los precios
+6. Acerca del costo por combustible
 
 
 Contenido
@@ -122,3 +123,7 @@ Express       |      490      |         80         |
 Dia siguiente |      440      |         74         |
 2-5 Dias      |      400      |         68         |
 Terrestre     |      360      |         35         |
+
+
+6. Costo por combustible
+13% al costo del servicio

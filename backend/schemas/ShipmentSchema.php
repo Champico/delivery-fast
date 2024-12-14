@@ -1,13 +1,15 @@
 <?php
-
 //  delivery-fast/backend/schemas/ShipmentSchema.php
 
-class ShipmentSchema {
-    public static function validateNewShipmentSchema($data) {
+class ShipmentSchema
+{
+    public static function validateNewShipmentSchema($data)
+    {
         $errors = ['error' => 'yes'];
 
         // Helper function for numeric range validation
-        function validateNumericRange($value, $min, $max, $fieldName, &$errors) {
+        function validateNumericRange($value, $min, $max, $fieldName, &$errors)
+        {
             if (!is_numeric($value)) {
                 $errors[$fieldName] = "$fieldName debe ser un número.";
                 return;
@@ -18,7 +20,8 @@ class ShipmentSchema {
         }
 
         // Helper function for string length validation
-        function validateStringLength($value, $maxLength, $fieldName, &$errors, $exactLength = null) {
+        function validateStringLength($value, $maxLength, $fieldName, &$errors, $exactLength = null)
+        {
             if (!is_string($value)) {
                 $errors[$fieldName] = "$fieldName debe ser un string.";
                 return;
@@ -29,6 +32,47 @@ class ShipmentSchema {
                 $errors[$fieldName] = "$fieldName no debe exceder $maxLength caracteres.";
             }
         }
+
+        // Helper function for ENUM validation
+        function validateEnum($value, $validOptions, $fieldName, &$errors)
+        {
+            if (!in_array($value, $validOptions)) {
+                $options = implode(", ", $validOptions);
+                $errors[$fieldName] = "$fieldName debe ser uno de los siguientes valores: $options.";
+            }
+        }
+
+        // Helper function for numeric-only string validation
+        function validateNumericString($value, $exactLength, $fieldName, &$errors)
+        {
+            if (!is_string($value)) {
+                $errors[$fieldName] = "$fieldName debe ser un string.";
+                return;
+            }
+            if (!ctype_digit($value)) {
+                $errors[$fieldName] = "$fieldName debe contener solo números.";
+                return;
+            }
+            if (strlen($value) !== $exactLength) {
+                $errors[$fieldName] = "$fieldName debe tener exactamente $exactLength caracteres.";
+            }
+        }
+
+
+        // Validate "sucursal" field
+        if (!isset($data['sucursal'])) {
+            $errors['sucursal'] = "sucursal es obligatorio.";
+        } else {
+            validateNumericString($data['sucursal'], 5, 'sucursal', $errors);
+        }
+
+        // Validate "servicio" field (enum validation added)
+        if (!isset($data['servicio'])) {
+            $errors['servicio'] = "servicio es obligatorio.";
+        } else {
+            validateEnum($data['servicio'], ['Express', 'Día siguiente', '2-5 Dias', 'Terrestre'], 'servicio', $errors); // Validate against enum options
+        }
+
 
         // Validate numeric fields
         validateNumericRange($data['peso'] ?? null, 0, 69, 'peso', $errors);
@@ -78,6 +122,40 @@ class ShipmentSchema {
         validateStringLength($data['estadoDestinatario'] ?? null, 255, 'estadoDestinatario', $errors);
         validateNumericRange($data['estadoDestinatario'] ?? null, 1, 32, 'estadoDestinatario', $errors);
 
+
+
+        // Validate metodo_de_pago (obligatorio y debe ser "Efectivo" o "Tarjeta de debito")
+        if (!isset($data['ticket']['metodo_de_pago'])) {
+            $errors['metodo_de_pago'] = "metodo_de_pago es obligatorio.";
+        } else {
+            validateEnum($data['ticket']['metodo_de_pago'], ['Efectivo', 'Tarjeta de debito'], 'metodo_de_pago', $errors);
+        }
+
+        // Validate pago_con (obligatorio y debe ser DECIMAL(10,2))
+        if (!isset($data['ticket']['pago_con']) || !is_numeric($data['ticket']['pago_con'])) {
+            $errors['pago_con'] = "pago_con es obligatorio y debe ser un número decimal.";
+        }
+
+        // Validate cambio (opcional y debe ser DECIMAL(10,2))
+        if (isset($data['ticket']['cambio']) && !is_numeric($data['ticket']['cambio'])) {
+            $errors['cambio'] = "cambio debe ser un número decimal.";
+        }
+
+        // Validate conceptos_ticket (opcional)
+        if (isset($data['ticket']['conceptos_ticket'])) {
+            if (!is_array($data['ticket']['conceptos_ticket'])) {
+                $errors['conceptos_ticket'] = "conceptos_ticket debe ser un arreglo.";
+            } else {
+                foreach ($data['ticket']['conceptos_ticket'] as $index => $concepto) {
+                    if (!isset($concepto['nombre']) || !is_string($concepto['nombre'])) {
+                        $errors["conceptos_ticket[$index][nombre]"] = "El nombre del concepto es obligatorio y debe ser un string.";
+                    }
+                    if (!isset($concepto['valor']) || !is_numeric($concepto['valor'])) {
+                        $errors["conceptos_ticket[$index][valor]"] = "El valor del concepto es obligatorio y debe ser un número decimal.";
+                    }
+                }
+            }
+        }
         // Return errors if any
         if (count($errors) > 1) {
             return $errors;
@@ -87,4 +165,3 @@ class ShipmentSchema {
         return $data;
     }
 }
-?>
