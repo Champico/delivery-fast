@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styleS/general-styles.css">
+    <link rel="stylesheet" href="../../styles/tables-styles.css">
+    <link rel="stylesheet" href="../../styles/forms-styles.css">
+
+    <title>DELIVERY FAST</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-menu">
+            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
+        </nav>
+        <div class="container-logo">
+            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
+                alt="Delivery Fast Logo Header">
+        </div>
+        <div class="user-info-container">
+            <h1 class="user-rol">COLABORADOR SUCURSAL 1</h1>
+            <img class="user-logo" src="../../resources/icons/perfil-icon.svg" alt="Profile Picture">
+        </div>
+    </header>
+
+
+    <main class="main-container">
+
+        <aside class="sidebar-menu-container">
+            <div class="sidebar-card module-create">
+                <button class="new-shupment-btn">
+                    <img class="new-shupment-btn-icon" src="../../resources/icons/nuevoFinal.svg"
+                        alt="crear nuevo envio">
+                    Nuevo envío
+                </button>
+            </div>
+
+            <div class="sidebar-card module-shupment">
+                <p class="list-title">Modulo envíos</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/inicio.svg" alt="">
+                            Inicio</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                            Buscar envíos</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/caja-registradora.svg" alt="">
+                            Ingresos</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-card module-packet last-module">
+                <p class="list-title">Modulo paquetes</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/buscar-envioFinal.svg" alt="">
+                            Paquetes</a></li>
+                </ul>
+
+            </div>
+        </aside>
+
+        <section class="content-section">
+
+            <div class="new-shupment-page-header">
+                <h1 class="title-section">Nuevo envío</h1>
+                <div class="form-inline">
+                    <Button class="button btn-anterior">Anterior</Button>
+                    <Button class="button btn-siguiente">Siguiente</Button>
+                </div>
+            </div>
+
+
+            <div class="new-shupment-wizard">
+                <div class="wizard-step-container wsc-datos-envio">
+                    <div class="wizard-step  ws-datos-envio">
+                        <span class="newStepButtonLabel">Datos de envío</span>
+                    </div>
+                </div>
+                <div class="wizard-step-container wsc-datos-paquete">
+                    <div class="wizard-step  ws-datos-paquete">
+                        <span class="newStepButtonLabel">Datos de paquete</span>
+                    </div>
+                </div>
+                <div class="wizard-step-container wsc-datos-pago">
+                    <div class="wizard-step wizard-step-selected ws-datos-pago">
+                        <span class="newStepButtonLabel">Datos de pago</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="new-shupment-page-content">
+
+                <!-- Sección Enviar desde -->
+                <div class="form-card form-sender">
+                    <h2 class="form-title">Desglose</h2>
+                    <div class="table-container-shipment">
+                        <table class="details-shipment">
+                            <thead>
+                                <tr>
+                                    <th>Concepto</th>
+                                    <th>Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Costo Guía</td>
+                                    <td>$210</td>
+                                </tr>
+                                <tr>
+                                    <td>Sobrecargo</td>
+                                    <td>$60</td>
+                                </tr>
+                                <tr>
+                                    <td>Total</td>
+                                    <td>$270</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h2 class="form-title">Método de pago</h2>
+                    <div class="payment-method">
+                        <label class="radio-label payment">
+                            <input class="radio-input" type="radio" name="r-payment-method" id="r-payment-method">
+                            Efectivo
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+</body>
+
+</html>

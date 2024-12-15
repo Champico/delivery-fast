@@ -300,6 +300,10 @@ ____________________________________________________
     align-items: center;
 }
 
+.buttonsContainer{
+    margin: 5px;
+    padding: 5px;
+}
 
 
 
@@ -503,4 +507,76 @@ ________________________________________________________________________________
     margin-left: 0px;
 }
 
+/*_______________________________________________________________________________  
+         
+        D E L I V E R Y  V I E W  C O N T A I N E R
+_________________________________________________________________________________
+*/
+
+.shupment-home-guide-view{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow-y: none;
+}
+
+
+/* Estilo del contenedor */
+.guide-input-container {
+    background-color: #ffe5cc; /* Fondo naranja claro */
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Título */
+.guide-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Campo de entrada */
+.guide-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.guide-button {
+    background-color: #ffa726; /* Naranja */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.button.guide-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.guide-button:hover {
+    background-color: #fb8c00; /* Más oscuro al pasar el mouse */
+}
 

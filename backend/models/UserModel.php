@@ -1,3 +1,5 @@
+<?php
+
 // backend/models/UserModel.php
 class UserModel {
     private $conn;
@@ -13,3 +15,5 @@ class UserModel {
         return $stmt->get_result();
     }
 }
+
+?>

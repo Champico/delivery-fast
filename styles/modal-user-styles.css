@@ -24,13 +24,17 @@
     height: 100%;
 }
 
-.modal-content {
+.modal-content,.modal-content-small {
     background-color: #fff;
     width: 800px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
+}
+
+.modal-content-small{
+    width: 400px;
 }
 
 .head-title-modal-container {
@@ -44,6 +48,11 @@
     font-size: 24px;
     font-weight: bold;
     margin: 0;
+}
+
+.-charge{
+    font-size: 24px;
+    margin-bottom: 0px;
 }
 
 .form-container-modal {
@@ -62,6 +71,7 @@
     margin-bottom: 5px;
     font-size: 14px;
     color: #333;
+    width: 100px;
 }
 
 .form-group-modal input,
@@ -89,6 +99,10 @@
     justify-content: space-between;
     gap: 10px;
 }
+.-print-container{
+    margin: 0px;
+    padding: 10px;
+}
 
 button.cancel {
     background-color: #f44336;
@@ -107,7 +121,7 @@ button.cancel:hover {
     background-color: #d32f2f;
 }
 
-button.create {
+button.create,.btnCobrar, .button-modals{
     background-color: #ffa500;
     color: #fff;
     padding: 10px;
@@ -120,14 +134,21 @@ button.create {
     transition: background-color 0.3s ease;
 }
 
-button.create:hover {
+button.create:hover,
+.btnCobrar:hover,
+.button-modals:hover {
     background-color: #e69500;
+}
+
+.btnCobrar{
+    width: 300px;
 }
   
 .form-inline-modal{
     display: flex;
     width: 100%;
     gap: 20px;
+    align-items: center;
   }
 
 .title-modal-info-contac{
@@ -144,3 +165,72 @@ button.create:hover {
     flex: 1;
   }
   
+.head-price-modal-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.price-total-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    margin-top: 0px;
+}
+
+.price-total{
+    font-size: 36px;
+}
+
+.p-cambio,.span-cambio{
+    font-size: 16px;
+    padding: 10px;
+}
+
+.p-cambio {
+    font-weight: bold;
+    display: flex;
+    align-items: center; 
+    gap: 0px; 
+}
+
+.span-cambio {
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1;
+}
+
+.ship-titles-modal{
+    font-size: 28px;
+}
+  
+.ship-subtitle-modal{
+    font-size: 24px;
+}
+  
+.ship-info-text-modal,.-text{ 
+    font-size: 16px;
+    padding: 0px;
+}
+
+.container-p-span-info-modal{
+    margin: 5px;
+    margin-left: 0px;
+}
+
+.shipping-information-modal{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: 10px;
+}
+.btnTerminar-container{
+    display: flex;
+    justify-content: end;
+    align-self: flex-end;
+}
+
+.btnTerminar{
+    width: 200px;
+
+}

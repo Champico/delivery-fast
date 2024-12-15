@@ -1,3 +1,5 @@
+<?php
+
 // backend/routes/authRoutes.php
 
 include_once __DIR__ . '/../controllers/authController.php';
@@ -24,3 +26,5 @@ switch ($method) {
         echo json_encode(['message' => 'Método no permitido']);
         break;
 }
+
+?>

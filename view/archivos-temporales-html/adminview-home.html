@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="../../styleS/general-styles.css">
+    <link rel="stylesheet" href="../../styles/tables-styles.css">
+    <link rel="stylesheet" href="../../styles/forms-styles.css">
+
+    <title>DELIVERY FAST</title>
+</head>
+
+<body>
+
+    <header>
+        <nav class="nav-menu">
+            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
+        </nav>
+        <div class="container-logo">
+            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
+                alt="Delivery Fast Logo Header">
+        </div>
+        <div class="user-info-container">
+            <h1 class="user-rol">ADMINISTRADOR SUCURSAL 1</h1>
+            <img class="user-logo" src="../../resources/icons/perfil-icon.svg" alt="Profile Picture">
+        </div>
+    </header>
+
+
+    <main class="main-container">
+
+        <aside class="sidebar-menu-container">
+            <div class="sidebar-card module-create">
+                <button class="new-shupment-btn">
+                    <img class="new-shupment-btn-icon" src="../../resources/icons/nuevoFinal.svg"
+                        alt="crear nuevo envio">
+                    Nuevo envío
+                </button>
+            </div>
+
+            <div class="sidebar-card module-shupment">
+                <p class="list-title">Modulo envíos</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/inicio.svg" alt="">
+                            Inicio</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                            Buscar envíos</a></li>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/caja-registradora.svg" alt="">
+                            Ingresos</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-card module-packet last-module">
+                <p class="list-title">Modulo paquetes</p>
+
+                <ul>
+                    <li class="sidebar-item-li"><a class="sidebar-item-a" href="#">
+                            <img class="sidebar-item-icon" src="../../resources/icons/buscar-envioFinal.svg" alt="">
+                            Paquetes</a></li>
+                </ul>
+
+            </div>
+
+        </aside>
+
+        <section class="content-section">
+            <h1 class="title-section">Envíos</h1>
+            <div class="shupment-home-content">
+                <div class="form-group">
+                    <div class="form-inline buttonsContainer">
+                        <button class="button">Nuevo</button>
+                        <button class="button">Modificar</button>
+                        <button class="button button-red">Eliminar</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="shipment-table">
+                        <thead>
+                            <tr>
+                                <th>No. Personal</th>
+                                <th>Nombre</th>
+                                <th>Rol</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>000001</td>
+                                <td>Julio A. Morales Romero</td>
+                                <td>Administrador</td>
+                                <td>921-135-1427</td>
+                                <td>jaldair2011@hotmail.com</td>
+                                </tr>
+                            <tr>
+                                <td>000002</td>
+                                <td>Edgar Yael Cortes Carrillo</td>
+                                <td>Administrador</td>
+                                <td>228-156-7570</td>
+                                <td>champico@hotmail.com</td>
+                                </tr>
+                            <tr>
+                                <td>000003</td>
+                                <td>Erick Jair Morales Romero</td>
+                                <td>Colaborador</td>
+                                <td>228-245-4590</td>
+                                <td>erickj@hotmail.com</td>
+                            </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </section>
+    </main>
+</body>
+
+</html>
