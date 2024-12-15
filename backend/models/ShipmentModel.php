@@ -12,9 +12,8 @@ class ShipmentModel
 
     public function getAll()
     {
-        $sql = "SELECT * FROM Envios_general";
-
         try {
+            $sql = "SELECT * FROM Envios_general";
             $result = $this->conexionDB->query($sql);
             if ($result->num_rows > 0) {
                 $shupments = [];
@@ -25,7 +24,7 @@ class ShipmentModel
             } else {
                 return null;
             }
-        } finally {
+        } catch(Exception $e){
             return null;
         }
     }
@@ -238,6 +237,7 @@ class ShipmentModel
             $query1 = "INSERT INTO ticket(total, guia) VALUES (?,?)";
             $stmt = $this->conexionDB->prepare($query1);
             $stmt->bind_param("ds",$costo_total, $guia);
+            $stmt->execute();
             $ticket = null;
 
             try {
@@ -249,10 +249,34 @@ class ShipmentModel
 
             if($ticket){
                 foreach($ticket_conceptos as $nombre => $valor) {
-                    $query3 = "INSERT INTO Concepto_ticket(id_ticket, nombre, valor) VALUES (?,?,?);";
-                    $stmt2 = $this->conexionDB->prepare($query3);
-                    $stmt2->bind_param("isd",$ticket['id'],$nombre,$valor);
+                    try{
+                        $query3 = "INSERT INTO Concepto_ticket(id_ticket, nombre, valor) VALUES (?,?,?);";
+                        $stmt2 = $this->conexionDB->prepare($query3);
+                        $stmt2->bind_param("isd",$ticket['id'],$nombre,$valor);
+                        $stmt->execute();
+                    }catch(Exception $e){
+                    }
                 }
+
+                    try {
+                        $query4 = "SELECT * FROM Concepto_ticket WHERE id_ticket = ?";
+                        $stmt = $this->conexionDB->prepare($query4);
+                        $stmt->bind_param("i", $ticket['id']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        if ($result->num_rows > 0) {
+                            $conceptos = [];
+                            while ($row = $result->fetch_assoc()) {
+                                $conceptos[] = $row;
+                            }
+                            $ticket["ticket_conceptos"] = $conceptos;
+                        } else {
+                            return null;
+                        }
+                    } catch(Exception $e){
+
+                    }
+
             }
 
         }catch(Exception $e){
@@ -401,6 +425,31 @@ class ShipmentModel
             }
         }catch(Exception $e){
             throw new Exception("No se encontó el ticket");
+        }
+    }
+
+    public function createStatus($guia, $colaborador, $estatus){
+        try{
+            $query1 = "INSERT INTO Estatus_Paquete(guia, colaborador, estatus) VALUES (?,?,?)";
+            $stmt = $this->conexionDB->prepare($query1);
+            $stmt->bind_param("sss",$guia, $colaborador, $estatus);
+            $stmt->execute();
+
+            try {
+                $query2 = "SELECT * FROM Estatus_Paquete WHERE guia = $guia ORDER BY fecha_cambio DESC LIMIT 1;";
+                $result = $this->conexionDB->query($query2);
+                $status = $result->fetch_assoc();
+
+                if($status){
+                    return $status;
+                }else{
+                    return;
+                }
+            } catch (Exception $e) {
+            }
+
+        }catch(Exception $e){
+            throw new Exception("Error al crear el estatus");
         }
     }
 

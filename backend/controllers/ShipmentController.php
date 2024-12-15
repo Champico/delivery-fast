@@ -39,8 +39,11 @@ class ShipmentController
     1. Verificar que existan los datos de otras tablas
         - Validar que los datos que llegaron sea un JSON
         - Validar los datos segun las reglas de negocio
-        - Calcular el costo si no se ha calculado
-        - Enviar datos a el MODEL
+        - Calcular el costo y crear un ticket
+        - Enviar los datos al MODEL para crear el envío
+        - Crear el primer estatus del envío
+        - Obtener los datos del envio y retornarlos
+
     */
 
         $data = validateJsonMiddleware();
@@ -66,13 +69,25 @@ class ShipmentController
 
         try {
             $newShipment = $this->shipmentModel->create($data);
-            http_response_code(201);
-            echo json_encode($newShipment);
         } catch (Exception $e) {
             http_response_code(404);
             echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
         }
 
+        if(!isset($data["colaborador"])) $data["colaborador"] = "000000";
+
+        try{
+            $this->shipmentModel->createStatus($newShipment["guia"], $data["colaborador"], "Pendiente");
+        }catch(Exception $e){
+            http_response_code(422);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+
+        http_response_code(201);
+        echo json_encode($newShipment);
     }
 
     public function update($guia)

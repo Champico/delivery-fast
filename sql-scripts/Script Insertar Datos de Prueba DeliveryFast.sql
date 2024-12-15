@@ -29,4 +29,30 @@ VALUES
 ('001', 'Viernes', '09:00:00', '19:00:00'),
 ('001', 'Sábado', '10:00:00', '14:00:00');
 
-SELECT * FROM Sucursales INNER JOIN Horario ON Sucursales.numero_sucursal = Horario.numero_sucursal;
+INSERT INTO Colaboradores (
+    numero_personal, 
+    contrasena, 
+    nombre, 
+    apellido_paterno, 
+    apellido_materno, 
+    curp, 
+    correo, 
+    telefono, 
+    fecha_contratacion, 
+    id_rol, 
+    numero_sucursal
+)
+VALUES (
+    '000001',               
+    'ContraseñaSegura123',   
+    'Juan',                 
+    'Pérez',               
+    'López',                 
+    'JUAP920101HDFRRN01',   
+    'juan.perez@example.com',
+    '5551234567',           
+    '2024-12-14',            
+    1,                      
+    '00001'                  
+);
+

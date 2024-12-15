@@ -482,3 +482,21 @@ INSERT INTO Precios (servicio, zona, precio, medida_aumento_peso, precio_aumento
     ('Dia siguiente', 'Zona 7', 440, 1, 74),
     ('2-5 Dias', 'Zona 7', 400, 1, 68),
     ('Terrestre', 'Zona 7', 360, 1, 35);
+
+
+
+
+
+
+
+-- ----------------------------------------------------------------------
+--     I N S E R T A R  U S U A R I O  P O R  D E F E C T O 
+-- ----------------------------------------------------------------------
+
+-- Insertar sucursal
+INSERT INTO Sucursales (numero_sucursal, correo, telefono, calle, numero_ext, numero_int, cp, colonia, ciudad, estado, hora_salida_diaria) VALUES 
+('00000', 'deliveryFastNacional@deliveryfast.com', '5551234567', 'Av. Central', '100', 'B', '01234', 'Centro', 'Ciudad de México', 'CDMX', '18:00:00');
+
+-- Insertar colaborador
+INSERT INTO Colaboradores (numero_personal, contrasena, nombre, apellido_paterno, apellido_materno, curp, correo, telefono, fecha_contratacion, id_rol, numero_sucursal)
+VALUES ('000000', 'password', 'Sistema', NULL, NULL, 'SIS000000HDFSRNA1', 'deliveryFastNacional@deliveryfast.com', NULL, CURDATE(), 1, '00000');

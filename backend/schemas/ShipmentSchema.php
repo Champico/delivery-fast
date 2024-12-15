@@ -15,6 +15,10 @@ class ShipmentSchema
         $errors[] = "Sucursal debe ser un string numérico de exactamente 5 caracteres.";
     }
 
+    if (isset($data['colaborador']) && (!$isNumericString($data['colaborador']) || strlen($data['colaborador']) !== 6)) {
+        $errors[] = "Colaborador debe ser un string numérico de exactamente 6 caracteres.";
+    }
+
     foreach ([
         'peso' => [0, 69, 'Peso debe ser un número decimal entre 0 y 69.'],
         'largo' => [0, 200, 'Largo debe ser un número decimal entre 0 y 200.'],
