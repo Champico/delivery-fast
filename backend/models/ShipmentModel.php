@@ -12,9 +12,8 @@ class ShipmentModel
 
     public function getAll()
     {
-        $sql = "SELECT * FROM Sucursales";
-
         try {
+            $sql = "SELECT * FROM Envios_general";
             $result = $this->conexionDB->query($sql);
             if ($result->num_rows > 0) {
                 $shupments = [];
@@ -25,7 +24,7 @@ class ShipmentModel
             } else {
                 return null;
             }
-        } finally {
+        } catch(Exception $e){
             return null;
         }
     }
@@ -42,6 +41,8 @@ class ShipmentModel
         - Insertar el envio
         - Insertar el remitente
         - Insertar el destinatario
+        - Insertar el ticket y los conceptos
+
     */
         $guia = null;
         $folio = null;
@@ -58,6 +59,7 @@ class ShipmentModel
             throw new Exception("Error al generar el folio");
         }
 
+
         try {
             $issetEnvio = $this->insertEnvio(
                 $guia,
@@ -68,18 +70,18 @@ class ShipmentModel
                 $data['alto'],
                 $data['ancho'],
                 $data['contenido'],
-                $data['tipo'],
+                $data['servicio'],
                 $data['seguro'],
                 $data['conductor_asignado']
             );
         } catch (Exception $e) {
-            throw new Exception("Error al crear el envío");
+            throw new Exception("Error al crear el envío en la base de datos");
         }
 
         try {
             $issetSender = $this->insertContacto(
                 $guia,
-                $data['tipo'],
+                "Remitente",
                 $data['nombre_remitente'],
                 $data['correo_remitente'],
                 $data['telefono_remitente'],
@@ -92,6 +94,7 @@ class ShipmentModel
                 $data['referencias_remitente'],
                 $data['estado_remitente']
             );
+            
         } catch (Exception $e) {
             throw new Exception("Error al guardar los datos del remitente");
         }
@@ -99,7 +102,7 @@ class ShipmentModel
         try {
             $issetRecipient = $this->insertContacto(
                 $guia,
-                $data['tipo_destinatario'],
+                "Destinatario",
                 $data['nombre_destinatario'],
                 $data['correo_destinatario'],
                 $data['telefono_destinatario'],
@@ -112,13 +115,24 @@ class ShipmentModel
                 $data['referencias_destinatario'],
                 $data['estado_destinatario']
             );
+
         } catch (Exception $e) {
             throw new Exception("Error al guardar los datos del destinatario");
         }
 
+        if(isset($data['ticket']['conceptos_ticket'])){
+            try{
+                $this->insertTicket($data['ticket']['conceptos_ticket'], $data['costo'], $guia);
+            }catch(Exception $e){
+                throw new Exception("Error al crear el ticket");
+            }
+        }
+        
         try {
             $queryGetEnvio = "SELECT * FROM Datos_completos_Envio WHERE guia=$guia";
             $result = $this->conexionDB->query($queryGetEnvio);
+            $envio = $result->fetch_assoc();
+            return $envio;
         } catch (Exception $e) {
             return null;
         }
@@ -164,15 +178,14 @@ class ShipmentModel
         }
     }
 
-    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo, $seguro, $conductor_asignado)
+    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado)
     {
         try {
-            $stmt = $this->conexionDB->prepare("
-        INSERT INTO Envios (guia, folio, costo, peso, largo, alto, ancho, contenido, tipo, seguro, conductor_asignado)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
+            $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param(
-                "siddddddssis",
+                "sidddddssis",
                 $guia,
                 $folio,
                 $costo,
@@ -181,7 +194,7 @@ class ShipmentModel
                 $alto,
                 $ancho,
                 $contenido,
-                $tipo,
+                $tipo_servicio,
                 $seguro,
                 $conductor_asignado
             );
@@ -191,17 +204,16 @@ class ShipmentModel
         }
     }
 
-    private function insertContacto($guia, $tipo, $nombre_completo, $correo, $telefono, $calle, $numero_ext, $numero_int, $colonia, $cp, $ciudad, $referencias, $estado)
+    private function insertContacto($guia, $tipo_cliente, $nombre_completo, $correo, $telefono, $calle, $numero_ext, $numero_int, $colonia, $cp, $ciudad, $referencias, $estado)
     {
         try {
-            $stmt = $this->conexionDB->prepare("
-        INSERT INTO Contactos (guia, tipo, nombre_completo, correo, telefono, calle, numero_ext, numero_int, colonia, cp, ciudad, referencias, estado)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-    ");
+            $query = "INSERT INTO Contactos (guia, tipo, nombre_completo, correo, telefono, calle, numero_ext, numero_int, colonia, cp, ciudad, referencias, estado)
+                      VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param(
                 "ssssssssssssi",
                 $guia,
-                $tipo,
+                $tipo_cliente,
                 $nombre_completo,
                 $correo,
                 $telefono,
@@ -220,7 +232,57 @@ class ShipmentModel
         }
     }
 
+    private function insertTicket($ticket_conceptos, $costo_total, $guia){
+        try{
+            $query1 = "INSERT INTO ticket(total, guia) VALUES (?,?)";
+            $stmt = $this->conexionDB->prepare($query1);
+            $stmt->bind_param("ds",$costo_total, $guia);
+            $stmt->execute();
+            $ticket = null;
 
+            try {
+                $query2 = "SELECT * FROM ticket WHERE guia=$guia";
+                $result = $this->conexionDB->query($query2);
+                $ticket = $result->fetch_assoc();
+            } catch (Exception $e) {
+            }
+
+            if($ticket){
+                foreach($ticket_conceptos as $nombre => $valor) {
+                    try{
+                        $query3 = "INSERT INTO Concepto_ticket(id_ticket, nombre, valor) VALUES (?,?,?);";
+                        $stmt2 = $this->conexionDB->prepare($query3);
+                        $stmt2->bind_param("isd",$ticket['id'],$nombre,$valor);
+                        $stmt->execute();
+                    }catch(Exception $e){
+                    }
+                }
+
+                    try {
+                        $query4 = "SELECT * FROM Concepto_ticket WHERE id_ticket = ?";
+                        $stmt = $this->conexionDB->prepare($query4);
+                        $stmt->bind_param("i", $ticket['id']);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        if ($result->num_rows > 0) {
+                            $conceptos = [];
+                            while ($row = $result->fetch_assoc()) {
+                                $conceptos[] = $row;
+                            }
+                            $ticket["ticket_conceptos"] = $conceptos;
+                        } else {
+                            return null;
+                        }
+                    } catch(Exception $e){
+
+                    }
+
+            }
+
+        }catch(Exception $e){
+            throw new Exception("Error al crear el ticket");
+        }
+    }
 
 
 
@@ -240,5 +302,155 @@ class ShipmentModel
         }
     }
 
+    public function getPreciosServicios($zona, $servicio){
+        $precios = null;
+        try{
+            $query = "SELECT t.peso_max_amparado, p.precio,  p.medida_aumento_peso,  p.precio_aumento 
+            FROM Precios AS p INNER JOIN Tipo_servicio AS t ON p.servicio = t.nombre WHERE p.zona = ? AND p.servicio = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("ss", $zona, $servicio);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $precios = $resultado->fetch_assoc();
+            return $precios ? $precios : null;
+        }catch(Exception $e){
+            return null;
+        }
+    }
+
+    public function getPorcentajeCombustible(){
+        try{
+            $query = "SELECT cargo_por_combustible FROM Configuracion_global";
+            $result = $this->conexionDB->query($query);
+            if ($result) {
+                $row = $result->fetch_assoc();
+                return $row['cargo_por_combustible'];
+            } else {
+                return 0;
+            }
+        }catch(Exception $e){
+            return 0;
+        }
+    }
+
+    public function getPrecioSeguro(){
+        try{
+            $query = "SELECT precio_seguro FROM Configuracion_global";
+            $result = $this->conexionDB->query($query);
+            if ($result) {
+                $row = $result->fetch_assoc();
+                return $row['precio_seguro'];
+            } else {
+                return 0;
+            }
+        }catch(Exception $e){
+            return 0;
+        }
+    }
+
+    public function getZonas(){
+        try{
+            $query = "SELECT * FROM Zonas";
+            $result = $this->conexionDB->query($query);
+            $zonas = $result->fetch_assoc();
+            return $zonas ? $zonas : null;
+        }catch(Exception $e){
+            return null;
+        }
+    }
+
+    public function getZonaOf($distancia){{
+      try{
+        $query = "SELECT nombre FROM zonas WHERE ? BETWEEN rango_min AND rango_max LIMIT 1";
+        $stmt = $this->conexionDB->prepare($query);
+        $stmt->bind_param("d", $distancia);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $nombre = $resultado->fetch_assoc();
+        if ($nombre) {
+            return $nombre['nombre'];
+        } else {
+            return "No se encontró ninguna zona para este número.";
+        }
+      } catch(Exception $ex){
+        return "No se encontró ninguna zona para este número.";
+      } 
+    }}
+
+    public function getTicket($guia){
+        $ticket = null;
+        try{
+            $query = "SELECT * FROM ticket WHERE guia = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $guia);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $ticket = $resultado->fetch_assoc();
+        }catch(Exception $e){
+            throw new Exception("No se encontó el ticket");
+        }
+
+        $ticket_conceptos = null;
+
+        try{
+            $query = "SELECT * FROM Concepto_ticket WHERE id = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $ticket['id']);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $ticket_conceptos = $resultado->fetch_all();
+
+            $ticket['ticket_conceptos'] = $ticket_conceptos;
+        }catch(Exception $e){
+        }
+
+        return $ticket;
+    }
+
+    public function getSucursal($numero_sucursal){
+        $sucursal = null;
+        try{
+            $query = "SELECT * FROM Sucursales WHERE numero_sucursal = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $numero_sucursal);
+            $stmt->execute();
+
+            $resultado = $stmt->get_result();
+            $sucursal = $resultado->fetch_assoc();
+            
+            if($sucursal){
+                return $sucursal;
+            }else{
+                throw new Exception("No se encontro el ticket");
+            }
+        }catch(Exception $e){
+            throw new Exception("No se encontó el ticket");
+        }
+    }
+
+    public function createStatus($guia, $colaborador, $estatus){
+        try{
+            $query1 = "INSERT INTO Estatus_Paquete(guia, colaborador, estatus) VALUES (?,?,?)";
+            $stmt = $this->conexionDB->prepare($query1);
+            $stmt->bind_param("sss",$guia, $colaborador, $estatus);
+            $stmt->execute();
+
+            try {
+                $query2 = "SELECT * FROM Estatus_Paquete WHERE guia = $guia ORDER BY fecha_cambio DESC LIMIT 1;";
+                $result = $this->conexionDB->query($query2);
+                $status = $result->fetch_assoc();
+
+                if($status){
+                    return $status;
+                }else{
+                    return;
+                }
+            } catch (Exception $e) {
+            }
+
+        }catch(Exception $e){
+            throw new Exception("Error al crear el estatus");
+        }
+    }
 
 }
