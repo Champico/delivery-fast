@@ -37,6 +37,7 @@ ____________________________________________________
 :root {
     --brand-orange-color: #FFAC13;; /* Color principal */
     --orange-color-higth-contrast: #dd9000; /* Color principal con mayor contraste con la letra blanca */
+    --input-error: #D0021B; /* Color de los mensaje de error en los input */
 }
 
 * {

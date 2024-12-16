@@ -62,7 +62,7 @@ CREATE TABLE Colaboradores (
     apellido_materno VARCHAR(60),
     curp CHAR(18) NOT NULL UNIQUE,
     correo VARCHAR(255),
-    telefono CHAR(13),
+    telefono VARCHAR(13),
     fecha_contratacion DATE,
 
     id_rol INT NOT NULL,

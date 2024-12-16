@@ -48,6 +48,7 @@ ____________________________________________________
   align-items: center;
   justify-content: center;
   padding-right: 5px;
+  cursor: pointer;
 }
 
 /* Boton base en rojo */
@@ -65,10 +66,17 @@ ____________________________________________________
   align-items: center;
   justify-content: center;
   padding-right: 5px;
+  transition: background-color 1s ease;
 }
 .btn-change-status{
   width: 400px;
 }
+
+.button:hover{
+  background-color: #ef9c00;
+  color: #fffbeb;
+}
+
 
 /*__________________________________________________  
          
@@ -82,9 +90,10 @@ ____________________________________________________
   width: 100%;
   padding: 8px;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 5px;
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 
@@ -92,7 +101,7 @@ ____________________________________________________
 .input{
   background-color: #FFFFFF;
   color: #222222;
-  height: 34px;
+  height: 39px;
   font-weight: 300;
   display: flex;
   align-items: center;
@@ -104,12 +113,44 @@ ____________________________________________________
   width: calc(100% - 10px);
 }
 
+/* Area de texto fija*/
+.textarea {
+  resize: none;
+}
+
+
 /* Placeholder del input base */
 .input::placeholder {
   color: #787878;
   font-family: 'Roboto', sans-serif;
-  font-weight:lighter;
-  font-size: 16px;
+  font-weight: lighter;
+  font-size: 18px;
+  letter-spacing: 1px;
+}
+
+/* Placeholder del text area*/
+.textarea {
+  resize: none;
+  font-size: 18px;
+  color: #787878;
+}
+
+/* Clase extra para input que tienen datos no validos*/
+.input-error{
+  border: 2px solid var(--input-error);
+}
+
+/* Color del input cuando tiene el foco*/
+input:focus {
+  outline: none;
+  border: 1px solid #d85300;
+  box-shadow: 0 0 4px var(--brand-orange-color);
+  transition: all 0.3s ease;
+}
+
+.input-error:focus {
+  border: 1px solid var(--input-error);
+  box-shadow: 0 0 4px #ff5b5b;
 }
 
 /* Label base */
@@ -117,12 +158,39 @@ ____________________________________________________
   display: block;
   margin-bottom: 5px;
   background-color: transparent;
-
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 18px;
   color: #222222;
 }
+
+/* Mensaje de error de los datos */
+.input-message{
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--input-error);
+  transition: all 0.5s ease;
+}
+
+/* Mensaje de error */
+.input-message-hide{
+  display: none;
+}
+
+
+
+
+
+
+
+
+/*__________________________________________________  
+         
+        T  O  O  G  L  E   B  U  T  T  O  N  
+____________________________________________________ 
+*/
+
 
 /* El contenedor principal del switch */
 .switch {
@@ -279,7 +347,7 @@ ____________________________________________________
 
 /* Conjunto de Label e Input*/
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 /* Elementos que estan en linea*/
