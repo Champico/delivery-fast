@@ -1,0 +1,3 @@
+> >  M A I N  J S  F I L E S< <
+
+En esta sección van los archivos en contacto directo con el html que llaman a otros archivos
