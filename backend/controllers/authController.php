@@ -15,24 +15,23 @@ class AuthController {
 
     public function login() {
         $inputData = json_decode(file_get_contents("php://input"), true);
-        $username = $inputData['username'] ?? '';
+        $numero_personal = $inputData['username'] ?? '';
         $password = $inputData['password'] ?? '';
 
-        if (empty($username) || empty($password)) {
+        if (empty($numero_personal) || empty($password)) {
             echo json_encode(['success' => false, 'message' => 'Por favor, complete ambos campos.']);
             exit;
         }
 
-        $stmt = $this->userModel->getUserByUsername($username);
-        if ($stmt->num_rows > 0) {
-            $user = $stmt->fetch_assoc();
+        $stmt = $this->userModel->getUserByNumPerso($numero_personal);
 
+        if ($stmt) {
+             if ($password === $stmt['contrasena']) {
 
-            if (password_verify($password, $user['password'])) {
-
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['role'] = $user['role'];
+                $_SESSION['user_id'] = $stmt['numero_personal'];
+                $_SESSION['username'] = $stmt['nombre'];
+                $_SESSION['role'] = $stmt['id_rol'];
+                $_SESSION['sucursal'] =$stmt['numero_sucursal'];
                 
                 echo json_encode(['success' => true, 'message' => 'Inicio de sesión exitoso.']);
             } else {

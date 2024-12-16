@@ -1,23 +1,48 @@
 // frontend/login.js
-document.getElementById('login-form').addEventListener('submit', function(event) {
-    event.preventDefault();
 
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+function login() {
+    const username = document.getElementById('numero-personal').value;
+    const password = document.getElementById('contrasena').value;
+    
 
-    fetch('http://localhost/delivery-fast/backend/auth/login', {
+    const usernameCasted = String(username);
+    const passwordCasted = String(password);
+
+    const data = {
+        username: usernameCasted,
+        password: passwordCasted
+    };
+
+
+    fetch('http://localhost/delivery-fast/backend/auth', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username, password })
+        
+        body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la respuesta del servidor');
+            }
+            return response.json();
+    })
     .then(data => {
         if (data.success) {
-            window.location.href = '/view/archivos-temporales-html/colabview-home.html';
+            alert(data.message);
+            window.location.href = 'view/archivos-temporales-html/colabview-home.html';
         } else {
             alert(data.message);
         }
+    });
+    
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById("login-form").addEventListener('submit', function(event) {
+        event.preventDefault();
+        login();
     });
 });

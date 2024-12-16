@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delivery Fast Login</title>
     <link rel="stylesheet" href="styles/login-style.css">
-    <script src="js/login.js" defer></script>
+    <script src="js/api/authSessions.js"></script>
 </head>
 <body>
     <div class="container">
@@ -16,16 +16,15 @@
             <div class="container-logo"><img class="dfast-logo" src="resources/brand/logotipo/logotipo-original.svg"></div>
             <form id="login-form" class="form-class">
                 <label class="label-form" for="numero-personal">Número del personal</label>
-                <input class="input-form" required type="number" name="numero-personal" id="numero-personal" placeholder="000000000000000">
+                <input class="input-form" required type="number" name="numero-personal" id="numero-personal" placeholder="000000">
 
-                <label class="label-form" for="contraseña">Contraseña</label>
-                <input class="input-form" required type="password" name="contraseña" id="contraseña" placeholder="Contraseña">
+                <label class="label-form" for="contrasena">Contraseña</label>
+                <input class="input-form" required type="password" name="contrasena" id="contrasena" placeholder="Contraseña">
                 
                 <button class="button-form" type="submit">Iniciar Sesión</button>
 
             </form>
         </div>
     </div>
-    <script src="/js/api/authSessions.js"></script>
 </body>
 </html>
