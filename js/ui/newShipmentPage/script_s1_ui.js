@@ -1,4 +1,10 @@
+import { errores, validateShipmentDataFields } from "../../bussines/newShipmentPage/script_s1_validations.js";
+
 export function getPageStepTwo() {
+
+  validateShipmentDataFields();
+  if(errores > 0) return;
+
   document.getElementById("new-shupment-page-content").innerHTML = page2();
 
   const boton = document.getElementById("btn-ns-p1-siguiente");
