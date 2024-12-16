@@ -5,6 +5,7 @@ import {validateCity, validateEmail, validateNeighborhood, validateName, validat
 export let errores = 0;
 
 export function validateShipmentDataFields(){
+    errores = 0;
     verifySenderData();
     verifyRecipientData();
 }
@@ -32,6 +33,7 @@ function verifySenderData(){
 
     //Validación
     Object.entries(valueElements).forEach(([key, value]) => {
+        console.log("Calculando errores de remitente");
         validateFieldData(key, value, htmlElements[key], remitente);
     });
 }
@@ -59,6 +61,7 @@ function verifyRecipientData(){
     //Validación
     Object.entries(valueElements).forEach(([key, value]) => {
         validateFieldData(key, value, htmlElements[key], destinatario);
+        console.log("Calculando errores de destinatario");
     });
 }
 
@@ -90,7 +93,6 @@ function manageValidationResponse(msg, htmlElement, idMsg){
     }else{
         removeErrorColorToInput(htmlElement);
         removeErrorMessageInput(idMsg);
-        errores-= 1;
         return true;
     }
 }
@@ -102,7 +104,7 @@ function addErrorColorToInput(htmlInput){
 }
 
 function removeErrorColorToInput(htmlInput){
-    if(!htmlInput.classList.contains("input-error")){
+    if(htmlInput.classList.contains("input-error")){
         htmlInput.classList.remove("input-error")
     }
 }

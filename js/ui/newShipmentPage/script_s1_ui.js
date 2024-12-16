@@ -1,35 +1,45 @@
-import { errores, validateShipmentDataFields } from "../../bussines/newShipmentPage/script_s1_validations.js";
+import {
+    errores,
+    validateShipmentDataFields,
+} from "../../bussines/newShipmentPage/script_s1_validations.js";
 
 export function getPageStepTwo() {
+    const boton = document.getElementById("btn-ns-p1-siguiente");
+    if (!boton) return;
 
-  validateShipmentDataFields();
-  if(errores > 0) return;
+    boton.disabled = true;
+    validateShipmentDataFields();
+    console.log("Hay este numero de errore", errores);
 
-  document.getElementById("new-shupment-page-content").innerHTML = page2();
+    if (errores > 0) {
+        boton.disabled = false;
+        return;
+    }
 
-  const boton = document.getElementById("btn-ns-p1-siguiente");
-  if (boton) {
+    console.log("Por que llega a este punto ?");
+
+    document.getElementById("new-shupment-page-content").innerHTML = page2();
+
+    boton.disabled = false;
     boton.id = "btn-ns-p2-siguiente";
-  } else {
-    console.error("Error al cargar el boton");
-  }
 
-  const script_container = document.getElementById("script_container_ns");
+    const script_container = document.getElementById("script_container_ns");
 
-  if (script_container) {
-    const script = document.createElement("script");
-    script.src = "../../js/main/newShipmentPage/script_s2.js";
-    script.defer = true;
-    script.type = "module";
-    if (script_container.firstChild) script_container.removeChild(script_container.firstChild);
-    script_container.appendChild(script);
-  } else {
-    console.error("No se encontro el contenedor de los scripts");
-  }
+    if (script_container) {
+        const script = document.createElement("script");
+        script.src = "../../js/main/newShipmentPage/script_s2.js";
+        script.defer = true;
+        script.type = "module";
+        if (script_container.firstChild)
+            script_container.removeChild(script_container.firstChild);
+        script_container.appendChild(script);
+    } else {
+        console.error("No se encontro el contenedor de los scripts");
+    }
 }
 
 function page2() {
-  return ` 
+    return ` 
             <div class="form-card form-sender">
                 <h2 class="form-title">Datos del paquete</h2>
                 <form class="form">

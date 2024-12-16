@@ -92,7 +92,8 @@ ____________________________________________________
   border: 1px solid #ccc;
   border-radius: 5px;
   font-family: 'Roboto', sans-serif;
-  font-size: 16px;
+  font-size: 18px;
+  letter-spacing: 1px;
 }
 
 
@@ -105,7 +106,6 @@ ____________________________________________________
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  letter-spacing: 1px;
 }
 
 /* Tamaño del input*/
@@ -128,9 +128,16 @@ ____________________________________________________
   letter-spacing: 1px;
 }
 
+/* Placeholder del text area*/
+.textarea {
+  resize: none;
+  font-size: 18px;
+  color: #787878;
+}
+
 /* Clase extra para input que tienen datos no validos*/
 .input-error{
-  border:  2px solid var(--input-error);
+  border: 2px solid var(--input-error);
 }
 
 /* Color del input cuando tiene el foco*/

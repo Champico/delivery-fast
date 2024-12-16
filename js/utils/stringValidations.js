@@ -37,11 +37,11 @@ export function isIntegerOfSizeBetween(string, min_character, max_character) {
   );
 }
 
-//Devuelve verdaderi su una cadena es un numero entero y tiene un numero de caracteres exacto
-export function isIntegerOfSize(string, characters) {
+//Devuelve verdadero si una cadena es un numero entero y tiene un numero de caracteres exacto
+export function isIntegerOfSize(string, characters_length) {
   if (!string) return false;
-  if (isNaN(character)) throw new Error("characters must be int");
-  return isInteger(string) && string.length === characters;
+  if (isNaN(characters_length)) throw new Error("characters_length must be int");
+  return isInteger(string) && string.length === characters_length;
 }
 
 // ________________________________________________________________________________________

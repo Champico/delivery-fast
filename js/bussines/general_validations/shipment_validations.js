@@ -23,7 +23,7 @@ export function validateZipCode(cp) {
     return "Este campo es obligatorio";
   }
 
-  if (!isIntegerOfSize(5)) {
+  if (!isIntegerOfSize(cp,5)) {
     return "Ingrese un número de 5 digitos";
   }
 
@@ -90,7 +90,7 @@ export function validateNumInt(num) {
 }
 
 export function validateTelephone(num) {
-  if (num && !isIntegerOfSizeBetween(10, 13)) {
+  if (num && !isIntegerOfSizeBetween(num, 10, 13)) {
     return "Debe ser un numero entre 10 y 13 digitos";
   }
   return true;
