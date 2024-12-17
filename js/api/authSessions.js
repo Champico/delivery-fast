@@ -1,4 +1,4 @@
-// frontend/login.js
+// delivery-fast/js/api/authSessions.js
 
 function login() {
     const username = document.getElementById('numero-personal').value;
@@ -31,8 +31,12 @@ function login() {
     })
     .then(data => {
         if (data.success) {
-            alert(data.message);
-            window.location.href = 'view/archivos-temporales-html/colabview-home.html';
+            localStorage.setItem("numero_personal", data.session.numero_pesonal);
+            localStorage.setItem("id_rol", data.session.id_rol);
+            localStorage.setItem("numero_sucursal", data.numero_sucursal);
+            localStorage.setItem("nombre", data.nombre)
+
+            window.location.href = 'http://localhost/delivery-fast/view/app.html';
         } else {
             alert(data.message);
         }

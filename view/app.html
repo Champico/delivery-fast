@@ -1,8 +1,5 @@
-<!-- APP JS
-La aplicación a realizar sera una single page application con js vanilla
-Este html contiene los componentes basicos y todo sera creado dinamicamente
-con archivos js de tipo modulo 
--->
+<!-- :::::::::::::::::::::: S I N G L E   P A G E  A P P L I C A T I O N  :::::::::::::::::::::::::::::::-->
+<!-- @atho-->
 
 <!DOCTYPE html>
 <html lang="es">
@@ -10,44 +7,48 @@ con archivos js de tipo modulo
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="authors" content="Edgar Yael Cortes Carrillo y Julio Aldair Morales Romero">
+    <link rel="icon" href="../resources/favicon/favicon.ico">
+    <title>Delivery Fast</title>
 
-    <!-- Hojas de estilo -->
+    <!-- :::::::::::::::::::::::  Hojas de estilo   :::::::::::::::::::::::  -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-    <link rel="stylesheet" href="../../styleS/general-styles.css">
-    <link rel="stylesheet" href="../../styles/tables-styles.css">
-    <link rel="stylesheet" href="../../styles/forms-styles.css">
+    <link rel="stylesheet" href="../styles/general-styles.css">
+    <link rel="stylesheet" href="../styles/tables-styles.css">
+    <link rel="stylesheet" href="../styles/forms-styles.css">
+    <link rel="stylesheet" href="../styles/modal-user-styles.css">
+    <link rel="stylesheet" href="../styles/efects-styles.css">
 
-    <title>DELIVERY FAST</title>
+    <!-- :::::::::::::::::::::::  Script de informacion global   :::::::::::::::::::::::  -->
+    <script src="../js/data/shipment_data.js" type="module" defer></script>
+    <script src="../js/data/menu_data.js" type="module" defer></script>
+
+
 </head>
-
 <body>
+    <!-- ::::::::::::::::::::::: Scripts dinamicos :::::::::::::::::::::::  -->
+    <div id="script_container_ns"></div>
 
-    <header>
-        <nav class="nav-menu">
-            <img class="menu-icon" src="../../resources/icons/menu.svg" alt="Menu Icon Header">
-        </nav>
-        <div class="container-logo">
-            <img class="logo-extendido" src="../../resources/brand/logotipo/logotipo-extendido.svg"
-                alt="Delivery Fast Logo Header">
-        </div>
-        <div class="user-info-container">
-            <!-- I N F O R M A C I O N  D E  U S U A R I O  D I N A M I C O  -->
-             <script src="empty" type="module"></script>
-        </div>
+    <!-- P A N T A L L A  D E  C A R G A -->
+    <div id="loading-container">
+        <div class="loading-screen"><div class="loading"></div><img src="../resources/brand/isotipo/isotipo.svg" alt="Cargando" class="image-loader"></div>
+    </div>
+
+    <header id="header">
+        <!-- H E A D E R  D I N A M I C O -->
+        <script src="../js/ui/header/create-header.js" type="module"></script>
     </header>
-
 
     <main class="main-container">
 
         <aside class="sidebar-menu-container">
             <!-- M E N U  D I N A M I C O -->
-
-            <div class="sidebar-card module-empty"></div>
+            <script src="../js/ui/sidebar/create-sidebar.js" type="module"></script>
         </aside>
 
         <section class="content-section">
             <!-- C O N T E N I D O   D I N A M I C O -->
-
+            <script src="../js/ui/home/script_home.js" type="module"></script>
         </section>
     </main>
 </body>

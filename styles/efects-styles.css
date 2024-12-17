@@ -1,0 +1,43 @@
+/* Contenedor principal */
+.loading-screen {
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animación circular */
+.loading {
+    position: absolute;
+    
+    width: 120px;
+    height: 120px;
+    border: 6px solid #ffffff;
+    border-top: 6px solid #ffa500;
+    border-radius: 50%;
+    animation: spin 2s ease-in-out infinite;
+}
+
+/* Animación de giro */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Imagen centrada */
+.image-loader {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    z-index: 1;  /* Asegúrate de que la imagen esté por encima del círculo */
+}
