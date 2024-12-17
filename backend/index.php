@@ -29,7 +29,10 @@ switch($resource){
     case 'auth':
         include_once 'routes/authRoutes.php';
         break;
-        
+    
+    case 'utils':
+        include_once 'routes/utilsRoutes.php';
+        break;
 
     default:
         http_response_code(404);

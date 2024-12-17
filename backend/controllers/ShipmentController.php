@@ -23,7 +23,6 @@ class ShipmentController
             http_response_code(422);
             echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
-
     }
 
     public function get($guia)
