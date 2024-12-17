@@ -237,11 +237,13 @@ ____________________________________________________
     text-align: center;
     transition: background-color 0.1s ease;
     box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.4);
+    transition: box-shadow background-color 0.5s ease;
 }
 
 /* Boton de crear nuevo envío con el mouse encima */
 .new-shupment-btn:hover{
     background-color: #ECEBEB;
+    box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.4);
 }
 
 /* Imagen del boton de crear nuevo envío*/
@@ -265,6 +267,7 @@ ____________________________________________________
 
 /* Elemento/Item de el menu*/
 .sidebar-item-li{
+    background-color: transparent;
     list-style: none;
     margin-bottom: 3px;
     padding: 10px;
@@ -272,12 +275,16 @@ ____________________________________________________
     width: 170px;
     display: flex;
     align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 10;
 }
 
 /* Elemento/Item del menu con el mouse encima*/
 .sidebar-item-li:hover{
     background-color: #ECEBEB;
-    border-radius: 10px;
 }
 
 /* Elemento/item link del menu */
@@ -309,6 +316,20 @@ ____________________________________________________
 .buttonsContainer{
     margin: 5px;
     padding: 5px;
+}
+
+/* Boton seleccionado */
+.sidebar-item-li-selected{
+    background-color: #ffe9c8;
+    border-radius: 10px;
+}
+
+.sidebar-item-li-selected:hover{
+    background-color: #f8d5a0;
+}
+
+.sidebar-item-li-selected .sidebar-item-icon{
+    fill: var(--orange-color-higth-contrast);
 }
 
 

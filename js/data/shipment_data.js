@@ -27,3 +27,4 @@ export const destinatario = {
     "estado": "",
 }
 
+export const shipmentsList = [];

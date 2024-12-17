@@ -1,3 +1,5 @@
+import { menuButtons } from "../../data/htmlPages_data.js";
+
 function createSideBar(){
     const rol = localStorage.getItem("id_rol") ? localStorage.getItem("id_rol") : 2;
 
@@ -42,7 +44,7 @@ function createDealerSideBar(){
 function getNewShipmentButton(){
     return (`
         <div class="sidebar-card module-create">
-            <button class="new-shupment-btn">
+            <button class="new-shupment-btn sidebar-clickeable" id="sb-bt-new-shupment">
                 <img class="new-shupment-btn-icon" src="../resources/icons/nuevoFinal.svg"
                     alt="crear nuevo envio">
                 Nuevo envío
@@ -55,35 +57,39 @@ function getNewShipmentButton(){
 function getShipmentModule(home, search, earnings){
     let shipmentModule = `<div class="sidebar-card module-shupment">
                                 <p class="list-title">Modulo envíos</p>
-                                    <ul>`;
+                                    <ul">`;
 
     if(home){
         shipmentModule = shipmentModule + `
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-item-li-selected sidebar-clickeable" id="sb-bt-home">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/inicio.svg" alt="">
-            Inicio</a>
+            Inicio</span>
         </li>`
+
+        menuButtons["sb-bt-home"] = "sb-bt-home";
     }
 
     if(search){
         shipmentModule = shipmentModule + `
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-search-shipment">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/lupa.svg" alt="">
-            Buscar envíos</a>
+            Buscar envíos</span>
         </li>
         `
+        menuButtons["sb-bt-search-shipment"] = "sb-bt-search-shipment";
     }
 
     if(earnings){
         shipmentModule = shipmentModule + `
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-earnings">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/caja-registradora.svg" alt="">
-            Ingresos</a>
+            Ingresos</span>
         </li>
         `
+        menuButtons["sb-bt-earnings"] = "sb-bt-earnings";
     }
 
     shipmentModule = shipmentModule + `</ul> </div>`;
@@ -99,11 +105,13 @@ function getPackageModule(packages){
 
     if(packages){
         packageModule = packageModule +`
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-package">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon sidebar-item-icon-car" src="../resources/icons/buscar-envioFinal.svg" alt="">
-            Paquetes</a>
+            Paquetes</span>
         </li>`;
+
+        menuButtons["sb-bt-package"] = "sb-bt-package";
     }
 
     packageModule = packageModule +`</ul></div>`;
@@ -120,29 +128,35 @@ function getAdminstrationModule(users, info, about){
 
     if(users){
         administrationModule = administrationModule +`                    
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li id="sb-bt-users">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/editar.svg" alt="">
-            Usuarios</a>
+            Usuarios</span>
         </li>`
+
+        menuButtons["sb-bt-users"] = "sb-bt-users";
     }
 
     if(info){
         administrationModule = administrationModule +`                    
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-about">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/informacion.svg" alt="">
-            Acerca de</a>
+            Acerca de</span>
         </li>`
+
+        menuButtons["sb-bt-about"] = "sb-bt-about";
     }
 
     if(about){
         administrationModule = administrationModule +`
-        <li class="sidebar-item-li">
-            <a class="sidebar-item-a" href="#">
+        <li class="sidebar-item-li sidebar-clickeable" "sb-bt-statistics">
+            <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/grafico-de-barras.svg" alt="">
-            Reportes</a>
+            Reportes</span>
         </li>`
+
+        menuButtons["sb-bt-statistics"] = "sb-bt-statistics";
     }
 
     administrationModule = administrationModule +`</ul></div>`;
