@@ -1,4 +1,4 @@
-import { menuButtons } from "../../data/htmlPages_data.js";
+export var menuButtons = {};
 
 function createSideBar(){
     const rol = localStorage.getItem("id_rol") ? localStorage.getItem("id_rol") : 2;
@@ -44,7 +44,7 @@ function createDealerSideBar(){
 function getNewShipmentButton(){
     return (`
         <div class="sidebar-card module-create">
-            <button class="new-shupment-btn sidebar-clickeable" id="sb-bt-new-shupment">
+            <button class="new-shupment-btn sidebar-clickeable" id="sb-bt-new-shipment">
                 <img class="new-shupment-btn-icon" src="../resources/icons/nuevoFinal.svg"
                     alt="crear nuevo envio">
                 Nuevo envío

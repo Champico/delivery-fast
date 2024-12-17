@@ -1,11 +1,9 @@
-const page = {
+export const searchPage = {
     page : "",
-    id_page : "",
+    id_btn : "",
 
     create(){
-        if(page !== null) return load();
-
-        page = `<div class="shupment-home-guide-view">
+        this.page = `<div class="shupment-home-guide-view">
                 <div class="guide-input-container">
                     <h2 class="guide-title">Ingrese Guía o Folio</h2>
                     <div class="form-group">
@@ -15,12 +13,8 @@ const page = {
                 </div>                
             </div>`
 
-        return page;
+        return this.page;
     },
-    
-    load(){
-        if(page === null) return create();
-    }
 }
 
 

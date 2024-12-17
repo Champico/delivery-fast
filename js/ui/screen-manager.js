@@ -1,6 +1,12 @@
 import { hideLoadingScreen } from "./efects/loading-screen.js";
-import { currentPage, menuButtons, menuSelected } from "../data/htmlPages_data.js";
 import { homePage } from "./staticsPages/homePage.js";
+import { searchPage } from "./staticsPages/searchPage.js";
+import { newShipmentPage } from "./staticsPages/newShipmentPage.js";
+
+export var htmlPages = {};
+export var currentPage = {"value" : ""};
+export var menuSelected = {"value" : ""};
+import { menuButtons } from "./sidebar/create-sidebar.js";
 
 let contentContainer = null;
 
@@ -22,18 +28,17 @@ async function loadFirstTime(){
 }
 
 export async function changePage(nuevaPagina){
-    console.log("Dio click para cambiar a la pagina -> ", nuevaPagina);
-
     if(!nuevaPagina in menuButtons) return;
 
-    if(!currentPage === nuevaPagina) saveStateOfPage(currentPage);
+    if(!currentPage["value"] === nuevaPagina) saveStateOfPage(currentPage["value"]);
 
+    console.log("Pagina actual ", currentPage, "Nueva pagina ", nuevaPagina)
     let page = "";
 
     switch(nuevaPagina){
         case "sb-bt-home": page = await getHomeScreen(); break;
-        case "sb-bt-new-shipment": page = await getNewShipmentScreen();
-        case "sb-bt-search-shipment": page = await getSearchScreen(); break;
+        case "sb-bt-new-shipment": page = await getNewShipmentScreen();break;
+        case "sb-bt-search-shipment": page = getSearchScreen(); break;
         case "sb-bt-earnings": page = await getEarningScreen(); break;
         case "sb-bt-package": page = await getPackageScreen(); break;
         case "sb-bt-users": page = await getUsersScreen(); break;
@@ -49,6 +54,7 @@ export async function changePage(nuevaPagina){
 }
 
 function saveStateOfPage(stateId){
+    console.log("-----------El objeto es",stateId)
     if(!stateId || typeof miVariable === "string") return;
 
     const partes = stateId.split("-");
@@ -63,16 +69,16 @@ async function getHomeScreen(){
     return await homePage.create();
 }
 
-function getNewShipmentScreen(){
-    return "<h1>New shipment</h1>"
+async function getNewShipmentScreen(){
+    return await newShipmentPage.create();
 }
 
 function getSearchScreen(){
-    return "<h1>Search</h1>"
+    return searchPage.create();
 }
 
 function getEarningScreen(){
-    return "<h1>Earning</h1>"
+    return 
 }
 
 function getPackageScreen(){

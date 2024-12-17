@@ -1,4 +1,4 @@
-const page = {
+const page= {
     page : {},
     id_page : "",
 
@@ -8,3 +8,11 @@ const page = {
 }
 
 
+
+
+
+                
+
+
+
+                    
