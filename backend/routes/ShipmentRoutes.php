@@ -10,7 +10,13 @@ $shipmentController = new ShipmentController(new ShipmentModel($conexionDB));
 switch ($method) {
     case 'GET':
         if ($action) {
-            $shipmentController->get($action);
+            switch($action){
+                case 'branch': $shipmentController->getAllBranch($a2); break;
+                case 'tracking-number': $shipmentController->get($a2); break;
+                default: http_response_code(405);
+                echo json_encode(['message' => 'Dirección no encontrada']);
+                break;
+            }
         } else {
             $shipmentController->getAll();
         }

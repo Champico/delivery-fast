@@ -25,6 +25,18 @@ class ShipmentController
         }
     }
 
+    
+    public function getAllBranch($branch)
+    {
+        try{
+            $envios = $this->shipmentModel->getAllBranch($branch);
+            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
+        }catch(Exception $e){
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
     public function get($guia)
     {
         echo json_encode(['message' => "Envío con la guía " . $guia], JSON_UNESCAPED_UNICODE);

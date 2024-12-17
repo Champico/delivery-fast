@@ -9,8 +9,10 @@ async function login() {
 
   const data = {
     username: usernameCasted,
-    password: passwordCasted,
+    password: passwordCasted
   };
+
+  console.log(data);
 
   try {
     const url = "http://localhost/delivery-fast/backend/auth"
@@ -20,11 +22,11 @@ async function login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(data)
       }
     );
 
-    console.log(response);
+    console.log("LA RESPUESTA DEL SERVIDOR ES", response);
 
     if (!response.ok) {
       throw new Error("Error en la respuesta del servidor");
@@ -39,6 +41,7 @@ async function login() {
       localStorage.setItem("id_rol", dataR.session.id_rol);
       localStorage.setItem("numero_sucursal",dataR.session.numero_sucursal);
       localStorage.setItem("nombre", dataR.session.nombre);
+
       window.location.href = "http://localhost/delivery-fast/view/app.html";
     } else {
       alert(dataR.message);

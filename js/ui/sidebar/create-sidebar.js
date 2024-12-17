@@ -17,8 +17,6 @@ function createSideBar(){
 
     const menu_container = document.getElementById("sidebar-menu-container");
 
-    console.log(menu);
-
     if(menu_container){
         menu_container.innerHTML = menu;
     }else{
@@ -29,17 +27,14 @@ function createSideBar(){
 }
 
 function createAdministratorSideBar(){
-    console.log("Hola admin")
     return " " + getNewShipmentButton() + getShipmentModule(true, true, true) + getPackageModule(true) + getAdminstrationModule(true, true, true);
 }
 
 function createCollaboratorSideBar(){
-    console.log("Hola colaborador")
     return " " + getNewShipmentButton() + getShipmentModule(true, true, true) + getPackageModule(true);
 }
 
 function createDealerSideBar(){
-    console.log("Hola reaprtidor")
     return " " + getShipmentModule(true, false, false) + getPackageModule(true);
 }
 
@@ -93,8 +88,6 @@ function getShipmentModule(home, search, earnings){
 
     shipmentModule = shipmentModule + `</ul> </div>`;
 
-    console.log(shipmentModule);
-
     return shipmentModule;
 }
 
@@ -112,8 +105,6 @@ function getPackageModule(packages){
             Paquetes</a>
         </li>`;
     }
-
-    console.log(packageModule);
 
     packageModule = packageModule +`</ul></div>`;
 
@@ -155,8 +146,6 @@ function getAdminstrationModule(users, info, about){
     }
 
     administrationModule = administrationModule +`</ul></div>`;
-
-    console.log(administrationModule);
 
     return administrationModule;
 }

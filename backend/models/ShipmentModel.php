@@ -13,8 +13,8 @@ class ShipmentModel
     public function getAll()
     {
         try {
-            $sql = "SELECT * FROM Envios_general";
-            $result = $this->conexionDB->query($sql);
+            $query = "SELECT * FROM Envios_general";
+            $result = $this->conexionDB->query($query);
             if ($result->num_rows > 0) {
                 $shupments = [];
                 while ($row = $result->fetch_assoc()) {
@@ -28,6 +28,30 @@ class ShipmentModel
             return null;
         }
     }
+
+    public function getAllBranch($numero_sucursal)
+    {
+        try {
+            $query = "SELECT * FROM Envios_general WHERE numero_sucursal = ?";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $numero_sucursal);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $shupments = [];
+                while ($row = $result->fetch_assoc()) {
+                    $shupments[] = $row;
+                }
+                return $shupments;
+            } else {
+                return null;
+            }
+        } catch(Exception $e){
+            return null;
+        }
+    }
+
 
     public function create($data)
     {
@@ -72,7 +96,8 @@ class ShipmentModel
                 $data['contenido'],
                 $data['servicio'],
                 $data['seguro'],
-                $data['conductor_asignado']
+                $data['conductor_asignado'],
+                $data['sucursal']
             );
         } catch (Exception $e) {
             throw new Exception("Error al crear el envío en la base de datos");
@@ -178,14 +203,14 @@ class ShipmentModel
         }
     }
 
-    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado)
+    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado, $numero_sucursal)
     {
         try {
-            $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado)
-                       VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+            $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado, numero_sucursal)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param(
-                "sidddddssis",
+                "sidddddssiss",
                 $guia,
                 $folio,
                 $costo,
@@ -196,7 +221,8 @@ class ShipmentModel
                 $contenido,
                 $tipo_servicio,
                 $seguro,
-                $conductor_asignado
+                $conductor_asignado,
+                $numero_sucursal
             );
             return $stmt->execute();
         } catch (Exception $e) {

@@ -7,22 +7,6 @@ DROP DATABASE IF EXISTS DeliveryFast;
 CREATE DATABASE DeliveryFast;
 USE DeliveryFast;
 
--- Tabla de Envíos
-DROP TABLE IF EXISTS Envios;
-CREATE TABLE Envios (
-    guia CHAR(15) PRIMARY KEY,
-    folio INT,
-    costo DECIMAL(10, 2) NOT NULL,
-    peso DECIMAL(10, 2),
-    largo DECIMAL(10, 2),
-    alto DECIMAL(10, 2),
-    ancho DECIMAL(10, 2),
-    contenido VARCHAR(255),
-    servicio VARCHAR(50),
-    seguro BOOLEAN NOT NULL,
-    conductor_asignado CHAR(6)
-  );
-
 -- Tabla de Sucursales
 DROP TABLE IF EXISTS Sucursales;  
 CREATE TABLE Sucursales (
@@ -39,6 +23,28 @@ CREATE TABLE Sucursales (
     hora_salida_diaria TIME NOT NULL
 );
 
+
+-- Tabla de Envíos
+DROP TABLE IF EXISTS Envios;
+CREATE TABLE Envios (
+    guia CHAR(15) PRIMARY KEY,
+    folio INT,
+    costo DECIMAL(10, 2) NOT NULL,
+    peso DECIMAL(10, 2),
+    largo DECIMAL(10, 2),
+    alto DECIMAL(10, 2),
+    ancho DECIMAL(10, 2),
+    contenido VARCHAR(255),
+    servicio VARCHAR(50),
+    seguro BOOLEAN NOT NULL,
+    conductor_asignado CHAR(6),
+    numero_sucursal CHAR(5),
+    
+    FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal)
+  );
+  
+  
+  
 -- Tabla de Roles
 DROP TABLE IF EXISTS Roles;
 CREATE TABLE Roles (
@@ -234,7 +240,9 @@ SELECT
     c.cp_destinatario,
     c.ciudad_destinatario,
     c.referencias_destinatario,
-    c.estado_destinatario
+    c.estado_destinatario,
+    
+    e.numero_sucursal
 FROM Envios AS e
 INNER JOIN (
     SELECT
@@ -280,7 +288,8 @@ SELECT
     c.nombre_completo AS destinatario,
     c.ciudad AS ciudad_destino,
     ef.nombre AS estado_destino,
-    ep.estatus
+    ep.estatus,
+    e.numero_sucursal
 FROM Entidades_Federativas AS ef
 INNER JOIN Contactos AS c 
     ON c.estado = ef.id_entidad 

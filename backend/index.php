@@ -4,6 +4,8 @@ Ubicacion:  delivery-fast/backend/index.php
 API REST PHP
 */
 
+include './utils/console-js.php';
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost");
 
@@ -14,8 +16,7 @@ $uri = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 
 $resource = isset($uri[3]) ? $uri[3] : null;
 $action = isset($uri[4]) ? $uri[4] : null;
-
-
+$a2 = isset($uri[5]) ? $uri[5] : null;
 
 switch($resource){
     case 'shipment':
@@ -39,5 +40,6 @@ switch($resource){
         echo json_encode(['message' => "Recurso no encontrado en raiz el recurso solicitad es $resource"]);
         break;
 }
+
 
 ?>
