@@ -108,3 +108,7 @@ ____________________________________________________
 .shipment-table tr:hover{
     background-color: #F7F7F7;
 }
+
+.isSelectedItemTable {
+    background-color:#ffa726 ;
+}

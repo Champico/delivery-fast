@@ -581,3 +581,6 @@ button.button.guide-button {
     background-color: #fb8c00; /* Más oscuro al pasar el mouse */
 }
 
+.isSelectedItemTable {
+    background-color:#ffa726 ;
+}

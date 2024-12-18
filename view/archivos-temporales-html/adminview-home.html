@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../../styleS/general-styles.css">
     <link rel="stylesheet" href="../../styles/tables-styles.css">
     <link rel="stylesheet" href="../../styles/forms-styles.css">
+    <link rel="stylesheet" href="../../styles/modal-user-styles.css">
 
     <title>DELIVERY FAST</title>
 </head>
@@ -76,49 +77,32 @@
             <div class="shupment-home-content">
                 <div class="form-group">
                     <div class="form-inline buttonsContainer">
-                        <button class="button">Nuevo</button>
-                        <button class="button">Modificar</button>
-                        <button class="button button-red">Eliminar</button>
+                        <button class="button" id="newUser" onclick="openModalCreateUser()">Nuevo</button>
+                        <button class="button" id="editUser" onclick="editUserPreAction()">Modificar</button>
+                        <button class="button button-red" id="deleteUser" onclick="deleteUserPreAction()">Eliminar</button>
                     </div>
-                    <div class="table-container">
-                        <table class="shipment-table">
-                        <thead>
-                            <tr>
-                                <th>No. Personal</th>
-                                <th>Nombre</th>
-                                <th>Rol</th>
-                                <th>Telefono</th>
-                                <th>Correo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>000001</td>
-                                <td>Julio A. Morales Romero</td>
-                                <td>Administrador</td>
-                                <td>921-135-1427</td>
-                                <td>jaldair2011@hotmail.com</td>
+                        <div class="table-container">
+                            <table class="shipment-table">
+                            <thead>
+                                <tr>
+                                    <th>No. Personal</th>
+                                    <th>Nombre</th>
+                                    <th>Rol</th>
+                                    <th>Telefono</th>
+                                    <th>Correo</th>
                                 </tr>
-                            <tr>
-                                <td>000002</td>
-                                <td>Edgar Yael Cortes Carrillo</td>
-                                <td>Administrador</td>
-                                <td>228-156-7570</td>
-                                <td>champico@hotmail.com</td>
-                                </tr>
-                            <tr>
-                                <td>000003</td>
-                                <td>Erick Jair Morales Romero</td>
-                                <td>Colaborador</td>
-                                <td>228-245-4590</td>
-                                <td>erickj@hotmail.com</td>
-                            </tr>
-                                </tbody>
+                            </thead>
+                            <tbody id="user-table-body">
+
+                            </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
         </section>
+
+        <div id="modal-container"></div>
+        <script src="../../js/api/adminFunctions.js"></script>
     </main>
 </body>
 
