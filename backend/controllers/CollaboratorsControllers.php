@@ -69,5 +69,15 @@ class CollaboratorsControllers {
             echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
+
+    public function searchUsers($searchTerm) {
+        try {
+            $users = $this->userModel->searchUsers($searchTerm);
+            echo json_encode($users, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
 }
 ?>

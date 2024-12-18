@@ -13,6 +13,9 @@ switch ($method) {
         if (isset($uri[4])) {
             $personalNumber = $uri[4]; 
             $colabController->getInfoUserByNumPerso($personalNumber);
+        } elseif (isset($_GET['search'])) {
+            $searchTerm = $_GET['search'];
+            $colabController->searchUsers($searchTerm);
         } else {
             $colabController->getAllUsersColab();
         }

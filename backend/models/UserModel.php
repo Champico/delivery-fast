@@ -31,7 +31,18 @@ class UserModel {
 
     public function getAllUsersColab() {
         try {
-            $query = "SELECT numero_personal, nombre, id_rol, telefono, correo FROM Colaboradores";
+            $query = "
+            SELECT 
+                c.numero_personal, 
+                c.nombre, 
+                r.nombre_rol AS rol,
+                c.telefono, 
+                c.correo 
+            FROM 
+                Colaboradores c
+            JOIN 
+                roles r ON c.id_rol = r.id_rol";
+
             $result = $this->conexionDB->query($query);
             $users = [];
             while ($row = $result->fetch_assoc()) {
@@ -138,6 +149,40 @@ class UserModel {
             throw new Exception("Error al obtener el usuario: " . $e->getMessage());
         }
         
+    }
+
+    public function searchUsers($searchTerm) {
+        try {
+            $query = "
+                SELECT 
+                    c.numero_personal, 
+                    c.nombre, 
+                    r.nombre_rol AS rol,
+                    c.telefono, 
+                    c.correo 
+                FROM 
+                    Colaboradores c
+                JOIN 
+                    roles r ON c.id_rol = r.id_rol
+                WHERE 
+                    c.numero_personal LIKE ? 
+                    OR c.nombre LIKE ? 
+                    OR r.nombre_rol LIKE ?";
+
+            $stmt = $this->conexionDB->prepare($query);
+            $searchTerm = '%' . $searchTerm . '%';
+            $stmt->bind_param('sss', $searchTerm, $searchTerm, $searchTerm);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            $users = [];
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+            return $users;
+        } catch (Exception $e) {
+            throw new Exception("Error al buscar los colaboradores: " . $e->getMessage());
+        }
     }
 }
 ?>

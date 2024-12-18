@@ -27,7 +27,7 @@ function loadUsers() {
             row.innerHTML = `
                 <td>${user.numero_personal}</td>
                 <td>${user.nombre}</td>
-                <td>${user.id_rol}</td>
+                <td>${user.rol}</td>
                 <td>${user.telefono}</td>
                 <td>${user.correo}</td>
             `;
@@ -232,8 +232,8 @@ function generateCURP(name, lastName, secondLastName, personalNumber) {
 function getCurrentDate() {
     const today = new Date();
     const year = today.getFullYear();
-    const month = ("0" + (today.getMonth() + 1)).slice(-2); // Mes en formato 2 dígitos
-    const day = ("0" + today.getDate()).slice(-2); // Día en formato 2 dígitos
+    const month = ("0" + (today.getMonth() + 1)).slice(-2);
+    const day = ("0" + today.getDate()).slice(-2);
     return `${year}-${month}-${day}`;
 }
 
@@ -309,4 +309,57 @@ function loadUserDataInModal(personalNumber) {
     .catch((error) => {
         console.error('Error al cargar los datos del usuario:', error);
     });
+}
+
+function searchUser() {
+    const searchInput = document.getElementById('searchInput').value.trim();
+    const userList = document.getElementById('user-table-body');
+
+    if (searchInput === "") {
+        loadUsers();
+        return;
+    }
+
+    fetch(`http://localhost/delivery-fast/backend/users?search=${encodeURIComponent(searchInput)}`, {
+        method: 'GET'
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('La respuesta de la red no fue correcta ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        userList.innerHTML = '';
+        data.forEach(user => {
+            const row = document.createElement('tr');
+            row.setAttribute('data-personal-number', user.numero_personal);
+            row.innerHTML = `
+                <td>${user.numero_personal}</td>
+                <td>${user.nombre}</td>
+                <td>${user.rol}</td>
+                <td>${user.telefono}</td>
+                <td>${user.correo}</td>
+            `;
+            row.style.cursor = 'pointer';
+            userList.appendChild(row);
+        });
+
+        const rows = userList.querySelectorAll('tr');
+        rows.forEach(row => {
+            row.addEventListener('click', () => {
+                if (row.style.backgroundColor === 'rgb(255, 167, 38)') {
+                    row.style.backgroundColor = ''; 
+                    selectedUser = null; 
+                } else {
+                    rows.forEach(r => r.style.backgroundColor = ''); 
+                    row.style.backgroundColor = '#ffa726'; 
+                    selectedUser = row.getAttribute('data-personal-number');
+                    selectedRow = row;
+                    console.log(selectedUser);
+                }
+            });
+        });
+    })
+    .catch(error => console.error('Error al cargar los usuarios:', error));
 }

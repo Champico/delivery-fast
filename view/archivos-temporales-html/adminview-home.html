@@ -77,9 +77,24 @@
             <div class="shupment-home-content">
                 <div class="form-group">
                     <div class="form-inline buttonsContainer">
-                        <button class="button" id="newUser" onclick="openModalCreateUser()">Nuevo</button>
-                        <button class="button" id="editUser" onclick="editUserPreAction()">Modificar</button>
-                        <button class="button button-red" id="deleteUser" onclick="deleteUserPreAction()">Eliminar</button>
+                        <div class="form-group">
+                            <div class="form-inline">
+
+                                <button class="button" id="newUser" onclick="openModalCreateUser()">Nuevo</button>
+                                <button class="button" id="editUser" onclick="editUserPreAction()">Modificar</button>
+                                <button class="button button-red" id="deleteUser" onclick="deleteUserPreAction()">Eliminar</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-inline">
+                                <input type="text" id="searchInput" placeholder="Buscar por nombre, número o rol" onkeyup="searchUser()" />
+                                <button class="button btnBuscar" id="searchButton" onclick="searchUser()">
+                                    <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                                    Buscar
+                                </button>
+                            </div>
+                        </div>
+                        
                     </div>
                         <div class="table-container">
                             <table class="shipment-table">
