@@ -8,7 +8,6 @@ export function showLoadingScreen(){
 }
 
 export function hideLoadingScreen(){
-    console.log("Se eliminar la pantalla");
     const container = document.getElementById("loading-container");
 
     if(container.childElementCount > 0){

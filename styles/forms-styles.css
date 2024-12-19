@@ -179,10 +179,29 @@ input:focus {
 }
 
 
+/*__________________________________________________  
+         
+            S  E  L  E  C  T  S 
+____________________________________________________ 
+*/
 
 
+.form-select{
+  height: 39px;
+  font-size: 18px;
+  color: #222;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
 
 
+.form-select:focus{
+  outline: none;
+  box-shadow: 0 0 5px rgba(252, 163, 17, 0.5);
+}
 
 
 /*__________________________________________________  

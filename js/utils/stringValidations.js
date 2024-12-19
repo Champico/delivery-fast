@@ -28,8 +28,7 @@ export function isFloat(string) {
 //Devuelve verdadero si una cadena es un numero entero y tiene un numero de caracteres dentro de un rango definido
 export function isIntegerOfSizeBetween(string, min_character, max_character) {
   if (!string) return false;
-  if (isNaN(min_character) || isNaN(max_character))
-    throw new Error("min_character and max_character must be int");
+  if (isNaN(min_character) || isNaN(max_character)) return false;
   return (
     isInteger(string) &&
     string.length >= min_character &&
@@ -52,8 +51,7 @@ export function isIntegerOfSize(string, characters_length) {
 //Devuelve verdadero si una cadena tiene un numero de caracteres dentro de un rango definido
 export function isOfSizeBetween(string, min_character, max_character) {
   if (!string) return false;
-  if (isNaN(min_character) || isNaN(max_character))
-    throw new Error("min_character and max_character must be int");
+  if (isNaN(min_character) || isNaN(max_character)) return false;
   return string.length >= min_character && string.length <= max_character;
 }
 
@@ -62,4 +60,14 @@ export function hasOnlyBasicCharacters(string) {
   if (!string) return false;
   const regex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9\s]+$/;
   return regex.test(string);
+}
+
+
+
+export function isFloatValueBetween(numero, min, max){
+  if (!numero) return false;
+  if (isNaN(min) || isNaN(max)) return false;
+  let floatValue = parseFloat(numero);
+  if (isNaN(floatValue)) return false;
+  return numero >= min && numero <= max;
 }

@@ -1,6 +1,6 @@
 // delivery-fast/js/bussines/general_validations
 
-import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize} from "../../utils/stringValidations.js";
+import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween} from "../../utils/stringValidations.js";
 
 export function validateName(name) {
   if (!name) {
@@ -31,7 +31,15 @@ export function validateZipCode(cp) {
 }
 
 export function validateState(state) {
-  return "Este campo es obligatorio ";
+  if(!state){
+    return "Seleccione una opción";
+  }
+
+  if(!isIntegerOfSizeBetween(state,1,2)){
+    return "Seleccione una opcion";
+  }
+
+  return true;
 }
 
 export function validateCity(city) {
@@ -122,5 +130,96 @@ export function validateEmail(email) {
       return "El dominio del correo no es válido";
     }
   }
+  return true;
+}
+
+
+
+export function validateWeigth(num){
+  if (!num) {
+    return "Este campo es obligatorio";
+  }
+  
+  if(!isNumber(num)){
+    return "Ingresa sólo numeros";
+  }
+
+  if(!isFloatValueBetween(num,0,69)){
+    return "Máximo 69kg";
+  }
+
+  return true;
+}
+
+
+export function validateWidth(num){
+  if (!num) {
+    return "Este campo es obligatorio";
+  }
+
+  if(!isNumber(num)){
+    return "Ingresa sólo numeros";
+  }
+
+  if(!isFloatValueBetween(num,0,200)){
+    return "Ancho máximo de 200cm";
+  }
+
+  return true;
+}
+
+
+export function validateLength(num){
+  if (!num) {
+    return "Este campo es obligatorio";
+  }
+
+  if(!isNumber(num)){
+    return "Ingresa sólo numeros";
+  }
+
+  if(!isFloatValueBetween(num,0,200)){
+    return "Largo máximo de 200cm";
+  }
+
+  return true;
+}
+
+
+export function validateHeight(num){
+  if (!num) {
+    return "Este campo es obligatorio";
+  }
+
+  if(!isNumber(num)){
+    return "Ingresa sólo numeros";
+  }
+
+  if(!isFloatValueBetween(num,0,150)){
+    return "Alto máximo de 150cm";
+  }
+
+  return true;
+}
+
+export function validateDescription(text){
+  if(!text) return true
+
+  if(!hasOnlyBasicCharacters(text)){
+    return "Ingresa sólo letras y números";
+  }
+
+  if(text.length > 255){
+    return "Máximo 255 caracteres";
+  }
+
+  return true;
+}
+
+export function validateService(text){
+  if(!text){
+    return "Selecciona una opción"
+  }
+
   return true;
 }

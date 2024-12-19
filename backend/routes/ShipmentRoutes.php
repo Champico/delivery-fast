@@ -13,6 +13,7 @@ switch ($method) {
             switch($action){
                 case 'branch': $shipmentController->getAllBranch($a2); break;
                 case 'tracking-number': $shipmentController->get($a2); break;
+                case 'ticket' : $shipmentController->getTicket(); break;
                 default: http_response_code(405);
                 echo json_encode(['message' => 'Dirección no encontrada']);
                 break;
@@ -22,7 +23,17 @@ switch ($method) {
         }
         break;
     case 'POST':
-        $shipmentController->create();
+        if ($action) {
+            switch($action){
+                case 'ticket' : $shipmentController->getTicket(); break;
+                default: http_response_code(405);
+                echo json_encode(['message' => 'Dirección no encontrada']);
+                break;
+            }
+        }else{
+            $shipmentController->create();
+        }
+
         break;
 
     case 'PUT':

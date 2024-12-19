@@ -4,9 +4,10 @@ import { searchPage } from "./staticsPages/searchPage.js";
 import { newShipmentPage } from "./staticsPages/newShipmentPage.js";
 
 export var htmlPages = {};
-export var currentPage = {"value" : ""};
-export var menuSelected = {"value" : ""};
+export var currentPage = {};
+export var menuSelected = {};
 import { menuButtons } from "./sidebar/create-sidebar.js";
+import { addFirstScriptNewShipment } from "./dinamicBehavior/dinamic-manager.js";
 
 let contentContainer = null;
 
@@ -18,44 +19,35 @@ function saveMainContainer(){
 }
 
 async function loadFirstTime(){
-    const homePage = await getHomeScreen();
-    if(homePage){
-        contentContainer.innerHTML = homePage;
-        menuSelected["value"] = "sb-bt-home";
-        currentPage["value"] = "sb-bt-home";
-    }
+    await showHomeScreen();
+    menuSelected.value = "sb-bt-home";
+    currentPage.value = "sb-bt-home";
     hideLoadingScreen();
 }
 
 export async function changePage(nuevaPagina){
     if(!nuevaPagina in menuButtons) return;
 
-    if(!currentPage["value"] === nuevaPagina) saveStateOfPage(currentPage["value"]);
-
-    console.log("Pagina actual ", currentPage, "Nueva pagina ", nuevaPagina)
-    let page = "";
+    //console.log("Pagina actual ", currentPage.value, "Nueva pagina ", nuevaPagina);
+    if(!currentPage.value || currentPage.value !== nuevaPagina) saveStateOfPage(nuevaPagina);
 
     switch(nuevaPagina){
-        case "sb-bt-home": page = await getHomeScreen(); break;
-        case "sb-bt-new-shipment": page = await getNewShipmentScreen();break;
-        case "sb-bt-search-shipment": page = getSearchScreen(); break;
-        case "sb-bt-earnings": page = await getEarningScreen(); break;
-        case "sb-bt-package": page = await getPackageScreen(); break;
-        case "sb-bt-users": page = await getUsersScreen(); break;
-        case "sb-bt-about": page = await getAboutScreen(); break;
-        case "sb-bt-statistics": page = await getStatisticsScreen(); break;
-        default: page = await "<h1>Not found 404</h1>"; break;
+        case "sb-bt-home": await showHomeScreen(nuevaPagina); break;
+        case "sb-bt-new-shipment": await showNewShipmentScreen(nuevaPagina);break;
+        case "sb-bt-search-shipment": showSearchScreen(nuevaPagina); break;
+        case "sb-bt-earnings": await showEarningScreen(nuevaPagina); break;
+        case "sb-bt-package": await showPackageScreen(nuevaPagina); break;
+        case "sb-bt-users": await showUsersScreen(nuevaPagina); break;
+        case "sb-bt-about": await showAboutScreen(nuevaPagina); break;
+        case "sb-bt-statistics": await showStatisticsScreen(nuevaPagina); break;
+        default: await "<h1>Not found 404</h1>"; break;
     }
 
-    if(page && contentContainer){
-        contentContainer.innerHTML = page;
-        currentPage["valor"] = nuevaPagina;
-    }
+    currentPage.value = nuevaPagina;
 }
 
 function saveStateOfPage(stateId){
-    console.log("-----------El objeto es",stateId)
-    if(!stateId || typeof miVariable === "string") return;
+    if(!stateId) stateId = "page";
 
     const partes = stateId.split("-");
     const pageId = partes[2] ? partes[2] : stateId;
@@ -65,36 +57,44 @@ function saveStateOfPage(stateId){
     history.pushState(state, '', url);
 }
 
-async function getHomeScreen(){
-    return await homePage.create();
+async function showHomeScreen(id){
+    addToDOM(id, await homePage.create());
 }
 
-async function getNewShipmentScreen(){
-    return await newShipmentPage.create();
+async function showNewShipmentScreen(id){
+    addToDOM(id, await newShipmentPage.create());
+    addFirstScriptNewShipment();
 }
 
-function getSearchScreen(){
-    return searchPage.create();
+function showSearchScreen(id){
+     addToDOM(id, searchPage.create());
 }
 
-function getEarningScreen(){
-    return 
+function showEarningScreen(id){
+     "<h1>Earnings</h1>"
 }
 
-function getPackageScreen(){
-    return "<h1>Package</h1>"
+function showPackageScreen(id){
+     "<h1>Package</h1>"
 }
 
-function getUsersScreen(){
-    return "<h1>Users</h1>"
+function showUsersScreen(id){
+     "<h1>Users</h1>"
 }
 
-function getAboutScreen(){
-    return "<h1>About</h1>"
+function showAboutScreen(id){
+     "<h1>About</h1>"
 }
 
-function getStatisticsScreen(){
-    return "<h1>Statistics</h1>"
+function showStatisticsScreen(id){
+     "<h1>Statistics</h1>"
+}
+
+function addToDOM(nuevaPagina, page){
+    if(page && contentContainer){
+        contentContainer.innerHTML = page;
+        currentPage["valor"] = nuevaPagina;
+    }
 }
 
 

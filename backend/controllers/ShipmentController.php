@@ -111,6 +111,26 @@ class ShipmentController
         echo json_encode(['message' => "Se actualizo el envío " . $guia], JSON_UNESCAPED_UNICODE);
     }
 
+    public function getTicket(){
+        try{
+            $data = validateJsonMiddleware();
+            $error = ShipmentSchema::validateTicket($data);
+
+            if ($error && sizeof($error) > 0) {
+                http_response_code(422);
+                echo json_encode($error, JSON_UNESCAPED_UNICODE);
+                exit();
+            }
+
+            $ticket = $this->create_ticket_without_id($data);
+            echo json_encode(["ticket"=>$ticket]);
+        }catch(Exception $e){
+            http_response_code(422);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+    }
+
 
     private function create_ticket_without_id($data){
         $ticket = [];

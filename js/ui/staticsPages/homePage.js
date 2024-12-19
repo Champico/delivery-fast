@@ -1,8 +1,10 @@
 import { getShipmentList } from "../../api/shipmentsList.js";
 
+
 export const homePage = {
   page: "",
   id_page: "",
+  shipments: "",
 
   async create() {
     let topPage = this.getTop();
@@ -15,7 +17,7 @@ export const homePage = {
   },
 
   load() {
-    if (page === null) return create();
+    if (this.page === null) return create();
   },
 
   getTop() {
@@ -56,9 +58,9 @@ export const homePage = {
     const num_sucursal = localStorage.getItem("numero_sucursal");
     if (!num_sucursal) return ":,c";
 
-    const shipments = await getShipmentList(num_sucursal);
+    this.shipments = await getShipmentList(num_sucursal);
 
-    if (!shipments)
+    if (!this.shipments)
       return `<p class="empty-data-message"> No hay envíos aún</p>`;
 
     let table = `<div class="table-container">
@@ -77,7 +79,7 @@ export const homePage = {
                             <tbody>`;
 
     let tableRows = "";
-    shipments.forEach((shipment) => {
+    this.shipments.forEach((shipment) => {
       tableRows = tableRows + this.generateTableRow(shipment);
     });
     table = table + tableRows;

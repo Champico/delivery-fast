@@ -20,13 +20,13 @@ export const newShipmentPage = {
         let sender = `
             <div class="form-group">
                 <label class="input-label" for="estado-destinatario">Estado*</label>
-                <input class="input" type="text" id="estado-destinatario">`
+                <select class="form-select" id="estado-destinatario">`
         
 
         let recipient =`
             <div class="form-group">
                 <label class="input-label" for="estado-remitente">Estado*</label>
-                <input class="input" type="text" id="estado-remitente">`
+                <select class="form-select" id="estado-remitente">`
 
         let stateSelectOptions = "";
 
@@ -38,12 +38,17 @@ export const newShipmentPage = {
         recipient = recipient + stateSelectOptions;
 
         sender = sender + `
+                    </select>
                 <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
             </div>`
 
         recipient = recipient + `
+                    </select>
                 <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
             </div>`
+
+        this.stateSelectRecipient = recipient;
+        this.stateSelectSender = sender;
     },
     getTop(){
         return `<div class="new-shupment-page-header">

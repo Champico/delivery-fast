@@ -128,7 +128,7 @@ function getAdminstrationModule(users, info, about){
 
     if(users){
         administrationModule = administrationModule +`                    
-        <li class="sidebar-item-li id="sb-bt-users">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-users">
             <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="../resources/icons/editar.svg" alt="">
             Usuarios</span>
