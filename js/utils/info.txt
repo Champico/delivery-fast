@@ -1,5 +1,0 @@
-> > U T I L S  S C R I P T  F I L E S < <
-
-En esta sección van los archivos que manejan funciones complementarias.
-Herramientas
-- Como formateo de datos etc...

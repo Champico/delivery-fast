@@ -1,6 +1,6 @@
 // delivery-fast/js/bussines/general_validations
 
-import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween} from "../../utils/stringValidations.js";
+import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween} from "./stringValidations.js";
 
 export function validateName(name) {
   if (!name) {

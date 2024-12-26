@@ -1,3 +1,0 @@
-> > J A V A  S C R I P T  F I L E S < <
-
-En esta sección van todos los archivos tipo "Javascript" ( .JS )

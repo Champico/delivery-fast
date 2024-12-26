@@ -8,7 +8,7 @@
 
         public function getAllStates(){
             try {
-                $sql = "SELECT clave, nombre, abreviatura FROM Estados";
+                $sql = "SELECT clave, nombre, abreviatura FROM Estado;";
                 $result = $this->conexionDB->query($sql);
                 if ($result->num_rows > 0) {
                     $states = [];
@@ -70,6 +70,7 @@
                 $stmt->bind_param("s", $zip_code);
                 $stmt->execute();
                 $result = $stmt->get_result();
+                $stmt->close();
             }catch(Exception $e){
                 throw new Exception("Error del servidor de codigos postales");
             }
@@ -93,6 +94,7 @@
                 $stmt->execute();
                 $resultado = $stmt->get_result();
                 $coordinates = $resultado->fetch_assoc();
+                $stmt->close();
                 return  $coordinates ?  $coordinates : null;
             } catch (Exception $e) {
                 return null;

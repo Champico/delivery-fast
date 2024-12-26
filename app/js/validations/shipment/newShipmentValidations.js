@@ -1,5 +1,5 @@
 
-import {validateCity, validateEmail, validateNeighborhood, validateName, validateState, validateStreet, validateTelephone, validateZipCode, validateNumExt, validateNumInt, validateHeight, validateWeigth, validateLength, validateWidth, validateDescription, validateService} from '../general_validations/shipment_validations.js'
+import {validateCity, validateEmail, validateNeighborhood, validateName, validateState, validateStreet, validateTelephone, validateZipCode, validateNumExt, validateNumInt, validateHeight, validateWeigth, validateLength, validateWidth, validateDescription, validateService} from '../general/shipment_validations.js'
 
 export let errores = 0;
 

@@ -4,7 +4,6 @@
 include_once(__DIR__ . '/../middlewares/validateJsonMiddleware.php');
 
 session_start();
-include_once __DIR__ . '/../config/conexion-bd.php';
 
 class AuthController {
 

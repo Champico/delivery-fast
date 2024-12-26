@@ -3,6 +3,7 @@
 
 include_once(__DIR__ . '/../controllers/UtilsController.php');
 include_once(__DIR__ . '/../models/ZipCodeModel.php');
+include_once(__DIR__ . '/../models/ShipmentModel.php');
 include_once(__DIR__ . '/../config/ConnDeliveryDB.php');
 include_once(__DIR__ . '/../config/ConnZipCodeDB.php');
 

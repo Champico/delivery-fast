@@ -1,8 +1,0 @@
-> > R E S O U R C E S < <
-
-En la seccion de resources van todos los archivos de multimedia como imagenes, videos, musica, iconos, etc.
-La estructura es la siguiente:
-
-brand > En esta carpeta van las imagenes de los logos de la empresa
-img > Imagenes de bits (.jpg, .png, .webp) que se utilizan en la interfaz grafica
-svg > Imagenes vectoriales (.svg) que se utilizan en la interfaz grafica

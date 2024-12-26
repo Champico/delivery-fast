@@ -4,9 +4,9 @@
 
 include_once __DIR__ . '/../controllers/authController.php';
 include_once __DIR__ . '/../models/UserModel.php';
-include_once __DIR__ . '/../config/conexion-bd.php';
+include_once __DIR__ . '/../config/ConnDeliveryDB.php';
 
-$authController = new AuthController(new UserModel($conexionDB));
+$authController = new AuthController(new UserModel(ConnDeliveryDB::getInstance()));
 
 switch ($method) {
     case 'POST':

@@ -1,19 +1,42 @@
+-------------------------------------------------------------------
 Nombre del proyecto: Delivery Fast
+Autores: Edgar Yael Cortes Carrillo y Julio Aldair Morales Romero
 Sistema operativo del servidor: Windows 11
-Dirección: 127.0.0.1
+Dirección: 127.0.0.1 (localhost)
 Puerto: 80
 Tecnologías: PHP, MySQL, HTML, JS, CSS
+Manejadores de dependencias: Composer
+Librerias adicionales: JWT
+Ultima modificación: 26/12/2024 12:00 pm
+Métodologia de desarollo: Ninguna
+-------------------------------------------------------------------
 
-Estructura de carpetas:
+Estructura del proyecto:
 
-> htdocs (Carpeta de XAMPP)
-	> delivery-fast (carpeta raíz del proyecto)
-		> backend
-			> config
-				.env
+> htdocs/ (Carpeta de XAMPP)
+	> delivery-fast / (carpeta raíz del proyecto)
+		> app/
+			> js/
+				> api/
+				> ui/
+				> validations/
+			> resources/
+				> brand/
+				> favicon/
+				> icons/
+				> img/
+				> svg/
+			> styles/
+			> view
+				> temp/
+			index.js
+			info.txt
+		> backend/
+			> config/
+				.env (NO SUBIDO A GIT)
 				conexion-bd.php
 			> controllers
-				ShipmentController.php
+				ShipmentController.php/
 			> middlewares
 				ValidateJsonMiddleware.php
 			> models
@@ -25,40 +48,11 @@ Estructura de carpetas:
 				ShipmentSchema.php
 			.htaccess
 			index.php
-		> js
-			> api
-			> bussines
-			> data
-			> main
-				> newShipmentPage
-				script_s1.js 
-				script_s2.js 
-				script_s3.js
-			> ui
-				> newShipmentPage
-				script_s1_ui.js 
-				script_s2_ui.js 
-				script_s3_ui.js
-			> utils
-			login.js
-			index.js
-		> resources
-			> brand
-			> icons
-			> img
-			> svg
-		> sql-scripts
-			Script Creacion DeliveryFast.sql
-			Script Insertar Datos de Prueba DeliveryFast.sql
-		> styles
-			forms-styles.css
-			general-styles.css 
-			login-styles.css 
-			tables-styles.css 
-		> view
-			> archivos-temporales-html 
-			> pruebas
-				appPrueba.html 
-			app.html
+		>sql-scripts
+			cpInyector.php
+			Datos.sql (NO SUBIDO A GIT)
+			info.txt
 		.gitignore
-		login.html
+		Info.txt
+		index.html
+		README.md

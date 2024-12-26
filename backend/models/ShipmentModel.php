@@ -241,7 +241,7 @@ class ShipmentModel
                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
             $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param(
-                "ssssssssssssi",
+                "sssssssssssss",
                 $guia,
                 $tipo_cliente,
                 $nombre_completo,
@@ -258,7 +258,6 @@ class ShipmentModel
             );
             return $stmt->execute();
         } catch (Exception $e) {
-            echo $e->getMessage();
             throw new Exception("Error al cargar los datos de contacto");
         }
     }

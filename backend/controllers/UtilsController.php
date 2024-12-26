@@ -1,6 +1,7 @@
 <?php
 
 //  delivery-fast/backend/controllers/UtilsController.php
+include __DIR__ . '/../controllers/ZipCodeController.php';
 
 class UtilsController{
     private $zipCodeController;

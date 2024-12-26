@@ -100,7 +100,7 @@ class ShipmentController
 
 
         http_response_code(201);
-        echo json_encode($newShipment);
+        echo json_encode($newShipment, JSON_UNESCAPED_UNICODE);
     }
 
     public function update($guia)
