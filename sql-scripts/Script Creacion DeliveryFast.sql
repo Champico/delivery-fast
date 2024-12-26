@@ -2,12 +2,21 @@
 --  S C R I P T  P A R A  C R E A R  L A  B A S E  D E  D A T O S 
 -- ----------------------------------------------------------------------
 
--- Creación de la base de datos
+-- Creación de la base de datos --
 DROP DATABASE IF EXISTS DeliveryFast;
 CREATE DATABASE DeliveryFast;
 USE DeliveryFast;
 
--- Tabla de Sucursales
+-- Tabla de Entidades Federativas --
+DROP TABLE IF EXISTS Entidades_Federativas;
+CREATE TABLE Entidades_Federativas (
+    clave CHAR(2) PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    nombre_extendido VARCHAR(100) NOT NULL,
+    abreviatura CHAR(6) NOT NULL
+);
+
+-- Tabla de Sucursales --
 DROP TABLE IF EXISTS Sucursales;  
 CREATE TABLE Sucursales (
     numero_sucursal CHAR(5) PRIMARY KEY,
@@ -19,12 +28,16 @@ CREATE TABLE Sucursales (
     cp VARCHAR(5)  NOT NULL CHECK (cp REGEXP '^[0-9]{5}$'),
     colonia VARCHAR(50) NOT NULL,
     ciudad VARCHAR(50) NOT NULL,
-    estado VARCHAR(50) NOT NULL,
-    hora_salida_diaria TIME NOT NULL
+	latitud_dec DECIMAL(13,7) NOT NULL,
+    longitud_dec DECIMAL(13,7) NOT NULL,
+    hora_salida_diaria TIME NOT NULL,
+
+    estado CHAR(2) NOT NULL,
+    
+    FOREIGN KEY (estado) REFERENCES Entidades_Federativas(clave)
 );
 
-
--- Tabla de Envíos
+-- Tabla de Envíos --
 DROP TABLE IF EXISTS Envios;
 CREATE TABLE Envios (
     guia CHAR(15) PRIMARY KEY,
@@ -43,22 +56,20 @@ CREATE TABLE Envios (
     FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal)
   );
   
-  
-  
--- Tabla de Roles
+-- Tabla de Roles --
 DROP TABLE IF EXISTS Roles;
 CREATE TABLE Roles (
     id_rol INT AUTO_INCREMENT PRIMARY KEY,
     nombre_rol VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Inserciones iniciales para Roles
+-- Inserciones iniciales para Roles --
 INSERT INTO Roles (nombre_rol) VALUES
 ('Administrador'),
 ('Colaborador'),
 ('Repartidor');
 
--- Tabla de Colaboradores
+-- Tabla de Colaboradores --
 DROP TABLE IF EXISTS Colaboradores;
 CREATE TABLE Colaboradores (
     numero_personal CHAR(6) PRIMARY KEY,
@@ -78,58 +89,44 @@ CREATE TABLE Colaboradores (
     FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal)
 );
 
--- Tabla de entidades federativas
-DROP TABLE IF EXISTS Entidades_Federativas;
-CREATE TABLE Entidades_Federativas (
-    id_entidad INT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL,
-    nombre_extendido VARCHAR(100) NOT NULL,
-    abreviatura CHAR(6) NOT NULL,
-    min_cp TINYINT,
-    max_cp TINYINT,
-    latitud DECIMAL(10, 7),
-    longitud DECIMAL(10, 7)
-);
+-- Inserciones iniciales para Entidades federativas --
+INSERT INTO Entidades_Federativas (clave, nombre, nombre_extendido, abreviatura) VALUES
+("01", 'Aguascalientes', 'Estado de Aguascalientes', 'AGS'),
+("02", 'Baja California', 'Estado de Baja California', 'BC'),
+("03", 'Baja California Sur', 'Estado de Baja California Sur', 'BCS'),
+("04", 'Campeche', 'Estado de Campeche', 'CC'),
+("05", 'Coahuila', 'Estado de Coahuila de Zaragoza', 'CC'),
+("06", 'Colima', 'Estado de Colima', 'CL'),
+("07", 'Chiapas', 'Estado de Chiapas', 'CM'),
+("08", 'Chihuahua', 'Estado de Chihuahua', 'CS'),
+("09", 'Ciudad de México', 'Ciudad de México', 'CDMX'),
+("10", 'Durango', 'Estado de Durango', 'DG'),
+("11", 'Guanajuato', 'Estado de Guanajuato', 'GT'),
+("12", 'Guerrero', 'Estado de Guerrero', 'GR'),
+("13", 'Hidalgo', 'Estado de Hidalgo', 'HG'),
+("14", 'Jalisco', 'Estado de Jalisco', 'JC'),
+("15", 'México', 'Estado de México', 'EM'),
+("16", 'Michoacán', 'Estado de Michoacán de Ocampo', 'MC'),
+("17", 'Morelos', 'Estado de Morelos', 'MN'),
+("18", 'Nayarit', 'Estado de Nayarit', 'MS'),
+("19", 'Nuevo León', 'Estado de Nuevo León', 'NL'),
+("20", 'Oaxaca', 'Estado de Oaxaca', 'OA'),
+("21", 'Puebla', 'Estado de Puebla', 'PB'),
+("22", 'Querétaro', 'Estado de Querétaro', 'QT'),
+("23", 'Quintana Roo', 'Estado de Quintana Roo', 'QR'),
+("24", 'San Luis Potosí', 'Estado de San Luis Potosí', 'SLP'),
+("25", 'Sinaloa', 'Estado de Sinaloa', 'SN'),
+("26", 'Sonora', 'Estado de Sonora', 'SR'),
+("27", 'Tabasco', 'Estado de Tabasco', 'TC'),
+("28", 'Tamaulipas', 'Estado de Tamaulipas', 'TM'),
+("29", 'Tlaxcala', 'Estado de Tlaxcala', 'TL'),
+("30", 'Veracruz', 'Estado de Veracruz de Ignacio de la Llave', 'VZ'),
+("31", 'Yucatán', 'Estado de Yucatán', 'YN'),
+("32", 'Zacatecas', 'Estado de Zacatecas', 'ZS');
 
-INSERT INTO Entidades_Federativas (id_entidad, nombre, nombre_extendido, abreviatura, min_cp, max_cp, latitud, longitud) VALUES
-(1, 'Aguascalientes', 'Estado de Aguascalientes', 'AGS', 20, 20, 22.0724247, -102.3076925),
-(2, 'Baja California', 'Estado de Baja California', 'BC', 21, 22, 32.1636117, -116.3031437),
-(3, 'Baja California Sur', 'Estado de Baja California Sur', 'BCS', 23, 23, 25.1448734, -111.2262671),
-(4, 'Campeche', 'Estado de Campeche', 'CC', 24, 24, 19.1578254, -90.4921726),
-(5, 'Coahuila', 'Estado de Coahuila de Zaragoza', 'CC', 25, 27, 27.1719759, -101.5544302),
-(6, 'Colima', 'Estado de Colima', 'CL', 28, 28, 19.1719996, -103.8596560),
-(7, 'Chiapas', 'Estado de Chiapas', 'CM', 29, 30, 16.4980000, -92.6397034),
-(8, 'Chihuahua', 'Estado de Chihuahua', 'CS', 31, 33, 28.3510503, -106.6160957),
-(9, 'Ciudad de México', 'Ciudad de México', 'CDMX', 1, 16, 19.3450894, -99.1532516),
-(10, 'Durango', 'Estado de Durango', 'DG', 34, 35, 24.9361354, -104.7118333),
-(11, 'Guanajuato', 'Estado de Guanajuato', 'GT', 36, 38, 20.7087239, -100.9782212),
-(12, 'Guerrero', 'Estado de Guerrero', 'GR', 39, 41, 17.6030727, -99.4330865),
-(13, 'Hidalgo', 'Estado de Hidalgo', 'HG', 42, 43, 20.4147457, -98.8285380),
-(14, 'Jalisco', 'Estado de Jalisco', 'JC', 44, 49, 20.5039744, -103.4780113),
-(15, 'México', 'Estado de México', 'EM', 50, 57, 19.3997811, -99.4181191),
-(16, 'Michoacán', 'Estado de Michoacán de Ocampo', 'MC', 58, 61, 19.5920937, -101.7289468),
-(17, 'Morelos', 'Estado de Morelos', 'MN', 62, 62, 18.7852731, -99.0644756),
-(18, 'Nayarit', 'Estado de Nayarit', 'MS', 63, 63, 21.6120478, -104.9045737),
-(19, 'Nuevo León', 'Estado de Nuevo León', 'NL', 64, 67, 25.6778490, -99.9785496),
-(20, 'Oaxaca', 'Estado de Oaxaca', 'OA', 68, 71, 17.0948029, -96.8537151),
-(21, 'Puebla', 'Estado de Puebla', 'PB', 72, 75, 19.1207678, -97.9056539),
-(22, 'Querétaro', 'Estado de Querétaro', 'QT', 76, 76, 20.7879598, -99.9141013),
-(23, 'Quintana Roo', 'Estado de Quintana Roo', 'QR', 77, 77, 20.2273805, -87.6169463),
-(24, 'San Luis Potosí', 'Estado de San Luis Potosí', 'SLP', 78, 79, 22.2118083, -100.0177798),
-(25, 'Sinaloa', 'Estado de Sinaloa', 'SN', 80, 82, 24.7967726, -107.3904539),
-(26, 'Sonora', 'Estado de Sonora', 'SR', 83, 85, 29.6204208, -110.2837409),
-(27, 'Tabasco', 'Estado de Tabasco', 'TC', 86, 86, 17.9514465, -92.7092385),
-(28, 'Tamaulipas', 'Estado de Tamaulipas', 'TM', 87, 89, 24.2199113, -98.8231737),
-(29, 'Tlaxcala', 'Estado de Tlaxcala', 'TL', 90, 90, 19.3429507, -98.1770951),
-(30, 'Veracruz', 'Estado de Veracruz de Ignacio de la Llave', 'VZ', 91, 96, 19.3461124, -96.6971134),
-(31, 'Yucatán', 'Estado de Yucatán', 'YN', 97, 97, 20.8145152, -89.1240009),
-(32, 'Zacatecas', 'Estado de Zacatecas', 'ZS', 98, 99, 22.6152649, -102.7721144);
-
-
-
+-- Tabla de datos de remitentes y destinatarios --
 DROP TABLE IF EXISTS Contactos;
 CREATE TABLE Contactos (
-    -- Llave primaria referencia a su envío
     guia CHAR(15),
     tipo ENUM("Remitente","Destinatario"),
 
@@ -147,14 +144,14 @@ CREATE TABLE Contactos (
     ciudad VARCHAR(50) NOT NULL,
     referencias VARCHAR(255),
 
-    estado INT NOT NULL,
+    estado CHAR(2) NOT NULL,
 
     FOREIGN KEY (guia) REFERENCES envios(guia), 
-    FOREIGN KEY (estado) REFERENCES Entidades_Federativas(id_entidad)
+    FOREIGN KEY (estado) REFERENCES Entidades_Federativas(clave)
 );
 
 
--- Tabla de Estatus de Paquetes
+-- Tabla de Estatus de Paquetes --
 DROP TABLE IF EXISTS Estatus_Paquete;
 CREATE TABLE Estatus_Paquete (
     id_estatus INT AUTO_INCREMENT PRIMARY KEY,
@@ -168,7 +165,7 @@ CREATE TABLE Estatus_Paquete (
     FOREIGN KEY (colaborador) REFERENCES Colaboradores(numero_personal)
 );
 
--- Ticket de compra
+-- Ticket de compra --
 DROP TABLE IF EXISTS Ticket;
 CREATE TABLE ticket (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -181,7 +178,7 @@ CREATE TABLE ticket (
     FOREIGN KEY (guia) REFERENCES envios(guia)
 );
 
--- Concepto de compra
+-- Concepto de compra --
 DROP TABLE IF EXISTS Concepto_ticket;
 CREATE TABLE concepto_ticket (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -189,7 +186,7 @@ CREATE TABLE concepto_ticket (
     nombre VARCHAR(255),
     valor DECIMAL(10,2),
     FOREIGN KEY (id_ticket) REFERENCES ticket(id)
-    );
+);
 
 
 
@@ -230,6 +227,7 @@ SELECT
     c.ciudad_remitente,
     c.referencias_remitente,
     c.estado_remitente,
+    c.nombre_estado_remitente,
     c.nombre_destinatario,
     c.correo_destinatario,
     c.telefono_destinatario,
@@ -241,6 +239,7 @@ SELECT
     c.ciudad_destinatario,
     c.referencias_destinatario,
     c.estado_destinatario,
+    c.nombre_estado_destinatario,
     
     e.numero_sucursal
 FROM Envios AS e
@@ -258,6 +257,7 @@ INNER JOIN (
         r.ciudad AS ciudad_remitente,
         r.referencias AS referencias_remitente,
         r.estado AS estado_remitente,
+        efr.nombre AS nombre_estado_remitente,
 
         d.nombre_completo AS nombre_destinatario,
         d.correo AS correo_destinatario,
@@ -269,20 +269,24 @@ INNER JOIN (
         d.cp AS cp_destinatario,
         d.ciudad AS ciudad_destinatario,
         d.referencias AS referencias_destinatario,
-        d.estado AS estado_destinatario
-    FROM Contactos AS r
-    JOIN Contactos AS d
-    ON r.guia = d.guia 
-    WHERE r.tipo = 'Remitente' AND d.tipo = 'Destinatario'
-) AS c
-ON c.guia = e.guia;
+        d.estado AS estado_destinatario,
+        efd.nombre AS nombre_estado_destinatario
+
+    FROM 
+		Contactos AS r
+    JOIN Contactos AS d ON r.guia = d.guia
+    INNER JOIN Entidades_Federativas AS efr ON r.estado = efr.clave
+    INNER JOIN Entidades_Federativas AS efd ON d.estado = efd.clave
+	WHERE r.tipo = 'Remitente' AND d.tipo = 'Destinatario'
+) AS c ON c.guia = e.guia;
+
 
 
 -- Vista con datos del envío reducidas
 DROP VIEW IF EXISTS Envios_General;
 CREATE VIEW Envios_General AS
-SELECT 
-    e.guia, 
+SELECT
+    e.guia,
     e.folio,
     e.servicio,
     c.nombre_completo AS destinatario,
@@ -292,7 +296,7 @@ SELECT
     e.numero_sucursal
 FROM Entidades_Federativas AS ef
 INNER JOIN Contactos AS c 
-    ON c.estado = ef.id_entidad 
+    ON c.estado = ef.clave
 INNER JOIN Envios AS e 
     ON e.guia = c.guia
 INNER JOIN (
@@ -303,7 +307,7 @@ INNER JOIN (
         FROM Estatus_Paquete AS ep2
         WHERE ep2.guia = ep1.guia
     )
-) AS ep 
+) AS ep
     ON e.guia = ep.guia
 WHERE c.tipo = 'Destinatario';
 
@@ -384,7 +388,8 @@ CREATE TABLE Configuracion_global(
 	alto_maximo DECIMAL(10,2),
 	ancho_maximo DECIMAL(10,2),
     cargo_por_combustible INT,
-    precio_seguro DECIMAL(10,2)
+    precio_seguro DECIMAL(10,2),
+    use_google_services BOOLEAN
 );
 
 -- Insertar datos 
@@ -503,8 +508,8 @@ INSERT INTO Precios (servicio, zona, precio, medida_aumento_peso, precio_aumento
 -- ----------------------------------------------------------------------
 
 -- Insertar sucursal
-INSERT INTO Sucursales (numero_sucursal, correo, telefono, calle, numero_ext, numero_int, cp, colonia, ciudad, estado, hora_salida_diaria) VALUES 
-('00000', 'deliveryFastNacional@deliveryfast.com', '5551234567', 'Av. Central', '100', 'B', '01234', 'Centro', 'Ciudad de México', 'CDMX', '18:00:00');
+INSERT INTO Sucursales (numero_sucursal, correo, telefono, calle, numero_ext, cp, colonia, ciudad, estado, latitud_dec, longitud_dec, hora_salida_diaria) VALUES 
+('00000', 'deliveryFastNacional@deliveryfast.com', '5551234567', 'Av. Xalapa', 's/n', '91020', 'Obrero Campesina', ' Xalapa-Enríquez', '30', 19.541211, -96.926956, '18:00:00');
 
 -- Insertar colaborador
 INSERT INTO Colaboradores (numero_personal, contrasena, nombre, apellido_paterno, apellido_materno, curp, correo, telefono, fecha_contratacion, id_rol, numero_sucursal)

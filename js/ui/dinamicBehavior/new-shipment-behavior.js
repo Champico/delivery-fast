@@ -18,8 +18,7 @@ export function getPageStepTwo() {
         return;
     }
 
-    console.log("PAGINA 1 > DATOS ACTUALES :  \n", dataNewShipment, "DATOS DEL TICKET QUE SE AGREGAN", data);
-    Object.assign(dataNewShipment, data);
+     Object.assign(dataNewShipment, data);
 
     boton.removeEventListener('click', getPageStepTwo);
     boton.id = "btn-ns-p2-siguiente";
@@ -107,8 +106,7 @@ export async function getPageStepThree() {
     const dataToSend = {...data, "cp_destinatario" : dataNewShipment.cp_destinatario };
     let ticketData = await getDataToGenerateTicket(dataToSend);
 
-    console.log("DATOS ACTUALES DEL ENVIO: \n", dataNewShipment, "DATOS DEL TICKET QUE SE AGREGAN", ticketData);
-    Object.assign(dataNewShipment, ticketData);
+  Object.assign(dataNewShipment, ticketData);
 
     boton.removeEventListener('click', getPageStepThree);
     boton.innerHTML = "Pagar";
@@ -235,7 +233,6 @@ async function getDataToGenerateTicket(data){
   function showModalPayment(){
     const modal = document.getElementById("paymentModal");
     const botonModal = document.getElementById("btnCobrar");
-    console.log("El modal ", modal, " y el otro ", botonModal);
 
     if(modal){
         if (modal.classList.contains("modal-hide")) {
@@ -246,7 +243,6 @@ async function getDataToGenerateTicket(data){
     }
 
     if(botonModal){
-        console.log("Se agrega el evento al boton qeuis deeeeeeeee");
         botonModal.addEventListener('click',createShipment);
     }else{
         return false;
@@ -269,9 +265,7 @@ async function createShipment(){
 
     try{
         let dataShipment = dataNewShipment;
-        console.log("Los datos llegan asi -> ", dataShipment)
         dataShipment = {...dataShipment, "sucursal": localStorage.getItem("numero_sucursal"), "colaborador": localStorage.getItem("numero_personal")}
-        console.log("DATOS ANTES DE SER ENVIADOS ALV XD: ", dataShipment);
         newShipment = await fetchCreateShipment(dataShipment);
 
         if(newShipment === false){
@@ -294,9 +288,7 @@ async function createShipment(){
             boton.addEventListener('click', changePage("sb-bt-home"))
         }
 
-        console.log("TERMINAMOS")
     }catch(e){
-        console.log(e);
         alert("Error de conexión")
     }
 }

@@ -2,15 +2,24 @@
 // delivery-fast/backend/routes/utilsRoutes.php
 
 include_once(__DIR__ . '/../controllers/UtilsController.php');
-include_once(__DIR__ . '/../models/UtilsModel.php');
-include_once(__DIR__ . '/../config/conexion-bd.php');
+include_once(__DIR__ . '/../models/ZipCodeModel.php');
+include_once(__DIR__ . '/../config/ConnDeliveryDB.php');
+include_once(__DIR__ . '/../config/ConnZipCodeDB.php');
 
-$utilController = new UtilsController(new UtilsModel($conexionDB));
+$utilController = null;
+
+try{
+    $utilsController = new UtilsController(new ShipmentModel(ConnDeliveryDB::getInstance()),
+    new ZipCodeModel(ConnZipCodeDB::getInstance()));
+}catch(Exception $e){
+    http_response_code(500);
+    echo json_encode(['error' => 'Error 500 Internal Server', 'details'=>$e->getMessage()]);
+}
 
 switch ($method) {
     case 'GET':
         switch ($action){
-            case 'states': $utilController->getStatesOfMexico();
+            case 'states': $utilsController->getStatesOfMexico(); break;
             break;
 
             default:

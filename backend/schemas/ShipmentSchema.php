@@ -25,6 +25,8 @@ class ShipmentSchema
                 'ancho' => [0, 200, 'Ancho debe ser un número decimal entre 0 y 200.'],
                 'alto' => [0, 150, 'Alto debe ser un número decimal entre 0 y 150.'],
                 'costo' => [0, INF, 'Costo debe ser un número decimal.'],
+                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'], 
+                'cambio' => [0, INF, 'El cambio debe ser un número decimal.']
             ] as $key => [$min, $max, $errorMessage]
         ) {
             if (isset($data[$key]) && !$isDecimal($data[$key], $min, $max)) {
@@ -62,20 +64,20 @@ class ShipmentSchema
             }
         }
 
-        if (isset($data['cp_remitente']) && (!$isNumericString($data['cp_remitente']) || strlen($data['cp_remitente']) !== 5 || $data['cp_remitente'][0] === '0')) {
-            $errors[] = "Código postal del remitente debe ser un string numérico de 5 caracteres que no comience con 0.";
+        if (isset($data['cp_remitente']) && (!$isNumericString($data['cp_remitente']) || strlen($data['cp_remitente']) !== 5)) {
+            $errors[] = "El código postal del remitente debe tener 5 digitos";
         }
 
-        if (isset($data['cp_destinatario']) && (!$isNumericString($data['cp_destinatario']) || strlen($data['cp_destinatario']) !== 5 || $data['cp_destinatario'][0] === '0')) {
-            $errors[] = "Código postal del destinatario debe ser un string numérico de 5 caracteres que no comience con 0.";
+        if (isset($data['cp_destinatario']) && (!$isNumericString($data['cp_destinatario']) || strlen($data['cp_destinatario']) !== 5)) {
+            $errors[] = "El código postal del destinatario debe tener 5 digitos";
         }
 
-        if (isset($data['estado_remitente']) && (!is_int($data['estado_remitente']) || $data['estado_remitente'] < 1 || $data['estado_remitente'] > 32)) {
-            $errors[] = "Estado del remitente debe ser un entero entre 1 y 32.";
+        if (isset($data['estado_destinatario']) && (!$isNumericString($data['estado_destinatario']) || strlen($data['estado_destinatario']) !== 2)) {
+            $errors[] = "El codigo del estado del destinatario debe estar entre 01 y 32.";
         }
 
-        if (isset($data['estado_destinatario']) && (!is_int($data['estado_destinatario']) || $data['estado_destinatario'] < 1 || $data['estado_destinatario'] > 32)) {
-            $errors[] = "Estado del destinatario debe ser un entero entre 1 y 32.";
+        if (isset($data['estado_remitente']) && (!$isNumericString($data['estado_remitente']) || strlen($data['estado_remitente']) !== 2)) {
+            $errors[] = "El codigo del estado del remitente debe estar entre 01 y 32.";
         }
 
         if (isset($data['seguro']) && !is_bool($data['seguro'])) {
@@ -112,7 +114,7 @@ class ShipmentSchema
 
 
 
-    public static function validateTicket($data)
+    public static function validateDataToTicket($data)
     {
         $errors = [];
 
@@ -131,6 +133,8 @@ class ShipmentSchema
                 'ancho' => [0, 200, 'Ancho debe ser un número decimal entre 0 y 200.'],
                 'alto' => [0, 150, 'Alto debe ser un número decimal entre 0 y 150.'],
                 'costo' => [0, INF, 'Costo debe ser un número decimal.'],
+                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'], 
+                'cambio' => [0, INF, 'El cambio debe ser un número decimal.']
             ] as $key => [$min, $max, $errorMessage]
         ) {
             if (isset($data[$key]) && !$isDecimal($data[$key], $min, $max)) {

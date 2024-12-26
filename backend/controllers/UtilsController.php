@@ -3,15 +3,17 @@
 //  delivery-fast/backend/controllers/UtilsController.php
 
 class UtilsController{
-    private $utilsModel;
+    private $zipCodeController;
+    private $shipmentModel;
 
-    public function __construct($utilsModel){
-        $this->utilsModel = $utilsModel;
+    public function __construct($shipmentModel, $zipCodesModel){
+        $this->zipCodeController = new ZipCodeController($zipCodesModel);
+        $this->shipmentModel = $shipmentModel;
     }
 
     public function getStatesOfMexico(){
         try{
-        $estados = $this->utilsModel->getAllStates();
+        $estados = $this->zipCodeController->getStatesOfMexico();
         echo json_encode($estados, JSON_UNESCAPED_UNICODE);
     }catch(Exception $e){
         http_response_code(422);

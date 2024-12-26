@@ -3,9 +3,16 @@
 
 include_once(__DIR__ . '/../controllers/shipmentController.php');
 include_once(__DIR__ . '/../models/ShipmentModel.php');
-include_once(__DIR__ . '/../config/conexion-bd.php');
+include_once(__DIR__ . '/../config/ConnDeliveryDB.php');
 
-$shipmentController = new ShipmentController(new ShipmentModel($conexionDB));
+$shipmentController = null;
+
+try{
+    $shipmentController = new ShipmentController(new ShipmentModel(ConnDeliveryDB::getInstance()));
+}catch(Exception $e){
+    http_response_code(500);
+    echo json_encode(['error' => 'Error 500 Internal Server', 'details'=>$e->getMessage()]);
+}
 
 switch ($method) {
     case 'GET':
@@ -13,9 +20,8 @@ switch ($method) {
             switch($action){
                 case 'branch': $shipmentController->getAllBranch($a2); break;
                 case 'tracking-number': $shipmentController->get($a2); break;
-                case 'ticket' : $shipmentController->getTicket(); break;
                 default: http_response_code(405);
-                echo json_encode(['message' => 'Dirección no encontrada']);
+                echo json_encode(['error' => 'Dirección no encontrada']);
                 break;
             }
         } else {
@@ -25,9 +31,9 @@ switch ($method) {
     case 'POST':
         if ($action) {
             switch($action){
-                case 'ticket' : $shipmentController->getTicket(); break;
+                case 'ticket' : $shipmentController->getTicketPreview(); break;
                 default: http_response_code(405);
-                echo json_encode(['message' => 'Dirección no encontrada']);
+                echo json_encode(['error' => 'Dirección no encontrada']);
                 break;
             }
         }else{
@@ -46,6 +52,6 @@ switch ($method) {
 
     default:
         http_response_code(405);
-        echo json_encode(['message' => 'Método no permitido']);
+        echo json_encode(['error' => 'Método no permitido']);
         break;
 }

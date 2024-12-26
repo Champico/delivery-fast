@@ -1,7 +1,6 @@
 <?php
 // backend/controllers/authController.php
 
-include_once(__DIR__ . '/../utils/console-js.php');
 include_once(__DIR__ . '/../middlewares/validateJsonMiddleware.php');
 
 session_start();

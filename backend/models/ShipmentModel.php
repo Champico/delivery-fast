@@ -55,21 +55,10 @@ class ShipmentModel
 
     public function create($data)
     {
-    /* > LOGICA PARA CREAR UN ENVIO MODEL <
-    
-    Pre-condición: Se considera que el controller ya verifico que todos los datos cumplen las reglas de negocio
-
-    Pasos:
-        - Generar una guía aleatorioa
-        - Generar un folio incrementando en 1 el anterior
-        - Insertar el envio
-        - Insertar el remitente
-        - Insertar el destinatario
-        - Insertar el ticket y los conceptos
-
-    */
         $guia = null;
         $folio = null;
+
+        $data = $this->fillOptionalFields($data);
 
         try {
             $guia = $this->generateGuia();
@@ -82,10 +71,9 @@ class ShipmentModel
         } catch (Exception $e) {
             throw new Exception("Error al generar el folio");
         }
-
-
+        
         try {
-            $issetEnvio = $this->insertEnvio(
+            $this->insertShipment(
                 $guia,
                 $folio,
                 $data['costo'],
@@ -104,7 +92,7 @@ class ShipmentModel
         }
 
         try {
-            $issetSender = $this->insertContacto(
+            $this->insertContacto(
                 $guia,
                 "Remitente",
                 $data['nombre_remitente'],
@@ -125,7 +113,7 @@ class ShipmentModel
         }
 
         try {
-            $issetRecipient = $this->insertContacto(
+            $this->insertContacto(
                 $guia,
                 "Destinatario",
                 $data['nombre_destinatario'],
@@ -163,6 +151,20 @@ class ShipmentModel
         }
     }
 
+    public function getCoordinatesOfBranch($id_branch){
+        $coordinates = null;
+        try {
+            $query = "SELECT latitud_dec, longitud_dec FROM Sucursales WHERE numero_sucursal = ?";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $id_branch);
+            $stmt->execute();
+            $resultado = $stmt->get_result();
+            $coordinates = $resultado->fetch_assoc();
+            return  $coordinates ?  $coordinates : null;
+        } catch (Exception $e) {
+            return null;
+        }
+    }
 
 
 
@@ -203,8 +205,10 @@ class ShipmentModel
         }
     }
 
-    private function insertEnvio($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado, $numero_sucursal)
+    private function insertShipment($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado, $numero_sucursal)
     {
+        if(!isset($guia)) throw new Exception("Es necesaria una guia para crear el envío");
+
         try {
             $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado, numero_sucursal)
                        VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -254,6 +258,7 @@ class ShipmentModel
             );
             return $stmt->execute();
         } catch (Exception $e) {
+            echo $e->getMessage();
             throw new Exception("Error al cargar los datos de contacto");
         }
     }
@@ -312,68 +317,6 @@ class ShipmentModel
 
 
 
-    public function getCoordinatesOfState($codigo_entidad)
-    {
-        $coordinates = null;
-        try {
-            $query = "SELECT latitud, longitud FROM Entidades_Federativas WHERE ? >= min_cp AND ? <= max_cp";
-            $stmt = $this->conexionDB->prepare($query);
-            $stmt->bind_param("ii", $codigo_entidad, $codigo_entidad);
-            $stmt->execute();
-            $resultado = $stmt->get_result();
-            $coordinates = $resultado->fetch_assoc();
-            return  $coordinates ?  $coordinates : null;
-        } catch (Exception $e) {
-            return null;
-        }
-    }
-
-    public function getPreciosServicios($zona, $servicio){
-        $precios = null;
-        try{
-            $query = "SELECT t.peso_max_amparado, p.precio,  p.medida_aumento_peso,  p.precio_aumento 
-            FROM Precios AS p INNER JOIN Tipo_servicio AS t ON p.servicio = t.nombre WHERE p.zona = ? AND p.servicio = ?;";
-            $stmt = $this->conexionDB->prepare($query);
-            $stmt->bind_param("ss", $zona, $servicio);
-            $stmt->execute();
-            $resultado = $stmt->get_result();
-            $precios = $resultado->fetch_assoc();
-            return $precios ? $precios : null;
-        }catch(Exception $e){
-            return null;
-        }
-    }
-
-    public function getPorcentajeCombustible(){
-        try{
-            $query = "SELECT cargo_por_combustible FROM Configuracion_global";
-            $result = $this->conexionDB->query($query);
-            if ($result) {
-                $row = $result->fetch_assoc();
-                return $row['cargo_por_combustible'];
-            } else {
-                return 0;
-            }
-        }catch(Exception $e){
-            return 0;
-        }
-    }
-
-    public function getPrecioSeguro(){
-        try{
-            $query = "SELECT precio_seguro FROM Configuracion_global";
-            $result = $this->conexionDB->query($query);
-            if ($result) {
-                $row = $result->fetch_assoc();
-                return $row['precio_seguro'];
-            } else {
-                return 0;
-            }
-        }catch(Exception $e){
-            return 0;
-        }
-    }
-
     public function getZonas(){
         try{
             $query = "SELECT * FROM Zonas";
@@ -396,10 +339,10 @@ class ShipmentModel
         if ($nombre) {
             return $nombre['nombre'];
         } else {
-            return "No se encontró ninguna zona para este número.";
+            return "No se encontró ninguna zona";
         }
       } catch(Exception $ex){
-        return "No se encontró ninguna zona para este número.";
+        return "No se encontró ninguna zona";
       } 
     }}
 
@@ -477,6 +420,113 @@ class ShipmentModel
         }catch(Exception $e){
             throw new Exception("Error al crear el estatus");
         }
+    }
+
+
+
+
+
+
+
+    /*__________________________________________________________________
+
+           O  B  T  E  N  E  R    C  O  N  S  T  A  N  T  E  S 
+    __________________________________________________________________*/
+
+    public function getShippingGuidePrice($zone, $service){
+        $precios = null;
+        try{
+            $query = "SELECT precio FROM  Precios WHERE zona = ? AND servicio = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("ss", $zone, $service);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener el precio de la guía");
+        }
+
+        if($result->num_rows > 0){
+            $precios = $result->fetch_assoc();
+            return (float) $precios["precio"];
+        }else{
+            throw new Exception("La zona o el precio no existen");
+        }
+    }
+    
+    public function getInsuranseCost(){
+        try{
+            $query = "SELECT precio_seguro FROM Configuracion_global";
+            $result = $this->conexionDB->query($query);
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener el precio del seguro");
+        }
+        
+            if ($result) {
+                $row = $result->fetch_assoc();
+                return (float) $row['precio_seguro'];
+            } else {
+                return 0;
+            }
+    }
+
+    public function getAdditionalPercentageForFuel(){
+        try{
+            $query = "SELECT cargo_por_combustible FROM Configuracion_global";
+            $result = $this->conexionDB->query($query);
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener el cargo por combustible");
+        }
+
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return (float) $row['cargo_por_combustible'];
+        } else {
+            return 0;
+        }
+    }
+
+
+    public function getPricesForOverweight($zone, $service){
+        try{
+            $query = "SELECT ts.peso_max_amparado, p.medida_aumento_peso, p.precio_aumento
+                      FROM Tipo_servicio AS ts
+                      INNER JOIN Precios AS p ON p.servicio = ts.nombre
+                      WHERE p.zona = ? AND p.servicio = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("ss", $zone, $service);
+            $stmt->execute();
+            $result = $stmt->get_result();
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener el costo por sobrepeso");
+        }
+
+        if ($result->num_rows > 0) {
+            $precios = $result->fetch_assoc();
+            $precios["peso_max_amparado"] = (float) $precios["peso_max_amparado"]; 
+            $precios["precio_aumento"] = (float)  $precios["precio_aumento"]; 
+            $precios["medida_aumento_peso"] = (float) $precios["medida_aumento_peso"];
+            return $precios;
+        } else {
+            throw new Exception("Ocurrio un error al obtener los costos por sobrepeso");
+        }
+       
+    }
+
+
+
+    private function fillOptionalFields($data){
+        if(!isset($data['correo_remitente']))         $data['correo_remitente'] = null;
+        if(!isset($data['telefono_remitente']))       $data['telefono_remitente'] = null;
+        if(!isset($data['numeroInt_remitente']))      $data['numeroInt_remitente'] = null;
+        if(!isset($data['referencias_remitente']))    $data['referencias_remitente'] = null;
+
+        if(!isset($data['correo_destinatario']))      $data['correo_destinatario'] = null;
+        if(!isset($data['telefono_destinatario']))    $data['telefono_destinatario'] = null;
+        if(!isset($data['numeroInt_destinatario']))   $data['numeroInt_destinatario'] = null;
+        if(!isset($data['referencias_destinatario'])) $data['referencias_destinatario'] = null;
+        
+        if(!isset($data['conductor_asignado']))       $data['conductor_asignado'] = null;
+        return $data;
     }
 
 }

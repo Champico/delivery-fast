@@ -4,11 +4,10 @@ Ubicacion:  delivery-fast/backend/index.php
 API REST PHP
 */
 
-include './utils/console-js.php';
-
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost");
 
+require_once __DIR__ . '/config/LoaderEnv.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 

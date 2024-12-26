@@ -1,6 +1,6 @@
 export async function fetchTicket(data) {
     data = {...data, "sucursal": localStorage.getItem("numero_sucursal")}
-    console.log("DATOS QUE SE ENVIAN PARA CREAR EL TICKET GG", JSON.stringify(data))
+    console.log("------------------------------------------------------------------\nDATOS QUE ENVIO PARA CREAR EL TICKET \n---------------------------------------------------------------------\n", JSON.stringify(data))
     try {
         const response = await fetch("http://localhost/delivery-fast/backend/shipment/ticket", {
             method: "POST",
@@ -10,10 +10,16 @@ export async function fetchTicket(data) {
             body: JSON.stringify(data)
         });
 
-        if (!response.ok) console.log("Respuesta del servidor en seco", response);
-
         const responseData = await response.json();
 
+        if (!response.ok){
+            if(responseData.error) return responseData.error;
+            if(response.message) return responseData.message;
+            return {};
+        }
+
+        console.log("------------------------------------------------------------------\nDATOS QUE ENVIO PARA CREAR EL TICKET \n---------------------------------------------------------------------\n", JSON.stringify(data))
+   
         return validateTicket(responseData);
     } catch (error) {
         console.log("El error es", error);
@@ -22,7 +28,7 @@ export async function fetchTicket(data) {
 }
 
 
-function validateTicket(ticket) {
+/*function validateTicket(ticket) {
     if (!ticket || !ticket.ticket) return ticket;
     return { ...ticket };
-}
+}*/

@@ -12,7 +12,6 @@ async function login() {
     password: passwordCasted
   };
 
-  console.log(data);
 
   try {
     const url = "http://localhost/delivery-fast/backend/auth"
@@ -26,15 +25,12 @@ async function login() {
       }
     );
 
-    console.log("LA RESPUESTA DEL SERVIDOR ES", response);
-
     if (!response.ok) {
       throw new Error("Error en la respuesta del servidor");
     }
 
     const dataR = await response.json();
 
-    console.log(dataR);
 
     if (dataR) {
       localStorage.setItem("numero_personal",dataR.session.numero_personal);

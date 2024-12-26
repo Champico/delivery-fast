@@ -114,7 +114,7 @@ function addToDOM(nuevaPagina, page){
 
 
 /* EJECUCIÓN FUNCIONAL */
-
-console.log("Valores del local storage: \n Colaborador:", localStorage.getItem("numero_personal"), "\nRol:", localStorage.getItem("id_rol"), "\nSucursal:", localStorage.getItem("numero_sucursal"),"\nNombre:", localStorage.getItem("nombre"));
+console.log("INICIO"),
+//console.log("Valores del local storage: \n Colaborador:", localStorage.getItem("numero_personal"), "\nRol:", localStorage.getItem("id_rol"), "\nSucursal:", localStorage.getItem("numero_sucursal"),"\nNombre:", localStorage.getItem("nombre"));
 saveMainContainer();
 loadFirstTime();

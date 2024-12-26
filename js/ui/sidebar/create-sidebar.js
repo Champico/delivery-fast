@@ -22,7 +22,6 @@ function createSideBar(){
     if(menu_container){
         menu_container.innerHTML = menu;
     }else{
-        console.log("No se pudo crear");
         throw new Error("No se puedo crear el menu lateral ");
     }
 
