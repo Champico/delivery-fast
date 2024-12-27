@@ -1,4 +1,4 @@
-// delivery-fast/js/api/authSessions.js
+// delivery-fast/app/js/api/authSessions.js
 
 async function login() {
   const username = document.getElementById("numero-personal").value;
@@ -38,7 +38,7 @@ async function login() {
       localStorage.setItem("numero_sucursal",dataR.session.numero_sucursal);
       localStorage.setItem("nombre", dataR.session.nombre);
 
-      window.location.href = "http://localhost/delivery-fast/view/app.html";
+      window.location.href = "http://localhost/delivery-fast/app/home";
     } else {
       alert(dataR.message);
     }
