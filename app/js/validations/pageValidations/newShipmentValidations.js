@@ -1,5 +1,5 @@
 
-import {validateCity, validateEmail, validateNeighborhood, validateName, validateState, validateStreet, validateTelephone, validateZipCode, validateNumExt, validateNumInt, validateHeight, validateWeigth, validateLength, validateWidth, validateDescription, validateService} from '../general/shipment_validations.js'
+import {validateCity, validateEmail, validateNeighborhood, validateName, validateState, validateStreet, validateTelephone, validateZipCode, validateNumExt, validateNumInt, validateHeight, validateWeigth, validateLength, validateWidth, validateDescription, validateService} from '../shipmentValidations.js';
 
 export let errores = 0;
 
@@ -41,8 +41,6 @@ function verifySenderData(){
         validateFieldData(key, value, htmlElements[key]);
     });
 
-    valueElements.estado_remitente = Number(valueElements.estado_remitente);
-
     return errores === 0 ? valueElements : false;
 }
 
@@ -71,8 +69,6 @@ function verifyRecipientData(){
         validateFieldData(key, value, htmlElements[key]);
     });
 
-    valueElements.estado_destinatario = Number(valueElements.estado_destinatario);
-
     return errores === 0 ? valueElements : false;
 }
 
@@ -81,16 +77,16 @@ function validateFieldData(nameField,valueField,htmlElement){
     let idMsg = nameField + "-msg";
 
     switch(split[0]){
-        case 'nombre':   if(manageValidationResponse(validateName(valueField), htmlElement, idMsg)); break;
-        case 'cp':       if(manageValidationResponse(validateZipCode(valueField), htmlElement, idMsg)); break;
-        case 'estado':   if(manageValidationResponse(validateState(valueField), htmlElement, idMsg)); break;
-        case 'ciudad':   if(manageValidationResponse(validateCity(valueField), htmlElement, idMsg)); break;
+        case 'nombre':   if(manageValidationResponse(validateName(valueField),         htmlElement, idMsg)); break;
+        case 'cp':       if(manageValidationResponse(validateZipCode(valueField),      htmlElement, idMsg)); break;
+        case 'estado':   if(manageValidationResponse(validateState(valueField),        htmlElement, idMsg)); break;
+        case 'ciudad':   if(manageValidationResponse(validateCity(valueField),         htmlElement, idMsg)); break;
         case 'colonia':  if(manageValidationResponse(validateNeighborhood(valueField), htmlElement, idMsg)); break;
-        case 'calle':    if(manageValidationResponse(validateStreet(valueField), htmlElement, idMsg)); break;
-        case 'noext':    if(manageValidationResponse(validateNumExt(valueField), htmlElement, idMsg)); break;
-        case 'noint':    if(manageValidationResponse(validateNumInt(valueField), htmlElement, idMsg)); break;
-        case 'correo':   if(manageValidationResponse(validateEmail(valueField), htmlElement, idMsg)); break;
-        case 'telefono': if(manageValidationResponse(validateTelephone(valueField), htmlElement, idMsg)); break;
+        case 'calle':    if(manageValidationResponse(validateStreet(valueField),       htmlElement, idMsg)); break;
+        case 'noext':    if(manageValidationResponse(validateNumExt(valueField),       htmlElement, idMsg)); break;
+        case 'noint':    if(manageValidationResponse(validateNumInt(valueField),       htmlElement, idMsg)); break;
+        case 'correo':   if(manageValidationResponse(validateEmail(valueField),        htmlElement, idMsg)); break;
+        case 'telefono': if(manageValidationResponse(validateTelephone(valueField),    htmlElement, idMsg)); break;
     }
 
 }
@@ -244,7 +240,7 @@ function formatPackageData(data){
         cp_remitente: data["cp-remitente"] || "",
         ciudad_remitente: data["ciudad-remitente"] || "",
         referencias_remitente: data["referencias-remitente"] || "",
-        estado_remitente: parseInt(data["estado-remitente"]) || null,
+        estado_remitente: data["estado-remitente"] || "",
 
         // Destinatario
         nombre_destinatario: data["nombre-destinatario"] || "",
@@ -257,7 +253,6 @@ function formatPackageData(data){
         cp_destinatario: data["cp-destinatario"] || "",
         ciudad_destinatario: data["ciudad-destinatario"] || "",
         referencias_destinatario: data["referencias-destinatario"] || "",
-        estado_destinatario: parseInt(data["estado-destinatario"]) || null,
-
+        estado_destinatario: data["estado-destinatario"] || "",
     };
 }

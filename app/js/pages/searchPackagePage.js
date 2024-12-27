@@ -16,6 +16,3 @@ export async function addFunctionality(){
     return true;
 }
 
-
-
-

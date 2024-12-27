@@ -1,63 +1,72 @@
-import { fetchStates } from "../../api/states.js";
-import { fetchCreateShipment } from "../../api/createShipment.js";
-import { fetchTicket } from "../../api/generateTicket.js";
-import { validateShipmentDataFields, validatePackageDataFields, shipmentsList } from "../../bussines/newShipmentPage/script_s1_validations.js";
-import { changePage } from "../screen-manager.js";
-import { dataNewShipment } from "./dinamic-manager.js";
+import { fetchStates } from "../api/states.js";
+import { fetchCreateShipment } from "../api/createShipment.js";
+import { fetchTicket } from "../api/generateTicket.js";
+import { validateShipmentDataFields, validatePackageDataFields} from "../validations/pageValidations/newShipmentValidations.js";
 
-let states = [];
+let page = null;
+let stateSelectSender = "";
+let stateSelectRecipient = "";
+let dataNewShipment = null;
 
-export const newShipmentPage = {
-    page : null,
-    id_page : "",
-    stateSelectSender : "",
-    stateSelectRecipient : "",
-    async create(){
-        if(!this.page) this.page = await this.createFirstTime();
-        return this.page;
-    },
-    async createFirstTime(){
-        await this.getStates();
-        this.page = this.getTop() + this.getSenderForm() + this.getRecipientForm() + this.getBottom();
-        return this.page;
-    },
-    async getStates(){
-       let states =  await fetchStates();
-        
-        let sender = `
-            <div class="form-group">
-                <label class="input-label" for="estado-destinatario">Estado*</label>
-                <select class="form-select" id="estado-destinatario">`
-        
+export async function getPage(){
+    if(!page) page = await createFirstTime();
+    return page;
+}
 
-        let recipient =`
-            <div class="form-group">
-                <label class="input-label" for="estado-remitente">Estado*</label>
-                <select class="form-select" id="estado-remitente">`
+export async function addFunctionality(){
+    const boton = document.getElementById("btn-ns-p1-siguiente");
+    if(boton){
+        boton.addEventListener('click', getPageStepTwo);
+    }
+    return true;
+}
 
-        let stateSelectOptions = "";
+async function createFirstTime(){
+    await getStates();
+    page = getTop() + getSenderForm() + getRecipientForm() + getBottom();
+    return page;
+}
 
-        states.forEach(state => {
-            stateSelectOptions = stateSelectOptions +`<option value="${state.id_entidad}">${state.nombre}</option>`
-        });
+async function getStates(){
+   let states =  await fetchStates();
+    
+    let sender = `
+        <div class="form-group">
+            <label class="input-label" for="estado-destinatario">Estado*</label>
+            <select class="form-select" id="estado-destinatario">
+            <option value="" disabled selected>Selecciona una opción</option>`
+    
 
-        sender = sender + stateSelectOptions;
-        recipient = recipient + stateSelectOptions;
+    let recipient =`
+        <div class="form-group">
+            <label class="input-label" for="estado-remitente">Estado*</label>
+            <select class="form-select" id="estado-remitente">
+            <option value="" disabled selected>Selecciona una opción</option>`
 
-        sender = sender + `
-                    </select>
-                <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
-            </div>`
+    let stateSelectOptions = "";
 
-        recipient = recipient + `
-                    </select>
-                <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
-            </div>`
+    states.forEach(state => {
+        stateSelectOptions = stateSelectOptions +`<option value="${state.id_entidad}">${state.nombre}</option>`
+    });
 
-        this.stateSelectRecipient = recipient;
-        this.stateSelectSender = sender;
-    },
-    getTop(){
+    sender = sender + stateSelectOptions;
+    recipient = recipient + stateSelectOptions;
+
+    sender = sender + `
+                </select>
+            <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
+        </div>`
+
+    recipient = recipient + `
+                </select>
+            <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
+        </div>`
+
+    stateSelectRecipient = recipient;
+    stateSelectSender = sender;
+}
+
+function getTop(){
         return `<div class="new-shupment-page-header">
                     <h1 class="title-section">Nuevo envío</h1>
                     <Button type="button" class="button btn-siguiente" id="btn-ns-p1-siguiente">Siguiente</Button>
@@ -84,11 +93,13 @@ export const newShipmentPage = {
 
                 <!--Contenido dinamico-->
                 <div class="new-shupment-page-content" id="new-shupment-page-content">`
-    },
-    getBottom(){
-         return `</div>`
-    },
-    getSenderForm(){
+    }
+    
+function getBottom(){
+    return `</div>`
+}
+
+function getSenderForm(){
         return `
                 <div class="form-card form-sender">
                     <h2 class="form-title">Enviar desde</h2>
@@ -104,7 +115,7 @@ export const newShipmentPage = {
                                 <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140">
                                 <span class="input-message input-message-hide" id="cp-remitente-msg"></span>
                             </div>
-                                ${this.stateSelectSender}
+                                ${stateSelectSender}
                             <div class="form-group">
                                 <label class="input-label" for="ciudad-remitente">Ciudad*</label>
                                 <input class="input" type="text" id="ciudad-remitente">
@@ -150,76 +161,76 @@ export const newShipmentPage = {
                     </form>
                 </div>
         `
-    },
-    getRecipientForm(){
-        return `
-                <div class="form-card form-recipient">
-                <h2 class="form-title">Para</h2>
-                <form>
-                    <div class="form-group">
-                        <label class="input-label" for="nombre-destinatario">Nombre*</label>
-                        <input class="input" type="text" id="nombre-destinatario" placeholder="Ingrese el nombre completo del destinatario">
-                        <span class="input-message input-message-hide" id="nombre-destinatario-msg"></span>
-                    </div>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label class="input-label" for="cp-destinatario">Código postal*</label>
-                            <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140">
-                            <span class="input-message input-message-hide" id="cp-destinatario-msg"></span>
-                        </div>
-                        ${this.stateSelectRecipient}
-                        <div class="form-group">
-                            <label class="input-label" for="ciudad-destinatario">Ciudad*</label>
-                            <input class="input" type="text" id="ciudad-destinatario">
-                            <span class="input-message input-message-hide" id="ciudad-destinatario-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-label" for="colonia-destinatario">Colonia*</label>
-                            <input class="input" type="text" id="colonia-destinatario">
-                            <span class="input-message input-message-hide" id="colonia-destinatario-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label" for="calle-destinatario">Calle*</label>
-                        <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente">
-                        <span class="input-message input-message-hide" id="calle-destinatario-msg"></span>
-                    </div>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label class="input-label" for="noext-destinatario">No. ext*</label>
-                            <input class="input" type="text" id="noext-destinatario">
-                            <span class="input-message input-message-hide" id="noext-destinatario-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-label" for="noint-destinatario">No. int</label>
-                            <input class="input" type="text" id="noint-destinatario">
-                            <span class="input-message input-message-hide" id="noint-destinatario-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <label class="input-label" for="correo-destinatario">Correo</label>
-                            <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com">
-                            <span class="input-message input-message-hide" id="correo-destinatario-msg"></span>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-label" for="telefono-destinatario">Teléfono</label>
-                            <input class="input" type="text" id="telefono-destinatario">
-                            <span class="input-message input-message-hide" id="telefono-destinatario-msg"></span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="input-label" for="referencias">Referencias</label>
-                        <textarea class="textarea" id="referencias" rows="3" placeholder="Breve descripción del lugar de destino..."></textarea>
-                        <span class="input-message input-message-hide" id="referencias-destinatario-msg"></span>
-                    </div>
-                </form>
-            </div>
-        `
     }
-}
 
-export function getPageStepTwo() {
+function getRecipientForm(){
+    return `
+        <div class="form-card form-recipient">
+        <h2 class="form-title">Para</h2>
+        <form>
+            <div class="form-group">
+                <label class="input-label" for="nombre-destinatario">Nombre*</label>
+                <input class="input" type="text" id="nombre-destinatario" placeholder="Ingrese el nombre completo del destinatario">
+                <span class="input-message input-message-hide" id="nombre-destinatario-msg"></span>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="input-label" for="cp-destinatario">Código postal*</label>
+                    <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140">
+                    <span class="input-message input-message-hide" id="cp-destinatario-msg"></span>
+                </div>
+                ${stateSelectRecipient}
+                <div class="form-group">
+                    <label class="input-label" for="ciudad-destinatario">Ciudad*</label>
+                    <input class="input" type="text" id="ciudad-destinatario">
+                    <span class="input-message input-message-hide" id="ciudad-destinatario-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label class="input-label" for="colonia-destinatario">Colonia*</label>
+                    <input class="input" type="text" id="colonia-destinatario">
+                    <span class="input-message input-message-hide" id="colonia-destinatario-msg"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="input-label" for="calle-destinatario">Calle*</label>
+                <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente">
+                <span class="input-message input-message-hide" id="calle-destinatario-msg"></span>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="input-label" for="noext-destinatario">No. ext*</label>
+                    <input class="input" type="text" id="noext-destinatario">
+                    <span class="input-message input-message-hide" id="noext-destinatario-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label class="input-label" for="noint-destinatario">No. int</label>
+                    <input class="input" type="text" id="noint-destinatario">
+                    <span class="input-message input-message-hide" id="noint-destinatario-msg"></span>
+                </div>
+            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <label class="input-label" for="correo-destinatario">Correo</label>
+                    <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com">
+                    <span class="input-message input-message-hide" id="correo-destinatario-msg"></span>
+                </div>
+                <div class="form-group">
+                    <label class="input-label" for="telefono-destinatario">Teléfono</label>
+                    <input class="input" type="text" id="telefono-destinatario">
+                    <span class="input-message input-message-hide" id="telefono-destinatario-msg"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="input-label" for="referencias">Referencias</label>
+                <textarea class="textarea" id="referencias" rows="3" placeholder="Breve descripción del lugar de destino..."></textarea>
+                <span class="input-message input-message-hide" id="referencias-destinatario-msg"></span>
+            </div>
+        </form>
+    </div> `
+    }
+
+
+function getPageStepTwo() {
     const boton = document.getElementById("btn-ns-p1-siguiente");
     if (!boton) return;
 
@@ -231,7 +242,7 @@ export function getPageStepTwo() {
         return;
     }
 
-     Object.assign(dataNewShipment, data);
+    Object.assign(dataNewShipment, data);
 
     boton.removeEventListener('click', getPageStepTwo);
     boton.id = "btn-ns-p2-siguiente";
@@ -243,68 +254,68 @@ export function getPageStepTwo() {
 
 function page2() {
     return ` 
-            <div class="form-card form-sender">
-                <h2 class="form-title">Datos del paquete</h2>
-                <form class="form">
-                    <div class="form-inline">
-                        <div class="form-group">
-        
-                            <div class="form-inline">
-                                <div class="form-group">
-                                    <label class="input-label" for="peso-package">Peso*</label>
-                                    <input class="input" type="text" id="peso-package" placeholder="Kg">
-                                    <span class="input-message input-message-hide" id="peso-package-msg"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="input-label" for="largo-package">Largo*</label>
-                                    <input class="input" type="text" id="largo-package" placeholder="Cm">
-                                    <span class="input-message input-message-hide" id="largo-package-msg"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="input-label" for="ancho-package">Ancho*</label>
-                                    <input class="input" type="text" id="ancho-package" placeholder="Cm">
-                                    <span class="input-message input-message-hide" id="ancho-package-msg"></span>
-                                </div>
-                                <div class="form-group">
-                                    <label class="input-label" for="alto-package">Alto*</label>
-                                    <input class="input" type="text" id="alto-package" placeholder="Cm">
-                                    <span class="input-message input-message-hide" id="alto-package-msg"></span>
-                                </div>
+        <div class="form-card form-sender">
+            <h2 class="form-title">Datos del paquete</h2>
+            <form class="form">
+                <div class="form-inline">
+                    <div class="form-group">
+    
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label class="input-label" for="peso-package">Peso*</label>
+                                <input class="input" type="text" id="peso-package" placeholder="Kg">
+                                <span class="input-message input-message-hide" id="peso-package-msg"></span>
                             </div>
                             <div class="form-group">
-                                <label class="input-label" for="service-package">Tipo de servicio*</label>
-                                <select class="filter-selects" name="service-package" id="service-package">
-                                    <option value="" disabled selected>Selecciona una opcion</option>
-                                    <option value="Express">Express</option>
-                                    <option value="Dia-siguiente">Dia siguiente</option>
-                                    <option value="Terrestre">Terrestre</option>
-                                </select>
-                                <span class="input-message input-message-hide" id="service-package-msg"></span>
+                                <label class="input-label" for="largo-package">Largo*</label>
+                                <input class="input" type="text" id="largo-package" placeholder="Cm">
+                                <span class="input-message input-message-hide" id="largo-package-msg"></span>
                             </div>
                             <div class="form-group">
-                                <label class="input-label" for="security-package">Seguro de paquete</label>
-                                <label class="switch">
-                                    <input class="input" type="checkbox" id="security-package">
-                                    <span class="slider round"></span>
-                                </label>
+                                <label class="input-label" for="ancho-package">Ancho*</label>
+                                <input class="input" type="text" id="ancho-package" placeholder="Cm">
+                                <span class="input-message input-message-hide" id="ancho-package-msg"></span>
                             </div>
                             <div class="form-group">
-                                <label class="input-label label-new-info-status" for="new-observation">Contenido</label>
-                                <textarea class="textarea txta-input-new-notes" id="new-observation" placeholder="Describa brevemente el contenido del paquete..."></textarea>
-                                <span class="input-message input-message-hide" id="new-observation-msg"></span>
-                            </div>                          
+                                <label class="input-label" for="alto-package">Alto*</label>
+                                <input class="input" type="text" id="alto-package" placeholder="Cm">
+                                <span class="input-message input-message-hide" id="alto-package-msg"></span>
+                            </div>
                         </div>
                         <div class="form-group">
-                            <img src="../resources/icons/dimensionesFinal.svg" alt="Caja con dimensiones">
+                            <label class="input-label" for="service-package">Tipo de servicio*</label>
+                            <select class="filter-selects" name="service-package" id="service-package">
+                                <option value="" disabled selected>Selecciona una opcion</option>
+                                <option value="Express">Express</option>
+                                <option value="Dia-siguiente">Dia siguiente</option>
+                                <option value="Terrestre">Terrestre</option>
+                            </select>
+                            <span class="input-message input-message-hide" id="service-package-msg"></span>
                         </div>
+                        <div class="form-group">
+                            <label class="input-label" for="security-package">Seguro de paquete</label>
+                            <label class="switch">
+                                <input class="input" type="checkbox" id="security-package">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label class="input-label label-new-info-status" for="new-observation">Contenido</label>
+                            <textarea class="textarea txta-input-new-notes" id="new-observation" placeholder="Describa brevemente el contenido del paquete..."></textarea>
+                            <span class="input-message input-message-hide" id="new-observation-msg"></span>
+                        </div>                          
                     </div>
-                </form>
-            </div>
+                    <div class="form-group">
+                        <img src="resources/icons/dimensionesFinal.svg" alt="Caja con dimensiones">
+                    </div>
+                </div>
+            </form>
+        </div>
             `;
 }
 
 
-export async function getPageStepThree() {
+async function getPageStepThree() {
     const boton = document.getElementById("btn-ns-p2-siguiente");
     if (!boton) return;
 
@@ -334,7 +345,8 @@ async function getDataToGenerateTicket(data){
     const ticket = await fetchTicket(data);
     return ticket;
 }
-  function page3(ticket){
+
+function page3(ticket){
       return(`
       <div class="form-card form-sender" id="form-sender">
             <div id="modal-container">${buildModal(ticket)} </div>
@@ -368,7 +380,7 @@ async function getDataToGenerateTicket(data){
   }
 
 
-  export function pay(){
+  function pay(){
     const boton = document.getElementById("btn-ns-p3-siguiente");
 
     if (!boton) return;

@@ -1,5 +1,5 @@
 export async function fetchCreateShipment(shipmentData) {
-    const url = "http://localhost/delivery-fast/backend/shipment";
+    const url = "http://localhost/backend/shipment";
 
     console.log("Se envia el siguiente archivo: ", JSON.stringify(shipmentData));
     try {

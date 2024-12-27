@@ -176,14 +176,16 @@ sidebar.addEventListener('click', async function(event) {
         "sb-bt-new-shipment" :    "/app/new-shipment",
         "sb-bt-search-shipment" : "/app/search-shipment",
         "sb-bt-earnings" :        "/app/earnings",
-        "sb-bt-package" :         "/app/package",
+        "sb-bt-package" :         "/app/search-package",
         "sb-bt-users" :           "/app/users",
         "sb-bt-about" :           "/app/branch",
         "sb-bt-statistics" :      "/app/statistics"
     }
 
+    console.log("liElement", btnToRoute[liElement.id]);
+
     if (liElement) {
-        await navigateTo(btnToRoute[menuButtons[liElement.id]]);
+        await navigateTo(btnToRoute[liElement.id]);
     }
 });
 }

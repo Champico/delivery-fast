@@ -36,7 +36,7 @@ export function validateState(state) {
   }
 
   if(!isIntegerOfSizeBetween(state,1,2)){
-    return "Seleccione una opcion";
+    return "Seleccione una opción";
   }
 
   return true;

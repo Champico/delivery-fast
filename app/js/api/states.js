@@ -1,6 +1,6 @@
 export async function fetchStates() {
     try {
-        const response = await fetch('http://localhost/delivery-fast/backend/utils/states');
+        const response = await fetch('http://localhost/backend/utils/states');
         
         if (!response.ok) {
             throw new Error('Error al obtener los estados');

@@ -7,13 +7,14 @@ let mainContainer = document.getElementById('content-section');
 const routes = {
     "/app/home":            () => import('./pages/homePage.js'),
     "/app/new-shipment":    () => import('./pages/newShipmentPage.js'),
-    "/app/shipment":        () => import('./pages/shipmentProfilePage.js'),
-    "/app/branch-page" :    () => import('./pages/branchPage.js'),
+    "/app/branch" :         () => import('./pages/branchPage.js'),
     "/app/earnings":        () => import('./pages/earningsPage.js'),
-    "/app/package":         () => import('./pages/packageProfikePage.js'),
     "/app/users":           () => import('./pages/usersPage.js'),
     "/app/search-shipment": () => import('./pages/searchShipmentPage.js'),
-    "/app/search-package":  () => import('./pages/searchPackagePage.js')
+    "/app/search-package":  () => import('./pages/searchPackagePage.js'),
+    "/app/statistics":      () => import('./pages/statisticsPage.js'),
+    "/app/shipment":        () => import('./pages/shipmentProfilePage.js'),
+    "/app/package":         () => import('./pages/packageProfilePage.js')
 };
 
 export const navigateTo = async (url) => {
@@ -23,13 +24,15 @@ export const navigateTo = async (url) => {
 
 const renderContent = async () => {
     const path = window.location.pathname;
-    console.log("Ruta completa:");
-    route = path.substring()
+    const route = routes[path.split("?")[0]];
     if(route){
         const module = await route();
-        const page = module.getPage();
-        mainContainer.innerHTML = html;
+        const page = await module.getPage();
 
+        mainContainer.innerHTML = page;
+
+        const funcionality = await module.addFunctionality();
+        
         const queryParams = new URLSearchParams(window.location.search);
         if(queryParams && path.startsWith("/app/shipment")){
             const shipmentId = queryParams.get("id");

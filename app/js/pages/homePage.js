@@ -11,6 +11,12 @@ export async function getPage() {
   return page;
 }
 
+
+export async function addFunctionality(){
+    console.log('Home Page Functionality');
+    return true;
+}
+
 function getTop() {
   return `<h1 class="title-section">Envíos</h1>
                 <div class="shupment-home-content">
@@ -35,7 +41,7 @@ function getTop() {
                             <option value="No">No</option>
                         </select>
                         <button class="btnClean">
-                            <img class="filter-btnClean" src="../resources/icons/tacho-de-reciclaje.svg" alt="">
+                            <img class="filter-btnClean" src="resources/icons/tacho-de-reciclaje.svg" alt="">
                         </button>
                     </div>`;
 }
@@ -104,7 +110,7 @@ function generateTableRow(data) {
             <td>${ciudad_destino}</td>
             <td>
                 <button class="btnClean">
-                    <img class=filter-btnClean src="../resources/icons/tacho-de-reciclaje.svg" alt="eliminar">
+                    <img class=filter-btnClean src="resources/icons/tacho-de-reciclaje.svg" alt="eliminar">
                 </button>
             </td>
         </tr>`;

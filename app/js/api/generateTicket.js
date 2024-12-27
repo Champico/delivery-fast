@@ -2,7 +2,7 @@ export async function fetchTicket(data) {
     data = {...data, "sucursal": localStorage.getItem("numero_sucursal")}
     console.log("------------------------------------------------------------------\nDATOS QUE ENVIO PARA CREAR EL TICKET \n---------------------------------------------------------------------\n", JSON.stringify(data))
     try {
-        const response = await fetch("http://localhost/delivery-fast/backend/shipment/ticket", {
+        const response = await fetch("http://localhost/backend/shipment/ticket", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

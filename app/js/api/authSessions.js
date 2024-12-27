@@ -14,7 +14,7 @@ async function login() {
 
 
   try {
-    const url = "http://localhost/delivery-fast/backend/auth"
+    const url = "http://localhost/backend/auth"
     const response = await fetch(url,
       {
         method: "POST",
@@ -38,7 +38,7 @@ async function login() {
       localStorage.setItem("numero_sucursal",dataR.session.numero_sucursal);
       localStorage.setItem("nombre", dataR.session.nombre);
 
-      window.location.href = "http://localhost/delivery-fast/app/home";
+      window.location.href = "http://localhost/app/home";
     } else {
       alert(dataR.message);
     }

@@ -1,84 +1,103 @@
 -------------------------------------------------------------------
 Nombre del proyecto: Delivery Fast
 Autores: Edgar Yael Cortes Carrillo y Julio Aldair Morales Romero
-Sistema operativo del servidor: Windows 11
-Dirección: 127.0.0.1 (localhost)
-Puerto: 80
-Tecnologías: PHP, MySQL, HTML, JS, CSS
+Tecnologías: HTML, JS, CSS, PHP, MySQL 
 Manejadores de dependencias: Composer
 Librerias adicionales: JWT
 Ultima modificación: 26/12/2024 12:00 pm
 Métodologia de desarollo: Ninguna
 Dirección del repositorio: https://github.com/Champico/delivery-fast
+ 
+ > Configuración del servidor de desarollo <
+Sistema operativo: Windows 11
+Dirección : 127.0.0.1 (localhost)
+Puerto: 80
+Servidor http: Apache (XAMPP)
 -------------------------------------------------------------------
 
 Estructura del proyecto:
 
-> htdocs/ (Carpeta de XAMPP)
-	> delivery-fast / (carpeta raíz del proyecto)
-		> app/
-			> js/
-				> api/
-					authSession.js
-					createShipment.js
-					generateTicket.js
-					shipmentList.js
-					states.js
-				> components/
-					header.js
-					loadingScreen.js
-					sidebar.js
-				> pages/
-					branchPage.js
-					earningsPage.js
-					homePage.js
-					newShipmentPage.js
-					packageProfilePage.js
-					searchShipmentPage.js
-					shipmentProfilPage.js
-					statisticsPage.js
-					usersPage.js
-				> validations/
-					> pageValidations/
-						newShipmentValidations.js
-					shipmentValidations.js
-					stringValidations.js
-				index.js
-				router.js
-			> resources/
-				> brand/
-				> favicon/
-				> icons/
-				> img/
-				> svg/
-			> styles/
-			> view
-				> temp/
-				
-			app.html
-			info.txt
-		> backend/
-			> config/
-				.env (NO SUBIDO A GIT)
-				conexion-bd.php
-			> controllers
-				ShipmentController.php/
-			> middlewares
-				ValidateJsonMiddleware.php
-			> models
-				ShipmentModel.php
-			> routes
-				ShipmentRoutes.php
-				UserRoutes.php
-			> schemas
-				ShipmentSchema.php
-			.htaccess
-			index.php
-		>sql-scripts
-			cpInyector.php
-			Datos.sql (NO SUBIDO A GIT)
-			info.txt
-		.gitignore
-		Info.txt
-		index.html
-		README.md
+> delivery-fast / (carpeta raíz del proyecto)
+	> app/
+		> js/
+			> api/
+				authSession.js
+				createShipment.js
+				generateTicket.js
+				shipmentList.js
+				states.js
+			> components/
+				header.js
+				loadingScreen.js
+				sidebar.js
+			> pages/
+				branchPage.js
+				earningsPage.js
+				homePage.js
+				newShipmentPage.js
+				packageProfilePage.js
+				searchShipmentPage.js
+				shipmentProfilPage.js
+				statisticsPage.js
+				usersPage.js
+			> validations/
+				> pageValidations/
+					newShipmentValidations.js
+				shipmentValidations.js
+				stringValidations.js
+			index.js
+			router.js
+		> resources/
+			> brand/
+			> favicon/
+			> icons/
+			> img/
+			> svg/
+		> styles/
+		> view
+			> temp/
+			
+		app.html
+		info.txt
+	> backend/
+		> config/
+			.env (NO SUBIDO A GIT)
+			conexion-bd.php
+		> controllers
+			ShipmentController.php/
+		> middlewares
+			ValidateJsonMiddleware.php
+		> models
+			ShipmentModel.php
+		> routes
+			ShipmentRoutes.php
+			UserRoutes.php
+		> schemas
+			ShipmentSchema.php
+		.htaccess
+		index.php
+	>sql-scripts
+		cpInyector.php
+		Datos.sql (NO SUBIDO A GIT)
+		info.txt
+	.gitignore
+	Info.txt
+	index.html
+	README.md
+
+-------------------------------------------------------------------
+
+Congifuración del servidor de desarollo XAMPP:
+
+La carpeta raiz del servidor web fue modificada de htdocs a delivery-fast en el archivo
+C:/xampp/apache/conf/httpd.conf cambiando las lineas:
+
+	DocumentRoot "C:/xampp/htdocs"
+	<Directory "C:/xampp/htdocs">
+
+por las siguientes:
+
+	DocumentRoot "C:/xampp/delivery-fast"
+	<Directory "C:/xampp/delivery-fast">
+
+-------------------------------------------------------------------
