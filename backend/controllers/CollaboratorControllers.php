@@ -1,39 +1,39 @@
 <?php
-// backend/controllers/CollaboratorsControllers.php
+// backend/controllers/CollaboratorController.php
 
-include_once __DIR__ . '/../models/UserModel.php';
+include_once __DIR__ . '/../models/collaboratorModel.php';
 
-class CollaboratorsControllers {
-    private $userModel;
+class CollaboratorController {
+    private $collaboratorModel;
 
-    public function __construct($userModel) {
-        $this->userModel = $userModel;
+    public function __construct($collaboratorModel) {
+        $this->collaboratorModel = $collaboratorModel;
     }
 
-    public function getAllUsersColab() {
+    public function getAllcollaboratorsColab() {
         try{
-            $users = $this->userModel->getAllUsersColab();
-            echo json_encode($users, JSON_UNESCAPED_UNICODE);
+            $collaborators = $this->collaboratorModel->getAllCollaboratorsColab();
+            echo json_encode($collaborators, JSON_UNESCAPED_UNICODE);
         }catch(Exception $e){
             http_response_code(422);
             echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
 
-    public function createUserColab () {
+    public function createcollaboratorColab () {
         $data = json_decode(file_get_contents("php://input"), true);
         error_log("Datos recibidos en el controlador: " . print_r($data, true));
 
-        if ($this->userModel->createUserColab($data)) {
+        if ($this->collaboratorModel->createCollaboratorColab($data)) {
             echo json_encode(['message' => 'Colaborador creado exitosamente']);
         } else {
             echo json_encode(['message' => 'Error al crear el colaborador']);
         }
     }
 
-    public function deleteUserColab($personalNumber) {
+    public function deletecollaboratorColab($personalNumber) {
         try {
-            if ($this->userModel->deleteUserColab($personalNumber)) {
+            if ($this->collaboratorModel->deleteCollaboratorColab($personalNumber)) {
                 echo json_encode(['message' => 'Usuario eliminado exitosamente']);
             } else {
                 http_response_code(404);
@@ -46,20 +46,20 @@ class CollaboratorsControllers {
         
     }
 
-    public function updateUserColab($personalNumber) {
+    public function updatecollaboratorColab($personalNumber) {
         $data = json_decode(file_get_contents("php://input"), true);
-        if ($this->userModel->updateUserColab($personalNumber, $data)) {
+        if ($this->collaboratorModel->updateCollaboratorColab($personalNumber, $data)) {
             echo json_encode(['message' => 'Colaborador actualizado exitosamente']);
         } else {
             echo json_encode(['message' => 'Error al actualizar el colaborador']);
         }
     }
 
-    public function getInfoUserByNumPerso($personalNumber) {
+    public function getInfocollaboratorByNumPerso($personalNumber) {
         try {
-            $user = $this->userModel->getInfoUserByNumPerso($personalNumber);
-            if ($user) {
-                echo json_encode($user, JSON_UNESCAPED_UNICODE);
+            $collaborator = $this->collaboratorModel->getInfoCollaboratorByNumPerso($personalNumber);
+            if ($collaborator) {
+                echo json_encode($collaborator, JSON_UNESCAPED_UNICODE);
             } else {
                 http_response_code(404);
                 echo json_encode(['message' => 'Usuario no encontrado']);
@@ -70,10 +70,10 @@ class CollaboratorsControllers {
         }
     }
 
-    public function searchUsers($searchTerm) {
+    public function searchcollaborators($searchTerm) {
         try {
-            $users = $this->userModel->searchUsers($searchTerm);
-            echo json_encode($users, JSON_UNESCAPED_UNICODE);
+            $collaborators = $this->collaboratorModel->searchCollaborators($searchTerm);
+            echo json_encode($collaborators, JSON_UNESCAPED_UNICODE);
         } catch (Exception $e) {
             http_response_code(422);
             echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);

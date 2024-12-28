@@ -50,6 +50,7 @@ Si estas ejecutando esto en un ambiente local con XAMPP en windows debes realiza
 6.Models 
 7.Middlewares
 8.Schemas 
+9.Composer
 
 _______________________________________________________
 
@@ -62,7 +63,6 @@ _______________________________________________________
 
 2. C  O  N  F  I  G  U  R  A  C  I  O  N 
 _______________________________________________________
-
 2.1 .env
 Un archivo .env (archivo de entorno) es un archivo de texto plano que se utiliza para almacenar variables de entorno que
 configuran y personalizan el comportamiento de una aplicación, como claves de acceso, configuraciones de conexión a bases
@@ -75,7 +75,6 @@ _______________________________________________________
 
 3. I  N  D  E  X 
 _______________________________________________________
-
 El archivo index es la entrada de las solicitudes a el backend, analiza la url enviada y redirige a los routers
 
 
@@ -83,7 +82,6 @@ _______________________________________________________
 
 4. R  O  U  T  E  S
 _______________________________________________________
-
 En la seccion de model van los archivos que redirigen la API REST
 
 
@@ -91,7 +89,6 @@ _______________________________________________________
 
 5. C  O  N  T  R  O  L  L  E  R  S
 _______________________________________________________
-
 En la seccion de controlers van los archivos que reciben los datos o peticiones desde la vista
 Aqui se validan que cumplan con las reglas del negocio
 Posteriormente si lo necesitan llaman a los archivos de model, el cual sólo se encarga de hacer
@@ -102,14 +99,19 @@ _______________________________________________________
 
 6. M O D E L 
 _______________________________________________________
-
-
 En la seccion de model van los archivos que se conectan directamente a la base de datos y realizan
 las operaciones de CRUD
 
 
+_______________________________________________________
 
+6. C O M P O S E R
+_______________________________________________________
+Composer es una herramienta de gestión de dependencias para PHP. Permite declarar las bibliotecas o
+paquetes y las instala y actualiza automáticamente. Asegura que siempre se tenga la versión correcta
+de cada paquete.
 
+Descargado de la página oficial: https://getcomposer.org/
 
 
 

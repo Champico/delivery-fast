@@ -11,9 +11,7 @@ require_once __DIR__ . '/config/LoaderEnv.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-error_log("URL INGRESADA: " .parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
 $uri = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-error_log("Se ha solicitado el recurso: $uri[2]");
 
 $resource = isset($uri[2]) ? $uri[2] : null;
 $action = isset($uri[3]) ? $uri[3] : null;
@@ -21,19 +19,19 @@ $a2 = isset($uri[4]) ? $uri[4] : null;
 
 switch($resource){
     case 'shipment':
-        include_once 'routes/shipmentRoutes.php';
+        include_once 'routes/ShipmentRoutes.php';
         break;
 
-    case 'users' :
-        include_once 'routes/usersRoutes.php';
+    case 'collaborators' :
+        include_once 'routes/CollaboratorsRoutes.php';
         break;
 
     case 'auth':
-        include_once 'routes/authRoutes.php';
+        include_once 'routes/AuthRoutes.php';
         break;
     
     case 'utils':
-        include_once 'routes/utilsRoutes.php';
+        include_once 'routes/UtilsRoutes.php';
         break;
 
     default:

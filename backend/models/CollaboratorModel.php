@@ -1,14 +1,14 @@
 <?php
 
 // backend/models/UserModel.php
-class UserModel {
+class CollaboratorModel {
     private $conexionDB;
 
     public function __construct($conexionDB) {
         $this->conexionDB = $conexionDB;
     }
 
-    public function getUserByNumPerso($numero_personal) {
+    public function getCollaboratorByNumPerso($numero_personal) {
         try {
             $query = "SELECT numero_personal, contrasena, nombre, id_rol, numero_sucursal FROM Colaboradores WHERE numero_personal = ?";
             $stmt = $this->conexionDB->prepare($query);
@@ -29,7 +29,7 @@ class UserModel {
         
     }
 
-    public function getAllUsersColab() {
+    public function getAllCollaboratorsColab() {
         try {
             $query = "
             SELECT 
@@ -54,7 +54,7 @@ class UserModel {
         }
     }
 
-    public function createUserColab($data) {
+    public function createCollaboratorColab($data) {
         if(session_start()){
             $numero_sucursal = $_SESSION['sucursal'];
             if($numero_sucursal === null){
@@ -91,7 +91,7 @@ class UserModel {
         }
     }
     
-    public function deleteUserColab($personalNumber) {
+    public function deleteCollaboratorColab($personalNumber) {
         try {
             $query = "DELETE FROM Colaboradores WHERE numero_personal = ?";
             $stmt = $this->conexionDB->prepare($query);
@@ -102,7 +102,7 @@ class UserModel {
         }
     }
 
-    public function updateUserColab($personalNumber, $data) {
+    public function updateCollaboratorColab($personalNumber, $data) {
         try {
             $query = "UPDATE Colaboradores SET 
                 nombre = ?, 
@@ -130,7 +130,7 @@ class UserModel {
         }
     }
 
-    public function getInfoUserByNumPerso($numero_personal) {
+    public function getInfoCollaboratorByNumPerso($numero_personal) {
         try {
             $query = "SELECT * FROM Colaboradores WHERE numero_personal = ?";
             $stmt = $this->conexionDB->prepare($query);
@@ -151,7 +151,7 @@ class UserModel {
         
     }
 
-    public function searchUsers($searchTerm) {
+    public function searchCollaborators($searchTerm) {
         try {
             $query = "
                 SELECT 

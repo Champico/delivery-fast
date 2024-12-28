@@ -56,30 +56,44 @@ Estructura del proyecto:
 		> styles/
 		> view
 			> temp/
-			
 		app.html
 		info.txt
 	> backend/
 		> config/
 			.env (NO SUBIDO A GIT)
-			conexion-bd.php
-		> controllers
-			ShipmentController.php/
+			ConnDeliveryDB.php
+			ConnZipCodeDB.php
+			LoaderEnv.php
+		> controllers/
+			AuthController.php
+			CollaboratorsControllers.php
+			ShipmentController.php
+			UtilsController.php
+			ZipCodeController.php
 		> middlewares
 			ValidateJsonMiddleware.php
 		> models
 			ShipmentModel.php
+			UserModel.php
+			ZipCodeModel.php
 		> routes
+			AuthRoutes.php
 			ShipmentRoutes.php
-			UserRoutes.php
+			UsersRoutes.php
+			UtilsRoutes.php
 		> schemas
 			ShipmentSchema.php
 		.htaccess
 		index.php
-	>sql-scripts
+		info.txt
+		Terminos y condiciones para generar Costos.txt		
+	> sql-scripts/
 		cpInyector.php
 		Datos.sql (NO SUBIDO A GIT)
 		info.txt
+		MX.txt
+		Script DeliveryFastDB.sql
+		Script ZipCodeDB.sql
 	.gitignore
 	Info.txt
 	index.html
@@ -99,5 +113,10 @@ por las siguientes:
 
 	DocumentRoot "C:/xampp/delivery-fast"
 	<Directory "C:/xampp/delivery-fast">
+
+Configuración de composer:
+
+En windows 11 se descarga el instalador de composer directo de su sitio web y se instala.
+Se inicializa el proyecto dentro de la carpeta /backend
 
 -------------------------------------------------------------------

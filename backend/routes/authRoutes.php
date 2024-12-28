@@ -2,11 +2,11 @@
 
 // backend/routes/authRoutes.php
 
-include_once __DIR__ . '/../controllers/authController.php';
+include_once __DIR__ . '/../controllers/AuthController.php';
 include_once __DIR__ . '/../models/UserModel.php';
 include_once __DIR__ . '/../config/ConnDeliveryDB.php';
 
-$authController = new AuthController(new UserModel(ConnDeliveryDB::getInstance()));
+$authController = new AuthController(new AuthModel(ConnDeliveryDB::getInstance()));
 
 switch ($method) {
     case 'POST':

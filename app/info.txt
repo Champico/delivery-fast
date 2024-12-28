@@ -8,14 +8,60 @@
  |___|                                                                   |___| 
 (_____)-----------------------------------------------------------------(_____)
 
-> > J A V A  S C R I P T  F I L E S < <
-En esta sección van todos los archivos javascript (js) que dan funcionamiento dinámico a la página
+El fronted app es la vista del usuario en el navegador. Esta parte de la aplicación se encarga
+de obtener los datos del usuario y enviarlos a el backend.
 
-> > S T Y L E S < <
-En esta sección van todos los archivos cascade style sheet (css) que le dan color y forma a la página
+ _____                            _____ 
+( ___ )--------------------------( ___ )
+ |   |                            |   | 
+ |   |  __  __ _____ _   _ _   _  |   | 
+ |   | |  \/  | ____| \ | | | | | |   | 
+ |   | | |\/| |  _| |  \| | | | | |   | 
+ |   | | |  | | |___| |\  | |_| | |   | 
+ |   | |_|  |_|_____|_| \_|\___/  |   | 
+ |___|                            |___| 
+(_____)--------------------------(_____)
 
-> > R E S O U R C E S < <
 
+1.Estructura de carpetas
+2.javascript files
+3.styles
+4.resources
+5.view
+
+_______________________________________________________
+
+1.  E S T R U C T U R A   D E   C A R P E T A S 
+_______________________________________________________
+
+
+
+
+
+_______________________________________________________
+
+2. J A V A  S C R I P T  F I L E S
+_______________________________________________________
+En esta sección van todos los archivos javascript (js) que dan funcionamiento dinámico a la página.
+Para esta aplicación se opto por hacer una single page application(SPA) con js vanilla, para esto
+se creo un router rustico que recibe la url de las peticiones GET ya sea declaradas directamente
+en la barra de busquedas o dentro del mismo programa y redirige a una página.
+
+_______________________________________________________
+
+3. S  T  Y  L  E  S
+_______________________________________________________
+En esta sección van todos los archivos cascade style sheet (css) que le dan color y forma a la página.
+Para este proyecto se crearon varios archivos css que forman uno solo en conjunto, se definen estilos
+generales que se aplicaran a todos los componentes, esto nos sirve en dos aspectos, un diseño mas 
+consistente entre páginas y un codigo mas fácil de entender.
+Utilizamos la fuente de roboto importada desde archivos true type font (.ttf);
+
+
+_______________________________________________________
+
+4. R  E  S  O  U  R  C  E  S
+_______________________________________________________
 En la seccion de resources van todos los archivos de multimedia como imagenes, videos, musica, iconos, etc.
 La estructura es la siguiente:
 
@@ -23,5 +69,9 @@ brand > En esta carpeta van las imagenes de los logos de la empresa
 img > Imagenes de bits (.jpg, .png, .webp) que se utilizan en la interfaz grafica
 svg > Imagenes vectoriales (.svg) que se utilizan en la interfaz grafica
 
-> > view < <
+
+_______________________________________________________
+
+5. V  I  E  W 
+_______________________________________________________
 Aqui van todos los archivos de tipo hipertext (html) que le dan estructura a la página

@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function loadUsers() {
     const userList = document.getElementById('user-table-body');
 
-    fetch('http://localhost/delivery-fast/backend/users', {
+    fetch('http://localhost/backend/users', {
         method: 'GET'
     })
     .then(response => {
@@ -171,7 +171,7 @@ function setupModalEvents() {
 }
 
 function createUser(data) {
-    fetch('http://localhost/delivery-fast/backend/users', {
+    fetch('http://localhost/backend/users', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -193,7 +193,7 @@ function createUser(data) {
 }
 
 function updateUser(personalNumber, data) {
-    fetch(`http://localhost/delivery-fast/backend/users/${personalNumber}`, {
+    fetch(`http://localhost/backend/users/${personalNumber}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -254,7 +254,7 @@ function deleteUserPreAction(){
 function deleteUser(selectedUser){
     const personalNumber = selectedUser;
 
-    fetch(`http://localhost/delivery-fast/backend/users/${personalNumber}`, {
+    fetch(`http://localhost/backend/users/${personalNumber}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -288,7 +288,7 @@ function editUserPreAction(){
 }
 
 function loadUserDataInModal(personalNumber) {
-    fetch(`http://localhost/delivery-fast/backend/users/${personalNumber}`, {
+    fetch(`http://localhost/backend/users/${personalNumber}`, {
         method: 'GET',
     })
     .then((response) => {
@@ -320,7 +320,7 @@ function searchUser() {
         return;
     }
 
-    fetch(`http://localhost/delivery-fast/backend/users?search=${encodeURIComponent(searchInput)}`, {
+    fetch(`http://localhost/backend/users?search=${encodeURIComponent(searchInput)}`, {
         method: 'GET'
     })
     .then(response => {
