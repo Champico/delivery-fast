@@ -186,8 +186,6 @@ export function validatePackageDataFields(){
         valueElementsCorrect[key] = validateFieldDataPackage(key, value, htmlElements[key]);
     });
 
-    console.log("Datos secos", valueElementsCorrect)
-
     return errores === 0 ? formatPackageData(valueElementsCorrect) : false;
 }
 

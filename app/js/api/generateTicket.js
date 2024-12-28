@@ -1,6 +1,5 @@
 export async function fetchTicket(data) {
-    data = {...data, "sucursal": localStorage.getItem("numero_sucursal")}
-    console.log("------------------------------------------------------------------\nDATOS QUE ENVIO PARA CREAR EL TICKET \n---------------------------------------------------------------------\n", JSON.stringify(data))
+    console.log("La informacion que se envia al backend es: ", data);
     try {
         const response = await fetch("http://localhost/backend/shipment/ticket", {
             method: "POST",
@@ -11,24 +10,15 @@ export async function fetchTicket(data) {
         });
 
         const responseData = await response.json();
-
         if (!response.ok){
             if(responseData.error) return responseData.error;
-            if(response.message) return responseData.message;
-            return {};
+            if(responseData.message) return responseData.message;
+            return "Ocurrio un error del servidor";
         }
-
-        console.log("------------------------------------------------------------------\nDATOS QUE ENVIO PARA CREAR EL TICKET \n---------------------------------------------------------------------\n", JSON.stringify(data))
-   
-        return validateTicket(responseData);
+        console.log("La información que llega ",responseData);
+        return responseData;
+        
     } catch (error) {
-        console.log("El error es", error);
-        return {}
+        return "Ocurrio un error del servidor";
     }
 }
-
-
-/*function validateTicket(ticket) {
-    if (!ticket || !ticket.ticket) return ticket;
-    return { ...ticket };
-}*/

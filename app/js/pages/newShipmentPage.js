@@ -6,7 +6,7 @@ import { validateShipmentDataFields, validatePackageDataFields} from "../validat
 let page = null;
 let stateSelectSender = "";
 let stateSelectRecipient = "";
-let dataNewShipment = null;
+let dataNewShipment = {};
 
 export async function getPage(){
     if(!page) page = await createFirstTime();
@@ -46,7 +46,7 @@ async function getStates(){
     let stateSelectOptions = "";
 
     states.forEach(state => {
-        stateSelectOptions = stateSelectOptions +`<option value="${state.id_entidad}">${state.nombre}</option>`
+        stateSelectOptions = stateSelectOptions +`<option value="${state.clave}">${state.nombre}</option>`
     });
 
     sender = sender + stateSelectOptions;
@@ -67,32 +67,32 @@ async function getStates(){
 }
 
 function getTop(){
-        return `<div class="new-shupment-page-header">
-                    <h1 class="title-section">Nuevo envío</h1>
-                    <Button type="button" class="button btn-siguiente" id="btn-ns-p1-siguiente">Siguiente</Button>
-                </div>
-
-
-                <div class="new-shupment-wizard">
-                    <div class="wizard-step-container wsc-datos-envio">
-                        <div class="wizard-step wizard-step-selected ws-datos-envio">
-                            <span class="newStepButtonLabel">Datos de envío</span>
-                        </div>
-                    </div>
-                    <div class="wizard-step-container wsc-datos-paquete">
-                        <div class="wizard-step ws-datos-paquete">
-                            <span class="newStepButtonLabel">Datos de paquete</span>
-                        </div>
-                    </div>
-                    <div class="wizard-step-container wsc-datos-pago">
-                        <div class="wizard-step ws-datos-pago">
-                            <span class="newStepButtonLabel">Datos de pago</span>
-                        </div>
+    return `<div class="new-shupment-page-header">
+                <h1 class="title-section">Nuevo envío</h1>
+                <Button type="button" class="button btn-siguiente" id="btn-ns-p1-siguiente">Siguiente</Button>
+            </div>
+    
+    
+            <div class="new-shupment-wizard">
+                <div class="wizard-step-container wsc-datos-envio">
+                    <div class="wizard-step wizard-step-selected ws-datos-envio">
+                        <span class="newStepButtonLabel">Datos de envío</span>
                     </div>
                 </div>
-
-                <!--Contenido dinamico-->
-                <div class="new-shupment-page-content" id="new-shupment-page-content">`
+                <div class="wizard-step-container wsc-datos-paquete">
+                    <div class="wizard-step ws-datos-paquete">
+                        <span class="newStepButtonLabel">Datos de paquete</span>
+                    </div>
+                </div>
+                <div class="wizard-step-container wsc-datos-pago">
+                    <div class="wizard-step ws-datos-pago">
+                        <span class="newStepButtonLabel">Datos de pago</span>
+                    </div>
+                </div>
+            </div>
+        
+            <!--Contenido dinamico-->
+            <div class="new-shupment-page-content" id="new-shupment-page-content">`
     }
     
 function getBottom(){
@@ -100,67 +100,66 @@ function getBottom(){
 }
 
 function getSenderForm(){
-        return `
-                <div class="form-card form-sender">
-                    <h2 class="form-title">Enviar desde</h2>
-                    <form class="form">
-                        <div class="form-group">
-                            <label class="input-label" for="nombre-remitente">Nombre*</label>
-                            <input class="input" type="text" id="nombre-remitente" placeholder="Ingrese el nombre completo del remitente">
-                            <span class="input-message input-message-hide" id="nombre-remitente-msg"></span>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label class="input-label" for="cp-remitente">Código postal*</label>
-                                <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140">
-                                <span class="input-message input-message-hide" id="cp-remitente-msg"></span>
-                            </div>
-                                ${stateSelectSender}
-                            <div class="form-group">
-                                <label class="input-label" for="ciudad-remitente">Ciudad*</label>
-                                <input class="input" type="text" id="ciudad-remitente">
-                                <span class="input-message input-message-hide" id="ciudad-remitente-msg"></span>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="colonia-remitente">Colonia*</label>
-                                <input class="input" type="text" id="colonia-remitente">
-                                <span class="input-message input-message-hide" id="colonia-remitente-msg"></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="input-label" for="calle-remitente">Calle*</label>
-                            <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente">
-                            <span class="input-message input-message-hide" id="calle-remitente-msg">Hola</span>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label class="input-label" for="noext-remitente">No. ext*</label>
-                                <input class="input" type="text" id="noext-remitente">
-                                <span class="input-message input-message-hide" id="noext-remitente-msg"></span>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="noint-remitente">No. int</label>
-                                <input class="input" type="text" id="noint-remitente">
-                                <span class="input-message input-message-hide" id="noint-remitente-msg"></span>
-                            </div>
-                            <div class="form-group"> </div>
-                            <div class="form-group"> </div>
-                        </div>
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label class="input-label" for="correo-remitente">Correo</label>
-                                <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com">
-                                <span class="input-message input-message-hide" id="correo-remitente-msg"></span>
-                            </div>
-                            <div class="form-group">
-                                <label class="input-label" for="telefono-remitente">Teléfono</label>
-                                <input class="input" type="text" id="telefono-remitente">
-                                <span class="input-message input-message-hide" id="telefono-remitente-msg"></span>
-                            </div>
-                        </div>
-                    </form>
+    return `
+        <div class="form-card form-sender">
+            <h2 class="form-title">Enviar desde</h2>
+            <form class="form">
+                <div class="form-group">
+                    <label class="input-label" for="nombre-remitente">Nombre*</label>
+                    <input class="input" type="text" id="nombre-remitente" placeholder="Ingrese el nombre completo del remitente">
+                    <span class="input-message input-message-hide" id="nombre-remitente-msg"></span>
                 </div>
-        `
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="input-label" for="cp-remitente">Código postal*</label>
+                        <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140">
+                        <span class="input-message input-message-hide" id="cp-remitente-msg"></span>
+                    </div>
+                        ${stateSelectSender}
+                    <div class="form-group">
+                        <label class="input-label" for="ciudad-remitente">Ciudad*</label>
+                        <input class="input" type="text" id="ciudad-remitente">
+                        <span class="input-message input-message-hide" id="ciudad-remitente-msg"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="colonia-remitente">Colonia*</label>
+                        <input class="input" type="text" id="colonia-remitente">
+                        <span class="input-message input-message-hide" id="colonia-remitente-msg"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="input-label" for="calle-remitente">Calle*</label>
+                    <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente">
+                    <span class="input-message input-message-hide" id="calle-remitente-msg">Hola</span>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="input-label" for="noext-remitente">No. ext*</label>
+                        <input class="input" type="text" id="noext-remitente">
+                        <span class="input-message input-message-hide" id="noext-remitente-msg"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="noint-remitente">No. int</label>
+                        <input class="input" type="text" id="noint-remitente">
+                        <span class="input-message input-message-hide" id="noint-remitente-msg"></span>
+                    </div>
+                    <div class="form-group"> </div>
+                    <div class="form-group"> </div>
+                </div>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label class="input-label" for="correo-remitente">Correo</label>
+                        <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com">
+                        <span class="input-message input-message-hide" id="correo-remitente-msg"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="input-label" for="telefono-remitente">Teléfono</label>
+                        <input class="input" type="text" id="telefono-remitente">
+                        <span class="input-message input-message-hide" id="telefono-remitente-msg"></span>
+                    </div>
+                </div>
+            </form>
+        </div>`
     }
 
 function getRecipientForm(){
@@ -242,7 +241,7 @@ function getPageStepTwo() {
         return;
     }
 
-    Object.assign(dataNewShipment, data);
+    dataNewShipment = {...dataNewShipment, ...data};
 
     boton.removeEventListener('click', getPageStepTwo);
     boton.id = "btn-ns-p2-siguiente";
@@ -310,8 +309,7 @@ function page2() {
                     </div>
                 </div>
             </form>
-        </div>
-            `;
+        </div>`;
 }
 
 
@@ -320,36 +318,37 @@ async function getPageStepThree() {
     if (!boton) return;
 
     boton.disabled = true;
-    let data = validatePackageDataFields();
+    let dataOfPackage = validatePackageDataFields();
 
-    if (data === false) {
+    if (dataOfPackage === false) {
         boton.disabled = false;
         return;
     }
-
-    const dataToSend = {...data, "cp_destinatario" : dataNewShipment.cp_destinatario };
-    let ticketData = await getDataToGenerateTicket(dataToSend);
-
-  Object.assign(dataNewShipment, ticketData);
-
+    
+    dataOfPackage = {...dataOfPackage, "sucursal": localStorage.getItem("numero_sucursal"), "colaborador": localStorage.getItem("numero_personal")};
+    dataNewShipment = {...dataNewShipment, ...dataOfPackage};
+    
+    let ticketData = await generatePreviewTicket({...dataOfPackage , "cp_destinatario": dataNewShipment.cp_destinatario});
+    ticketData = ticketData.ticket;
+ 
     boton.removeEventListener('click', getPageStepThree);
     boton.innerHTML = "Pagar";
     boton.id = "btn-ns-p3-siguiente";
     boton.addEventListener('click', pay);
     boton.disabled = false;
 
-    document.getElementById("new-shupment-page-content").innerHTML = page3(ticketData.ticket);
+    document.getElementById("new-shupment-page-content").innerHTML = page3(ticketData);
 }
 
-async function getDataToGenerateTicket(data){
-    const ticket = await fetchTicket(data);
+async function generatePreviewTicket(data){
+    let ticket = await fetchTicket(data);
     return ticket;
 }
 
 function page3(ticket){
       return(`
       <div class="form-card form-sender" id="form-sender">
-            <div id="modal-container">${buildModal(ticket)} </div>
+            <div id="modal-container">${buildCashModal(ticket)} </div>
           <h2 class="form-title">Desglose</h2>
           <div class="table-container-shipment">
               <table class="details-shipment">
@@ -389,41 +388,36 @@ function page3(ticket){
     boton.disabled = true;
     boton.removeEventListener('click', pay);
 
-    let datosAEnviar = dataNewShipment;
-    datosAEnviar.ticket.metodo_de_pago = "Efectivo";
-
-    showModalPayment();
-
+    showModalCashPayment();
     boton.disabled = false;
   }
 
 
 
   function buildTicket(ticket){
-
     let rows = "";
-    
+
     if(ticket.conceptos_ticket){
-        Object.entries(ticket.conceptos_ticket).forEach(([key, value]) => {
-            const nombre = key.replace(/_/g, ' ');
+        ticket.conceptos_ticket.forEach((concepto) =>{
+            const description = concepto.descripcion ? concepto.descripcion.replace(/_/g, ' ') : "";
+            const value = concepto.valor ? concepto.valor : ""; 
             rows = rows + `<tr>
-                <td>${nombre}</td>
+                <td>${description}</td>
                 <td>${value}</td>
             </tr>`
         });
     }
-
     return rows;
   }
 
 
 
-  function buildModal(ticket){
-    return `<div class="body-modal modal-hide" id="paymentModal">
+  function buildCashModal(ticket){
+    return `<div class="body-modal modal-hide" id="payment-cash-modal">
         <div id="userModal" class="modal">
             <div class="modal-content-small">
                 <div class="form-group-modal">
-                    <div class="head-title-modal-container -charge">
+                    <div class="head-title-modal-container">
                         <h1 class="title-modal-user">COBRAR (EFECTIVO)</h1>
                     </div>                    
                 </div>
@@ -431,51 +425,81 @@ function page3(ticket){
                 <div class="form-group-modal">
 
                     <div class="form-group-modal price-total-container">
-                        <h1 class="price-total">$<span class="price-total">${ticket.total}</span></h1>
+                        <h1 class="price-total">$<span class="price-total" id="price-total">${ticket.total}</span></h1>
                     </div>
 
                     <div class="form-inline-modal">
-                        <label class="input-label input-label-modal" for="">Paga con</label>
-                        <input class="input input-modal" id="cash-input" value=${ticket.total} type="text" name="" id="" placeholder="">
+                        <label class="input-label input-label-modal" for="cash-input">Paga con</label>
+                        <input type="number" class="input input-modal" id="cash-input" value=${ticket.total} name="cash-input" placeholder="Ingrese una cantidad">
                     </div>
 
+                    <span class="input-message input-message-hide" id="cash-msg"></span>
+                    
                     <div class="form-inline-modal">
-                        <label class="input-label input-label-modal" for="">Cambio</label>
+                        <p class="input-label input-label-modal" >Cambio</label>
                         <p class="p-cambio">$
-                            <span class="span-cambio">0</span>
+                            <span class="span-cambio" id="span-cambio">0</span>
                         </p>
                     </div>
                 </div>
                 <div class="button-group-modal">
-                    <button class="btnCobrar" id="btnCobrar">Cobrar</button>
+                    <button class=" button btn-cobrar" id="btn-cobrar">Cobrar</button>
                 </div>
             </div>
         </div>
     </div>`
   }
 
+  function showModalCashPayment(){
+    const paymentCashModal = document.getElementById("payment-cash-modal");
+    const inputCashModel = document.getElementById("cash-input");
+    const botonModal = document.getElementById("btn-cobrar");
 
-  function showModalPayment(){
-    const modal = document.getElementById("paymentModal");
-    const botonModal = document.getElementById("btnCobrar");
-
-    if(modal){
-        if (modal.classList.contains("modal-hide")) {
-            modal.classList.remove("modal-hide");
-        }
-    }else{
-        return false;
-    }
-
-    if(botonModal){
-        botonModal.addEventListener('click',createShipment);
-    }else{
-        return false;
-    }
+    
+    if(!paymentCashModal || !inputCashModel || !botonModal ) return false;
+    
+    if (paymentCashModal.classList.contains("modal-hide")) paymentCashModal.classList.remove("modal-hide");
+    inputCashModel.addEventListener('input', calculateChange);
+    botonModal.addEventListener('click',createShipmentWithCash);
+   
+    console.log("Se completo la creacion del modal de pago en efectivo");
     return true;
   }
 
-  function hideModalPayment(){
+  function calculateChange() {
+    const total = document.getElementById("price-total").innerHTML;
+    const inputCash = document.getElementById("cash-input");
+    const spanChange = document.getElementById("span-cambio");
+    const boton = document.getElementById("btn-cobrar");
+    const msg = document.getElementById("cash-msg");
+    const regexValido = /^[0-9]+(\.[0-9]+)?$/;
+
+
+    if (!total || !inputCash || !spanChange || !boton || !msg) return;
+    if(!inputCash.value || inputCash.value === ".") return;
+    if(regexValido.test(inputCash.value) === false) inputCash.value = inputCash.value.replace(/e|E|\+|\-/g, "");
+    
+    const cash = parseFloat(inputCash.value);
+    const change = cash - total;
+
+    if (change < 0) {
+        msg.innerHTML = "El monto debe ser mayor al total";
+        if(msg.classList.contains("input-message-hide")){
+            msg.classList.remove("input-message-hide");
+            console.log("Se quito la clase");
+        }
+        boton.disabled = true;
+        spanChange.innerHTML = "0";
+    } else {
+        msg.innerHTML = "";
+        if(!msg.classList.contains("input-message-hide")) msg.classList.add("input-message-hide");
+        boton.disabled = false;
+        spanChange.innerHTML = change.toFixed(2);
+    }
+}
+
+
+  function hideModalCashPayment(){
     const modal = document.getElementById("paymentModal");
 
     if(modal){
@@ -486,40 +510,42 @@ function page3(ticket){
     }
   }
 
-async function createShipment(){
+async function createShipmentWithCash(){
 
     try{
         let dataShipment = dataNewShipment;
-        dataShipment = {...dataShipment, "sucursal": localStorage.getItem("numero_sucursal"), "colaborador": localStorage.getItem("numero_personal")}
-        newShipment = await fetchCreateShipment(dataShipment);
 
-        if(newShipment === false){
+        const cash = parseFloat(document.getElementById("cash-input").value);
+        if(!cash || cash < dataNewShipment.total) return;
+
+        dataShipment = {...dataShipment, "metodo_de_pago": "Efectivo", "pago_con": cash};
+        const newShipment = await fetchCreateShipment(dataShipment);
+
+        if(!newShipment){
             alert("Error de conexión");
             return;
         }
         
-        hideModalPayment();
+        hideModalCashPayment();
 
-        const modalExito = buildModal2(newShipment);
         const parent = document.getElementById("modal-container");
-
-        if(parent){
-            parent.add(modalExito);
-        }
+        if(parent) parent.innerHTML+= buildModalShipmentCreated(newShipment);
 
         const boton = document.getElementById("btnTerminar");
+        
+        console.log("depuracion  4");
 
-        if(boton){
-            boton.addEventListener('click', changePage("sb-bt-home"))
-        }
+        if(boton) boton.addEventListener('click', () => {  window.location.href = "http://localhost/app/home"; });
+        
+            console.log("depuracion  5");
 
     }catch(e){
-        alert("Error de conexión")
+        alert(e.message);
     }
 }
 
 
-function buildModal2(shipment) {
+function buildModalShipmentCreated(shipment) {
     return `<div class="body-modal">
     <div id="userModal" class="modal">
         <div class="modal-content">

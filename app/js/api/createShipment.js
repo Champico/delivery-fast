@@ -10,14 +10,16 @@ export async function fetchCreateShipment(shipmentData) {
             },
             body: JSON.stringify(shipmentData)
         });
-
-        if (!response.ok) {
-            console.log("El error es el siguiente: ", await response.json())
+        
+        const responseData = await response.json();
+        if (!response.ok){
+            if(responseData.error) throw new Error(responseData.error);
+            if(responseData.message) throw new Error(responseData.message);
         }
+        console.log("Se ha creado el envio: ", responseData);
+        return responseData;
 
-        const data = await response.json();
-        return data;
     } catch (error) {
-        console.log("El errore es ", error)
+        throw new Error(error.message);
     }
 }
