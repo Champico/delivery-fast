@@ -1,0 +1,624 @@
+/**
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+   | |   ____  _____ _     _____     _______ ______   __  _____ _    ____ _____   ____ _______   ___     _____   | |  
+   | |  |  _ \| ____| |   |_ _\ \   / / ____|  _ \ \ / / |  ___/ \  / ___|_   _| / ___|_   _\ \ / / |   | ____|  | |  
+   | |  | | | |  _| | |    | | \ \ / /|  _| | |_) \ V /  | |_ / _ \ \___ \ | |   \___ \ | |  \ V /| |   |  _|    | |  
+   | |  | |_| | |___| |___ | |  \ V / | |___|  _ < | |   |  _/ ___ \ ___) || |    ___) || |   | | | |___| |___   | |  
+   | |  |____/|_____|_____|___|  \_/  |_____|_| \_\|_|   |_|/_/   \_\____/ |_|   |____/ |_|   |_| |_____|_____|  | |  
+   | |                                                                                                           | |  
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+
+    Nombre del archivo: general-styles.css
+    
+    Descripcion: El siguiente archivo contiene los estilos generales de la aplicación "Delivery Fast",
+    como el encabezado, el menu lateral y los contenedores basicos
+    
+    Estructura del archivo:
+    - Global variables
+    - Header
+    - Main section
+    - Sidebar
+    - Content section
+*/
+
+
+
+
+
+/*__________________________________________________  
+        
+        G L O B A L  V A R I A B L E S 
+____________________________________________________ 
+*/
+:root {
+    --brand-orange-color: #FFAC13;; /* Color principal */
+    --orange-color-higth-contrast: #dd9000; /* Color principal con mayor contraste con la letra blanca */
+    --input-error: #D0021B; /* Color de los mensaje de error en los input */
+}
+
+* {
+    font-family: 'Roboto';
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;    
+}
+
+
+/*__________________________________________________  
+         
+        H    E   A   D   E   R  
+____________________________________________________ 
+*/
+
+/* Fondo de la barra superior */
+header{
+    background-color: var(--orange-color-higth-contrast);
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Contenedor del logo de la empresa*/
+.container-logo{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    width: auto;
+    height: 50px;
+    margin: 0px;
+    padding: 0px;
+    flex: 1;
+}
+
+/* Logo de la empresa*/
+.logo-extendido{
+    width: 420px;
+    filter: brightness(0) invert(1);
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor del icono del menu*/
+.nav-menu{
+    display: flex;
+    align-items: center;
+}
+
+/* Icono del menu*/
+.menu-icon{
+    width: 50px;
+    padding: 5px;
+    cursor: pointer;
+    filter: invert(100%);
+}
+
+/* Contenedor de la informacion del usuario*/
+.user-info-container{
+    display: flex;
+    align-items: center;
+    gap:10px;
+    color: white;
+}
+
+/* Texto de informacion del usuario*/
+.user-rol{
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+}
+
+/* Icono de perfil de usuario*/
+.user-logo{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit:cover;
+    background-color: #f5f5f5;
+    padding: 2px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+
+/*__________________________________________________  
+         
+        M  A  I  N    S  E  C  T  I  O  N  
+____________________________________________________ 
+*/
+
+/* Contenedor principal, abajo del header*/
+.main-container{
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
+}
+
+
+
+
+/*__________________________________________________  
+         
+            S   I   D   E   B   A   R   
+____________________________________________________ 
+*/
+
+/* Contenedor del menu lateral*/
+.sidebar-menu-container{
+    width: 215px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding:0;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* Sección/Modulo dentro del menu */
+.sidebar-card{
+    width: 215px;
+    background-color: #ffffff;
+    padding: 10px 13px;
+    flex-direction: column;
+    box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Modulo del boton de crear nuevio envio*/
+.module-create{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Modulo de envios*/
+.module-shupment{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modulo de paquetes */
+.module-packet{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Modulo de empty y administracion*/
+.module-empty, .module-admin{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.last-module{
+    height: 100vh;
+    flex: 1;
+}
+
+/* Estilo de las listas dentro del menu*/
+.cardSideBar ul{
+    list-style: none;
+    padding: 0;
+}
+
+/* Boton de crear nuevo envío*/
+.new-shupment-btn{
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 60px;
+    padding: 0 10px 0 3px; /* TOP RIGTH BOTTOM LEFT*/
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.1s ease;
+    box-shadow: 2px 1px 5px rgba(0, 0, 0, 0.4);
+    transition: box-shadow background-color 0.5s ease;
+}
+
+/* Boton de crear nuevo envío con el mouse encima */
+.new-shupment-btn:hover{
+    background-color: #ECEBEB;
+    box-shadow: 4px 2px 7px rgba(0, 0, 0, 0.4);
+}
+
+/* Imagen del boton de crear nuevo envío*/
+.new-shupment-btn-icon{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: contain;
+    padding: 0px;
+    margin-right: 10px;
+}
+
+/* Titulo de seccion/Modulo del menu*/
+.list-title{
+    color: #cfcfcf;
+    font-family: 'Roboto', sans-serif;
+    margin: 2px;
+    display: flex;
+    align-items: center;
+}
+
+/* Elemento/Item de el menu*/
+.sidebar-item-li{
+    background-color: transparent;
+    list-style: none;
+    margin-bottom: 3px;
+    padding: 10px;
+    text-align: start;
+    width: 170px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+/* Elemento/Item del menu con el mouse encima*/
+.sidebar-item-li:hover{
+    background-color: #ECEBEB;
+}
+
+/* Elemento/item link del menu */
+.sidebar-item-a{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+/* Icono de cada elemento*/
+.sidebar-item-icon{
+    margin-right: 10px;
+    padding: 0;
+    width: 26px;
+    height: 26px;
+    text-align:start;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-item-icon-car{
+    width: 34px;
+    height: 34px;
+}
+
+.buttonsContainer{
+    margin: 5px;
+    padding: 5px;
+}
+
+/* Boton seleccionado */
+.sidebar-item-li-selected{
+    background-color: #ffe9c8;
+    border-radius: 10px;
+}
+
+.sidebar-item-li-selected:hover{
+    background-color: #f8d5a0;
+}
+
+.sidebar-item-li-selected .sidebar-item-icon{
+    fill: var(--orange-color-higth-contrast);
+}
+
+
+
+
+
+/*__________________________________________________  
+         
+        C O N T E N T   S E C T I O N  
+____________________________________________________ 
+*/
+
+/* Seccion de contenido */
+.content-section{
+    flex: 1;
+    padding: 20px;
+    margin: 0px;
+    overflow-y: scroll;
+}
+
+/* Titulo de sección*/
+.title-section{
+    display: flex;
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+    color:#373737;
+}
+
+/*__________________________________________________  
+         
+            H  O  M  E    P  A  G  E  
+____________________________________________________ 
+*/
+
+/* Sección de envíos*/
+.shupment-home-content{
+    background-color: white;
+    border-radius: 20px;
+    width: 100%;
+    height: 100vh;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+
+
+/*__________________________________________________  
+         
+        N  E  W     S  H  U  P  M  E  N  T  
+____________________________________________________ 
+*/
+
+/* Seccion de nuevo envío */
+.new-shupment-page-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Header de pagina de nuevo envío*/
+.new-shupment-page-header{
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Wizard */
+.new-shupment-wizard{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    margin-bottom: 20px;
+}
+
+/* Paso del wizard: Contenedor*/
+.wizard-step-container {
+    position: relative;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Paso del wizard */
+.wizard-step{
+    /* Forma */
+    height: 60px;
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 15% 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* Estilo */
+    background: #ffffff;
+    transition: filter 0.3s ease;
+    font-family: 'Roboto', sans-serif;
+    font-size: 19px;
+    font-weight: 200;
+    color: #504E4E;
+    cursor: pointer;
+
+    /* Posicionamiento */
+    position: relative;
+    z-index: 3;
+}
+
+/* Segundo paso del wizar de los datos del paquete*/
+.ws-datos-envio{
+    width: 235px;
+    left: 0px;
+}
+
+/* Segundo paso del wizar de los datos del paquete*/
+.ws-datos-paquete{
+    width: 235px;
+    left: -18px;
+}
+
+/* Tercer paso del wizard de los datos del pago */
+.ws-datos-pago{
+    width: 235px;
+    left: -36px;
+}
+
+/*  Paso del wizard: Seleccionado*/
+.wizard-step-selected{
+    background-color: #FFD79A;
+}
+
+/* Paso del wizard: Mouse encima */
+.wizard-step:hover{
+    filter: brightness(0.9);
+}
+
+/* Paso del wizard: Contendor sombra */
+.wizard-step-container::before {
+    content: "";
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%, 15% 50%);
+    background: rgba(0, 0, 0, 0.25);
+    filter: blur(4px);
+    z-index: 1;
+}
+
+/* Primer paso: sombra*/
+.wsc-datos-envio::before{
+    left: 0px;
+}
+
+/* Segundo paso: sombra*/
+.wsc-datos-paquete::before{
+    left: -18px;
+}
+
+/* Tercer paso: : sombra */
+.wsc-datos-pago::before{
+    left: -36px;
+}
+
+/*__________________________________________________  
+         
+        I N F O  C O N T A I N E R
+____________________________________________________ 
+*/
+
+.info-details-content{
+    padding: 30px;
+}
+
+.about-button-container{
+    display: flex;
+    justify-content: end;
+}
+
+
+/*_______________________________________________________________________________  
+         
+        S H I P M E N T  I N F O  D E T A I L S  C O N T A I N E R  S T Y L E S
+_________________________________________________________________________________
+*/
+
+.title-container,.edit-status-shipment,.shipping-information{
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    gap: 20px;
+}
+
+.shipping-information{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+}
+
+.container-p-span-info p{
+    margin: 5px;
+    margin-left: 0px;
+}
+
+/*_______________________________________________________________________________  
+         
+        D E L I V E R Y  V I E W  C O N T A I N E R
+_________________________________________________________________________________
+*/
+
+.shupment-home-guide-view{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    overflow-y: none;
+}
+
+
+/* Estilo del contenedor */
+.guide-input-container {
+    background-color: #ffe5cc; /* Fondo naranja claro */
+    border-radius: 8px;
+    padding: 20px;
+    width: 400px;
+    margin: 0 auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Título */
+.guide-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Campo de entrada */
+.guide-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Botón */
+.guide-button {
+    background-color: #ffa726; /* Naranja */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button.button.guide-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.guide-button:hover {
+    background-color: #fb8c00; /* Más oscuro al pasar el mouse */
+}
+
+.isSelectedItemTable {
+    background-color:#ffa726 ;
+}
+
+
+
+
+/* */
+.empty-data-message{
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #474747;
+}

@@ -1,8 +1,6 @@
 RewriteEngine On
 
-# Si la solicitud es para un archivo o directorio existente, no redirigir
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 
-# Redirigir todas las solicitudes al archivo index.php
 RewriteRule ^(.*)$ index.php [QSA,L]

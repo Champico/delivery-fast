@@ -1,9 +1,9 @@
 <?php
 // backend/controllers/authController.php
 
+include_once(__DIR__ . '/../middlewares/validateJsonMiddleware.php');
 
 session_start();
-include_once __DIR__ . '/../config/conexion-bd.php';
 
 class AuthController {
 
@@ -14,7 +14,7 @@ class AuthController {
     }
 
     public function login() {
-        $inputData = json_decode(file_get_contents("php://input"), true);
+        $inputData =  validateJsonMiddleware();
         $numero_personal = $inputData['username'] ?? '';
         $password = $inputData['password'] ?? '';
 
@@ -33,12 +33,12 @@ class AuthController {
                 $_SESSION['role'] = $stmt['id_rol'];
                 $_SESSION['sucursal'] =$stmt['numero_sucursal'];
                 
-                echo json_encode(['success' => true, 'message' => 'Inicio de sesión exitoso.']);
+                echo json_encode(['success' => true, 'session' => $stmt]);
             } else {
-                echo json_encode(['success' => false, 'message' => 'Contraseña incorrecta.']);
+                echo json_encode(['success' => false, 'message' => 'Contraseña incorrecta.'],JSON_UNESCAPED_UNICODE);
             }
         } else {
-            echo json_encode(['success' => false, 'message' => 'Usuario no encontrado.']);
+            echo json_encode(['success' => false, 'message' => 'Usuario no encontrado.'],JSON_UNESCAPED_UNICODE);
         }
     }
 }

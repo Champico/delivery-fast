@@ -1,3 +1,22 @@
 > > S Q L - S C R I P T S < <
 
-En la seccion de sql scripts van los archivos .sql para crear y consultar la base de datos en mysql.
+En la seccion de sql scripts van los archivos .sql para crear la base de datos en mysql.
+
+Información:
+
+1. Script DeliveryFastDB.sql
+Este archivo contiene el script para crear la base de datos mysql principal
+En esta contiene los datos de las sucursales, los colaboradores y los envios.
+
+2. Script ZipCodeDB.sql
+Este archivo contiene el script para crear la base de datos que contiene los
+codigos postales relacionados con el nombre de la colonia y sus coordenadas
+latitud y longitud decimales.
+
+3.cpInyector.php
+Este archivo vuelca los datos del archivo MX.txt que contiene la información de
+los codigos postales, el nombre de las colonias y sus coordenadas latitud y longitud
+decimales
+
+4. MX.txt
+Contiene la información de los codigos postales

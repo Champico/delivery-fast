@@ -1,1 +1,3 @@
 #Aqui van los archivos que no queremos que se suban al repositorio :)
+backend\config\.env
+sql-scripts\Datos.sql

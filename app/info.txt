@@ -1,0 +1,27 @@
+ _____                                                                   _____ 
+( ___ )-----------------------------------------------------------------( ___ )
+ |   |  _____ ____   ___  _   _ _____ _____ ____       _    ____  ____   |   | 
+ |   | |  ___|  _ \ / _ \| \ | |_   _| ____|  _ \     / \  |  _ \|  _ \  |   | 
+ |   | | |_  | |_) | | | |  \| | | | |  _| | | | |   / _ \ | |_) | |_) | |   | 
+ |   | |  _| |  _ <| |_| | |\  | | | | |___| |_| |  / ___ \|  __/|  __/  |   | 
+ |   | |_|   |_| \_\\___/|_| \_| |_| |_____|____/  /_/   \_\_|   |_|     |   | 
+ |___|                                                                   |___| 
+(_____)-----------------------------------------------------------------(_____)
+
+> > J A V A  S C R I P T  F I L E S < <
+En esta sección van todos los archivos javascript (js) que dan funcionamiento dinámico a la página
+
+> > S T Y L E S < <
+En esta sección van todos los archivos cascade style sheet (css) que le dan color y forma a la página
+
+> > R E S O U R C E S < <
+
+En la seccion de resources van todos los archivos de multimedia como imagenes, videos, musica, iconos, etc.
+La estructura es la siguiente:
+
+brand > En esta carpeta van las imagenes de los logos de la empresa
+img > Imagenes de bits (.jpg, .png, .webp) que se utilizan en la interfaz grafica
+svg > Imagenes vectoriales (.svg) que se utilizan en la interfaz grafica
+
+> > view < <
+Aqui van todos los archivos de tipo hipertext (html) que le dan estructura a la página
