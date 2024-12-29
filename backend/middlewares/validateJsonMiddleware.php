@@ -7,7 +7,6 @@ function validateJsonMiddleware(){
  if (json_last_error() !== JSON_ERROR_NONE) {
      http_response_code(400);
      echo json_encode([
-         "error" => true,
          "message" => "El cuerpo de la solicitud no contiene un JSON válido."
      ]);
      exit;

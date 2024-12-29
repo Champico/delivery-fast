@@ -33,11 +33,11 @@ class CollaboratorModel {
         try {
             $query = "
             SELECT 
-                c.numero_personal, 
-                c.nombre, 
+                c.numero_personal,
+                c.nombre,
                 r.nombre_rol AS rol,
-                c.telefono, 
-                c.correo 
+                c.telefono,
+                c.correo
             FROM 
                 Colaboradores c
             JOIN 
@@ -132,7 +132,19 @@ class CollaboratorModel {
 
     public function getInfoCollaboratorByNumPerso($numero_personal) {
         try {
-            $query = "SELECT * FROM Colaboradores WHERE numero_personal = ?";
+            $query = "SELECT SELECT 
+                c.numero_personal,
+                c.nombre,
+                r.nombre_rol AS rol,
+                c.telefono,
+                c.correo
+            FROM 
+                Colaboradores c
+            JOIN 
+                roles r ON c.id_rol = r.id_rol
+            WHERE 
+                numero_personal = ?";
+
             $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param("s", $numero_personal);
             $stmt->execute();

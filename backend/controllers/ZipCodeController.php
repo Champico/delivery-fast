@@ -63,7 +63,7 @@ class ZipCodeController{
 
     private function getCoordinatesGoogle($zipCode){
         try{
-            $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipCode."&key=".getenv('GOOGLE_API_KEY');
+            $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$zipCode."&key=".$_ENV['GOOGLE_API_KEY'];
             $response = file_get_contents($url);
             $response = json_decode($response, true);
             return $response;

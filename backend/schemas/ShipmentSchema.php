@@ -3,116 +3,222 @@
 
 class ShipmentSchema
 {
-    public static function validateNewShipmentSchema(array $data): array
+    public static $maxWeight = 69;
+    public static $maxLength = 200;
+    public static $maxWidth = 200;
+    public static $maxHeight = 150;
+    public static $maxMoney = 9999999;
+
+    public static function validateDataToCreateShipment($data)
     {
         $errors = [];
+        
+        if(empty($data) || !is_array($data)){
+            $errors[] = "Debe enviar los datos necesarios";
+            return $errors;
+        }
 
+        foreach (
+            [
+                "sucursal" => "Ingrese la sucursal",
+                "colaborador" => "Ingrese el número de personal del colaborador",
+                "peso" => "Ingrese el peso",
+                "largo" => "Ingrese el largo",
+                "ancho" => "Ingrese el ancho",
+                "alto" => "Ingrese el alto",
+                "servicio" => "Ingrese el tipo de servicio",
+                "seguro" => "Ingrese si el paquete tiene seguro",
+                "metodo_de_pago" => "Ingrese el método de pago",
+
+                "nombre_remitente" => "Ingrese el nombre del remitente",
+                "calle_remitente" => "Ingrese la calle del remitente",
+                "numeroExt_remitente" => "Ingrese el numero exterior del remitente",
+                "colonia_remitente" => "Ingrese la colonia del remitente",
+                "cp_remitente" => "Ingrese el código postal del remitente",
+                "ciudad_remitente" => "Ingrese la ciudad del remitente",
+                "estado_remitente" => "Ingrese el estado del remitente",
+
+                "nombre_destinatario" => "Ingrese el nombre del destinatario",
+                "calle_destinatario" => "Ingrese la calle del destinatario",
+                "numeroExt_destinatario" => "Ingrese el numero exterior del destinatario",
+                "colonia_destinatario" => "Ingrese la colonia del destinatario",
+                "cp_destinatario" => "Ingrese el código postal del destinatario",
+                "ciudad_destinatario" => "Ingrese la ciudad del destinatario",
+                "estado_destinatario" => "Ingrese el estado del destinatario",
+            ] as $key => $errorMessage
+        ) {
+            if (!isset($data[$key])) {
+                $errors[] = $errorMessage;
+            }
+        }
+
+        if(!empty($errors)) return $errors;
+
+        $errValidation = ShipmentSchema::validateShipment($data);
+        $errors = [...$errors, ...(is_array($errValidation) ? $errValidation : [])];
+
+        if(!empty($errors)) return $errors;
+        return false;
+    }
+
+    public static function validateDataToModifiedShipment() {
+
+        if(empty($data) || is_array($data)){
+            $errors[] = "Debe enviar los datos necesarios";
+            return $errors;
+        }
+
+        foreach (
+            [
+                "guia" => "Ingrese la guía",
+                "sucursal" => "Ingrese la sucursal",
+                "colaborador" => "Ingrese el número de personal del colaborador",
+            ] as $key => $errorMessage
+        ) {
+            if (!isset($data[$key])) {
+                $errors[] = $errorMessage;
+            }
+        }
+        return $errors;
+    }
+
+    private static function validateShipment($data)
+    {
+        $errors = [];
         $isNumericString = fn($value) => is_string($value) && ctype_digit($value);
-        $isDecimal = fn($value, $min, $max) => is_numeric($value) && $value >= $min && $value <= $max;
+        $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
 
-        if (!isset($data['sucursal']) || !$isNumericString($data['sucursal']) || strlen($data['sucursal']) !== 5) {
-            $errors[] = "Sucursal debe ser un string numérico de exactamente 5 caracteres.";
+        foreach
+        (
+            [
+                "sucursal" => [5, "La clave de la sucursal debe ser un número de 5 dígitos"],
+                "colaborador" => [6, "El número de personal del colaborador debe ser de 6 dígitos"],
+                "guia" => [15, "La guía debe ser de 15 dígitos"],
+                "conductor_asignado" => [6, "El número de personal del conductor asignado debe ser de 6 dígitos"]
+            ] as $key => [$length, $errorMessage]
+        ){
+            if (isset($data[$key]) && !$isNumericStringOfLength($data[$key], $length)){
+                $errors[] = $errorMessage;
+            }
         }
-
-        if (isset($data['colaborador']) && (!$isNumericString($data['colaborador']) || strlen($data['colaborador']) !== 6)) {
-            $errors[] = "Colaborador debe ser un string numérico de exactamente 6 caracteres.";
+        
+        if(isset($data['folio']) && !$isNumericString($data['folio'])){
+            $errors[] = "El folio debe ser un número";
         }
 
         foreach (
             [
-                'peso' => [0, 69, 'Peso debe ser un número decimal entre 0 y 69.'],
-                'largo' => [0, 200, 'Largo debe ser un número decimal entre 0 y 200.'],
-                'ancho' => [0, 200, 'Ancho debe ser un número decimal entre 0 y 200.'],
-                'alto' => [0, 150, 'Alto debe ser un número decimal entre 0 y 150.'],
-                'costo' => [0, INF, 'Costo debe ser un número decimal.'],
-                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'], 
-                'cambio' => [0, INF, 'El cambio debe ser un número decimal.']
-            ] as $key => [$min, $max, $errorMessage]
+                'peso' => [0, ShipmentSchema::$maxWeight, 'Peso debe ser un número decimal','El peso no puede ser negativo', "El peso no puede ser mayor a " . ShipmentSchema::$maxWeight . " kg"],
+                'largo' => [0, ShipmentSchema::$maxLength, 'Largo debe ser un número decimal', 'El largo no puede ser negativo', "El largo no puede ser mayor a " . ShipmentSchema::$maxLength . " cm"],
+                'ancho' => [0, ShipmentSchema::$maxWidth, 'Ancho debe ser un número decimal', 'El ancho no puede ser negativo', "El ancho no puede ser mayor a " . ShipmentSchema::$maxWidth . " cm"],
+                'alto' => [0, ShipmentSchema::$maxHeight, 'Alto debe ser un número decimal', 'El alto no puede ser negativo', "El alto no puede ser mayor a " . ShipmentSchema::$maxHeight . " cm"],
+                'costo' => [0, ShipmentSchema::$maxMoney, 'Costo debe ser un número decimal', 'El costo no puede ser negativo', "El costo no puede ser mayor a " . ShipmentSchema::$maxMoney . " $"],
+                'pago_con' => [0, ShipmentSchema::$maxMoney, 'El pago debe ser un número decimal', 'El pago no puede ser negativo', "El pago no puede ser mayor a " . ShipmentSchema::$maxMoney . " $"],
+            ] as $key => [$min, $max, $errorMessageNotDecimal, $errorMessageLessThanAllowed, $errorMessageMoreThanAllowed]
         ) {
-            if (isset($data[$key]) && !$isDecimal($data[$key], $min, $max)) {
-                $errors[] = $errorMessage;
+            if (isset($data[$key])) {
+                if(!is_numeric($data[$key])){
+                    $errors[] = $errorMessageNotDecimal;
+                    continue;
+                }
+                if((float)$data[$key] < $min){
+                    $errors[] = $errorMessageLessThanAllowed;
+                    continue;
+                }
+                if((float)$data[$key] > $max){
+                    $errors[] = $errorMessageMoreThanAllowed;
+                }
             }
+
+            if(empty($errors)) return null;
+            return $errors;
         }
 
         foreach (
             [
-                'contenido' => [255, 'Contenido debe ser un string de máximo 255 caracteres.'],
-                'tipo' => [50, 'Tipo debe ser un string de máximo 50 caracteres.'],
-                'servicio' => [50, 'Servicio debe ser un string de máximo 50 caracteres.'],
-                'nombre_remitente' => [255, 'Nombre del remitente debe ser un string de máximo 255 caracteres.'],
-                'correo_remitente' => [255, 'Correo del remitente debe ser un string de máximo 255 caracteres.'],
-                'telefono_remitente' => [13, 'Teléfono del remitente debe ser un string de máximo 13 caracteres.'],
-                'calle_remitente' => [50, 'Calle del remitente debe ser un string de máximo 50 caracteres.'],
-                'numeroExt_remitente' => [10, 'Número exterior del remitente debe ser un string de máximo 10 caracteres.'],
-                'numeroInt_remitente' => [10, 'Número interior del remitente debe ser un string de máximo 10 caracteres.'],
-                'colonia_remitente' => [50, 'Colonia del remitente debe ser un string de máximo 50 caracteres.'],
-                'ciudad_remitente' => [50, 'Ciudad del remitente debe ser un string de máximo 50 caracteres.'],
-                'referencias_remitente' => [255, 'Referencias del remitente debe ser un string de máximo 255 caracteres.'],
-                'nombre_destinatario' => [255, 'Nombre del destinatario debe ser un string de máximo 255 caracteres.'],
-                'correo_destinatario' => [255, 'Correo del destinatario debe ser un string de máximo 255 caracteres.'],
-                'telefono_destinatario' => [13, 'Teléfono del destinatario debe ser un string de máximo 13 caracteres.'],
-                'calle_destinatario' => [50, 'Calle del destinatario debe ser un string de máximo 50 caracteres.'],
-                'numeroExt_destinatario' => [10, 'Número exterior del destinatario debe ser un string de máximo 10 caracteres.'],
-                'numeroInt_destinatario' => [10, 'Número interior del destinatario debe ser un string de máximo 10 caracteres.'],
-                'colonia_destinatario' => [50, 'Colonia del destinatario debe ser un string de máximo 50 caracteres.'],
-                'ciudad_destinatario' => [50, 'Ciudad del destinatario debe ser un string de máximo 50 caracteres.'],
-                'referencias_destinatario' => [255, 'Referencias del destinatario debe ser un string de máximo 255 caracteres.'],
-            ] as $key => [$maxLength, $errorMessage]
+                'contenido' => [255, 'Contenido debe tener máximo 255 caracteres', 'Contenido debe ser una cadena de caracteres'],
+                'tipo' => [50, 'Tipo debe tener máximo 50 caracteres', 'Tipo debe ser una cadena de caracteres'],
+                'servicio' => [50, 'Servicio debe tener máximo 50 caracteres', 'Servicio debe ser una cadena de caracteres'],
+                'nombre_remitente' => [255, 'Nombre del remitente debe tener máximo 255 caracteres', 'Nombre del remitente debe ser una cadena de caracteres'],
+                'correo_remitente' => [255, 'Correo del remitente debe tener máximo 255 caracteres', 'Correo del remitente debe ser una cadena de caracteres'],
+                'telefono_remitente' => [13, 'Teléfono del remitente debe tener máximo 13 caracteres', 'Teléfono del remitente debe ser una cadena de caracteres'],
+                'calle_remitente' => [50, 'Calle del remitente debe tener máximo 50 caracteres', 'Calle del remitente debe ser una cadena de caracteres'],
+                'numeroExt_remitente' => [10, 'Número exterior del remitente debe tener máximo 10 caracteres', 'Número exterior del remitente debe ser una cadena de caracteres'],
+                'numeroInt_remitente' => [10, 'Número interior del remitente debe tener máximo 10 caracteres', 'Número interior del remitente debe ser una cadena de caracteres'],
+                'colonia_remitente' => [50, 'Colonia del remitente debe tener máximo 50 caracteres', 'Colonia del remitente debe ser una cadena de caracteres'],
+                'ciudad_remitente' => [50, 'Ciudad del remitente debe tener máximo 50 caracteres', 'Ciudad del remitente debe ser una cadena de caracteres'],
+                'referencias_remitente' => [255, 'Referencias del remitente debe tener máximo 255 caracteres', 'Referencias del remitente debe ser una cadena de caracteres'],
+                'nombre_destinatario' => [255, 'Nombre del destinatario debe tener máximo 255 caracteres', 'Nombre del destinatario debe ser una cadena de caracteres'],
+                'correo_destinatario' => [255, 'Correo del destinatario debe tener máximo 255 caracteres', 'Correo del destinatario debe ser una cadena de caracteres'],
+                'telefono_destinatario' => [13, 'Teléfono del destinatario debe tener máximo 13 caracteres', 'Teléfono del destinatario debe ser una cadena de caracteres'],
+                'calle_destinatario' => [50, 'Calle del destinatario debe tener máximo 50 caracteres', 'Calle del destinatario debe ser una cadena de caracteres'],
+                'numeroExt_destinatario' => [10, 'Número exterior del destinatario debe tener máximo 10 caracteres', 'Número exterior del destinatario debe ser una cadena de caracteres'],
+                'numeroInt_destinatario' => [10, 'Número interior del destinatario debe tener máximo 10 caracteres', 'Número interior del destinatario debe ser una cadena de caracteres'],
+                'colonia_destinatario' => [50, 'Colonia del destinatario debe tener máximo 50 caracteres', 'Colonia del destinatario debe ser una cadena de caracteres'],
+                'ciudad_destinatario' => [50, 'Ciudad del destinatario debe tener máximo 50 caracteres', 'Ciudad del destinatario debe ser una cadena de caracteres'],
+                'referencias_destinatario' => [255, 'Referencias del destinatario debe tener máximo 255 caracteres', 'Referencias del destinatario debe ser una cadena de caracteres'],
+            ] as $key => [$maxLength, $errorMessageMoreLengthThanAllowed, $errorMessageNotString]
         ) {
-            if (isset($data[$key]) && (!is_string($data[$key]) || strlen($data[$key]) > $maxLength)) {
-                $errors[] = $errorMessage;
+            if (isset($data[$key])){
+                if(!is_string($data[$key])){
+                    $errors[] = $errorMessageNotString;
+                    continue;
+                }
+                if(strlen($data[$key]) > $maxLength){
+                    $errors[] = $errorMessageMoreLengthThanAllowed;
+                    continue;
+                }
+                if(strlen($data[$key]) < 1){
+                    $errors[] = "Ingrese el campo " . $key;
+                }
             }
         }
 
-        if (isset($data['cp_remitente']) && (!$isNumericString($data['cp_remitente']) || strlen($data['cp_remitente']) !== 5)) {
-            $errors[] = "El código postal del remitente debe tener 5 digitos";
+        foreach(
+            [
+                "cp_remitente" => ["El código postal del remitente deber ser un número", "El código postal del remitente debe tener 5 digitos"], 
+                "cp_destinatario" => ["El código postal del destinatario debe ser un número", "El código postal del destinatario debe tener 5 digitos"]
+            ] as $key => [$errorMessageNotInteger, $errorMessageLengthNotAllowed]
+        ){
+            if (isset($data[$key])){
+                if(!$isNumericString($data[$key])){
+                    $errors[] = $errorMessageNotInteger;
+                    continue;
+                }
+                if(strlen($data[$key]) !== 5){
+                    $errors[] = $errorMessageLengthNotAllowed;
+                }
+            }
         }
 
-        if (isset($data['cp_destinatario']) && (!$isNumericString($data['cp_destinatario']) || strlen($data['cp_destinatario']) !== 5)) {
-            $errors[] = "El código postal del destinatario debe tener 5 digitos";
-        }
-
-        if (isset($data['estado_destinatario']) && (!$isNumericString($data['estado_destinatario']) || strlen($data['estado_destinatario']) !== 2)) {
-            $errors[] = "El codigo del estado del destinatario debe estar entre 01 y 32.";
-        }
-
-        if (isset($data['estado_remitente']) && (!$isNumericString($data['estado_remitente']) || strlen($data['estado_remitente']) !== 2)) {
-            $errors[] = "El codigo del estado del remitente debe estar entre 01 y 32.";
+        foreach
+        (
+            [
+                "estado_remitente" => ["El estado del remitente debe ser la clave de entidad el cual es en formato númerico","La clave del estado del remitente debe ser 01 y 32" ],
+                "estado_destinatario" => ["El estado del destinatario debe ser la clave de entidad el cual es en formato númerico", "La clave del estado del remitente debe ser 01 y 32"]
+            ] as $key => [$errorMessageNotInteger, $errorMessageNotValidState]
+        ){
+            if(isset($data[$key])){
+                if(!$isNumericString($data[$key])){
+                    $errors[] = $errorMessageNotInteger;
+                    continue;
+                }
+                if((float) $data[$key] < 1 || (float) $data[$key] >32){
+                    $errors = $errorMessageNotValidState;
+                }
+            }
         }
 
         if (isset($data['seguro']) && !is_bool($data['seguro'])) {
             $errors[] = "Seguro debe ser un booleano.";
         }
 
-        if (isset($data['ticket']) && is_array($data['ticket'])) {
-            $ticket = $data['ticket'];
-
-            if (isset($ticket['total']) && !$isDecimal($ticket['total'], 0, INF)) {
-                $errors[] = "El total del ticket debe ser un número decimal.";
-            }
-
-            if (isset($ticket['metodo_de_pago']) && !in_array($ticket['metodo_de_pago'], ['Efectivo', 'Tarjeta de debito'], true)) {
-                $errors[] = "El método de pago debe ser 'Efectivo' o 'Tarjeta de debito'.";
-            }
-
-            if (isset($ticket['conceptos_ticket']) && is_array($ticket['conceptos_ticket'])) {
-                foreach ($ticket['conceptos_ticket'] as $concepto) {
-                    if (isset($concepto['nombre']) && (!is_string($concepto['nombre']) || strlen($concepto['nombre']) > 255)) {
-                        $errors[] = "El nombre de un concepto del ticket debe ser un string de máximo 255 caracteres.";
-                    }
-
-                    if (isset($concepto['valor']) && !$isDecimal($concepto['valor'], 0, INF)) {
-                        $errors[] = "El valor de un concepto del ticket debe ser un número decimal.";
-                    }
-                }
-            }
+        if (isset($ticket['metodo_de_pago']) && !in_array($ticket['metodo_de_pago'], ['Efectivo', 'Tarjeta de débito'], true)) {
+            $errors[] = "El método de pago debe ser 'Efectivo' o 'Tarjeta de débito'.";
         }
 
         return $errors;
     }
-
-
-
 
     public static function validateDataToTicket($data)
     {
@@ -121,7 +227,7 @@ class ShipmentSchema
         $isNumericString = fn($value) => is_string($value) && ctype_digit($value);
         $isDecimal = fn($value, $min, $max) => is_numeric($value) && $value >= $min && $value <= $max;
 
-        
+
         if (!isset($data['sucursal']) || !$isNumericString($data['sucursal']) || strlen($data['sucursal']) !== 5) {
             $errors[] = "Sucursal debe ser un string numérico de exactamente 5 caracteres.";
         }
@@ -133,7 +239,7 @@ class ShipmentSchema
                 'ancho' => [0, 200, 'Ancho debe ser un número decimal entre 0 y 200.'],
                 'alto' => [0, 150, 'Alto debe ser un número decimal entre 0 y 150.'],
                 'costo' => [0, INF, 'Costo debe ser un número decimal.'],
-                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'], 
+                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'],
                 'cambio' => [0, INF, 'El cambio debe ser un número decimal.']
             ] as $key => [$min, $max, $errorMessage]
         ) {

@@ -48,14 +48,15 @@ class ShipmentController
     public function create()
     {
         $data = validateJsonMiddleware();
-        $error = ShipmentSchema::validateNewShipmentSchema($data);
+        $error = ShipmentSchema::validateDataToCreateShipment($data);
 
-        if ($error && sizeof($error) > 0) {
+        if ($error && is_array($error) && sizeof($error) > 0) {
             http_response_code(422);
-            echo json_encode($error, JSON_UNESCAPED_UNICODE);
+            echo json_encode([
+                "message" => "Error al validar los datos", 
+                "details" => $error], JSON_UNESCAPED_UNICODE);
             exit();
         }
-
 
             try {
                 $data["ticket"] = $this->getTicketPrivate($data);
@@ -67,7 +68,6 @@ class ShipmentController
                 unset($data["metodo_de_pago"]);
 
                 if($data["ticket"]["metodo_de_pago"]=== "Efectivo" ){
-                    if(!isset($data["pago_con"])) throw new Exception("En los pagos en efectivo debe ingresar un monto con el que paga");
                     $data["ticket"]["pago_con"] = (float) $data["pago_con"];
                     unset($data["pago_con"]);
                     if(isset($data["cambio"])) unset($data["cambio"]);

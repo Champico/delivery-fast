@@ -1,0 +1,19 @@
+{
+    "name": "delivery-fast/backend",
+    "description": "Servidor de delivery-fast",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "DeliveryFast\\Backend\\": "backend/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Edgar Yael Cortes Carrillo y Julio Aldair Morales Romero"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "vlucas/phpdotenv": "5.6"
+    }
+}

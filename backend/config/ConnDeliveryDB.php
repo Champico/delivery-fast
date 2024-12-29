@@ -19,15 +19,13 @@ class ConnDeliveryDB
     }
 
     private function initializeConnection(){
-        $direccion = getenv('DATABASE_HOST');
-        $nombreBD = getenv('DATABASE_NAME');
-        $usuario = getenv('DATABASE_USER');
-        $password = getenv('DATABASE_PASSWORD');
+        $direccion = $_ENV['DATABASE_HOST'];
+        $nombreBD = $_ENV['DATABASE_NAME'];
+        $usuario = $_ENV['DATABASE_USER'];
+        $password = $_ENV['DATABASE_PASSWORD'];
 
-        if (!$direccion || !$nombreBD || !$usuario || !$password) {
-            throw new Exception("Error al conectar al servidor de datos de Delivery fast");
-        }
-
+        if (!$direccion || !$nombreBD || !$usuario || !$password) throw new Exception("Error al conectar al servidor de datos de Delivery fast");
+        
         $this->connection = new mysqli($direccion, $usuario, $password, $nombreBD);
 
         if ($this->connection->connect_error) {

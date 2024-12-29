@@ -18,14 +18,12 @@ class ConnZipCodeDB
     }
 
     private function initializeConnection(){
-        $direccion = getenv('DATABASE_HOST');
-        $nombreBD = getenv('DATABASE2_NAME');
-        $usuario = getenv('DATABASE_USER');
-        $password = getenv('DATABASE_PASSWORD');
+        $direccion = $_ENV['DATABASE_HOST'];
+        $nombreBD = $_ENV['DATABASE2_NAME'];
+        $usuario = $_ENV['DATABASE_USER'];
+        $password = $_ENV['DATABASE_PASSWORD'];
 
-        if (!$direccion || !$nombreBD || !$usuario || !$password) {
-            throw new Exception("Servicio denegado por falta de credenciales");
-        }
+        if (!$direccion || !$nombreBD || !$usuario || !$password) throw new Exception("Servicio denegado por falta de credenciales");
 
         $this->connection = new mysqli($direccion, $usuario, $password, $nombreBD);
 
