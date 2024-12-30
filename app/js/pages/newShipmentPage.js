@@ -2,6 +2,7 @@ import { fetchStates } from "../api/states.js";
 import { fetchCreateShipment } from "../api/createShipment.js";
 import { fetchTicket } from "../api/generateTicket.js";
 import { validateShipmentDataFields, validatePackageDataFields} from "../validations/pageValidations/newShipmentValidations.js";
+import { fetchServices } from "../api/services.js";
 
 let page = null;
 let stateSelectSender = "";
@@ -16,7 +17,7 @@ export async function getPage(){
 export async function addFunctionality(){
     const boton = document.getElementById("btn-ns-p1-siguiente");
     if(boton){
-        boton.addEventListener('click', getPageStepTwo);
+        boton.addEventListener('click', await getPageStepTwo);
     }
     return true;
 }
@@ -229,7 +230,7 @@ function getRecipientForm(){
     }
 
 
-function getPageStepTwo() {
+async function getPageStepTwo() {
     const boton = document.getElementById("btn-ns-p1-siguiente");
     if (!boton) return;
 
@@ -243,15 +244,15 @@ function getPageStepTwo() {
 
     dataNewShipment = {...dataNewShipment, ...data};
 
-    boton.removeEventListener('click', getPageStepTwo);
+    boton.removeEventListener('click', await getPageStepTwo);
     boton.id = "btn-ns-p2-siguiente";
     boton.addEventListener('click', getPageStepThree);
     boton.disabled = false;
 
-    document.getElementById("new-shupment-page-content").innerHTML = page2();
+    document.getElementById("new-shupment-page-content").innerHTML = await page2();
 }
 
-function page2() {
+async function page2() {
     return ` 
         <div class="form-card form-sender">
             <h2 class="form-title">Datos del paquete</h2>
@@ -281,16 +282,7 @@ function page2() {
                                 <span class="input-message input-message-hide" id="alto-package-msg"></span>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="input-label" for="service-package">Tipo de servicio*</label>
-                            <select class="filter-selects" name="service-package" id="service-package">
-                                <option value="" disabled selected>Selecciona una opcion</option>
-                                <option value="Express">Express</option>
-                                <option value="Dia-siguiente">Dia siguiente</option>
-                                <option value="Terrestre">Terrestre</option>
-                            </select>
-                            <span class="input-message input-message-hide" id="service-package-msg"></span>
-                        </div>
+                            ${await getServicesOptions()}
                         <div class="form-group">
                             <label class="input-label" for="security-package">Seguro de paquete</label>
                             <label class="switch">
@@ -312,6 +304,24 @@ function page2() {
         </div>`;
 }
 
+async function getServicesOptions(){
+    let servicesSelectOptions = `
+            <div class="form-group">
+                <label class="input-label" for="service-package">Tipo de servicio*</label>
+                <select class="filter-selects" name="service-package" id="service-package">
+                    <option value="" disabled selected>Selecciona una opcion</option>`
+    const services = await fetchServices();
+    
+    services.forEach(service => {
+        servicesSelectOptions = servicesSelectOptions +`<option value="${service}">${service}</option>`;
+    });
+
+    servicesSelectOptions= servicesSelectOptions +`
+                    </select>
+                <span class="input-message input-message-hide" id="service-package-msg"></span>
+            </div>`
+    return servicesSelectOptions;
+}
 
 async function getPageStepThree() {
     const boton = document.getElementById("btn-ns-p2-siguiente");
@@ -519,10 +529,11 @@ async function createShipmentWithCash(){
         if(!cash || cash < dataNewShipment.total) return;
 
         dataShipment = {...dataShipment, "metodo_de_pago": "Efectivo", "pago_con": cash};
+        console.log("DEPURACION 1");
+        
         const newShipment = await fetchCreateShipment(dataShipment);
 
         if(!newShipment){
-            alert("Error de conexión");
             return;
         }
         

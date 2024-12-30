@@ -1,7 +1,9 @@
 export async function fetchTicket(data) {
-    console.log("La informacion que se envia al backend es: ", data);
+    const url = "http://localhost/backend/shipment/ticket";
+    console.log("VA\n_________________________________________________\n", data,"\n");
+
     try {
-        const response = await fetch("http://localhost/backend/shipment/ticket", {
+        const response = await fetch(url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -10,15 +12,13 @@ export async function fetchTicket(data) {
         });
 
         const responseData = await response.json();
-        if (!response.ok){
-            if(responseData.error) return responseData.error;
-            if(responseData.message) return responseData.message;
-            return "Ocurrio un error del servidor";
-        }
-        console.log("La información que llega ",responseData);
-        return responseData;
+        if (!response.ok) if(responseData.message) throw new Error(responseData.message);
         
+        console.log("VIENE\n_________________________________________________\n",responseData, "\n");
+       
+        return responseData;
     } catch (error) {
-        return "Ocurrio un error del servidor";
+        alert(error.message);
+        return [];
     }
 }

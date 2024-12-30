@@ -1,7 +1,7 @@
-export async function fetchStates() {
+export async function fetchServices() {
   let response;
   try {
-    response = await fetch("http://localhost/backend/utils/states");
+    response = await fetch("http://localhost/backend/utils/services");
   } catch (error) {
     return [];
   }

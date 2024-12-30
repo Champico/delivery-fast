@@ -223,39 +223,36 @@ class ShipmentSchema
     public static function validateDataToTicket($data)
     {
         $errors = [];
-
-        $isNumericString = fn($value) => is_string($value) && ctype_digit($value);
-        $isDecimal = fn($value, $min, $max) => is_numeric($value) && $value >= $min && $value <= $max;
-
-
-        if (!isset($data['sucursal']) || !$isNumericString($data['sucursal']) || strlen($data['sucursal']) !== 5) {
-            $errors[] = "Sucursal debe ser un string numérico de exactamente 5 caracteres.";
+        
+        if(empty($data) || !is_array($data)){
+            $errors[] = "Debe enviar los datos necesarios";
+            return $errors;
         }
 
         foreach (
             [
-                'peso' => [0, 69, 'Peso debe ser un número decimal entre 0 y 69.'],
-                'largo' => [0, 200, 'Largo debe ser un número decimal entre 0 y 200.'],
-                'ancho' => [0, 200, 'Ancho debe ser un número decimal entre 0 y 200.'],
-                'alto' => [0, 150, 'Alto debe ser un número decimal entre 0 y 150.'],
-                'costo' => [0, INF, 'Costo debe ser un número decimal.'],
-                'pago_con' => [0, INF, 'El pago debe ser un número decimal.'],
-                'cambio' => [0, INF, 'El cambio debe ser un número decimal.']
-            ] as $key => [$min, $max, $errorMessage]
+                "sucursal" => "Ingrese la sucursal",
+                "colaborador" => "Ingrese el número de personal del colaborador",
+                "peso" => "Ingrese el peso",
+                "largo" => "Ingrese el largo",
+                "ancho" => "Ingrese el ancho",
+                "alto" => "Ingrese el alto",
+                "servicio" => "Ingrese el tipo de servicio",
+                "seguro" => "Ingrese si el paquete tiene seguro",
+                "cp_destinatario" => "Ingrese el código postal del destinatario",
+            ] as $key => $errorMessage
         ) {
-            if (isset($data[$key]) && !$isDecimal($data[$key], $min, $max)) {
+            if (!isset($data[$key])) {
                 $errors[] = $errorMessage;
             }
         }
 
-        if (isset($data['seguro']) && !is_bool($data['seguro'])) {
-            $errors[] = "Seguro debe ser un booleano.";
-        }
+        if(!empty($errors)) return $errors;
 
-        if (!isset($data['servicio']) || (!is_string($data['servicio']) || strlen($data['servicio']) > 50)) {
-            $errors[] = "El servicio no debe ser mayor a 50 caracteres";
-        }
+        $errValidation = ShipmentSchema::validateShipment($data);
+        $errors = [...$errors, ...(is_array($errValidation) ? $errValidation : [])];
 
-        return $errors;
+        if(!empty($errors)) return $errors;
+        return false;
     }
 }

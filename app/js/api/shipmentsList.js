@@ -1,13 +1,12 @@
-
 export async function getShipmentList(num_sucursal) {
+    let response;
     try {
-        const response = await fetch(`http://localhost/backend/shipment/branch/${num_sucursal}`);
-        if (!response.ok) {
-            throw new Error('Error al obtener los datos');
-        }
-        const data = await response.json();
-        return data ? data : [];
+        response = await fetch(`http://localhost/backend/shipment/branch/${num_sucursal}`);
     } catch (error) {
-        return [];
+      return [];
     }
-}
+  
+    let responseData = await response.json();
+    if (!response.ok) return [];
+    return responseData ? responseData : [];
+  }

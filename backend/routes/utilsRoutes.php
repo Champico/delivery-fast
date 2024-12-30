@@ -21,7 +21,7 @@ switch ($method) {
     case 'GET':
         switch ($action){
             case 'states': $utilsController->getStatesOfMexico(); break;
-            break;
+            case 'services': $utilsController->getNameServices(); break;
 
             default:
             http_response_code(404);

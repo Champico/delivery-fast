@@ -511,6 +511,25 @@ class ShipmentModel
        
     }
 
+    public function getNameServices(){
+        try{
+            $query = "SELECT nombre FROM tipo_servicio;";
+            $result = $this->conexionDB->query($query);
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener los servicios");
+        }
+
+        if ($result->num_rows > 0) {
+            $services = [];
+            while ($row = $result->fetch_assoc()) {
+                $services[] = $row["nombre"];
+            }
+            return $services;
+        } else {
+            throw new Exception("No se encontro ningún servicio");
+        }
+    }
+
 
 
     private function fillOptionalFields($data){

@@ -394,7 +394,7 @@ CREATE TABLE Configuracion_global(
 
 -- Insertar datos 
 INSERT INTO Configuracion_global(const_peso_volumetrico, peso_maximo, largo_maximo, alto_maximo, ancho_maximo, cargo_por_combustible, precio_seguro) VALUES
-(6000, 69, 200, 150, 200, 10, 300);
+(6000, 69, 200, 150, 200, 10, 150);
 
 -- Tabla de horario
 DROP TABLE IF EXISTS Horario;

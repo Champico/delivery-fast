@@ -198,10 +198,10 @@ class ShipmentController
             ];
         }
 
-        if ($costo_sobrepeso = $this->calculateOverWeigth($zona, $servicio, $peso, $largo, $ancho, $alto)) {
+        if ($costo_de_sobrepeso = $this->calculateOverWeigth($zona, $servicio, $peso, $largo, $ancho, $alto)) {
             $conceptos_ticket[] = [
                 "descripcion" => "costo_de_sobrepeso",
-                "valor" => $costo_sobrepeso
+                "valor" => $costo_de_sobrepeso
             ];
         }
 
@@ -212,11 +212,15 @@ class ShipmentController
             ];
         }
 
-        if (isset($conceptos_ticket["precio_guia"])) {
-            if ($conceptos_ticket["costo_de_sobrepeso"]) {
-                $cargo_por_combustible = $this->getCostoCombustible(($conceptos_ticket["precio_guia"] + $conceptos_ticket["costo_de_sobrepeso"]));
+        error_log("Costo de la guia " . $conceptos_ticket[0]["valor"]);
+        error_log("Costo de el sobrepeso " . $conceptos_ticket[1]["valor"]);
+        error_log("Costo completo es " . ($conceptos_ticket[1]["valor"] + $conceptos_ticket[0]["valor"]));
+
+        if (isset($conceptos_ticket[0]) && $conceptos_ticket[0]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[0]["valor"])) {
+            if (isset($conceptos_ticket[1]) && $conceptos_ticket[1]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[1]["valor"])) {
+                $cargo_por_combustible = $this->getCostoCombustible(($conceptos_ticket[0]["valor"] + $conceptos_ticket[1]["valor"]));
             } else {
-                $cargo_por_combustible = $this->getCostoCombustible($conceptos_ticket["precio_guia"]);
+                $cargo_por_combustible = $this->getCostoCombustible($conceptos_ticket[0]["valor"]);
             }
             $conceptos_ticket[] = [
                 "descripcion" => "cargo_por_combustible",
@@ -294,17 +298,18 @@ class ShipmentController
             if ($e->getMessage()) return $e->getMessage();
         }
 
-        $peso_max_amparado = $sobrepeso_constantes["peso_max_amparado"];
-        $precio_aumento =  $sobrepeso_constantes["precio_aumento"];
-        $precio_aumento_peso = (float) $sobrepeso_constantes["medida_aumento_peso"];
-
-        return (float) (($final_weight - $peso_max_amparado) / $precio_aumento_peso) * $precio_aumento;
+        $peso_max_amparado = (float) $sobrepeso_constantes["peso_max_amparado"];
+        $precio_aumento =  (float) $sobrepeso_constantes["precio_aumento"];
+        $medida_aumento_peso = (float) $sobrepeso_constantes["medida_aumento_peso"];
+        
+        if($final_weight <= $peso_max_amparado) return null;
+        return (float) (($final_weight - $peso_max_amparado) / $medida_aumento_peso) * $precio_aumento;
     }
 
     private function calculateFinalWeigth($peso, $largo, $ancho, $alto)
     {
         $peso_volumetrico = ($peso * $largo * $alto * $ancho) / 6000;
-        if ($peso_volumetrico >= $peso) {
+        if ($peso_volumetrico > $peso) {
             return $peso_volumetrico;
         } else {
             return $peso;
