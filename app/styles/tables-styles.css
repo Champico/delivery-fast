@@ -112,3 +112,7 @@ ____________________________________________________
 .isSelectedItemTable {
     background-color:#ffa726 ;
 }
+
+.row-selectable{
+    cursor: pointer;
+}

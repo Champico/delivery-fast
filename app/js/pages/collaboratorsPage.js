@@ -1,3 +1,8 @@
+import {fetchAllUsersOfBranch} from '../api/users.js';
+
+let selectedUser = null;
+let selectRow = null;
+
 export async function getPage(){
     return `
         <h1 class="title-section">Envíos</h1>
@@ -30,18 +35,14 @@ export async function getPage(){
                                     <th>No. Personal</th>
                                     <th>Nombre</th>
                                     <th>Rol</th>
-                                    <th>Telefono</th>
                                     <th>Correo</th>
                                 </tr>
                             </thead>
-                            <tbody id="user-table-body">
-
-                            </tbody>
+                                ${await buildUserList()}
                             </table>
                         </div>
                     </div>
                 </div>
-    
     `;
 }
 
@@ -50,3 +51,46 @@ export async function addFunctionality(){
     console.log('Users Page Functionality');
     return true;
 }
+
+async function buildUserList(){
+    const users = await fetchAllUsersOfBranch("000000");
+
+    let userRows = `<tbody id="user-table-body">`
+
+    if(users){
+        users.forEach(user => {
+            let row = `<tr class="row-selectable" data-personal-number=${user.numero_personal}>`;
+            row = row + `
+                <td>${user.numero_personal}</td>
+                <td>${user.nombre}</td>
+                <td>${user.rol}</td>
+                <td>${user.correo}</td>
+            `;
+            userRows = userRows + row;
+        })
+    }
+    userRows = userRows + `</tbody>`;
+    return userRows;
+}
+
+
+/*
+function addFunctionalityRows(){
+    const rows = userTable.querySelectorAll('tr');
+    rows.forEach(row => {
+        row.addEventListener('click', () => {
+
+            if (row.style.backgroundColor === 'rgb(255, 167, 38)') {
+
+                row.style.backgroundColor = ''; 
+                selectedUser = null; 
+            } else {
+                rows.forEach(r => r.style.backgroundColor = ''); 
+                row.style.backgroundColor = '#ffa726'; 
+                selectedUser = row.getAttribute('data-personal-number');
+                selectedRow = row;
+                console.log(selectedUser);
+            }
+        });
+    });
+}*/

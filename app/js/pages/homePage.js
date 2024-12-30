@@ -1,4 +1,4 @@
-import { getShipmentList } from "../api/shipmentsList.js";
+import { getAllShipmentsOfBranch } from "../api/shipments.js";
 
 export let page = "";
 export let shipments = "";
@@ -55,7 +55,7 @@ async function getTable() {
   const num_sucursal = localStorage.getItem("numero_sucursal");
   if (!num_sucursal) return ":,c";
 
-  shipments = await getShipmentList(num_sucursal);
+  shipments = await getAllShipmentsOfBranch(num_sucursal);
 
   if (!shipments) return `<p class="empty-data-message"> No hay envíos aún</p>`;
 

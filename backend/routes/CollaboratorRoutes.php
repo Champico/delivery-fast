@@ -1,7 +1,7 @@
 <?php
 // backend/routes/ColaboratorRoutes.php
 
-include_once __DIR__ . '/../controllers/CollaboratorController.php';
+include_once __DIR__ . '/../controllers/CollaboratorControllers.php';
 include_once __DIR__ . '/../models/CollaboratorModel.php';
 include_once __DIR__ . '/../config/ConnDeliveryDB.php';
 

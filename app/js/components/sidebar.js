@@ -17,7 +17,9 @@ createSideBar();
 function createSideBar(){
     buildSideBar();
     addFuncionalityToSideBar();
-    changeMenuButtonPresssed("/app/home");
+    const path = window.location.pathname;
+    const route = path.split("?")[0];
+    changeMenuButtonPresssed(route);
 }
 
 export function changeMenuButtonPresssed(url){

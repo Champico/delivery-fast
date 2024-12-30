@@ -22,8 +22,8 @@ switch($resource){
         include_once 'routes/ShipmentRoutes.php';
         break;
 
-    case 'collaborators' :
-        include_once 'routes/CollaboratorsRoutes.php';
+    case 'users' :
+        include_once 'routes/CollaboratorRoutes.php';
         break;
 
     case 'auth':
