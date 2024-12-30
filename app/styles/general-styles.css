@@ -38,6 +38,7 @@ ____________________________________________________
     --brand-orange-color: #FFAC13;; /* Color principal */
     --orange-color-higth-contrast: #dd9000; /* Color principal con mayor contraste con la letra blanca */
     --input-error: #D0021B; /* Color de los mensaje de error en los input */
+    --orange-ligth:  #ffe5cc; /* Naranja claro de ventana de busqueda*/
 }
 
 * {
@@ -555,7 +556,7 @@ ________________________________________________________________________________
 
 /* Estilo del contenedor */
 .guide-input-container {
-    background-color: #ffe5cc; /* Fondo naranja claro */
+    background-color: var(--orange-ligth);
     border-radius: 8px;
     padding: 20px;
     width: 400px;
@@ -586,6 +587,7 @@ ________________________________________________________________________________
     border-radius: 8px;
     margin-bottom: 15px;
     box-sizing: border-box;
+    letter-spacing: 1px;
 }
 
 /* Botón */
@@ -645,4 +647,14 @@ ____________________________________________________
         padding-left: 20px;
         font-size: 16px;
     }
+}
+
+@media screen and (max-width: 800px){
+
+    .guide-input-container {
+        width: 100%;
+        height: 100%;
+        justify-content: flex-start;
+    }
+
 }

@@ -1,4 +1,5 @@
 import { hideLoadingScreen } from "./components/loadingScreen.js";
+import { changeMenuButtonPresssed } from "./components/sidebar.js";
 
 import("./components/loadingScreen.js");
 
@@ -30,7 +31,7 @@ const renderContent = async () => {
         const page = await module.getPage();
 
         mainContainer.innerHTML = page;
-
+        changeMenuButtonPresssed(path.split("?")[0]);
         const funcionality = await module.addFunctionality();
         
         const queryParams = new URLSearchParams(window.location.search);

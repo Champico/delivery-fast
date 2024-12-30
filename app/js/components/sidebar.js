@@ -1,22 +1,58 @@
 import { navigateTo } from "../router.js";
 
-let menuButtons = {};
+const buttons = {
+    "/app/home":            "sb-bt-home",
+    "/app/branch" :         "sb-bt-about",
+    "/app/earnings":        "sb-bt-earnings",
+    "/app/users":           "sb-bt-users",
+    "/app/search-shipment": "sb-bt-search-shipment",
+    "/app/search-package":  "sb-bt-package",
+    "/app/statistics":      "sb-bt-statistics",
+};
+
+let idButtonPressed = null;
+
+createSideBar();
 
 function createSideBar(){
-    const rol = localStorage.getItem("id_rol") ? localStorage.getItem("id_rol") : 2;
+    buildSideBar();
+    addFuncionalityToSideBar();
+    changeMenuButtonPresssed("/app/home");
+}
 
-    /* ROLES
-    1. Administrador
-    2. Colaborador
-    3. Repartidor
-    */
+export function changeMenuButtonPresssed(url){
+    try{
+        if(idButtonPressed !== null){
+            const buttonPressed = document.getElementById(idButtonPressed);
+            if(buttonPressed.classList.contains("sidebar-item-li-selected")) buttonPressed.classList.remove("sidebar-item-li-selected")
+        }
+        
+        idButtonPressed = buttons[url] ? buttons[url] : "";
+        if(idButtonPressed != ""){
+            const newButton = document.getElementById(idButtonPressed);
+            if(!newButton.classList.contains("sidebar-item-li-selected")) newButton.classList.add("sidebar-item-li-selected");
+        }
+           
+    }catch(error){
+    }
+}
 
+function buildSideBar(){
+    let rol = "";
+
+    try{
+        rol = localStorage.getItem("id_rol");
+    }catch(error){
+        throw new Error("No se puedo crear el menu lateral");
+    }
+   
     let menu = null;
 
     switch(rol){
         case "1": menu = createAdministratorSideBar(); break;
         case "2": menu = createCollaboratorSideBar(); break;
         case "3": menu = createDealerSideBar(); break;
+        default : menu = "<p>Error</p>";
     }
 
     const menu_container = document.getElementById("sidebar-menu-container");
@@ -24,7 +60,7 @@ function createSideBar(){
     if(menu_container){
         menu_container.innerHTML = menu;
     }else{
-        throw new Error("No se puedo crear el menu lateral ");
+        throw new Error("No se puedo crear el menu lateral");
     }
 
 }
@@ -41,6 +77,30 @@ function createDealerSideBar(){
     return " " + getShipmentModule(true, false, false) + getPackageModule(true);
 }
 
+function addFuncionalityToSideBar(){
+    const sidebar = document.getElementById("sidebar-menu-container");
+    
+    sidebar.addEventListener('click', async function(event) {
+        const liElement = event.target.closest(".sidebar-clickeable");
+    
+        const btnToRoute = {
+            "sb-bt-home" :            "/app/home", 
+            "sb-bt-new-shipment" :    "/app/new-shipment",
+            "sb-bt-search-shipment" : "/app/search-shipment",
+            "sb-bt-earnings" :        "/app/earnings",
+            "sb-bt-package" :         "/app/search-package",
+            "sb-bt-users" :           "/app/users",
+            "sb-bt-about" :           "/app/branch",
+            "sb-bt-statistics" :      "/app/statistics"
+        }
+    
+        console.log("liElement", btnToRoute[liElement.id]);
+    
+        if (liElement) {
+            await navigateTo(btnToRoute[liElement.id]);
+        }
+    });
+}
 
 function getNewShipmentButton(){
     return (`
@@ -62,13 +122,12 @@ function getShipmentModule(home, search, earnings){
 
     if(home){
         shipmentModule = shipmentModule + `
-        <li class="sidebar-item-li sidebar-item-li-selected sidebar-clickeable" id="sb-bt-home">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-home">
             <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="resources/icons/inicio.svg" alt="">
             Inicio</span>
         </li>`
 
-        menuButtons["sb-bt-home"] = "sb-bt-home";
     }
 
     if(search){
@@ -79,7 +138,6 @@ function getShipmentModule(home, search, earnings){
             Buscar envíos</span>
         </li>
         `
-        menuButtons["sb-bt-search-shipment"] = "sb-bt-search-shipment";
     }
 
     if(earnings){
@@ -90,7 +148,6 @@ function getShipmentModule(home, search, earnings){
             Ingresos</span>
         </li>
         `
-        menuButtons["sb-bt-earnings"] = "sb-bt-earnings";
     }
 
     shipmentModule = shipmentModule + `</ul> </div>`;
@@ -112,7 +169,6 @@ function getPackageModule(packages){
             Paquetes</span>
         </li>`;
 
-        menuButtons["sb-bt-package"] = "sb-bt-package";
     }
 
     packageModule = packageModule +`</ul></div>`;
@@ -134,8 +190,6 @@ function getAdminstrationModule(users, info, about){
                 <img class="sidebar-item-icon" src="resources/icons/editar.svg" alt="">
             Usuarios</span>
         </li>`
-
-        menuButtons["sb-bt-users"] = "sb-bt-users";
     }
 
     if(info){
@@ -145,19 +199,15 @@ function getAdminstrationModule(users, info, about){
                 <img class="sidebar-item-icon" src="resources/icons/informacion.svg" alt="">
             Acerca de</span>
         </li>`
-
-        menuButtons["sb-bt-about"] = "sb-bt-about";
     }
 
     if(about){
         administrationModule = administrationModule +`
-        <li class="sidebar-item-li sidebar-clickeable" "sb-bt-statistics">
+        <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-statistics">
             <span class="sidebar-item-a">
                 <img class="sidebar-item-icon" src="resources/icons/grafico-de-barras.svg" alt="">
             Reportes</span>
         </li>`
-
-        menuButtons["sb-bt-statistics"] = "sb-bt-statistics";
     }
 
     administrationModule = administrationModule +`</ul></div>`;
@@ -165,31 +215,5 @@ function getAdminstrationModule(users, info, about){
     return administrationModule;
 }
 
-function addFuncionalityToSideBar(){
-const sidebar = document.getElementById("sidebar-menu-container");
 
-sidebar.addEventListener('click', async function(event) {
-    const liElement = event.target.closest(".sidebar-clickeable");
-
-    const btnToRoute = {
-        "sb-bt-home" :            "/app/home", 
-        "sb-bt-new-shipment" :    "/app/new-shipment",
-        "sb-bt-search-shipment" : "/app/search-shipment",
-        "sb-bt-earnings" :        "/app/earnings",
-        "sb-bt-package" :         "/app/search-package",
-        "sb-bt-users" :           "/app/users",
-        "sb-bt-about" :           "/app/branch",
-        "sb-bt-statistics" :      "/app/statistics"
-    }
-
-    console.log("liElement", btnToRoute[liElement.id]);
-
-    if (liElement) {
-        await navigateTo(btnToRoute[liElement.id]);
-    }
-});
-}
-
-createSideBar();
-addFuncionalityToSideBar();
 
