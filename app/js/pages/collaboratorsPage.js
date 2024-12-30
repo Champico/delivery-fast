@@ -16,7 +16,7 @@ export async function getPage(){
                             <div class="form-inline">
                                 <input type="text" id="searchInput" placeholder="Buscar por nombre, número o rol" onkeyup="searchUser()" />
                                 <button class="button btnBuscar" id="searchButton" onclick="searchUser()">
-                                    <img class="sidebar-item-icon" src="../../resources/icons/lupa.svg" alt="">
+                                    <img class="sidebar-item-icon" src="resources/icons/lupa.svg" alt="">
                                     Buscar
                                 </button>
                             </div>

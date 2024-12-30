@@ -123,7 +123,7 @@ ____________________________________________________
 .input::placeholder {
   color: #787878;
   font-family: 'Roboto', sans-serif;
-  font-weight: lighter;
+  font-weight: 300;
   font-size: 18px;
   letter-spacing: 1px;
 }
@@ -159,7 +159,7 @@ input:focus {
   margin-bottom: 5px;
   background-color: transparent;
   font-family: 'Roboto', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 18px;
   color: #222222;
 }
@@ -447,4 +447,42 @@ ____________________________________________________
 .ship-info-text,.-text{ 
   font-size: 16px;
   padding: 0px;
+}
+
+
+
+
+
+/*__________________________________________________  
+         
+  R  E  S  P  O  N  S  I  V  E     D  E  S  I  G  N  
+____________________________________________________ 
+*/
+
+@media  screen and (max-width: 850px) {
+
+  .logo-extendido{
+    display: none;
+  }
+
+  .sidebar-menu-container{
+    display: none;
+  }
+
+  .user-rol{
+    display: none;
+  }
+
+  .new-shupment-page-header{
+    flex-direction: column;
+  }
+
+  .form-inline{
+    flex-direction: column;
+    gap:2px;
+  }
+
+  .btn-siguiente{
+    margin-bottom: 20px;
+  }
 }

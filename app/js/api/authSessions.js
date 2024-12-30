@@ -25,12 +25,8 @@ async function login() {
       }
     );
 
-    if (!response.ok) {
-      throw new Error("Error en la respuesta del servidor");
-    }
-
+    if (!response.ok) throw new Error("Error en la respuesta del servidor");
     const dataR = await response.json();
-
 
     if (dataR) {
       localStorage.setItem("numero_personal",dataR.session.numero_personal);
@@ -40,7 +36,7 @@ async function login() {
 
       window.location.href = "http://localhost/app/home";
     } else {
-      alert(dataR.message);
+      if(dataR.message) alert(dataR.message);
     }
   } catch (error) {
     console.error("Error:", error);
