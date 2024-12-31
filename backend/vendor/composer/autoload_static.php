@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7
+class ComposerStaticInit28a6424973ba6619d5d92a110993b69f
 {
     public static $files = array (
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
@@ -18,19 +18,33 @@ class ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Svg\\' => 4,
+            'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
         array (
             'PhpOption\\' => 10,
         ),
+        'M' => 
+        array (
+            'Masterminds\\' => 12,
+        ),
         'G' => 
         array (
             'GrahamCampbell\\ResultType\\' => 26,
         ),
+        'F' => 
+        array (
+            'FontLib\\' => 8,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
-            'DeliveryFast\\Backend\\' => 21,
+            'Dompdf\\' => 7,
+        ),
+        'C' => 
+        array (
+            'Champ\\Backend\\' => 14,
         ),
     );
 
@@ -47,19 +61,39 @@ class ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
+        'Svg\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-svg-lib/src/Svg',
+        ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
         'PhpOption\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoption/phpoption/src/PhpOption',
+        ),
+        'Masterminds\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/masterminds/html5/src',
         ),
         'GrahamCampbell\\ResultType\\' => 
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'FontLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/php-font-lib/src/FontLib',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
         ),
-        'DeliveryFast\\Backend\\' => 
+        'Dompdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dompdf/dompdf/src',
+        ),
+        'Champ\\Backend\\' => 
         array (
             0 => __DIR__ . '/../..' . '/backend',
         ),
@@ -68,6 +102,7 @@ class ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7
     public static $classMap = array (
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
         'PhpToken' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/PhpToken.php',
         'Stringable' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Stringable.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
@@ -77,9 +112,9 @@ class ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitcd33cc056542a071f79c0a97e2b104a7::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit28a6424973ba6619d5d92a110993b69f::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit28a6424973ba6619d5d92a110993b69f::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit28a6424973ba6619d5d92a110993b69f::$classMap;
 
         }, null, ClassLoader::class);
     }

@@ -640,7 +640,7 @@ function getHtmlModalSucces(shipment) {
                             </div>
                         </div>
 
-                        <div class="form-group-modal">
+                        <div class=" form-inline form-group-modal">
                             <button class="button-modals" id="btn-print-ticket">Imprimir ticket</button>
                             <button class="button-modals" id="btn-print-guide">Imprimir guía</button>
                             <button class="button-modals" id="btn-finish">Terminar</button>

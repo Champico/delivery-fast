@@ -1,21 +1,23 @@
 -------------------------------------------------------------------
+				DATOS GENERALES DEL PROYECTO
+
 Nombre del proyecto: Delivery Fast
 Autores: Edgar Yael Cortes Carrillo y Julio Aldair Morales Romero
-Tecnologías: HTML, JS, CSS, PHP, MySQL 
-Manejadores de dependencias: Composer
-Librerias adicionales: JWT
+Tecnologías base: HTML, JS, CSS, PHP, MySQL 
 Ultima modificación: 26/12/2024 12:00 pm
 Métodologia de desarollo: Ninguna
 Dirección del repositorio: https://github.com/Champico/delivery-fast
  
- > Configuración del servidor de desarollo <
+--------------------------------------------------------------------
+				DATOS DEL SERVIDOR DE DESAROLLO
+
 Sistema operativo: Windows 11
 Dirección : 127.0.0.1 (localhost)
 Puerto: 80
 Servidor http: Apache (XAMPP)
--------------------------------------------------------------------
 
-Estructura del proyecto:
+-------------------------------------------------------------------
+			ESTRUCTURA DE CARPETAS DEL PROYECTO
 
 > delivery-fast / (carpeta raíz del proyecto)
 	> app/
@@ -100,8 +102,48 @@ Estructura del proyecto:
 	README.md
 
 -------------------------------------------------------------------
+			LIBRERIAS ADIONALES IMPLEMENTADAS
 
-Congifuración del servidor de desarollo XAMPP:
+{
+	Librerias adicionales:[
+		
+		{
+			"Nombre": "composer/composer"
+			"Version": "2.8.4"
+			"repositorio": "https://github.com/composer/composer"
+			"Licencia": "MIT License"
+			"Descripción": "Gestor de depencias en php"
+		}
+
+		{
+			"Nombre":  "vlucas/phpdotenv"
+			"Version": "5.6"
+			"repositorio": "https://github.com/vlucas/phpdotenv"
+			"Licencia": "BSD 3-Clause "New" or "Revised" License"
+			"Descripción": "Permite cargar el archivo .env una sola vez al inicar el servidor apache"
+		}
+
+		{
+			"Nombre":  "dompdf/dompdf"
+			"Version": "3.0"
+			"repositorio": "https://github.com/dompdf/dompdf"
+			"Licencia": "GNU Lesser General Public License v2.1"
+			"Descripción": "Permite crear archivos pdf a partir de html"
+		}
+
+		{
+			"Nombre": 
+			"Version": 
+			"repositorio": 
+			"Licencia": 
+			"Descripción":
+		}
+
+	]
+}
+
+-------------------------------------------------------------------
+	NOTAS ADICIONALES PARA LOS DESAROLLADORES
 
 La carpeta raiz del servidor web fue modificada de htdocs a delivery-fast en el archivo
 C:/xampp/apache/conf/httpd.conf cambiando las lineas:
