@@ -212,10 +212,6 @@ class ShipmentController
             ];
         }
 
-        error_log("Costo de la guia " . $conceptos_ticket[0]["valor"]);
-        error_log("Costo de el sobrepeso " . $conceptos_ticket[1]["valor"]);
-        error_log("Costo completo es " . ($conceptos_ticket[1]["valor"] + $conceptos_ticket[0]["valor"]));
-
         if (isset($conceptos_ticket[0]) && $conceptos_ticket[0]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[0]["valor"])) {
             if (isset($conceptos_ticket[1]) && $conceptos_ticket[1]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[1]["valor"])) {
                 $cargo_por_combustible = $this->getCostoCombustible(($conceptos_ticket[0]["valor"] + $conceptos_ticket[1]["valor"]));
