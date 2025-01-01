@@ -4,11 +4,12 @@
 include_once(__DIR__ . '/../controllers/shipmentController.php');
 include_once(__DIR__ . '/../models/ShipmentModel.php');
 include_once(__DIR__ . '/../config/ConnDeliveryDB.php');
+include_once(__DIR__ . '/../models/TaxModel.php');
 
 $shipmentController = null;
 
 try{
-    $shipmentController = new ShipmentController(new ShipmentModel(ConnDeliveryDB::getInstance()));
+    $shipmentController = new ShipmentController(new ShipmentModel(ConnDeliveryDB::getInstance()), new TaxModel(ConnDeliveryDB::getInstance()));
 }catch(Exception $e){
     http_response_code(500);
     echo json_encode(['error' => 'Error 500 Internal Server', 'details'=>$e->getMessage()]);
@@ -19,7 +20,9 @@ switch ($method) {
         if ($action) {
             switch($action){
                 case 'branch': $shipmentController->getAllBranch($a2); break;
-                case 'tracking-number': $shipmentController->get($a2); break;
+                case 'search': $shipmentController->get($a2); break;
+                case 'ticket-pdf': $shipmentController->getTicketPDF($a2); break;
+                case 'guide-pdf': $shipmentController->getGuidePDF($a2); break;
                 default: http_response_code(405);
                 echo json_encode(['error' => 'Dirección no encontrada']);
                 break;

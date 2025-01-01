@@ -1,5 +1,4 @@
 <?php
-//  delivery-fast/backend/models/ShipmentModel.php
 
 class ShipmentModel
 {
@@ -25,7 +24,7 @@ class ShipmentModel
                 return null;
             }
         } catch(Exception $e){
-            return null;
+            throw new Exception("Ocurrio un error en el servidor");
         }
     }
 
@@ -48,7 +47,21 @@ class ShipmentModel
                 return null;
             }
         } catch(Exception $e){
-            return null;
+            throw new Exception("Ocurrio un error en el servidor");
+        }
+    }
+
+    public function get($guide){
+        try {
+            $query = "SELECT * FROM Datos_completos_Envio WHERE guia = ?";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $guide);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $shipment = $result->fetch_assoc();
+            return  $shipment ?  $shipment : null;
+        } catch (Exception $e) {
+            throw new Exception("Ocurrio un error en el servidor");
         }
     }
 
@@ -378,7 +391,26 @@ class ShipmentModel
     public function getSucursal($numero_sucursal){
         $sucursal = null;
         try{
-            $query = "SELECT * FROM Sucursales WHERE numero_sucursal = ?;";
+            $query = "SELECT 
+                    	s.numero_sucursal,
+                        s.correo,
+                        s.telefono,
+                        s.calle,
+                        s.numero_ext,
+                        s.numero_int,
+                        s.cp,
+                        s.colonia,
+                        s.ciudad,
+                        s.latitud_dec,
+                        s.longitud_dec,
+                        s.hora_salida_diaria,
+                        s.estado,
+                        e.nombre AS nombre_estado,
+                        e.abreviatura_informal AS abr_inf_estado
+                    FROM Sucursales AS s
+                    INNER JOIN entidades_federativas AS e ON e.clave = s.estado
+                    WHERE numero_sucursal = ?;
+                    ";
             $stmt = $this->conexionDB->prepare($query);
             $stmt->bind_param("s", $numero_sucursal);
             $stmt->execute();
@@ -460,12 +492,12 @@ class ShipmentModel
             throw new Exception("Ocurrio un error al obtener el precio del seguro");
         }
         
-            if ($result) {
-                $row = $result->fetch_assoc();
-                return (float) $row['precio_seguro'];
-            } else {
-                return 0;
-            }
+        if ($result) {
+            $row = $result->fetch_assoc();
+            return (float) $row['precio_seguro'];
+        } else {
+            return 0;
+        }
     }
 
     public function getAdditionalPercentageForFuel(){

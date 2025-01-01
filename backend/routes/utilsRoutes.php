@@ -10,8 +10,7 @@ include_once(__DIR__ . '/../config/ConnZipCodeDB.php');
 $utilController = null;
 
 try{
-    $utilsController = new UtilsController(new ShipmentModel(ConnDeliveryDB::getInstance()),
-    new ZipCodeModel(ConnZipCodeDB::getInstance()));
+    $utilsController = new UtilsController(new ShipmentModel(ConnDeliveryDB::getInstance()), new ZipCodeModel(ConnZipCodeDB::getInstance()));
 }catch(Exception $e){
     http_response_code(500);
     echo json_encode(['error' => 'Error 500 Internal Server', 'details'=>$e->getMessage()]);

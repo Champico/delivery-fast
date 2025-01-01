@@ -3,19 +3,29 @@
 
 include_once(__DIR__ . '/../schemas/ShipmentSchema.php');
 include_once(__DIR__ . '/../controllers/ZipCodeController.php');
+include_once(__DIR__ . '/../controllers/TaxController.php');
 include_once(__DIR__ . '/../models/ZipCodeModel.php');
 include_once(__DIR__ . '/../config/ConnZipCodeDB.php');
 include_once(__DIR__ . '/../middlewares/validateJsonMiddleware.php');
+include_once(__DIR__ . '/../utils/PDFGenerator.php');
 
 class ShipmentController
 {
     private $shipmentModel;
+    private $taxController;
 
-    public function __construct($shipmentModel)
+    public function __construct($shipmentModel, $taxModel)
     {
         $this->shipmentModel = $shipmentModel;
+        $this->taxController = new TaxController($taxModel);
     }
 
+
+/*
+==============================================================================================
+    S E C C I O N  D E  F U N C I O N E S  Q U E  R E T O R N A N  R E S P U E S T A  H T T P
+=============================================================================================
+*/
 
     public function getAll()
     {
@@ -138,6 +148,76 @@ class ShipmentController
         }
     }
 
+    public function getTicketPDF($guia){
+        if(empty($guia)) echo null;
+
+        $new_shipment = null;
+
+        try {
+            $new_shipment = $this->shipmentModel->get($guia);
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        if(empty($new_shipment)){
+            http_response_code(404);
+            echo json_encode(["message" => "No se encontro el envío con esa guía"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        $tax_data = $this->taxController->getTaxDataToTicket();
+        $sucursal = $this->shipmentModel->getSucursal($new_shipment['numero_sucursal']);
+        $ticket = $this->getTicketCreated($guia);
+        
+        $pdf = PDFGenerator::createTicketPDF($ticket, $tax_data, $sucursal, $new_shipment);
+
+        if(empty($pdf)){
+            http_response_code(404);
+            echo json_encode(["message" => "No se pudo generar el ticket"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="ticket-' .$guia. '.pdf"');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . strlen($pdf));
+
+        echo $pdf;
+        exit;
+    }
+
+    public function getGuidePDF($guia){
+        if(empty($guia)) echo null;
+        
+        $new_shipment = null;
+
+        try {
+            $new_shipment = $this->shipmentModel->get($guia);
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        if(empty($new_shipment)){
+            http_response_code(404);
+            echo json_encode(["message" => "No se pudo generar la guía impresa"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        $pdf = PDFGenerator::createGuidePDF($new_shipment);
+    }
+
+
+
+    
+/*
+=========================================================================
+    S E C C I O N  D E  F U N C I O N E S  A U X I L I A R E S 
+=========================================================================
+*/
 
     private function getTicketPrivate($data)
     {
@@ -317,6 +397,16 @@ class ShipmentController
         try {
             $coordinates = $this->shipmentModel->getCoordinatesOfBranch($id_branch);
             return $coordinates;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+
+    private function getTicketCreated($guia){
+        try {
+            $ticket = $this->shipmentModel->getTicket($guia);
+            return $ticket;
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }

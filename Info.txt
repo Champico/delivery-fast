@@ -132,11 +132,11 @@ Servidor http: Apache (XAMPP)
 		}
 
 		{
-			"Nombre": 
-			"Version": 
-			"repositorio": 
-			"Licencia": 
-			"Descripción":
+			"Nombre": picqer/php-barcode-generator
+			"Version": 3.2.0
+			"repositorio": https://github.com/picqer/php-barcode-generator
+			"Licencia": GNU Lesser General Public License v3.0
+			"Descripción": Permite generar codigos de barra a partir de texto plano
 		}
 
 	]
@@ -162,3 +162,25 @@ En windows 11 se descarga el instalador de composer directo de su sitio web y se
 Se inicializa el proyecto dentro de la carpeta /backend
 
 -------------------------------------------------------------------
+		INFORMACIÓN ACERCA DE LAS LICENCIAS
+
+1. LGPL Versión 2.1
+Condiciones:
+	Puedes usar la biblioteca en un software propietario o comercial, siempre y cuando:
+	La biblioteca en sí (su código fuente) permanezca abierta y accesible.
+	Si modificas la biblioteca, debes publicar esos cambios bajo la misma licencia (LGPL-2.1).
+	Tu software puede ser propietario, pero debe permitir que la biblioteca se pueda reemplazar o actualizar (por ejemplo, enlazar dinámicamente con una nueva versión).
+	No estás obligado a abrir el código de tu aplicación que usa la biblioteca, solo el de la biblioteca modificada (si aplica).
+
+2. LGPL Versión 3.0
+Condiciones:
+	Es similar a la LGPL-2.1, pero incluye restricciones más fuertes para proteger la libertad del usuario:
+	Si distribuyes un dispositivo con la biblioteca, debes permitir que los usuarios puedan modificarla y usar una versión propia de la misma.
+	Introduce medidas contra "tivoización" (cuando un dispositivo bloquea el uso de software modificado).
+	Puedes usarla en software comercial siempre que respetes las mismas condiciones.
+	Restricciones para Software Comercial:
+	Puedes vender tu software que utiliza bibliotecas LGPL, pero:
+	Debes proporcionar acceso al código fuente de la biblioteca LGPL que uses.
+	Si modificas la biblioteca, debes liberar esas modificaciones.
+	Los usuarios deben poder reemplazar la biblioteca en tu software si es dinámicamente vinculada.
+	

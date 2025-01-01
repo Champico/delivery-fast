@@ -99,7 +99,7 @@ function pay(){
 async function generatePreviewTicket(data){
     let ticket = {};
     try{
-        const module = await import('../api/generateTicket.js');
+        const module = await import('../api/ticket.js');
         ticket = await module.fetchTicket(data);
     }catch(error){}
     return ticket;
@@ -160,7 +160,7 @@ async function createShipmentWithCash(){
     const modalContainer = document.getElementById("modal-container");
     if(modalContainer){
         modalContainer.innerHTML+= getHtmlModalSucces(newShipment);
-        addFunToModalSucces();
+        await addFunToModalSucces(newShipment["guia"]);
     }
 }
 
@@ -651,11 +651,24 @@ function getHtmlModalSucces(shipment) {
         </div>`;
 }
 
-function addFunToModalSucces(){
+async function addFunToModalSucces($guia){
     const btnFinish = document.getElementById("btn-finish");
     const btnPrintTicket = document.getElementById("btn-print-ticket");
     const btnPrintGuide = document.getElementById("btn-print-guide");
     if(btnFinish) btnFinish.addEventListener('click', () => {  window.location.href = "http://localhost/app/home"; });
-    if(btnPrintTicket) btnPrintTicket.addEventListener('click', () => { console.log("Imprimiendo ticket") });
-    if(btnPrintGuide) btnPrintGuide.addEventListener('click', () => { console.log("Imprimiendo guia") });
+    if(btnPrintTicket) btnPrintTicket.addEventListener('click', async () => { await printTicket($guia) });
+    if(btnPrintGuide) btnPrintGuide.addEventListener('click', async () => { console.log("Imprimiendo guia") });
+}
+
+
+async function printTicket($guia){
+    console.log("Imprimiendo ticket");
+    try{
+        const module = await import("../api/ticket.js");
+        const success = await module.getTicketPDFByGuide($guia);    
+        return success;
+    }catch(e){
+        console.log("Error", e);
+        return false;
+    }
 }

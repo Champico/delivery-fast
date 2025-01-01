@@ -13,7 +13,8 @@ CREATE TABLE Entidades_Federativas (
     clave CHAR(2) PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
     nombre_extendido VARCHAR(100) NOT NULL,
-    abreviatura CHAR(6) NOT NULL
+    abreviatura CHAR(6) NOT NULL,
+    abreviatura_informal CHAR(6) NOT NULL
 );
 
 -- Tabla de Sucursales --
@@ -90,39 +91,40 @@ CREATE TABLE Colaboradores (
 );
 
 -- Inserciones iniciales para Entidades federativas --
-INSERT INTO Entidades_Federativas (clave, nombre, nombre_extendido, abreviatura) VALUES
-("01", 'Aguascalientes', 'Estado de Aguascalientes', 'AGS'),
-("02", 'Baja California', 'Estado de Baja California', 'BC'),
-("03", 'Baja California Sur', 'Estado de Baja California Sur', 'BCS'),
-("04", 'Campeche', 'Estado de Campeche', 'CC'),
-("05", 'Coahuila', 'Estado de Coahuila de Zaragoza', 'CC'),
-("06", 'Colima', 'Estado de Colima', 'CL'),
-("07", 'Chiapas', 'Estado de Chiapas', 'CM'),
-("08", 'Chihuahua', 'Estado de Chihuahua', 'CS'),
-("09", 'Ciudad de México', 'Ciudad de México', 'CDMX'),
-("10", 'Durango', 'Estado de Durango', 'DG'),
-("11", 'Guanajuato', 'Estado de Guanajuato', 'GT'),
-("12", 'Guerrero', 'Estado de Guerrero', 'GR'),
-("13", 'Hidalgo', 'Estado de Hidalgo', 'HG'),
-("14", 'Jalisco', 'Estado de Jalisco', 'JC'),
-("15", 'México', 'Estado de México', 'EM'),
-("16", 'Michoacán', 'Estado de Michoacán de Ocampo', 'MC'),
-("17", 'Morelos', 'Estado de Morelos', 'MN'),
-("18", 'Nayarit', 'Estado de Nayarit', 'MS'),
-("19", 'Nuevo León', 'Estado de Nuevo León', 'NL'),
-("20", 'Oaxaca', 'Estado de Oaxaca', 'OA'),
-("21", 'Puebla', 'Estado de Puebla', 'PB'),
-("22", 'Querétaro', 'Estado de Querétaro', 'QT'),
-("23", 'Quintana Roo', 'Estado de Quintana Roo', 'QR'),
-("24", 'San Luis Potosí', 'Estado de San Luis Potosí', 'SLP'),
-("25", 'Sinaloa', 'Estado de Sinaloa', 'SN'),
-("26", 'Sonora', 'Estado de Sonora', 'SR'),
-("27", 'Tabasco', 'Estado de Tabasco', 'TC'),
-("28", 'Tamaulipas', 'Estado de Tamaulipas', 'TM'),
-("29", 'Tlaxcala', 'Estado de Tlaxcala', 'TL'),
-("30", 'Veracruz', 'Estado de Veracruz de Ignacio de la Llave', 'VZ'),
-("31", 'Yucatán', 'Estado de Yucatán', 'YN'),
-("32", 'Zacatecas', 'Estado de Zacatecas', 'ZS');
+INSERT INTO Entidades_Federativas (clave, nombre, nombre_extendido, abreviatura, abreviatura_informal) VALUES
+("01", 'Aguascalientes', 'Estado de Aguascalientes', 'AGS', 'Agu'),
+("02", 'Baja California', 'Estado de Baja California', 'BC', 'Bc'),
+("03", 'Baja California Sur', 'Estado de Baja California Sur', 'BCS', 'Bcs'),
+("04", 'Campeche', 'Estado de Campeche', 'CC', 'Camp'),
+("05", 'Coahuila', 'Estado de Coahuila de Zaragoza', 'COA', 'Coah'),
+("06", 'Colima', 'Estado de Colima', 'CL', 'Col'),
+("07", 'Chiapas', 'Estado de Chiapas', 'CH', 'Chis'),
+("08", 'Chihuahua', 'Estado de Chihuahua', 'CS', 'Chih'),
+("09", 'Ciudad de México', 'Ciudad de México', 'CDMX', 'Cdmx'),
+("10", 'Durango', 'Estado de Durango', 'DG', 'Dgo'),
+("11", 'Guanajuato', 'Estado de Guanajuato', 'GT', 'Gto'),
+("12", 'Guerrero', 'Estado de Guerrero', 'GR', 'Gro'),
+("13", 'Hidalgo', 'Estado de Hidalgo', 'HG', 'Hgo'),
+("14", 'Jalisco', 'Estado de Jalisco', 'JC', 'Jal'),
+("15", 'México', 'Estado de México', 'EM', 'Mex'),
+("16", 'Michoacán', 'Estado de Michoacán de Ocampo', 'MC', 'Mic'),
+("17", 'Morelos', 'Estado de Morelos', 'MN', 'Mor'),
+("18", 'Nayarit', 'Estado de Nayarit', 'NA', 'Nay'),
+("19", 'Nuevo León', 'Estado de Nuevo León', 'NL', 'Nl'),
+("20", 'Oaxaca', 'Estado de Oaxaca', 'OA', 'Oax'),
+("21", 'Puebla', 'Estado de Puebla', 'PB', 'Pue'),
+("22", 'Querétaro', 'Estado de Querétaro', 'QT', 'Qro'),
+("23", 'Quintana Roo', 'Estado de Quintana Roo', 'QR', 'Qr'),
+("24", 'San Luis Potosí', 'Estado de San Luis Potosí', 'SLP', 'Slp'),
+("25", 'Sinaloa', 'Estado de Sinaloa', 'SN', 'Sin'),
+("26", 'Sonora', 'Estado de Sonora', 'SR', 'Son'),
+("27", 'Tabasco', 'Estado de Tabasco', 'TC', 'Tab'),
+("28", 'Tamaulipas', 'Estado de Tamaulipas', 'TM', 'Tamps'),
+("29", 'Tlaxcala', 'Estado de Tlaxcala', 'TL', 'Tlax'),
+("30", 'Veracruz', 'Estado de Veracruz de Ignacio de la Llave', 'VZ', 'Ver'),
+("31", 'Yucatán', 'Estado de Yucatán', 'YN', 'Yuc'),
+("32", 'Zacatecas', 'Estado de Zacatecas', 'ZS', 'Zac');
+
 
 -- Tabla de datos de remitentes y destinatarios --
 DROP TABLE IF EXISTS Contactos;
@@ -188,6 +190,41 @@ CREATE TABLE concepto_ticket (
     FOREIGN KEY (id_ticket) REFERENCES ticket(id)
 );
 
+-- Datos fiscales --
+DROP TABLE IF EXISTS Datos_fiscales;
+CREATE TABLE Datos_fiscales(
+    RFC VARCHAR(13) PRIMARY KEY,
+    nombre VARCHAR(64) NOT NULL,
+    apellido_paterno VARCHAR(64),
+    apellido_materno VARCHAR(64),
+    curp VARCHAR(18),
+    fecha_inicio_de_operaciones VARCHAR(64),
+    estatus_en_el_padron VARCHAR(32) NOT NULL,
+    fecha_ultimo_cambio_estado VARCHAR(64),
+    nombre_comercial VARCHAR(64),
+
+    codigo_postal VARCHAR(5) NOT NULL,
+    tipo_vialidad VARCHAR(32),
+    nombre_vialidad VARCHAR(64),
+    numero_exterior VARCHAR(16),
+    numero_interior VARCHAR(16),
+    colonia VARCHAR(64),
+    localidad VARCHAR(64),
+    municipio VARCHAR(64),
+    entidad_federativa CHAR(2) NOT NULL,
+
+    orden_ae VARCHAR(16),
+    descripcion_actividad_economica_ae VARCHAR(255),
+    porcentaje_ae VARCHAR(32),
+    fecha_inicio_ae VARCHAR(32),
+    
+    regimen VARCHAR(255),
+    fecha_inicio_regimen VARCHAR(32),
+
+    constancia_de_situacion_fiscal LONGBLOB,
+    
+	FOREIGN KEY (entidad_federativa) REFERENCES Entidades_Federativas(clave)
+);
 
 
 
@@ -496,21 +533,3 @@ INSERT INTO Precios (servicio, zona, precio, medida_aumento_peso, precio_aumento
     ('Dia siguiente', 'Zona 7', 440, 1, 74),
     ('2-5 Dias', 'Zona 7', 400, 1, 68),
     ('Terrestre', 'Zona 7', 360, 1, 35);
-
-
-
-
-
-
-
--- ----------------------------------------------------------------------
---     I N S E R T A R  U S U A R I O  P O R  D E F E C T O 
--- ----------------------------------------------------------------------
-
--- Insertar sucursal
-INSERT INTO Sucursales (numero_sucursal, correo, telefono, calle, numero_ext, cp, colonia, ciudad, estado, latitud_dec, longitud_dec, hora_salida_diaria) VALUES 
-('00000', 'deliveryFastNacional@deliveryfast.com', '5551234567', 'Av. Xalapa', 's/n', '91020', 'Obrero Campesina', ' Xalapa-Enríquez', '30', 19.541211, -96.926956, '18:00:00');
-
--- Insertar colaborador
-INSERT INTO Colaboradores (numero_personal, contrasena, nombre, apellido_paterno, apellido_materno, curp, correo, telefono, fecha_contratacion, id_rol, numero_sucursal)
-VALUES ('000000', 'password', 'Sistema', NULL, NULL, 'SIS000000HDFSRNA1', 'deliveryFastNacional@deliveryfast.com', NULL, CURDATE(), 1, '00000');
