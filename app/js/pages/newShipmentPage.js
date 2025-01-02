@@ -125,15 +125,14 @@ function calculateChange() {
         msg.innerHTML = "El monto debe ser mayor al total";
         if(msg.classList.contains("input-message-hide")){
             msg.classList.remove("input-message-hide");
-            console.log("Se quito la clase");
         }
         boton.disabled = true;
-        spanChange.innerHTML = "0";
+        spanChange.innerText = "0";
     } else {
         msg.innerHTML = "";
         if(!msg.classList.contains("input-message-hide")) msg.classList.add("input-message-hide");
         boton.disabled = false;
-        spanChange.innerHTML = change.toFixed(2);
+        spanChange.innerText = change.toFixed(2);
     }
 }
 
@@ -149,7 +148,7 @@ async function createShipmentWithCash(){
     dataShipment = {...dataShipment, "metodo_de_pago": "Efectivo", "pago_con": cash};
     
     try{
-        const module = await import('../api/createShipment.js')
+        const module = await import('../api/shipments.js')
         newShipment = await module.fetchCreateShipment(dataShipment);    
     }catch(error){}
 
@@ -662,13 +661,11 @@ async function addFunToModalSucces($guia){
 
 
 async function printTicket($guia){
-    console.log("Imprimiendo ticket");
     try{
         const module = await import("../api/ticket.js");
         const success = await module.getTicketPDFByGuide($guia);    
         return success;
     }catch(e){
-        console.log("Error", e);
         return false;
     }
 }

@@ -1,10 +1,6 @@
 import { hideLoadingScreen } from "./components/loadingScreen.js";
 import { changeMenuButtonPresssed } from "./components/sidebar.js";
 
-import("./components/loadingScreen.js");
-
-let mainContainer = document.getElementById('content-section');
-
 const routes = {
     "/app/home":            () => import('./pages/homePage.js'),
     "/app/new-shipment":    () => import('./pages/newShipmentPage.js'),
@@ -15,35 +11,39 @@ const routes = {
     "/app/search-package":  () => import('./pages/searchPackagePage.js'),
     "/app/statistics":      () => import('./pages/statisticsPage.js'),
     "/app/shipment":        () => import('./pages/shipmentProfilePage.js'),
-    "/app/package":         () => import('./pages/packageProfilePage.js')
+    "/app/package":         () => import('./pages/packageProfilePage.js'),
+    "/app/not-found":       () => import('./pages/notFoundPage.js'),
 };
+
+let mainContainer = document.getElementById('content-section');
+window.addEventListener("popstate", renderContent);
+renderContent().then(hideLoadingScreen);
 
 export const navigateTo = async (url) => {
     history.pushState(null, null, url);
     await renderContent();
 }
 
-const renderContent = async () => {
-    const path = window.location.pathname;
-    const route = routes[path.split("?")[0]];
-    if(route){
+async function renderContent() {
+    const path = urlParser();
+    const route = routes[path];
+    try{
+        if(!route) throw new Error("Error al cargar la url");
         const module = await route();
         const page = await module.getPage();
-
         mainContainer.innerHTML = page;
-        changeMenuButtonPresssed(path.split("?")[0]);
-        const funcionality = await module.addFunctionality();
-        
-        const queryParams = new URLSearchParams(window.location.search);
-        if(queryParams && path.startsWith("/app/shipment")){
-            const shipmentId = queryParams.get("id");
-            console.log("ID DE ENVIO: ", shipmentId);
-        }
-    }else{
+        changeMenuButtonPresssed(path);
+        await module.addFunctionality();
+    }catch(error){
         mainContainer.innerHTML = `<h1 class="NotFound">Not found 404</h1>`;
     }
 }
 
-window.addEventListener("popstate", renderContent);
+function urlParser(){
+    const completePath = window.location.pathname;
+    const pathWitouthSearch = completePath.split("?")[0];
+    const brokeRoute = pathWitouthSearch.split("/");
+    const route = "/" + (brokeRoute[1] || "") + "/" + (brokeRoute[2] || "");
+    return route;
+}
 
-renderContent().then(hideLoadingScreen);

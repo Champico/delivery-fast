@@ -264,3 +264,32 @@ button.create:hover,
   -webkit-appearance: none;
   margin: 0;
 }
+
+#not-found-img{
+    width: 200px;
+}
+
+#not-found-message{
+    font-size: 29px;
+    font-weight: 500;
+    margin: 0;
+}
+
+#close-modal-button{
+    position: absolute;
+    padding: 0;
+    margin: 0;
+    right: 20px;
+    top: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-family: 'Arial Narrow Bold', sans-serif;
+    font-weight: bold;
+    font-size: 50px;
+    color: #000;
+}
+
+#close-modal-button:hover{
+    color: #555;
+}

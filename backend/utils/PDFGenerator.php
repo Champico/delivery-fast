@@ -3,7 +3,7 @@ require 'vendor/autoload.php';
 
 use Dompdf\Dompdf;
 use Dompdf\Options;
-use Picqer\Barcode\BarcodeGeneratorPNG;
+//use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class PDFGenerator
 {
@@ -212,9 +212,9 @@ class PDFGenerator
     public static function createGuidePDF($shipment){
         echo (["shipment" => $shipment]);
 
-        $generator = new BarcodeGeneratorPNG();
+        $generator = //new BarcodeGeneratorPNG();
 
-        $code128 = base64_encode($generator->getBarcode('123456789', $generator::TYPE_CODE_128));
+        $code128 = //base64_encode($generator->getBarcode('123456789', $generator::TYPE_CODE_128));
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);

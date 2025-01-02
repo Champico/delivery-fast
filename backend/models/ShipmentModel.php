@@ -179,6 +179,23 @@ class ShipmentModel
         }
     }
 
+    public function exists($guide){
+        try {
+            $query = "SELECT COUNT(*) AS count FROM envios WHERE guia = ?;";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $guide);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $shipment = $result->fetch_assoc();
+            if($shipment['count'] > 0){
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception $e) {
+            throw new Exception("Ocurrio un error en el servidor");
+        }
+    }
 
 
 

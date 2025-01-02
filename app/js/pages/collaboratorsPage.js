@@ -4,6 +4,56 @@ let selectedUser = null;
 let selectRow = null;
 
 export async function getPage(){
+    return await getHtmlPage();
+}
+
+export async function addFunctionality(){
+    addFunctionalityRows();
+    return true;
+}
+
+function addFunctionalityRows(){
+    const rows = userTable.querySelectorAll('tr');
+    rows.forEach(row => {
+        row.addEventListener('click', () => {
+            if (row.style.backgroundColor === 'rgb(255, 167, 38)') {
+                row.style.backgroundColor = ''; 
+                selectedUser = null; 
+            } else {
+                rows.forEach(r => r.style.backgroundColor = ''); 
+                row.style.backgroundColor = '#ffa726'; 
+                selectedUser = row.getAttribute('data-personal-number');
+                selectedRow = row;
+            }
+        });
+    });
+}
+
+ 
+/*
+======================================================================================
+    S E C C I O N  D E  F U N C I O N E S  D E  L O G I C A  D E  N E G O C I O 
+======================================================================================
+*/
+
+
+
+
+
+
+
+
+/*
+======================================================================================
+    S E C C I O N  D E  F U N C I O N E S  Q U E  R E T O R N A N  H T M L 
+======================================================================================
+*/
+
+/* =========================
+    H T M L  P A G E  O N E 
+   ========================= */
+
+async function getHtmlPage(){
     return `
         <h1 class="title-section">Envíos</h1>
             <div class="shupment-home-content">
@@ -47,11 +97,6 @@ export async function getPage(){
 }
 
 
-export async function addFunctionality(){
-    console.log('Users Page Functionality');
-    return true;
-}
-
 async function buildUserList(){
     const users = await fetchAllUsersOfBranch("000000");
 
@@ -72,25 +117,3 @@ async function buildUserList(){
     userRows = userRows + `</tbody>`;
     return userRows;
 }
-
-
-/*
-function addFunctionalityRows(){
-    const rows = userTable.querySelectorAll('tr');
-    rows.forEach(row => {
-        row.addEventListener('click', () => {
-
-            if (row.style.backgroundColor === 'rgb(255, 167, 38)') {
-
-                row.style.backgroundColor = ''; 
-                selectedUser = null; 
-            } else {
-                rows.forEach(r => r.style.backgroundColor = ''); 
-                row.style.backgroundColor = '#ffa726'; 
-                selectedUser = row.getAttribute('data-personal-number');
-                selectedRow = row;
-                console.log(selectedUser);
-            }
-        });
-    });
-}*/

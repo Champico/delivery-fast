@@ -10,6 +10,17 @@ const buttons = {
     "/app/statistics":      "sb-bt-statistics",
 };
 
+const btnToRoute = {
+    "sb-bt-home" :            "/app/home", 
+    "sb-bt-new-shipment" :    "/app/new-shipment",
+    "sb-bt-search-shipment" : "/app/search-shipment",
+    "sb-bt-earnings" :        "/app/earnings",
+    "sb-bt-package" :         "/app/search-package",
+    "sb-bt-users" :           "/app/users",
+    "sb-bt-about" :           "/app/branch",
+    "sb-bt-statistics" :      "/app/statistics"
+}
+
 let idButtonPressed = null;
 
 createSideBar();
@@ -21,6 +32,20 @@ function createSideBar(){
     const route = path.split("?")[0];
     changeMenuButtonPresssed(route);
 }
+
+function addFuncionalityToSideBar(){
+    const sidebar = document.getElementById("sidebar-menu-container");
+    
+    sidebar.addEventListener('click', async function(event) {
+        const liElement = event.target.closest(".sidebar-clickeable");
+        if (liElement) {
+            await navigateTo(btnToRoute[liElement.id]);
+        }
+    });
+}
+
+
+
 
 export function changeMenuButtonPresssed(url){
     try{
@@ -77,31 +102,6 @@ function createCollaboratorSideBar(){
 
 function createDealerSideBar(){
     return " " + getShipmentModule(true, false, false) + getPackageModule(true);
-}
-
-function addFuncionalityToSideBar(){
-    const sidebar = document.getElementById("sidebar-menu-container");
-    
-    sidebar.addEventListener('click', async function(event) {
-        const liElement = event.target.closest(".sidebar-clickeable");
-    
-        const btnToRoute = {
-            "sb-bt-home" :            "/app/home", 
-            "sb-bt-new-shipment" :    "/app/new-shipment",
-            "sb-bt-search-shipment" : "/app/search-shipment",
-            "sb-bt-earnings" :        "/app/earnings",
-            "sb-bt-package" :         "/app/search-package",
-            "sb-bt-users" :           "/app/users",
-            "sb-bt-about" :           "/app/branch",
-            "sb-bt-statistics" :      "/app/statistics"
-        }
-    
-        console.log("liElement", btnToRoute[liElement.id]);
-    
-        if (liElement) {
-            await navigateTo(btnToRoute[liElement.id]);
-        }
-    });
 }
 
 function getNewShipmentButton(){

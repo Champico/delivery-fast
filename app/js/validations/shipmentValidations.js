@@ -2,6 +2,23 @@
 
 import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween} from "./stringValidations.js";
 
+
+export function validateGuide(guide){
+    if (!guide) {
+      return "Este campo es obligatorio";
+    }
+
+    if(!isNumber(guide)){
+      return "La guía debe ser un número";
+    }
+
+    if(!isIntegerOfSize(guide, 15)){
+      return "La guía debe tener 15 digitos"
+    }
+
+    return true;
+}
+
 export function validateName(name) {
   if (!name) {
     return "Este campo es obligatorio";

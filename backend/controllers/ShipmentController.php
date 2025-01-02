@@ -46,13 +46,19 @@ class ShipmentController
             echo json_encode($envios, JSON_UNESCAPED_UNICODE);
         } catch (Exception $e) {
             http_response_code(422);
-            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
 
     public function get($guia)
     {
-        echo json_encode(['message' => "Envío con la guía " . $guia], JSON_UNESCAPED_UNICODE);
+        try {
+            $envio = $this->shipmentModel->get($guia);
+            echo json_encode($envio, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
     }
 
     public function create()
@@ -145,6 +151,17 @@ class ShipmentController
                 echo json_encode(['error' => 'Eror al crear el ticket'], JSON_UNESCAPED_UNICODE);
             }
             exit();
+        }
+    }
+
+    public function exists($guia)
+    {
+        try {
+            $envio = $this->shipmentModel->exists($guia);
+            echo json_encode($envio, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
 

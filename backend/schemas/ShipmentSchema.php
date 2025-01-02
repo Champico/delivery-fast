@@ -255,4 +255,25 @@ class ShipmentSchema
         if(!empty($errors)) return $errors;
         return false;
     }
+
+    public static function validateGuide($guide)
+    {
+        $errors = [];
+
+        if(empty($guide)){
+            $errors[] = "Ingrese la guía";
+        }
+
+
+       if(!is_string($guide) || !ctype_digit($guide)){
+            $errors[] = "La guía debe ser un número de 15 digitos";
+       }
+       
+       
+       if(!strlen($guide) === 15){
+            $errors[] =  "La guía debe ser de 15 dígitos";
+       }
+
+       return $errors;
+    }
 }

@@ -23,6 +23,7 @@ switch ($method) {
                 case 'search': $shipmentController->get($a2); break;
                 case 'ticket-pdf': $shipmentController->getTicketPDF($a2); break;
                 case 'guide-pdf': $shipmentController->getGuidePDF($a2); break;
+                case 'exits' : $shipmentController->exists($a2); break;
                 default: http_response_code(405);
                 echo json_encode(['error' => 'Dirección no encontrada']);
                 break;
