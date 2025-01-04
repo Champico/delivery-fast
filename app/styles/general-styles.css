@@ -444,19 +444,19 @@ ____________________________________________________
 }
 
 /* Segundo paso del wizar de los datos del paquete*/
-.ws-datos-envio{
+#ws-datos-envio{
     width: 235px;
     left: 0px;
 }
 
 /* Segundo paso del wizar de los datos del paquete*/
-.ws-datos-paquete{
+#ws-datos-paquete{
     width: 235px;
     left: -18px;
 }
 
 /* Tercer paso del wizard de los datos del pago */
-.ws-datos-pago{
+#ws-datos-pago{
     width: 235px;
     left: -36px;
 }
@@ -487,17 +487,17 @@ ____________________________________________________
 }
 
 /* Primer paso: sombra*/
-.wsc-datos-envio::before{
+#wsc-datos-envio::before{
     left: 0px;
 }
 
 /* Segundo paso: sombra*/
-.wsc-datos-paquete::before{
+#wsc-datos-paquete::before{
     left: -18px;
 }
 
 /* Tercer paso: : sombra */
-.wsc-datos-pago::before{
+#wsc-datos-pago::before{
     left: -36px;
 }
 

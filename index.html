@@ -3,29 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Delivery Fast Login</title>
+    <title>Delivery Fast</title>
     <link rel="icon" href="./app/resources/favicon/favicon.ico">
-    <link rel="stylesheet" href="./app/styles/login-style.css">
-    <script src="./app/js/api/authSessions.js" type="module"></script>
+    <link rel="stylesheet" href="./app/styles/welcome-styles.css">
+    <script>
+        function goToLogin(){
+            window.location.href = "http://localhost/login";
+        }
+    </script>
 </head>
 <body>
-    <div class="container">
-        <div class="container-img">
-            <img class="img-login" src="./app/resources/img/avion-login.webp" alt="Air Plane Login Image">
-        </div>
-        <div class="container-form">
-            <div class="container-logo"><img class="dfast-logo" src="./app/resources/brand/logotipo/logotipo-original.svg"></div>
-            <form id="login-form" class="form-class">
-                <label class="label-form" for="numero-personal">Número del personal</label>
-                <input class="input-form" required type="number" name="numero-personal" id="numero-personal" placeholder="Ej. 123456">
 
-                <label class="label-form" for="contrasena">Contraseña</label>
-                <input class="input-form" required type="password" name="contrasena" id="contrasena" placeholder="Contraseña">
-                
-                <button class="button-form" type="submit">Iniciar Sesión</button>
+    <header class="top-bar">
+        <img src="./app/resources/brand/logotipo/logotipo-extendido.svg" alt="Logo Delivery Fast" class="logo">
+        <button type="button" class="collaborators-button" onclick="goToLogin()">
+            Colaboradores
+            <img src="./app/resources/icons/usuario_ico.svg" alt="Icono" class="button-icon">
+        </button>
+    </header>
 
-            </form>
+    <section class="banner">
+        <img src="./app/resources/img/city-nigth.webp" alt="Imagen Banner" class="banner-image">
+    </section>
+
+    <section class="info-section">
+        <div class="info-text">
+            <h2>Envíos rápidos y seguros</h2>
+            <p>En Delivery Fast, garantizamos la entrega de tus paquetes de forma rápida, segura y confiable en cualquier lugar de México.</p>
         </div>
-    </div>
+        <div class="info-image">
+            <img src="./app/resources/img/img1.webp" alt="Imagen de envíos">
+        </div>
+    </section>
+
+    <section class="info-section reverse">
+        <div class="info-image">
+            <img src="./app/resources/img/img2.webp" alt="Clientes satisfechos">
+        </div>
+        <div class="info-text">
+            <h2>Clientes satisfechos</h2>
+            <p>Nuestra prioridad es la satisfacción de nuestros clientes, brindando soluciones eficientes para sus necesidades de envío.</p>
+        </div>
+    </section>
+
+    <section class="info-section">
+        <div class="info-text">
+            <h2>Presencia nacional</h2>
+            <p>Con una cobertura que abarca todo México, somos tu aliado perfecto para el envío de paquetes sin importar la distancia.</p>
+        </div>
+        <div class="info-image">
+            <img src="./app/resources/img/img3.webp" alt="Mapa de México">
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Delivery Fast &copy; 2025. Envíos rápidos en todo México.</p>
+    </footer>
 </body>
 </html>

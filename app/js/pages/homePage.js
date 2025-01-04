@@ -40,9 +40,6 @@ function getTop() {
                             <option value="Si">Si</option>
                             <option value="No">No</option>
                         </select>
-                        <button class="btnClean">
-                            <img class="filter-btnClean" src="resources/icons/tacho-de-reciclaje.svg" alt="">
-                        </button>
                     </div>`;
 }
 

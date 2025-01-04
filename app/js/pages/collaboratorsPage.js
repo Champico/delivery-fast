@@ -50,16 +50,10 @@ function addFunctionalityRows(){
     const rows = userTable.querySelectorAll('tr');
     rows.forEach(row => { row.addEventListener('click', 
             () => {
-                if(row.classList.contains('row-selected')){
-                    row.classList.remove('row-selected');
-                    selectedUser = null;
-                }else{
-                    rows.forEach(r => {
-                        if(r.classList.contains('row-selected')) r.classList.remove('row-selected');
-                        selectedUser = row.getAttribute('data-personal-number');
-                        selectedRow = row;
-                    }); 
-                }
+                if(selectedRow) selectedRow.classList.remove('row-selected');
+                row.classList.add('row-selected');
+                selectedRow = row;
+                selectedUser = row.getAttribute('data-personal-number')
             }
         ); 
     })

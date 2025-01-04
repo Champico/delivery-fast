@@ -20,9 +20,10 @@ async function getPageStepTwo() {
     boton.disabled = true;
 
     try{
-        const module = await import("../validations/pageValidations/newShipmentValidations.js");
+        const module = await import("../validations/formsValidations/newShipmentValidations.js");
         data = await module.validateShipmentDataFields();    
-    }catch(e){ 
+    }catch(e){
+        console.log("ERROR", e) 
         return;
     }
     
@@ -39,6 +40,8 @@ async function getPageStepTwo() {
     boton.disabled = false;
 
     document.getElementById("new-shupment-page-content").innerHTML = await getHtmlStepTwo();
+
+    document.getElementById("ws-datos-paquete").classList.add("wizard-step-selected");
 }
 
 async function getPageStepThree() {
@@ -49,7 +52,7 @@ async function getPageStepThree() {
     boton.disabled = true;
 
     try{
-        const module = await import("../validations/pageValidations/newShipmentValidations.js");
+        const module = await import("../validations/formsValidations/newShipmentValidations.js");
         dataOfPackage = module.validatePackageDataFields();
     }catch(e){
     }
@@ -72,6 +75,8 @@ async function getPageStepThree() {
     boton.disabled = false;
 
     document.getElementById("new-shupment-page-content").innerHTML = getHtmlStepThree(ticketData);
+
+    document.getElementById("ws-datos-pago").classList.add("wizard-step-selected");
 }
 
 function pay(){
@@ -195,18 +200,18 @@ function getStepOneTop(){
             </div>
     
             <div class="new-shupment-wizard">
-                <div class="wizard-step-container wsc-datos-envio">
-                    <div class="wizard-step wizard-step-selected ws-datos-envio">
+                <div class="wizard-step-container" id="wsc-datos-envio">
+                    <div class="wizard-step wizard-step-selected" id="ws-datos-envio">
                         <span class="newStepButtonLabel">Datos de envío</span>
                     </div>
                 </div>
-                <div class="wizard-step-container wsc-datos-paquete">
-                    <div class="wizard-step ws-datos-paquete">
+                <div class="wizard-step-container" id="wsc-datos-paquete">
+                    <div class="wizard-step" id="ws-datos-paquete">
                         <span class="newStepButtonLabel">Datos de paquete</span>
                     </div>
                 </div>
-                <div class="wizard-step-container wsc-datos-pago">
-                    <div class="wizard-step ws-datos-pago">
+                <div class="wizard-step-container" id="wsc-datos-pago">
+                    <div class="wizard-step" id="ws-datos-pago">
                         <span class="newStepButtonLabel">Datos de pago</span>
                     </div>
                 </div>

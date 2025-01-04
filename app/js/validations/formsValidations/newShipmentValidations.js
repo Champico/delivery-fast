@@ -36,7 +36,7 @@ function verifySenderData(){
         validateFieldData(key, values[key], htmlElements[key]);
     });
 
-    return errores === 0 ? valueElements : false;
+    return errores === 0 ? values : false;
 }
 
 function verifyRecipientData(){
@@ -60,7 +60,7 @@ function verifyRecipientData(){
         validateFieldData(key, values[key], htmlElements[key]);
     });
 
-    return errores === 0 ? valueElements : false;
+    return errores === 0 ? values : false;
 }
 
 function validateFieldData(nameField,valueField,htmlElement){

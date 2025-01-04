@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Fast Login</title>
+    <link rel="icon" href="./app/resources/favicon/favicon.ico">
+    <link rel="stylesheet" href="./app/styles/login-style.css">
+    <script src="./app/js/api/authSessions.js" type="module"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="container-img">
+            <img class="img-login" src="./app/resources/img/avion-login.webp" alt="Air Plane Login Image">
+        </div>
+        <div class="container-form">
+            <div class="container-logo">
+                <img class="dfast-logo" src="./app/resources/brand/logotipo/logotipo-original.svg" alt="Logo de la empresa Delivery Fast">
+            </div>
+            <form id="login-form" class="form-class">
+                <label class="label-form" for="numero-personal">Número del personal</label>
+                <input class="input-form" required type="number" name="numero-personal" id="numero-personal" placeholder="Ej. 123456">
+
+                <label class="label-form" for="contrasena">Contraseña</label>
+                <input class="input-form" required type="password" name="contrasena" id="contrasena" placeholder="Contraseña" autocomplete="on">
+                
+                <button class="button-form" type="submit">Iniciar Sesión</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
