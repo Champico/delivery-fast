@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Fast</title>
+    <link rel="icon" href="./app/resources/favicon/favicon.ico">
+    <link rel="stylesheet" href="./app/styles/welcome-styles.css">
+    <script>
+        function goToLogin(){
+            window.location.href = "http://localhost/login";
+        }
+    </script>
+</head>
+<body>
+
+    <header class="top-bar">
+        <img src="./app/resources/brand/logotipo/logotipo-extendido.svg" alt="Logo Delivery Fast" class="logo">
+        <button type="button" class="collaborators-button" onclick="goToLogin()">
+            Colaboradores
+            <img src="./app/resources/icons/usuario_ico.svg" alt="Icono" class="button-icon">
+        </button>
+    </header>
+
+    <div id="container">
+        <div id="container-not-found">
+            <div id="image-container">
+                <img src="./app/resources/icons/not-found-page.svg" alt="Página no encontrada"></img>
+            </div>
+            <p id="message">La página que estás buscando no existe</p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Delivery Fast &copy; 2025. Envíos rápidos en todo México.</p>
+    </footer>
+</body>
+</html>
