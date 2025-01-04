@@ -63,13 +63,11 @@ async function getTable() {
                 <table class="shipment-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" disabled></th>
                             <th>No Folio</th>
                             <th>Consignatario</th>
                             <th>Estatus</th>
                             <th>Tipo de servicio</th>
                             <th>Ciudad destino</th>
-                            <th></th>
                         </tr>
                     </thead>
                     <tbody>`;
@@ -102,16 +100,10 @@ function generateTableRow(data) {
   const numero_sucursal = data.numero_sucursal || "";
 
   return `<tr>
-            <td><input type="checkbox">
             <td>${folio}</td>
             <td>${destinatario}</td>
             <td>${estatus}</td>
             <td>${servicio}</td>
             <td>${ciudad_destino}</td>
-            <td>
-                <button class="btnClean">
-                    <img class=filter-btnClean src="resources/icons/tacho-de-reciclaje.svg" alt="eliminar">
-                </button>
-            </td>
         </tr>`;
 }

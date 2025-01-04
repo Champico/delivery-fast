@@ -12,7 +12,6 @@ const routes = {
     "/app/statistics":      () => import('./pages/statisticsPage.js'),
     "/app/shipment":        () => import('./pages/shipmentProfilePage.js'),
     "/app/package":         () => import('./pages/packageProfilePage.js'),
-    "/app/not-found":       () => import('./pages/notFoundPage.js'),
 };
 
 let mainContainer = document.getElementById('content-section');
@@ -35,7 +34,15 @@ async function renderContent() {
         changeMenuButtonPresssed(path);
         await module.addFunctionality();
     }catch(error){
-        mainContainer.innerHTML = `<h1 class="NotFound">Not found 404</h1>`;
+        console.log("El error es: ", error)
+        try{
+            const module = await import("./components/notFoundPage.js");
+            const page = await module.getPage();
+            mainContainer.innerHTML = page;
+        }catch(error){
+            console.log("No se encontro el componente")
+            mainContainer.innerHTML = `<h1 class="NotFound">Not Found 404</h1>`;
+        }
     }
 }
 
@@ -46,4 +53,3 @@ function urlParser(){
     const route = "/" + (brokeRoute[1] || "") + "/" + (brokeRoute[2] || "");
     return route;
 }
-

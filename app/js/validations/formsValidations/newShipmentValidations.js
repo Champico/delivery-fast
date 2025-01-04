@@ -16,7 +16,6 @@ export function validateShipmentDataFields(){
 }
 
 function verifySenderData(){
-    //htmls
     const htmlElements = {
         "nombre-remitente":   document.getElementById("nombre-remitente"),
         "cp-remitente":       document.getElementById("cp-remitente"),
@@ -30,15 +29,11 @@ function verifySenderData(){
         "telefono-remitente": document.getElementById("telefono-remitente")
     };
 
-    //values
-    const valueElements = Object.entries(htmlElements).reduce((acc, [key, element]) =>{
-        acc[key] = element ? element.value : null;
-        return acc;
-    },{});
+    let values = {}
 
-    //Validación
-    Object.entries(valueElements).forEach(([key, value]) => {
-        validateFieldData(key, value, htmlElements[key]);
+    Object.entries(htmlElements).forEach(([key, element]) => {
+        values[key] = element.value || null;
+        validateFieldData(key, values[key], htmlElements[key]);
     });
 
     return errores === 0 ? valueElements : false;
@@ -58,15 +53,11 @@ function verifyRecipientData(){
         "telefono-destinatario": document.getElementById("telefono-destinatario")
     };
 
-    //values
-    const valueElements = Object.entries(htmlElements).reduce((acc, [key, element]) =>{
-        acc[key] = element ? element.value : null;
-        return acc;
-    },{});
+    let values = {}
 
-    //Validación
-    Object.entries(valueElements).forEach(([key, value]) => {
-        validateFieldData(key, value, htmlElements[key]);
+    Object.entries(htmlElements).forEach(([key, element]) => {
+        values[key] = element.value || null;
+        validateFieldData(key, values[key], htmlElements[key]);
     });
 
     return errores === 0 ? valueElements : false;

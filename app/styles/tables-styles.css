@@ -110,9 +110,13 @@ ____________________________________________________
 }
 
 .isSelectedItemTable {
-    background-color:#ffa726 ;
+    background-color: var(--row-selected);
 }
 
 .row-selectable{
     cursor: pointer;
+}
+
+.row-selected{
+    background-color: var(--row-selected);
 }

@@ -36,9 +36,10 @@ ____________________________________________________
 */
 :root {
     --brand-orange-color: #FFAC13;; /* Color principal */
-    --orange-color-higth-contrast: #dd9000; /* Color principal con mayor contraste con la letra blanca */
+    --orange-color-higth-contrast: #DD9000; /* Color principal con mayor contraste con la letra blanca */
     --input-error: #D0021B; /* Color de los mensaje de error en los input */
-    --orange-ligth:  #ffe5cc; /* Naranja claro de ventana de busqueda*/
+    --orange-ligth:  #FFE5CC; /* Naranja claro de ventana de busqueda*/
+    --row-selected: #FFA726; /* Color de la fila seleccionada */
 }
 
 * {
@@ -314,7 +315,7 @@ ____________________________________________________
     height: 34px;
 }
 
-.buttonsContainer{
+#buttons-container{
     margin: 5px;
     padding: 5px;
 }
@@ -629,7 +630,11 @@ button.button.guide-button {
     color: #474747;
 }
 
-
+/* User container */
+.search-container{
+    max-width: 560px;
+    padding-top: 10px;
+}
 
 
 

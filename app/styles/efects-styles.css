@@ -1,3 +1,28 @@
+/*
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+   | |   ____  _____ _     _____     _______ ______   __  _____ _    ____ _____   ____ _______   ___     _____   | |  
+   | |  |  _ \| ____| |   |_ _\ \   / / ____|  _ \ \ / / |  ___/ \  / ___|_   _| / ___|_   _\ \ / / |   | ____|  | |  
+   | |  | | | |  _| | |    | | \ \ / /|  _| | |_) \ V /  | |_ / _ \ \___ \ | |   \___ \ | |  \ V /| |   |  _|    | |  
+   | |  | |_| | |___| |___ | |  \ V / | |___|  _ < | |   |  _/ ___ \ ___) || |    ___) || |   | | | |___| |___   | |  
+   | |  |____/|_____|_____|___|  \_/  |_____|_| \_\|_|   |_|/_/   \_\____/ |_|   |____/ |_|   |_| |_____|_____|  | |  
+   | |                                                                                                           | |  
+ __| |___________________________________________________________________________________________________________| |__
+ __   ___________________________________________________________________________________________________________   __
+   | |                                                                                                           | |  
+
+    Nombre del archivo: efects-styles.css
+    
+    Descripcion: El siguiente archivo contiene los estilos para las paginas de carga y de error 404.
+
+    Estructura del archivo:
+    - loading screen
+    - error page
+    
+*/
+
+
 /* Contenedor principal */
 .loading-screen {
     position: fixed;
@@ -41,3 +66,44 @@
     height: 85px;
     z-index: 1;  /* Asegúrate de que la imagen esté por encima del círculo */
 }
+
+
+
+
+
+/* Pagina de not found*/
+#container-not-found-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #f5f5f5;
+  }
+
+  #not-found-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 600px;
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  #container-not-found-message img {
+    max-width: 230px;
+    margin-bottom: 20px;
+  }
+
+  #container-not-found-message p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 60px;
+    font-weight: 700;
+    color: #333;
+  }
+
+
+

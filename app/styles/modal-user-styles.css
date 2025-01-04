@@ -1,10 +1,3 @@
-* {
-    font-family: 'Roboto';
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
 .body-modal {
     position: fixed;
     top: 0;
@@ -26,31 +19,43 @@
     justify-content: center;
     align-items: center;
     animation: fadeIn 0.3s ease-in-out;
-    padding: 20px;
+    border-radius: 10px;
     position: fixed;
+    padding: 20px;
+    margin: 0;
     z-index: 8;
     left: 0;
     top: 0;
-    width: 100%;
-    height: 100%;
 }
 
 .modal-hide{
     display: none;
 }
 
-.modal-content,.modal-content-small {
+.modal-content, .modal-content-small, .modal-content-large{
     background-color: #fff;
-    width: 800px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     position: relative;
 }
 
-.modal-content-small{
-    width: 400px;
+.modal-content{
+    max-width: 600px;
 }
+.modal-content-small{
+    max-width: 400px;
+}
+
+.modal-content-large{
+    max-width: 800px;
+    height: 90%;
+}
+
+.create-user-modal{
+    overflow-y: auto; 
+}
+
 
 .head-title-modal-container {
     text-align: center;
@@ -86,7 +91,7 @@
     margin-bottom: 5px;
     font-size: 14px;
     color: #333;
-    width: 100px;
+    text-align: left;
 }
 
 .form-group-modal input,
