@@ -14,7 +14,9 @@ export async function getAllShipmentsOfBranch(num_sucursal) {
 export async function getAllShipmentsWithParams(params) {
     let response;
 
-    let url = `http://localhost/backend/shipment/branch?sucursal=${params['sucursal']}&guia=${params['guia']}&limite_min=${params['limite_min']}&limite_max${params['limite_max']}&order=${params['orden']}`
+    console.log(params);
+
+    let url = `http://localhost/backend/shipment/branch?search=true&numero_sucursal=${params['numero_sucursal']}&limite_min=${params['limite_min']}&limite_max=${params['limite_max']}&orden=${params['orden']}`
 
     if(params['fecha_inicio']) url = url + "&" + params['fecha_inicio']; 
     if(params['fecha_final'])  url = url + "&" + params['fecha_final'];
@@ -23,7 +25,8 @@ export async function getAllShipmentsWithParams(params) {
     if(params['seguro'])       url = url + "&" + params['seguro'];
 
     try {
-        response = await fetch(`http://localhost/backend/shipment/branch/${num_sucursal}`);
+        console.log(url);
+        response = await fetch(url);
     } catch (error) {
         return [];
     }

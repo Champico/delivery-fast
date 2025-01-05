@@ -362,6 +362,7 @@ SELECT
     e.guia,
     e.folio,
     e.servicio,
+    e.seguro,
     c.nombre_completo AS destinatario,
     c.ciudad AS ciudad_destino,
     f.nombre AS estado_destino,

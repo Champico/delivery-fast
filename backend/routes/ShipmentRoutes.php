@@ -21,8 +21,7 @@ switch ($method) {
             switch($action){
                 case 'branch':
                     if(isset($_GET['search'])) {
-                        $searchTerm = $_GET['search'];
-                        $shipmentController->getOfBranchIf($searchTerm);
+                        $shipmentController->getOfBranchIf();
                     }else{
                         $shipmentController->getAllBranch($a2); break;
                     }
@@ -57,7 +56,8 @@ switch ($method) {
         break;
 
     case 'DELETE':
-        $shipmentController->delete($action);
+        http_response_code(405);
+        echo json_encode(['error' => 'No se pueden eliminar los envíos']);
         break;
 
     default:

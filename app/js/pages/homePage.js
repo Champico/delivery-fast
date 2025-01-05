@@ -1,4 +1,3 @@
-import { getAllShipmentsOfBranch } from "../api/shipments.js";
 
 export let shipments = "";
 
@@ -172,14 +171,19 @@ return `<div class="dropdown">
 }
 
 async function getTable() {
-  searchParams['num_sucursal'] = localStorage.getItem("numero_sucursal");
-  if (!searchParams['num_sucursal']) return;
+  searchParams['numero_sucursal'] = localStorage.getItem("numero_sucursal");
+  if (!searchParams['numero_sucursal']) return;
 
   searchParams["limite_min"] = 1;
-  searchParams["limite-max"] = 20
+  searchParams["limite_max"] = 20
   searchParams["orden"] = "desc";
   
-  shipments = await getAllShipmentsOfBranch(num_sucursal);
+  try{
+    const module = await import('../api/shipments.js');
+    shipments = await module.getAllShipmentsWithParams(searchParams);
+  }catch(e){
+    console.log(e.message)
+  }
 
   let table = `<div class="table-container">
                 <table id="shipment-table">

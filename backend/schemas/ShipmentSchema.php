@@ -269,14 +269,17 @@ class ShipmentSchema
     {
         $errors = [];
 
+        if(empty($params)){
+            $errors[] = "Debe enviar los parametros de busqueda";
+        }
+
         $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
 
         foreach
         (
             [
-                "sucursal" => [5, "La sucursal es obligatoria", "La clave de la sucursal debe ser un número de 5 dígitos"],
-                "guia" => [15, "La guia es obligatoria", "La guía debe ser de 15 dígitos"]
-            ] as $key => [$length, $errorNotSet, $errorNotValid]
+                "numero_sucursal" => [5, "La sucursal es obligatoria", "La clave de la sucursal debe ser un número de 5 dígitos"],
+             ] as $key => [$length, $errorNotSet, $errorNotValid]
         ){
             if(!isset($params[$key]) || empty($params[$key])){
                 $error[] = $errorNotSet;

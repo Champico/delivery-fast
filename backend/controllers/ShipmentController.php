@@ -127,14 +127,14 @@ class ShipmentController
 
             $ticket = $this->getTicketPrivate($data);
             echo json_encode(["ticket" => $ticket]);
+            exit();
         } catch (Exception $e) {
             http_response_code(422);
             if ($e->getMessage()){
                  echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
             }else{
-                echo json_encode(['error' => 'Eror al crear el ticket'], JSON_UNESCAPED_UNICODE);
+                echo json_encode(['error' => 'Error al crear el ticket'], JSON_UNESCAPED_UNICODE);
             }
-            exit();
         }
     }
 
@@ -143,6 +143,7 @@ class ShipmentController
         try {
             $envio = $this->shipmentModel->exists($guia);
             echo json_encode($envio, JSON_UNESCAPED_UNICODE);
+            exit();
         } catch (Exception $e) {
             http_response_code(422);
             echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
@@ -150,17 +151,21 @@ class ShipmentController
     }
 
     public function getOfBranchIf(){
-        $data = [];
+        $params = [];
         
-        $data['limite_min'] = isset($_GET['limite_min']) ? $_GET['limit_min'] : "0";
-        $data['limite_max'] = isset($_GET['limite_max']) ? $_GET['limit_max'] : "20";
-        $data['orden'] = isset($_GET['orden']) ? $_GET['order'] : 'desc';
+        $params['limite_min'] = isset($_GET['limite_min']) ? $_GET['limite_min'] : "0";
+        $params['limite_max'] = isset($_GET['limite_max']) ? $_GET['limite_max'] : "20";
+        $params['orden'] = isset($_GET['orden']) ? $_GET['orden'] : 'desc';
 
-        if(isset($_GET['servicio'])) $data['servicio'] = $_GET['servicio'];
-        if(isset($_GET['estatus'])) $data['estatus'] = $_GET['estatus'];
-        if(isset($_GET['seguro'])) $data['seguro'] = $_GET['seguro'];
+        if(isset($_GET['numero_sucursal'])) $params['numero_sucursal'] = $_GET['numero_sucursal'];
+        if(isset($_GET['servicio'])) $params['servicio'] = $_GET['servicio'];
+        if(isset($_GET['estatus'])) $params['estatus'] = $_GET['estatus'];
+        if(isset($_GET['seguro'])) $params['seguro'] = $_GET['seguro'];
+        if(isset($_GET['fecha_inicio'])) $params['fecha_inicio'] = $_GET['fecha_inicio'];
+        if(isset($_GET['fecha_final'])) $params['fecha_final'] = $_GET['fecha_final'];
 
-        $error = ShipmentSchema::validateParamsToSearch($data);
+
+        $error = ShipmentSchema::validateParamsToSearch($params);
 
         if ($error && sizeof($error) > 0) {
             http_response_code(422);
@@ -169,7 +174,10 @@ class ShipmentController
         }
 
         try {
-            $this->shipmentModel->getAllBranchWithParams($data);
+            $shipments = $this->shipmentModel->getAllBrWithParams($params);
+            http_response_code(200);
+            echo json_encode($shipments, JSON_UNESCAPED_UNICODE);
+            exit();
         } catch (Exception $e) {
             http_response_code(422);
             echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
@@ -178,7 +186,10 @@ class ShipmentController
     }
 
     public function getTicketPDF($guia){
-        if(empty($guia)) echo null;
+        if(empty($guia)){
+            echo json_encode(["message" => "Ingrese la guia"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
 
         $new_shipment = null;
 
@@ -218,7 +229,10 @@ class ShipmentController
     }
 
     public function getGuidePDF($guia){
-        if(empty($guia)) echo null;
+        if(empty($guia)){
+            echo json_encode(["message" => "Ingrese la guia"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
         
         $new_shipment = null;
 

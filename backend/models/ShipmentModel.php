@@ -1,7 +1,7 @@
 <?php
 
-class ShipmentModel
-{
+class ShipmentModel{
+
     private $conexionDB;
 
     public function __construct($conexionDB)
@@ -203,32 +203,75 @@ class ShipmentModel
         }
     }
 
-    public function getAllBranchWithParams($params){
+    public function getAllBrWithParams($params){
 
-        $query = "SELECT * FROM Envios_general WHERE numero_sucursal = ?";
+        $where_clauses = [];
+        $bind_types = "";
+        $bind_values = [];
 
-        $query = $query + " ";
+        $query = "SELECT * FROM Envios_general ";
 
-        try {
-            
-            $stmt = $this->conexionDB->prepare($query);
-            $stmt->bind_param("s");
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $shupments = [];
-                while ($row = $result->fetch_assoc()) {
-                    $shupments[] = $row;
-                }
-                return $shupments;
-            } else {
-                return null;
-            }
-        } catch(Exception $e){
-            throw new Exception("Ocurrio un error en el servidor");
+        if(isset($params['numero_sucursal'])){
+            $where_clauses[] = "numero_sucursal = ? ";
+            $bind_types .= "s";
+            $bind_values[] = $params['numero_sucursal'];
         }
 
+        if(isset($params['servicio'])){
+            $where_clauses[] = "servicio = ? ";
+            $bind_types .= "s";
+            $bind_values[] = $params['servicio'];
+        }
+
+        if(isset($params['estatus'])){
+            $where_clauses[] = "estatus = ? ";
+            $bind_types .= "s";
+            $bind_values[] = $params['estatus'];
+        }
+
+        if(isset($params['seguro'])){
+            $where_clauses[] = "seguro = ? ";
+            $bind_types .= "i";
+            $bind_values[] = (int) $params['seguro'];
+        }
+
+        if(isset($params['fecha_inicio']) || isset($params['fecha_final'])){
+            $bind_values[] = $params['fecha_inicio'] ?: "2020-01-01";
+            $bind_values[] = $params['fecha_final'] ?: date('Y-m-d');
+            $where_clauses[] =  "fecha_creacion BETWEEN ? AND ? ";
+            $bind_types .= "ss";
+        }
+
+        if (count($where_clauses) > 0) {
+            $query .= "WHERE " . implode(" AND ", $where_clauses) . " ";
+        }
+
+        $query .= $params['orden'] === "asc" ? "ORDER BY folio ASC " : "ORDER BY folio DESC ";
+
+        $bind_values[] = (int) $params['limite_max'] - (int) $params['limite_min'];
+        $bind_values[] = (int) $params['limite_min'];
+        $query .= "LIMIT ? OFFSET ?;";
+        $bind_types .= "ii";
+
+        try {
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param($bind_types, ...$bind_values );
+            $stmt->execute();
+            $result = $stmt->get_result();
+            
+            if ($result->num_rows > 0) {
+                $shipments = [];
+                while ($row = $result->fetch_assoc()) {
+                    $shipments[] = $row;
+                }
+
+                return $shipments;
+            } else {
+                return [];
+            }
+        } catch(Exception $e){
+            return [];
+        }
     }
 
 
@@ -661,5 +704,6 @@ class ShipmentModel
         if(!isset($data['conductor_asignado']))       $data['conductor_asignado'] = null;
         return $data;
     }
+
 
 }
