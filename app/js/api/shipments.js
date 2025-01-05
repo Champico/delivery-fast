@@ -11,6 +11,28 @@ export async function getAllShipmentsOfBranch(num_sucursal) {
     return responseData ? responseData : [];
 }
 
+export async function getAllShipmentsWithParams(params) {
+    let response;
+
+    let url = `http://localhost/backend/shipment/branch?sucursal=${params['sucursal']}&guia=${params['guia']}&limite_min=${params['limite_min']}&limite_max${params['limite_max']}&order=${params['orden']}`
+
+    if(params['fecha_inicio']) url = url + "&" + params['fecha_inicio']; 
+    if(params['fecha_final'])  url = url + "&" + params['fecha_final'];
+    if(params['servicio'])     url = url + "&" + params['servicio'];
+    if(params['estatus'])      url = url + "&" + params['estatus'];
+    if(params['seguro'])       url = url + "&" + params['seguro'];
+
+    try {
+        response = await fetch(`http://localhost/backend/shipment/branch/${num_sucursal}`);
+    } catch (error) {
+        return [];
+    }
+   
+     let responseData = await response.json();
+     if (!response.ok) return [];
+     return responseData ? responseData : [];
+ }
+
 
 export async function fetchCreateShipment(shipmentData) {
     const url = "http://localhost/backend/shipment";

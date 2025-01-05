@@ -540,6 +540,15 @@ ________________________________________________________________________________
     margin-left: 0px;
 }
 
+#itle-shipment-profile{
+    background: transparent;
+    cursor: pointer;
+}
+
+#title-shipment-profile:hover{
+    text-decoration: underline;
+}
+
 /*_______________________________________________________________________________  
          
         D E L I V E R Y  V I E W  C O N T A I N E R

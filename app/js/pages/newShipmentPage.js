@@ -183,7 +183,7 @@ async function getHtmlStepOne(){
     let states = [];
 
     try{
-        const module = await import('../api/states.js');
+        const module = await import('../api/utils.js');
         states = await module.fetchStates();
     } catch (error) {
         return;
@@ -438,7 +438,7 @@ async function getServicesOptions(){
     let services = [];
 
     try{
-        const module = await import('../api/services.js')
+        const module = await import('../api/utils.js')
         services = await module.fetchServices();
     }catch(error){}
 

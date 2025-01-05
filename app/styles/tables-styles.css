@@ -39,36 +39,9 @@ ____________________________________________________
     transition: all 0.3s ease;
 }
 
-
 .filter-selects:focus{
     outline: none;
     box-shadow: 0 0 5px rgba(252, 163, 17, 0.5);
-}
-
-.btnClean{
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.btnClean img.filter-btnClean{
-    width: 18px;
-    height: 23px;   
-    filter: brightness(0) saturate(100%) invert(53%) sepia(0%) saturate(1162%) hue-rotate(146deg) brightness(95%) contrast(92%);
-
-}
-.btnClean:hover img.filter-btnClean{
-    filter: none;
-    transform: scale(1.2);
-}
-
-.btnClean:focus{
-    outline: none;
 }
 
 /* Seccion de filtros de envíos*/
@@ -85,7 +58,7 @@ ____________________________________________________
     padding: 5px;
 }
 
-.shipment-table{
+#shipment-table{
     font-size: 16px;
     font-family: 'Roboto';
     width: 100%;
@@ -93,19 +66,19 @@ ____________________________________________________
     background-color: transparent;
 }
 
-.shipment-table th, .shipment-table td{
+#shipment-table th, #shipment-table td{
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #B9B9B9;
 }
 
-.shipment-table th{
+#shipment-table th{
     background-color: transparent;
     color: #040404;
     font-weight: bold;
 }
 
-.shipment-table tr:hover{
+#shipment-table tr:hover{
     background-color: #F7F7F7;
 }
 
@@ -120,3 +93,100 @@ ____________________________________________________
 .row-selected{
     background-color: var(--row-selected);
 }
+
+/* Boton para seleccionar un periodo */
+.dropdown {
+    position: relative;
+  }
+  
+  .dropdown-button {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px 15px;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 250px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    z-index: 10;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .dropdown-content ul {
+    list-style: none;
+    padding: 10px;
+  }
+  
+  .dropdown-content ul li {
+    padding: 8px 10px;
+    cursor: pointer;
+  }
+  
+  .dropdown-content ul li:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dd-custom-period-panel {
+    display: none;
+    margin-top: 10px;
+  }
+  
+  .dd-custom-period:hover .dd-custom-period-panel {
+    display: block;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .dd-custom-period-panel label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .dd-custom-period-panel input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .dd-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .dd-cancel-button,
+  .dd-apply-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+  
+  .dd-apply-button {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .dd-apply-button:hover {
+    background-color: #45a049;
+  }
+  
+  .dd-cancel-button:hover {
+    background-color: #f0f0f0;
+  }
+  

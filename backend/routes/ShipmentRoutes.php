@@ -19,7 +19,13 @@ switch ($method) {
     case 'GET':
         if ($action) {
             switch($action){
-                case 'branch': $shipmentController->getAllBranch($a2); break;
+                case 'branch':
+                    if(isset($_GET['search'])) {
+                        $searchTerm = $_GET['search'];
+                        $shipmentController->getOfBranchIf($searchTerm);
+                    }else{
+                        $shipmentController->getAllBranch($a2); break;
+                    }
                 case 'search': $shipmentController->get($a2); break;
                 case 'ticket-pdf': $shipmentController->getTicketPDF($a2); break;
                 case 'guide-pdf': $shipmentController->getGuidePDF($a2); break;

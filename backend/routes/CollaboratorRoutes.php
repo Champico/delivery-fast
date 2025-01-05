@@ -18,7 +18,6 @@ switch ($method) {
             $personalNumber = $uri[3]; 
             $collaboratorController->getInfoCollaboratorByNumPerso($personalNumber);
         } elseif (isset($_GET['search'])) {
-            $searchTerm = $_GET['search'];
             $collaboratorController->searchCollaborators($searchTerm);
         } else {
             $collaboratorController->getAllCollaboratorsColab();

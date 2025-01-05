@@ -70,7 +70,6 @@ class ShipmentModel
     {
         $guia = null;
         $folio = null;
-
         $data = $this->fillOptionalFields($data);
 
         try {
@@ -146,7 +145,7 @@ class ShipmentModel
             throw new Exception("Error al guardar los datos del destinatario");
         }
 
-        if(isset($data['ticket']['conceptos_ticket'])){
+        if(isset($data['ticket']['conceptos_ticket']) && !empty(isset($data['ticket']['conceptos_ticket'])) ){
             try{
                 $this->insertTicket($data['ticket']['conceptos_ticket'], $data['costo'], $guia);
             }catch(Exception $e){
@@ -154,14 +153,21 @@ class ShipmentModel
             }
         }
         
+        $newShipment = null;
+
         try {
             $queryGetEnvio = "SELECT * FROM Datos_completos_Envio WHERE guia=$guia";
             $result = $this->conexionDB->query($queryGetEnvio);
-            $envio = $result->fetch_assoc();
-            return $envio;
+            $newShipment = $result->fetch_assoc();
         } catch (Exception $e) {
-            return null;
         }
+
+        try{
+            $this->createStatusWithDate($newShipment["guia"], $data["colaborador"], "Pendiente", $newShipment["fecha_creacion"]);
+        } catch (Exception $e) {       
+        }
+
+        return $newShipment;
     }
 
     public function getCoordinatesOfBranch($id_branch){
@@ -197,9 +203,33 @@ class ShipmentModel
         }
     }
 
+    public function getAllBranchWithParams($params){
 
+        $query = "SELECT * FROM Envios_general WHERE numero_sucursal = ?";
 
+        $query = $query + " ";
 
+        try {
+            
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s");
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if ($result->num_rows > 0) {
+                $shupments = [];
+                while ($row = $result->fetch_assoc()) {
+                    $shupments[] = $row;
+                }
+                return $shupments;
+            } else {
+                return null;
+            }
+        } catch(Exception $e){
+            throw new Exception("Ocurrio un error en el servidor");
+        }
+
+    }
 
 
 
@@ -237,7 +267,7 @@ class ShipmentModel
 
     private function insertShipment($guia, $folio, $costo, $peso, $largo, $alto, $ancho, $contenido, $tipo_servicio, $seguro, $conductor_asignado, $numero_sucursal)
     {
-        if(!isset($guia)) throw new Exception("Es necesaria una guia para crear el envío");
+        if(!isset($guia) || empty($guia)) throw new Exception("Es necesaria una guia para crear el envío");
 
         try {
             $query = " INSERT INTO Envios (guia,folio,costo,peso,largo,alto,ancho,contenido,servicio,seguro,conductor_asignado, numero_sucursal)
@@ -470,6 +500,23 @@ class ShipmentModel
         }
     }
 
+    private function createStatusWithDate($guia, $colaborador, $estatus, $datestamp){
+
+        try{
+            $query1 = "INSERT INTO Estatus_Paquete(guia, colaborador, estatus, fecha_cambio) VALUES (?,?,?,?)";
+            $stmt = $this->conexionDB->prepare($query1);
+            $stmt->bind_param("ssss", $guia, $colaborador, $estatus, $datestamp);
+            if($stmt->execute()){
+                return true;
+            }else{
+                return false;
+            }
+        }catch(Exception $e){
+            throw new Exception("Error al crear el estatus");
+        }
+
+    }
+
 
 
 
@@ -576,6 +623,25 @@ class ShipmentModel
             return $services;
         } else {
             throw new Exception("No se encontro ningún servicio");
+        }
+    }
+
+    public function getNameStatus(){
+        try{
+            $query = "SELECT id FROM estatus;";
+            $result = $this->conexionDB->query($query);
+        }catch(Exception $e){
+            throw new Exception("Ocurrio un error al obtener los Estatus");
+        }
+
+        if ($result->num_rows > 0) {
+            $services = [];
+            while ($row = $result->fetch_assoc()) {
+                $services[] = $row["id"];
+            }
+            return $services;
+        } else {
+            throw new Exception("No se encontro ningún Estatus");
         }
     }
 

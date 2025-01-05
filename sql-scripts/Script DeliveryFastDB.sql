@@ -53,6 +53,7 @@ CREATE TABLE Envios (
     seguro BOOLEAN NOT NULL,
     conductor_asignado CHAR(6),
     numero_sucursal CHAR(5),
+    fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     
     FOREIGN KEY (numero_sucursal) REFERENCES Sucursales(numero_sucursal)
   );
@@ -152,19 +153,37 @@ CREATE TABLE Contactos (
     FOREIGN KEY (estado) REFERENCES Entidades_Federativas(clave)
 );
 
+-- Tabla de los nombres de los estatus --
+DROP TABLE IF EXISTS Estatus;
+CREATE TABLE Estatus (
+    id VARCHAR(20) PRIMARY KEY,
+    descripcion VARCHAR(255) NOT NULL
+);
+
+-- Insertar valores permitidos --
+INSERT INTO Estatus (id, descripcion) VALUES
+    ('Pendiente',   'El paquete aún no ha sido procesado para su envío. Está esperando confirmación o preparación.'),
+    ('En_transito', 'El paquete ya fue enviado y se encuentra en camino hacia su destino. Puede estar en transporte terrestre o aéreo.'),
+    ('Detenido',    'El paquete enfrenta un retraso debido a inspecciones o algún inconveniente en la entrega.'),
+    ('Entregado',   'El paquete ha llegado satisfactoriamente a su destino y ha sido recibido por el destinatario o persona autorizada.'),
+    ('Cancelado',   'El envío del paquete fue cancelado. Esto puede deberse a solicitud del cliente o problemas internos en el proceso de envío.'),
+    ('No_pagado',   'El paquete no ha sido enviado porque el pago correspondiente no ha sido realizado o confirmado.');
+
 
 -- Tabla de Estatus de Paquetes --
 DROP TABLE IF EXISTS Estatus_Paquete;
 CREATE TABLE Estatus_Paquete (
     id_estatus INT AUTO_INCREMENT PRIMARY KEY,
-    estatus ENUM('Pendiente', 'En tránsito', 'Detenido', 'Entregado', 'Cancelado', 'No pagado') NOT NULL,
     fecha_cambio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
+    estatus VARCHAR(20) NOT NULL,
     guia CHAR(15) NOT NULL,
     colaborador CHAR(15) NOT NULL,
+    notas VARCHAR(255),
 
     FOREIGN KEY (guia) REFERENCES Envios(guia),
-    FOREIGN KEY (colaborador) REFERENCES Colaboradores(numero_personal)
+    FOREIGN KEY (colaborador) REFERENCES Colaboradores(numero_personal),
+    FOREIGN KEY (estatus) REFERENCES Estatus(id)    
 );
 
 -- Ticket de compra --
@@ -252,6 +271,8 @@ SELECT
     e.servicio,
     e.seguro,
     e.conductor_asignado,
+    e.fecha_creacion,
+    e.numero_sucursal,
 
     c.nombre_remitente,
     c.correo_remitente,
@@ -276,9 +297,7 @@ SELECT
     c.ciudad_destinatario,
     c.referencias_destinatario,
     c.estado_destinatario,
-    c.nombre_estado_destinatario,
-    
-    e.numero_sucursal
+    c.nombre_estado_destinatario
 FROM Envios AS e
 INNER JOIN (
     SELECT
@@ -318,38 +337,44 @@ INNER JOIN (
 ) AS c ON c.guia = e.guia;
 
 
+-- Vista que nos da la lista de envios con la ultima actualización
+DROP VIEW IF EXISTS Ultimo_estatus;
+CREATE VIEW Ultimo_estatus AS
+SELECT estatus_datos.estatus,
+       estatus_datos.fecha_cambio,
+       estatus_datos.guia,
+       estatus_datos.colaborador, 
+       estatus_datos.notas
+FROM Estatus_Paquete AS estatus_datos
+JOIN (
+    SELECT guia, MAX(fecha_cambio) AS max_fecha
+    FROM Estatus_Paquete
+    GROUP BY guia
+) AS estatus_reciente
+    ON  estatus_datos.guia = estatus_reciente.guia 
+    AND estatus_datos.fecha_cambio = estatus_reciente.max_fecha;
+
 
 -- Vista con datos del envío reducidas
-DROP VIEW IF EXISTS Envios_General;
-CREATE VIEW Envios_General AS
+DROP VIEW IF EXISTS Envios_general;
+CREATE VIEW Envios_general AS
 SELECT
     e.guia,
     e.folio,
     e.servicio,
     c.nombre_completo AS destinatario,
     c.ciudad AS ciudad_destino,
-    ef.nombre AS estado_destino,
-    ep.estatus,
+    f.nombre AS estado_destino,
+    f.abreviatura_informal,
+    e.fecha_creacion,
+    u.estatus,
+    u.fecha_cambio AS ultimo_cambio_de_estatus,
     e.numero_sucursal
-FROM Entidades_Federativas AS ef
-INNER JOIN Contactos AS c 
-    ON c.estado = ef.clave
-INNER JOIN Envios AS e 
-    ON e.guia = c.guia
-INNER JOIN (
-    SELECT ep1.guia, ep1.estatus
-    FROM Estatus_Paquete AS ep1
-    WHERE ep1.fecha_cambio = (
-        SELECT MAX(ep2.fecha_cambio)
-        FROM Estatus_Paquete AS ep2
-        WHERE ep2.guia = ep1.guia
-    )
-) AS ep
-    ON e.guia = ep.guia
+FROM Entidades_Federativas AS f
+INNER JOIN Contactos       AS c ON c.estado = f.clave
+INNER JOIN Envios          AS e ON e.guia = c.guia
+INNER JOIN Ultimo_estatus  AS u ON e.guia = u.guia
 WHERE c.tipo = 'Destinatario';
-
-
-
 
 
 

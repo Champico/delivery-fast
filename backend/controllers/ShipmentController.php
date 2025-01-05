@@ -74,27 +74,27 @@ class ShipmentController
             exit();
         }
 
-            try {
-                $data["ticket"] = $this->getTicketPrivate($data);
-                $data["costo"] = $data["ticket"]["total"];
+        try {
+            $data["ticket"] = $this->getTicketPrivate($data);
+            $data["costo"] = $data["ticket"]["total"];
 
-                if(!isset($data["metodo_de_pago"])) throw new Exception("Ingrese el metodo de pago");
+            if(!isset($data["metodo_de_pago"])) throw new Exception("Ingrese el metodo de pago");
 
-                $data["ticket"]["metodo_de_pago"] = $data["metodo_de_pago"];
-                unset($data["metodo_de_pago"]);
+            $data["ticket"]["metodo_de_pago"] = $data["metodo_de_pago"];
+            unset($data["metodo_de_pago"]);
 
-                if($data["ticket"]["metodo_de_pago"]=== "Efectivo" ){
-                    $data["ticket"]["pago_con"] = (float) $data["pago_con"];
-                    unset($data["pago_con"]);
-                    if(isset($data["cambio"])) unset($data["cambio"]);
-                    $data["ticket"]["cambio"] = $data["ticket"]["pago_con"] - $data["ticket"]["total"];
-                    if($data["ticket"]["cambio"] < 0) throw new Exception("El dinero con el que paga debe ser igual o mayor al costo del servicio"); 
-                }
-            } catch (Exception $e) {
-                http_response_code(422);
-                echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
-                exit();
+            if($data["ticket"]["metodo_de_pago"]=== "Efectivo" ){
+                $data["ticket"]["pago_con"] = (float) $data["pago_con"];
+                unset($data["pago_con"]);
+                if(isset($data["cambio"])) unset($data["cambio"]);
+                $data["ticket"]["cambio"] = $data["ticket"]["pago_con"] - $data["ticket"]["total"];
+                if($data["ticket"]["cambio"] < 0) throw new Exception("El dinero con el que paga debe ser igual o mayor al costo del servicio"); 
             }
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
+        }
 
         try {
             $newShipment = $this->shipmentModel->create($data);
@@ -104,27 +104,11 @@ class ShipmentController
             exit();
         }
 
-        if (!isset($data["colaborador"])) $data["colaborador"] = "000000";
-
-        try {
-            $this->shipmentModel->createStatus($newShipment["guia"], $data["colaborador"], "Pendiente");
-        } catch (Exception $e) {
-            http_response_code(422);
-            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
-            exit();
-        }
-
-
         http_response_code(201);
         echo json_encode($newShipment, JSON_UNESCAPED_UNICODE);
     }
 
     public function update($guia)
-    {
-        echo json_encode(['message' => "Se actualizo el envío " . $guia], JSON_UNESCAPED_UNICODE);
-    }
-
-    public function delete($guia)
     {
         echo json_encode(['message' => "Se actualizo el envío " . $guia], JSON_UNESCAPED_UNICODE);
     }
@@ -162,6 +146,34 @@ class ShipmentController
         } catch (Exception $e) {
             http_response_code(422);
             echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    public function getOfBranchIf(){
+        $data = [];
+        
+        $data['limite_min'] = isset($_GET['limite_min']) ? $_GET['limit_min'] : "0";
+        $data['limite_max'] = isset($_GET['limite_max']) ? $_GET['limit_max'] : "20";
+        $data['orden'] = isset($_GET['orden']) ? $_GET['order'] : 'desc';
+
+        if(isset($_GET['servicio'])) $data['servicio'] = $_GET['servicio'];
+        if(isset($_GET['estatus'])) $data['estatus'] = $_GET['estatus'];
+        if(isset($_GET['seguro'])) $data['seguro'] = $_GET['seguro'];
+
+        $error = ShipmentSchema::validateParamsToSearch($data);
+
+        if ($error && sizeof($error) > 0) {
+            http_response_code(422);
+            echo json_encode($error, JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        try {
+            $this->shipmentModel->getAllBranchWithParams($data);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
+            exit();
         }
     }
 

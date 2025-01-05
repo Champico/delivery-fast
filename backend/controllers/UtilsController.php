@@ -35,4 +35,15 @@ class UtilsController
             echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
         }
     }
+
+    public function getNameStatus()
+    {
+        try {
+            $services = $this->shipmentModel->getNameStatus();
+            echo json_encode($services, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
 }

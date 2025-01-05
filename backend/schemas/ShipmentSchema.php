@@ -259,21 +259,105 @@ class ShipmentSchema
     public static function validateGuide($guide)
     {
         $errors = [];
+        if(empty($guide)) $errors[] = "Ingrese la guía";
+        $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
+        if (isset($data["guia"]) && !$isNumericStringOfLength($data["guia"], 15)) $errors[] = "La guía debe ser de 15 dígitos";
+        return $errors;
+    }
 
-        if(empty($guide)){
-            $errors[] = "Ingrese la guía";
+    public static function validateParamsToSearch($params)
+    {
+        $errors = [];
+
+        $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
+
+        foreach
+        (
+            [
+                "sucursal" => [5, "La sucursal es obligatoria", "La clave de la sucursal debe ser un número de 5 dígitos"],
+                "guia" => [15, "La guia es obligatoria", "La guía debe ser de 15 dígitos"]
+            ] as $key => [$length, $errorNotSet, $errorNotValid]
+        ){
+            if(!isset($params[$key]) || empty($params[$key])){
+                $error[] = $errorNotSet;
+            }
+
+            if (!$isNumericStringOfLength($params[$key], $length)){
+                $errors[] = $errorNotValid;
+            }
         }
 
+        foreach (
+            [
+                "limite_min" => ["Debe ingresar el limite inferior","Ingrese un valor valido para el limite inferior", "Ingrese solo números positivos para el limite inferior"],
+                "limite_max" => ["Debe ingresar el limite superior","Ingrese un valor valido para el limite superior", "Ingrese solo números positivos para el limite superior"],
+            ] as $key => [$errorNotSet, $errorNotValid, $errorNotNumber]
+        ) {
+            if (!isset($params[$key]) || empty($params[$key])) {
+                $errors[] = $errorNotSet;
+            }
 
-       if(!is_string($guide) || !ctype_digit($guide)){
-            $errors[] = "La guía debe ser un número de 15 digitos";
-       }
-       
-       
-       if(!strlen($guide) === 15){
-            $errors[] =  "La guía debe ser de 15 dígitos";
-       }
+            if(!is_string($params[$key])){
+                $error[] = $errorNotValid;
+            }
 
-       return $errors;
+            if(!ctype_digit($params[$key])){
+                $error[] = $errorNotNumber;
+            }
+        }
+
+        if(empty($error)){
+            $dif = (int) $params["limite_max"] - (int) $params["limite_min"];
+            if($dif > 100) $error[] = "No se pueden retornar mas de 100 valores en una sóla consulta con parametros";
+        }
+
+        if(!isset($params['orden']) || empty(($params['orden'])) || !in_array(strtolower($params['orden']), ['asc', 'desc']))
+        {
+            $errors[] = "El orden debe ser ascendente(asc) o descendente(desc)";
+        }
+
+        foreach (
+            [
+                'tipo' => [50, 'Tipo debe tener máximo 50 caracteres', 'Tipo debe ser una cadena de caracteres'],
+                'servicio' => [50, 'Servicio debe tener máximo 50 caracteres', 'Servicio debe ser una cadena de caracteres'],
+            ] as $key => [$maxLength, $errorMessageMoreLengthThanAllowed, $errorMessageNotString]
+        ) {
+            if (isset($data[$key])){
+                if(!is_string($data[$key])){
+                    $errors[] = $errorMessageNotString;
+                    continue;
+                }
+                if(strlen($data[$key]) > $maxLength){
+                    $errors[] = $errorMessageMoreLengthThanAllowed;
+                    continue;
+                }
+                if(strlen($data[$key]) < 1){
+                    $errors[] = "Ingrese el campo " . $key;
+                }
+            }
+        }
+
+        if (isset($data['seguro']) && !is_bool($data['seguro'])) {
+            $errors[] = "Seguro debe ser un booleano.";
+        }
+
+        foreach
+        (
+            [
+                "fecha_inicio" => "La fecha de inicio no es valida ('YYYY-MM-DD')",
+                "fecha_final" => "La fecha de inicio no es valida ('YYYY-MM-DD')"
+            ] as $key => $errorMessage
+        ){
+            if(isset($params[$key])){
+                $format = 'Y-m-d';
+                $dateTimeInstance = DateTime::createFromFormat($format, $params[$key]); //Crea una nueva fecha correcta
+                if(!($dateTimeInstance->format($format) === $params[$key])){ //Compara la nueva fecha correcta con la enviada
+                   $error[] = $errorMessage;
+                }
+            }
+        }
+
+        return $errors;
     }
+
 }
