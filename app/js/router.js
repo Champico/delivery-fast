@@ -1,5 +1,7 @@
-import { hideLoadingScreen } from "./components/loadingScreen.js";
-import { changeMenuButtonPresssed } from "./components/sidebar.js";
+/* V A R I A B L E S   G L O B A L E S */
+let header = null;
+let sideBar = null;
+let mainContainer = null;
 
 const routes = {
     "/app/home":            () => import('./pages/homePage.js'),
@@ -14,15 +16,21 @@ const routes = {
     "/app/package":         () => import('./pages/packageProfilePage.js'),
 };
 
-let mainContainer = document.getElementById('content-section');
+/* F L U J O  N O R M A L  I N I C I O */
+createHeader();
+createSideBar();
+mainContainer = document.getElementById('content-section');
 window.addEventListener("popstate", renderContent);
-renderContent().then(hideLoadingScreen);
+renderContent().then(hideLoadingScreen());
 
-export const navigateTo = async (url) => {
+
+/* F U N C I Ó N  P A R A  C A M B I A R  D E  P Á G I N A*/
+export async function navigateTo(url){
     history.pushState(null, null, url);
     await renderContent();
 }
 
+/* F U N C I O N  P A R A  R E N D E R I Z A R  E L  C O N T E N I D O */
 async function renderContent() {
     const path = urlParser();
     const route = routes[path];
@@ -31,7 +39,7 @@ async function renderContent() {
         const module = await route();
         const page = await module.getPage();
         mainContainer.innerHTML = page;
-        changeMenuButtonPresssed(path);
+        sideBar.changeMenuButtonPresssed(path);
         await module.addFunctionality();
     }catch(error){
         console.log("El error es: ", error)
@@ -46,10 +54,40 @@ async function renderContent() {
     }
 }
 
+/* F U N C I O N  P A R A  A N A L I Z A R  L A  U R L */
 function urlParser(){
     const completePath = window.location.pathname;
     const pathWitouthSearch = completePath.split("?")[0];
     const brokeRoute = pathWitouthSearch.split("/");
     const route = "/" + (brokeRoute[1] || "") + "/" + (brokeRoute[2] || "");
     return route;
+}
+
+
+
+
+
+
+
+/* F U N C I O N E S  A D I C I O N A L E S */
+
+async function createHeader(){
+    try{
+        header = await import("./components/header.js");
+        await header.createHeader();
+    }catch(e){}
+}
+
+async function createSideBar(){
+    try{
+        sideBar = await import("./components/sidebar.js");
+        await sideBar.createSideBar();
+    }catch(e){}
+}
+
+async function hideLoadingScreen(){
+    try{
+        const module = await import("./components/loadingScreen.js");
+        module.hideLoadingScreen();
+    }catch(e){}
 }

@@ -18,11 +18,11 @@ export async function getAllShipmentsWithParams(params) {
 
     let url = `http://localhost/backend/shipment/branch?search=true&numero_sucursal=${params['numero_sucursal']}&limite_min=${params['limite_min']}&limite_max=${params['limite_max']}&orden=${params['orden']}`
 
-    if(params['fecha_inicio']) url = url + "&" + params['fecha_inicio']; 
-    if(params['fecha_final'])  url = url + "&" + params['fecha_final'];
-    if(params['servicio'])     url = url + "&" + params['servicio'];
-    if(params['estatus'])      url = url + "&" + params['estatus'];
-    if(params['seguro'])       url = url + "&" + params['seguro'];
+    if(params['fecha_inicio']) url = url + "&fecha_inicio=" + params['fecha_inicio']; 
+    if(params['fecha_final'])  url = url + "&fecha_final=" + params['fecha_final'];
+    if(params['servicio'])     url = url + "&servicio=" + params['servicio'];
+    if(params['estatus'])      url = url + "&estatus=" + params['estatus'];
+    if(params['seguro'])       url = url + "&seguro=" + params['seguro'];
 
     try {
         console.log(url);

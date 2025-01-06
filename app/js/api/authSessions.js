@@ -1,6 +1,6 @@
 // delivery-fast/app/js/api/authSessions.js
 
-async function login() {
+export async function login() {
   const username = document.getElementById("numero-personal").value;
   const password = document.getElementById("contrasena").value;
 
@@ -13,8 +13,8 @@ async function login() {
   };
 
 
-  try {
-    const url = "http://localhost/backend/auth"
+  try {          
+    const url = "http://localhost/backend/auth/login";
     const response = await fetch(url,
       {
         method: "POST",
@@ -25,7 +25,7 @@ async function login() {
       }
     );
 
-    if (!response.ok) throw new Error("Error en la respuesta del servidor");
+    if (!response.ok) return;
     const dataR = await response.json();
 
     if (dataR) {
@@ -51,3 +51,23 @@ document.addEventListener("DOMContentLoaded", async function () {
       await login();
     });
 });
+
+
+export async function logout(){
+
+  try{
+    const url = "http://localhost/backend/auth/logout";
+    const response = await fetch(url);
+
+    localStorage.removeItem("numero_personal");
+    localStorage.removeItem("id_rol");
+    localStorage.removeItem("numero_sucursal");
+    localStorage.removeItem("nombre");
+
+    if(response.ok) return true;
+    return false;
+  }catch(e){
+    console.log(e)
+  }
+
+}

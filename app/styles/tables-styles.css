@@ -44,6 +44,11 @@ ____________________________________________________
     box-shadow: 0 0 5px rgba(252, 163, 17, 0.5);
 }
 
+.filter-selects-selected{
+  background-color: var(--filter-selected);
+  color: #fff;
+}
+
 /* Seccion de filtros de envíos*/
 .filter-container{
     display: flex;
@@ -79,6 +84,7 @@ ____________________________________________________
 }
 
 #shipment-table tr:hover{
+    cursor: pointer;
     background-color: #F7F7F7;
 }
 
@@ -97,17 +103,19 @@ ____________________________________________________
 /* Boton para seleccionar un periodo */
 .dropdown {
     position: relative;
-  }
+    font-family: 'Roboto', sans-serif;
+}
   
-  .dropdown-button {
+.dropdown-button {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 10px 15px;
+    font-size: 18px;
     cursor: pointer;
-  }
+}
   
-  .dropdown-content {
+.dropdown-content {
     display: none;
     position: absolute;
     top: 100%;
@@ -117,76 +125,87 @@ ____________________________________________________
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
     border-radius: 4px;
-    z-index: 10;
-  }
+    z-index: 8;
+}
   
-  .dropdown:hover .dropdown-content {
+.dropdown:hover .dropdown-content {
     display: block;
-  }
+}
   
   .dropdown-content ul {
     list-style: none;
     padding: 10px;
   }
   
-  .dropdown-content ul li {
+.dropdown-content ul li {
     padding: 8px 10px;
     cursor: pointer;
-  }
+}
   
-  .dropdown-content ul li:hover {
+.dropdown-content ul li:hover {
     background-color: #f0f0f0;
-  }
+}
   
-  .dd-custom-period-panel {
+.dd-custom-period-panel {
     display: none;
     margin-top: 10px;
-  }
+}
   
-  .dd-custom-period:hover .dd-custom-period-panel {
+.dd-custom-period:hover .dd-custom-period-panel {
     display: block;
     padding: 10px;
     border-top: 1px solid #ccc;
-  }
+}
   
-  .dd-custom-period-panel label {
+.dd-custom-period-panel label {
     display: block;
     margin-bottom: 8px;
-  }
+}
   
-  .dd-custom-period-panel input[type="date"] {
+.dd-custom-period-panel input[type="date"] {
     width: calc(100% - 20px);
     padding: 5px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
-  }
+}
   
-  .dd-buttons {
+.dd-buttons {
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
-  }
+}
   
-  .dd-cancel-button,
-  .dd-apply-button {
+.dd-cancel-button,
+.dd-apply-button {
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
-  }
+}
   
-  .dd-apply-button {
+.dd-apply-button {
     background-color: #4caf50;
     color: white;
-  }
+}
   
-  .dd-apply-button:hover {
+.dd-apply-button:hover {
     background-color: #45a049;
-  }
+}
   
-  .dd-cancel-button:hover {
+.dd-cancel-button:hover {
     background-color: #f0f0f0;
-  }
+}
   
+
+
+@media screen and (max-width: 600px){
+    .filter-container{
+      flex-direction: column;
+    }
+
+    .filter-selects{
+      width: 100%;
+    }
+}

@@ -4,25 +4,60 @@ export let shipments = "";
 let searchParams = {};
 
 export async function getPage() {
+  cleanParams();
   return await getHtmlPage();
 }
 
 export async function addFunctionality(){
     addFunctionalityToRows();
+    addFunctionalityToFilters();
     return true;
 }
 
 function addFunctionalityToRows(){
     const shipmentTable = document.getElementById("shipment-table");
+    if(!shipmentTable) return;
+
     const rows = shipmentTable.querySelectorAll('tr');
+    if(!rows) return;
+    
     rows.forEach(row =>{
-            row.addEventListener('click', () => {
-                openShipment(row.getAttribute('guide'))
+            row.addEventListener('click', async () => {
+                removeFunctionalityToRows();
+                await openShipment(row.getAttribute('guide'))
             }
         );
     });
 }
 
+
+function addFunctionalityToFilters(){
+    const serviceFilter = document.getElementById("filter-tipo");
+    const statusFilter = document.getElementById("filter-estatus");
+    const insureFilter = document.getElementById("filter-seguro");
+
+    serviceFilter.addEventListener('change', async ()=>{
+        searchParams['servicio'] = serviceFilter.value;
+        removeFunctionalityToRows();
+        if(!serviceFilter.classList.contains("filter-selects-selected")) serviceFilter.classList.add("filter-selects-selected");
+        await reloadShipmentsTable();
+    })
+
+    statusFilter.addEventListener('change', async () =>{
+        searchParams['estatus'] = statusFilter.value;
+        removeFunctionalityToRows();
+        if(!statusFilter.classList.contains("filter-selects-selected")) statusFilter.classList.add("filter-selects-selected");
+        await reloadShipmentsTable();
+    })
+
+    insureFilter.addEventListener('change', async () => {
+        searchParams['insure'] = insureFilter.value;
+        removeFunctionalityToRows();
+        if(!insureFilter.classList.contains("filter-selects-selected")) insureFilter.classList.add("filter-selects-selected");
+        await reloadShipmentsTable();
+    }) 
+
+}
 
 
 
@@ -40,6 +75,13 @@ function addFunctionalityToRows(){
 ======================================================================================
 */
 
+function cleanParams(){
+    searchParams = [];
+    searchParams['numero_sucursal'] = localStorage.getItem("numero_sucursal");
+    searchParams["limite_min"] = 1;
+    searchParams["limite_max"] = 20
+    searchParams["orden"] = "desc";
+}
 
 async function openShipment(shipmentGuide){
   try{
@@ -50,11 +92,43 @@ async function openShipment(shipmentGuide){
   }
 }
 
-async function reloadShipmentsTable(){
-
+function removeFunctionalityToRows(){
+  const shipmentTable = document.getElementById("shipment-table");
+  if(!shipmentTable) return;
+  
+  const rows = shipmentTable.querySelectorAll('tr');
+  if(!rows) return;
+  
+  rows.forEach(row =>{
+          row.removeEventListener('click', () => {
+              openShipment(row.getAttribute('guide'))
+          }
+      );
+  });
 }
 
 
+async function reloadShipmentsTable(){
+    const table = document.getElementById("body-table-shipments");
+    if(!table) return;
+    table.innerHTML = "";
+
+    let shipments = null;
+    try{
+        const module = await import('../api/shipments.js');
+        shipments = await module.getAllShipmentsWithParams(searchParams);
+    }catch(e){}
+
+    if(Array.isArray(shipments) && shipments.length > 0){
+        let tableRows = "";
+        shipments.forEach((shipment) => {
+            tableRows = tableRows + generateTableRow(shipment);
+        });
+        table.innerHTML = tableRows;
+    }
+
+
+}
 
 
 
@@ -106,10 +180,10 @@ async function getControlPanel() {
 } 
 
 function getServicesFilter(services){
-    let servicesSelectOptions = `<select class="filter-selects" name="tipo" id="tipo"> <option value="Tipo" disabled selected>Tipo</option>`
+    let servicesSelectOptions = `<select class="filter-selects" name="tipo" id="filter-tipo"> <option value="Tipo" disabled selected>Tipo</option>`
 
     services.forEach(service => {
-      servicesSelectOptions = servicesSelectOptions +`<option value="${service}">${service}</option>`;
+      servicesSelectOptions = servicesSelectOptions +`<option value="${service}">${service.replace(/_/g, ' ')}</option>`;
     });
 
     servicesSelectOptions += `</select>`
@@ -118,7 +192,7 @@ function getServicesFilter(services){
 
 function getStatusFilter(status){
 
-  let statusSelectOptions = `<select class="filter-selects" name="estatus" id="estatus">  <option value="Estatus" disabled selected>Estatus</option>`
+  let statusSelectOptions = `<select class="filter-selects" name="estatus" id="filter-estatus">  <option value="Estatus" disabled selected>Estatus</option>`
 
     status.forEach(status => {
         statusSelectOptions = statusSelectOptions +`<option value="${status}">${status.replace(/_/g, ' ')}</option>`;
@@ -131,7 +205,7 @@ function getStatusFilter(status){
 
 function getInsureFilter(){
     return `
-        <select class="filter-selects" name="seguro" id="seguro">
+        <select class="filter-selects" name="seguro" id="filter-seguro">
             <option value="Seguro" disabled selected>Seguro</option>
             <option value="Si">Si</option>
             <option value="No">No</option>
@@ -140,7 +214,7 @@ function getInsureFilter(){
 
 function getPeriodFilter(){
 return `<div class="dropdown">
-      <button class="dropdown-button">Modificado</button>
+      <button class="dropdown-button">Fecha de creación</button>
       <div class="dropdown-content">
         <ul>
           <li>Hoy</li>
@@ -171,19 +245,12 @@ return `<div class="dropdown">
 }
 
 async function getTable() {
-  searchParams['numero_sucursal'] = localStorage.getItem("numero_sucursal");
   if (!searchParams['numero_sucursal']) return;
 
-  searchParams["limite_min"] = 1;
-  searchParams["limite_max"] = 20
-  searchParams["orden"] = "desc";
-  
   try{
     const module = await import('../api/shipments.js');
     shipments = await module.getAllShipmentsWithParams(searchParams);
-  }catch(e){
-    console.log(e.message)
-  }
+  }catch(e){}
 
   let table = `<div class="table-container">
                 <table id="shipment-table">
@@ -196,7 +263,7 @@ async function getTable() {
                             <th>Ciudad destino</th>
                         </tr>
                     </thead>
-                    <tbody>`;
+                    <tbody id="body-table-shipments">`;
 
   if(Array.isArray(shipments) && shipments.length > 0){
       let tableRows = "";

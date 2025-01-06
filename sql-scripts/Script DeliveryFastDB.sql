@@ -481,8 +481,8 @@ CREATE TABLE Tipo_Servicio (
 -- Insertar datos de tipo de servicio
 INSERT INTO Tipo_Servicio (nombre, peso_max_amparado) VALUES
     ('Express', 3),
-    ('Día siguiente', 3),
-    ('2-5 Dias', 3),
+    ('Día_siguiente', 3),
+    ('2-5_Dias', 3),
     ('Terrestre', 5);
 
 -- Crear tabla de zonas
@@ -520,42 +520,42 @@ CREATE TABLE Precios (
 INSERT INTO Precios (servicio, zona, precio, medida_aumento_peso, precio_aumento) VALUES
     -- Zona 1
     ('Express', 'Zona 1', 300, 1, 40),
-    ('Dia siguiente', 'Zona 1', 260, 1, 34),
-    ('2-5 Dias', 'Zona 1', 220, 1, 28),
+    ('Día_siguiente', 'Zona 1', 260, 1, 34),
+    ('2-5_Dias', 'Zona 1', 220, 1, 28),
     ('Terrestre', 'Zona 1', 180, 1, 5),
 
     -- Zona 2
     ('Express', 'Zona 2', 330, 1, 50),
-    ('Dia siguiente', 'Zona 2', 290, 1, 44),
-    ('2-5 Dias', 'Zona 2', 250, 1, 38),
+    ('Día_siguiente', 'Zona 2', 290, 1, 44),
+    ('2-5_Dias', 'Zona 2', 250, 1, 38),
     ('Terrestre', 'Zona 2', 210, 1, 10),
 
     -- Zona 3
     ('Express', 'Zona 3', 360, 1, 40),
-    ('Dia siguiente', 'Zona 3', 320, 1, 34),
-    ('2-5 Dias', 'Zona 3', 280, 1, 28),
+    ('Día_siguiente', 'Zona 3', 320, 1, 34),
+    ('2-5_Dias', 'Zona 3', 280, 1, 28),
     ('Terrestre', 'Zona 3', 240, 1, 15),
 
     -- Zona 4
     ('Express', 'Zona 4', 390, 1, 50),
-    ('Dia siguiente', 'Zona 4', 350, 1, 44),
-    ('2-5 Dias', 'Zona 4', 310, 1, 38),
+    ('Día_siguiente', 'Zona 4', 350, 1, 44),
+    ('2-5_Dias', 'Zona 4', 310, 1, 38),
     ('Terrestre', 'Zona 4', 270, 1, 20),
 
     -- Zona 5
     ('Express', 'Zona 5', 420, 1, 60),
-    ('Dia siguiente', 'Zona 5', 380, 1, 54),
-    ('2-5 Dias', 'Zona 5', 340, 1, 48),
+    ('Día_siguiente', 'Zona 5', 380, 1, 54),
+    ('2-5_Dias', 'Zona 5', 340, 1, 48),
     ('Terrestre', 'Zona 5', 300, 1, 25),
 
     -- Zona 6
     ('Express', 'Zona 6', 450, 1, 70),
-    ('Dia siguiente', 'Zona 6', 410, 1, 64),
-    ('2-5 Dias', 'Zona 6', 370, 1, 58),
+    ('Día_siguiente', 'Zona 6', 410, 1, 64),
+    ('2-5_Dias', 'Zona 6', 370, 1, 58),
     ('Terrestre', 'Zona 6', 330, 1, 30),
 
     -- Zona 7
     ('Express', 'Zona 7', 490, 1, 80),
-    ('Dia siguiente', 'Zona 7', 440, 1, 74),
-    ('2-5 Dias', 'Zona 7', 400, 1, 68),
+    ('Día_siguiente', 'Zona 7', 440, 1, 74),
+    ('2-5_Dias', 'Zona 7', 400, 1, 68),
     ('Terrestre', 'Zona 7', 360, 1, 35);

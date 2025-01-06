@@ -449,7 +449,7 @@ async function getServicesOptions(){
                     <option value="" disabled selected>Selecciona una opcion</option>`
 
     services.forEach(service => {
-        servicesSelectOptions = servicesSelectOptions +`<option value="${service}">${service}</option>`;
+        servicesSelectOptions = servicesSelectOptions +`<option value="${service}">${service.replace(/_/g, ' ')}</option>`;
     });
 
     servicesSelectOptions= servicesSelectOptions +`

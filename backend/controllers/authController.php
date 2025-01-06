@@ -60,7 +60,27 @@ class AuthController
         }
     }
 
-
+    public function logout(){
+        try{
+            session_start();
+            $_SESSION = [];
+            session_destroy();
+            if (ini_get("session.use_cookies")) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000, 
+                    $params["path"], 
+                    $params["domain"], 
+                    $params["secure"], 
+                    $params["httponly"]
+                );
+                http_response_code(200);
+                echo json_encode(['message' => "Se cerro la sesión"]);
+            }
+        }catch(Exception $e){
+            http_response_code(400);
+            echo json_encode(['message' => 'Ocurrio un error en el servidor']); 
+        }
+    }
 
     private function validateData($inputData)
     {
