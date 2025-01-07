@@ -20,21 +20,20 @@ async function addFunctionalityButtons(){
     const deleteUserButton = document.getElementById('deleteUser');
     const searchButton = document.getElementById('searchButton');
 
-    newUserButton.addEventListener('click', openModalCreateUser);
-    editUserButton.addEventListener('click', openModalCreateUser);
+    newUserButton.addEventListener('click', () =>{
+        const createUserButton = document.getElementById("btn-create");
+        createUserButton.setAttribute('action','create');
+        createUserButton.innerText = "Crear";
+        openModalCreateUser();
+    });
+    editUserButton.addEventListener('click', () =>{
+        const updateUserButton = document.getElementById("btn-create");
+        updateUserButton.setAttribute('action','update');
+        updateUserButton.innerText = "Modificar";
+        openModalCreateUser();
+    });
     deleteUserButton.addEventListener('click', deleteUser);
     searchButton.addEventListener('click', searchUser);
-}
-
-async function dinamicButton(action){
-    switch(action){
-        case 'create':
-            await deleteUser();
-        break;
-        case 'update':
-            await updateUser();
-        break;
-    }
 }
 
 async function addFunctionalityCreateUserModal(){
@@ -42,7 +41,27 @@ async function addFunctionalityCreateUserModal(){
     const buttonCreate = document.getElementById("btn-create");
 
     if(buttonCancel) buttonCancel.addEventListener('click', hideModalCreateUser);
-    if(buttonCreate) buttonCreate.addEventListener('click', await createUser);
+    if(buttonCreate) buttonCreate.addEventListener('click', async() =>{
+        await actionUser(buttonCreate.getAttribute('action'));
+    });
+
+    const buttonEyePass = document.getElementById("eye-button-pass");
+    const buttonEyeConfirm = document.getElementById("eye-button-confirm");
+
+    const inputPassword = document.getElementById("password");
+    const inputConfirm = document.getElementById("confirmPassword");
+
+    if(buttonEyePass) buttonEyePass.addEventListener('click', ()=>{
+        const currentType = inputPassword.getAttribute('type');
+        inputPassword.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+        buttonEyePass.textContent = currentType === 'password' ? '🙈' : '🙉';
+    });
+
+    if(buttonEyeConfirm) buttonEyeConfirm.addEventListener('click', ()=>{
+        const currentType = inputConfirm.getAttribute('type');
+        inputConfirm.setAttribute('type', currentType === 'password' ? 'text' : 'password');
+        buttonEyeConfirm.textContent = currentType === 'password' ? '🙈' : '🙉';
+    });
 }
 
 function addFunctionalityRows(){
@@ -77,32 +96,57 @@ function hideModalCreateUser(){
 ======================================================================================
 */
 
-async function createUser(){
+async function actionUser(action){
     let data = null;
     let newUser = null;
 
     try{
         const module = await import("../validations/formsValidations/newUserValidations.js");
-        data = await module.validateShipmentDataFields();
-    }catch(e){ 
+        data = await module.validateUserDataFields();
+    }catch(e){
+        console.log(e);
         return;
     }
 
     if (data === false) return;
+    if(!action) return;
 
-    try{
-        const module = await import("../api/users.js");
-        newUser = await module.createUser(data);
-    }catch(e){
-        newUser = null;
+    switch(action){
+        case 'create':
+            try{
+                const module = await import("../api/users.js");
+                newUser = await module.createUser(data);
+            }catch(e){
+                console.log(e);
+                newUser = null;
+            }
+
+            if(newUser){
+                addUserToTable(newUser);
+                hideModalCreateUser();
+            }else{
+                alert('Error al crear el usuario');
+            }
+        break;
+
+        case 'update':
+            try{
+                const module = await import("../api/users.js");
+                userUpdate = await module.updateUser(selectedUser, data);
+            }catch(e){
+                console.log(e);
+                userUpdate = null;
+            }
+        
+            if(userUpdate){
+                alert('Usuario modificado exitosamente');
+                hideModalCreateUser();
+            }else{
+                alert('Error al modificar el usuario');
+            }
+        break;
     }
 
-    if(newUser){
-        addUserToTable(newUser);
-        hideModalCreateUser();
-    }else{
-        alert('Error al crear el usuario');
-    }
 }
 
 function addUserToTable(user){
@@ -139,43 +183,12 @@ async function deleteUser(){
             }
         }else{
             selectedUser = null;
-            if(selectedRow && selectedRow.classList.contains('row-selected')) row.classList.remove('row-selected');
+            if(selectedRow && selectedRow.classList.contains('row-selected')) selectedRow.classList.remove('row-selected');
         }
     }else{
         alert('Seleccione un usuario para eliminar');
     }
 }
-
-async function updateUser(){
-    if(!selectedUser) alert("Seleccione un usuario para modificar");
-
-    let data = null;
-    let userUpdate = null;
-
-    try{
-        const module = await import("../validations/pageValidations/newUserValidations.js");
-        data = await module.validateShipmentDataFields();
-    }catch(e){ 
-        return;
-    }
-
-    if (data === false) return;
-
-    try{
-        const module = await import("../api/users.js");
-        userUpdate = await module.updateUser(selectedUser, data);
-    }catch(e){
-        userUpdate = null;
-    }
-
-    if(userUpdate){
-        alert('Usuario modificado exitosamente');
-        hideModalCreateUser();
-    }else{
-        alert('Error al modificar el usuario');
-    }
-}
-
 
 
 async function searchUser() {
@@ -260,8 +273,8 @@ async function getHtmlPage(){
                                 <tr>
                                     <th>No. Personal</th>
                                     <th>Nombre</th>
-                                    <th>Rol</th>
-                                    <th>Correo</th>
+                                    <th class="column-rol">Rol</th>
+                                    <th class="column-correo">Correo</th>
                                 </tr>
                             </thead>
                                 ${await buildUserList()}
@@ -288,8 +301,8 @@ async function buildUserList(){
             row = row + `
                 <td>${user.numero_personal}</td>
                 <td>${user.nombre}</td>
-                <td>${user.rol}</td>
-                <td>${user.correo}</td>
+                <td class="column-rol">${user.rol}</td>
+                <td class="column-correo">${user.correo}</td>
             `;
             userRows = userRows + row;
         })
@@ -318,22 +331,26 @@ function getModalCreateUser(){
                             <input class="input-modal" type="text" id="name" name="name" placeholder="Nombre del colaborador">
                             <span class="input-message input-message-hide" id="name-msg"></span>
                         </div>
+
                         <div class="form-group-modal">
                             <label for="lastName">Apellido Paterno*</label>
                             <input class="input-modal" type="text" id="lastName" name="lastName" placeholder="Apellido paterno del colaborador">
                             <span class="input-message input-message-hide" id="lastName-msg"></span>
                         </div>
+
                         <div class="form-group-modal">
                             <label for="secondLastName">Apellido Materno</label>
                             <input class="input-modal" type="text" id="secondLastName" placeholder="Apellido materno del colaborador">
                             <span class="input-message input-message-hide" id="secondLastName-msg"></span>
                         </div>
+
                         <div class="form-inline-modal">
                             <div class="form-group-modal">
                                 <label for="personalNumber">Número de personal*</label>
                                 <input class="input-modal" type="text" id="personalNumber" name="personalNumber" placeholder="6 Dígitos">
                                 <span class="input-message input-message-hide" id="personalNumber-msg"></span>
                             </div>
+
                             <div class="form-group-modal">
                                 <label for="role">Rol*</label>
                                 <select id="role" class="select-input">
@@ -345,26 +362,39 @@ function getModalCreateUser(){
                                 <span class="input-message input-message-hide" id="role-msg"></span>
                             </div>
                         </div>
-                        <div class="form-group-modal">
+
+                        <div class="form-group-modal" id="cn-pass">
                             <label for="password">Contraseña*</label>
                             <input class="input-modal" type="password" id="password" name="password" placeholder="Ingresa la contraseña (8 caracteres mínimo)">
                             <span class="input-message input-message-hide" id="password-msg"></span>
+                             <button type="button" class="eye-button" id="eye-button-pass"> 🙉 </button>
                         </div>
-                        <div class="form-group-modal">
+
+                        <div class="form-group-modal" id="cn-confirm">
                             <label for="confirmPassword">Confirmar Contraseña*</label>
                             <input class="input-modal" type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite la contraseña">
                             <span class="input-message input-message-hide" id="confirmPassword-msg"></span>
-                        </div>
+                            <button type="button" class="eye-button" id="eye-button-confirm"> 🙉 </button>
+                            </div>
+
                         <div class="form-group-modal">
                             <label for="email">Correo</label>
                             <input class="input-modal" type="email" id="email" name="email" placeholder="example@dominio.com">
                             <span class="input-message input-message-hide" id="email-msg"></span>
                         </div>
+
                         <div class="form-group-modal">
                             <label for="phone">Teléfono</label>
                             <input class="input-modal" type="tel" id="phone" name="phone" placeholder="Teléfono">
                             <span class="input-message input-message-hide" id="phone-msg"></span>
                         </div>
+
+                        <div class="form-group-modal">
+                            <label for="curp">Curp</label>
+                            <input class="input-modal" type="text" id="curp" placeholder="Ingrese el curp">
+                            <span class="input-message input-message-hide" id="curp-msg"></span>
+                        </div>
+
                         <div class="button-group-modal">
                             <button type="button" class="cancel" id="btn-cancel">Cancelar</button>
                             <button type="button" class="create" id="btn-create">Crear</button>

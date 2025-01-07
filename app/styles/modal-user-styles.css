@@ -300,3 +300,17 @@ button.create:hover,
 #close-modal-button:hover{
     color: #555;
 }
+
+.eye-button{ 
+    position: absolute;
+    top: 22px;
+    right: 10px;
+    background-color: transparent;
+    font-size: 25px;
+    border: none;
+    cursor:pointer;
+}
+
+#cn-pass, #cn-confirm{
+    position: relative;
+}

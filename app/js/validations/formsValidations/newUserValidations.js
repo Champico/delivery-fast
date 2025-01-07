@@ -1,3 +1,15 @@
+import {
+    validateName,
+    validateLastName,
+    validateSecondLastName,
+    validatePersonalNumber,
+    validateRole,
+    validatePassword,
+    validateEmail,
+    validatePhone,
+    validateCurp
+} from '../userValidations.js'
+
 export let errores = 0;
 
 export const userList = [];
@@ -23,6 +35,8 @@ function verifyUserData() {
         phone :           document.getElementById('phone'),
         curp :            document.getElementById('curp'),
     }
+
+    let values = [];
 
    Object.entries(htmlElements).forEach(([key, element]) => {
         values[key] = element.value || null;

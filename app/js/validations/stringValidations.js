@@ -112,7 +112,7 @@ export function isValidCurp(curp) {
   if (!curp) return "Este campo es obligatorio";
   if(curp.length !== 18) return "El CURP debe tener 18 caracteres";
   const curpPattern = /^[A-Z]{4}\d{6}[A-Z]{6}[A-Z]{2}\d{2}[A-Z]{1}$/;
-  if (!curpPattern.test(curp))return "El CURP no es válido";
+  if (!curpPattern.test(curp)) return "El CURP no es válido";
   return true;
 }
 

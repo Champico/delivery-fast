@@ -108,16 +108,19 @@ export function validatePassword(password) {
 }
 
 export function validateEmail(email) {
-  if ((message = !isValidEmail(email))) return message;
-  return true;
+    const message = isValidEmail(email);
+    if (message !== true) return message;
+    return true;
 }
 
 export function validatePhone(phone) {
-  if ((message = !isValidPhoneNumber(phone))) return message;
-  return true;
+    const message = isValidPhoneNumber(phone)
+    if (message !== true) return message;
+    return true;
 }
 
 export function validateCurp(curp) {
-  if ((message = !isValidCurp(curp))) return message;
-  return true;
+    const message = !isValidCurp(curp);
+    if (message !== true) return message;
+    return true;
 }

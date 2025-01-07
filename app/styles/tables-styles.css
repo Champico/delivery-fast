@@ -214,6 +214,9 @@ ____________________________________________________
         display: none;
     }
 
+    .column-rol, .column-correo{
+        display: none;
+    }
 
 }
 
