@@ -452,7 +452,14 @@ ____________________________________________________
   padding: 0px;
 }
 
-
+#searchIcon{
+  fill: #ffffff;
+  filter: brightness(0) invert(1);
+  width: 90%;
+  height: 90%;
+  max-width: 38px;
+  margin-left: 5px;
+}
 
 
 
@@ -468,10 +475,6 @@ ____________________________________________________
     display: none;
   }
 
-  .sidebar-menu-container{
-    display: none;
-  }
-
   .user-rol{
     display: none;
   }
@@ -481,6 +484,7 @@ ____________________________________________________
   }
 
   .form-inline{
+    width: 100%;
     flex-direction: column;
     gap:2px;
   }
@@ -488,4 +492,20 @@ ____________________________________________________
   .btn-siguiente{
     margin-bottom: 20px;
   }
+
+  .search-container{
+    flex: 1;
+    flex-direction: row;
+    max-width: 900px;
+    width: 100%;
+  }
+
+  #searchButton{
+    min-width: 38px;
+  }
+
+  #searchButtonText{
+    display: none;
+  }
+
 }

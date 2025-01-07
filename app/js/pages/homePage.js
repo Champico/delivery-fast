@@ -126,8 +126,7 @@ async function reloadShipmentsTable(){
         });
         table.innerHTML = tableRows;
     }
-
-
+    addFunctionalityToRows();
 }
 
 
@@ -253,14 +252,14 @@ async function getTable() {
   }catch(e){}
 
   let table = `<div class="table-container">
-                <table id="shipment-table">
+                <table class="main-table" id="shipment-table">
                     <thead>
                         <tr>
                             <th>No Folio</th>
                             <th>Consignatario</th>
-                            <th>Estatus</th>
-                            <th>Tipo de servicio</th>
-                            <th>Ciudad destino</th>
+                            <th class="column-estatus">Estatus</th>
+                            <th class="column-service">Tipo de servicio</th>
+                            <th class="column-city">Ciudad destino</th>
                         </tr>
                     </thead>
                     <tbody id="body-table-shipments">`;
@@ -294,8 +293,8 @@ function generateTableRow(data) {
   return `<tr class="shipment-row" guide="${guia}">
             <td>${folio}</td>
             <td>${destinatario}</td>
-            <td>${estatus}</td>
-            <td>${servicio}</td>
-            <td>${ciudad_destino}</td>
+            <td class="column-estatus">${estatus}</td>
+            <td class="column-service">${servicio}</td>
+            <td class="column-city">${ciudad_destino}</td>
         </tr>`;
 }

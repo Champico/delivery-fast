@@ -63,7 +63,7 @@ ____________________________________________________
     padding: 5px;
 }
 
-#shipment-table{
+.main-table{
     font-size: 16px;
     font-family: 'Roboto';
     width: 100%;
@@ -71,19 +71,19 @@ ____________________________________________________
     background-color: transparent;
 }
 
-#shipment-table th, #shipment-table td{
+.main-table th, .main-table td{
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #B9B9B9;
 }
 
-#shipment-table th{
+.main-table th{
     background-color: transparent;
     color: #040404;
     font-weight: bold;
 }
 
-#shipment-table tr:hover{
+.main-table tr:hover{
     cursor: pointer;
     background-color: #F7F7F7;
 }
@@ -103,6 +103,7 @@ ____________________________________________________
 /* Boton para seleccionar un periodo */
 .dropdown {
     position: relative;
+    z-index: 1;
     font-family: 'Roboto', sans-serif;
 }
   
@@ -207,5 +208,18 @@ ____________________________________________________
 
     .filter-selects{
       width: 100%;
+    }
+
+    .column-estatus, .column-service{
+        display: none;
+    }
+
+
+}
+
+
+@media screen and (max-width: 300px){
+    .column-city{
+        display: none;
     }
 }

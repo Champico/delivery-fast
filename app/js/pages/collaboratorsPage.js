@@ -38,10 +38,10 @@ async function dinamicButton(action){
 }
 
 async function addFunctionalityCreateUserModal(){
-    const buttonCancel = document.getElementById("btn-cancel-modal");
-    const buttonCreate = document.getElementById("btn-create-modal");
+    const buttonCancel = document.getElementById("btn-cancel");
+    const buttonCreate = document.getElementById("btn-create");
 
-    if(buttonCancel) cancelButton.addEventListener('click', hideModalCreateUser);
+    if(buttonCancel) buttonCancel.addEventListener('click', hideModalCreateUser);
     if(buttonCreate) buttonCreate.addEventListener('click', await createUser);
 }
 
@@ -82,7 +82,7 @@ async function createUser(){
     let newUser = null;
 
     try{
-        const module = await import("../validations/pageValidations/newUserValidations.js");
+        const module = await import("../validations/formsValidations/newUserValidations.js");
         data = await module.validateShipmentDataFields();
     }catch(e){ 
         return;
@@ -231,7 +231,7 @@ async function searchUser() {
 
 async function getHtmlPage(){
     return `
-        <h1 class="title-section">Envíos</h1>
+        <h1 class="title-section">Colaboradores</h1>
             <div class="shupment-home-content">
                 <div class="form-group">
                     <div class="form-inline" id="buttons-container">
@@ -246,8 +246,8 @@ async function getHtmlPage(){
                             <div class="form-inline search-container">
                                 <input class="input" type="text" id="searchInput" placeholder="Buscar por nombre, número o rol" />
                                 <button class="button btnBuscar" id="searchButton"">
-                                    <img class="sidebar-item-icon" src="resources/icons/lupa.svg" alt="">
-                                    Buscar
+                                    <img id="searchIcon" src="resources/icons/lupa.svg" alt="">
+                                    <span id="searchButtonText">Buscar</span>
                                 </button>
                             </div>
 
@@ -255,7 +255,7 @@ async function getHtmlPage(){
                         
                     </div>
                         <div class="table-container">
-                            <table class="shipment-table">
+                            <table class="main-table" id="users-table">
                             <thead>
                                 <tr>
                                     <th>No. Personal</th>
@@ -308,7 +308,7 @@ function getModalCreateUser(){
     return `
         <div class="body-modal modal-hide" id="modal-create-user">
             <div id="userModal" class="modal">
-                <div class="modal-content-large create-user-modal">
+                <div class="modal-content-large">
                     <div class="head-title-modal-container">    
                         <h2 class="title-modal-user">Gestion de Usuario</h2>
                     </div>
@@ -366,8 +366,8 @@ function getModalCreateUser(){
                             <span class="input-message input-message-hide" id="phone-msg"></span>
                         </div>
                         <div class="button-group-modal">
-                            <button type="button" class="btn-cancel-modal">Cancelar</button>
-                            <button type="button" class="btn-create-modal">Crear</button>
+                            <button type="button" class="cancel" id="btn-cancel">Cancelar</button>
+                            <button type="button" class="create" id="btn-create">Crear</button>
                         </div>
                     </form>
                 </div>

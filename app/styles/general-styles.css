@@ -41,6 +41,7 @@ ____________________________________________________
     --orange-ligth:  #FFE5CC; /* Naranja claro de ventana de busqueda*/
     --row-selected: #FFA726; /* Color de la fila seleccionada */
     --filter-selected: #ffd979;
+    --header-height: 70px; /* Altura del header*/
 }
 
 * {
@@ -67,11 +68,15 @@ ____________________________________________________
 /* Fondo de la barra superior */
 header{
     background-color: var(--orange-color-higth-contrast);
-    padding: 10px;
+    height: var(--header-height);
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* Contenedor del logo de la empresa*/
@@ -84,6 +89,7 @@ header{
     margin: 0px;
     padding: 0px;
     flex: 1;
+    cursor: pointer;
 }
 
 /* Logo de la empresa*/
@@ -98,13 +104,13 @@ header{
 .nav-menu{
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 
 /* Icono del menu*/
 .menu-icon{
     width: 50px;
     padding: 5px;
-    cursor: pointer;
     filter: invert(100%);
 }
 
@@ -172,6 +178,7 @@ ____________________________________________________
 }
 
 .sessionCardHidden {
+    display: none;
     opacity: 0;
     transform: translateY(-20px);
 }
@@ -269,7 +276,7 @@ ____________________________________________________
 */
 
 /* Contenedor principal, abajo del header*/
-.main-container{
+#main-container{
     display: flex;
     flex-direction: row;
     height: 100vh;
@@ -286,10 +293,13 @@ ____________________________________________________
 */
 
 /* Contenedor del menu lateral*/
-.sidebar-menu-container{
-    width: 215px;
-    height: 100vh;
+#sidebar-menu-container{
     display: flex;
+    position: relative;
+    top: var(--header-height);
+    width: 215px;
+    height: 100%;
+    overflow: hidden;
     flex-direction: column;
     padding:0;
     box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
@@ -455,8 +465,9 @@ ____________________________________________________
     fill: var(--orange-color-higth-contrast);
 }
 
-
-
+#background-sidebar-small{
+    display: none;
+}
 
 
 /*__________________________________________________  
@@ -466,11 +477,12 @@ ____________________________________________________
 */
 
 /* Seccion de contenido */
-.content-section{
+#content-section{
     flex: 1;
     padding: 20px;
     margin: 0px;
-    overflow-y: scroll;
+    margin-top: var(--header-height);
+    overflow-y: auto;
 }
 
 /* Titulo de sección*/
@@ -794,4 +806,47 @@ ____________________________________________________
         justify-content: flex-start;
     }
 
+    #sidebar-menu-container{
+        display: none;
+        position: fixed;
+        top: var(--header-height);
+        left: -50px;
+        transition: all 2s ease-in-out;
+        overflow: hidden;
+    } 
+
+    
+    #sidebar-menu-container.openSmallScreen{
+        position: fixed;
+        top: var(--header-height);
+        left: 0;
+        z-index: 20;
+        width: 215px;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding:0;
+        box-shadow: 0px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #background-sidebar-small{
+        content: "";
+        position: absolute;
+        display: flex;  
+        top: var(--header-height);
+        left: 0;
+        z-index: 15;
+        width: 100%;
+        height: 100vw;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.2);
+        justify-content: center;
+        align-items: center;
+    }
+
+    #background-sidebar-small.background-hide{
+        display: none;
+    }
+
 }
+

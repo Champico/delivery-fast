@@ -25,10 +25,10 @@ export function createHeader() {
         </div>`
 
     const headerBase = `
-        <nav class="nav-menu" id="nav-menu">
+        <div class="nav-menu" id="nav-menu" title="menu">
             <img class="menu-icon" src="resources/icons/menu.svg" alt="Menu Icon Header">
-        </nav>
-        <div class="container-logo" id="logo">
+        </div>
+        <div class="container-logo" id="logo" title="Delivery Fast">
             <img class="logo-extendido" src="resources/brand/logotipo/logotipo-extendido.svg" alt="Delivery Fast Logo Header">
         </div>
         <div class="user-info-container">
@@ -38,6 +38,7 @@ export function createHeader() {
             </div>
         </div>
         ${sessionCard}
+        <div class="background-hide" id="background-sidebar-small"></div>
         `
         
     document.getElementById("header").innerHTML = headerBase;
@@ -92,4 +93,27 @@ function addFuncionalityToLogo(){
 function addFuncionalityToMenuIcon(){
     const buttonMenu = document.getElementById("nav-menu");
     if(!buttonMenu) return;
+
+    buttonMenu.addEventListener('click', ()=>{
+        const width = window.innerWidth;
+        const sidebar = document.getElementById("sidebar-menu-container");
+
+        if(!sidebar || !width) return;
+
+        if(width > 800){
+            if(sidebar.classList.contains("openSmallScreen")) sidebar.classList.remove("openSmallScreen");
+            
+
+        }else{
+            const background = document.getElementById("background-sidebar-small");
+            if(sidebar.classList.contains("openSmallScreen")){
+                sidebar.classList.remove("openSmallScreen");
+                if(background && !background.classList.contains("background-hide")) background.classList.add("background-hide")
+            }else{
+                sidebar.classList.add("openSmallScreen");
+                if(background && background.classList.contains("background-hide"))background.classList.remove("background-hide")
+            }
+
+        }
+    });
 } 
