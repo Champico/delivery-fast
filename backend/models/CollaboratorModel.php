@@ -132,12 +132,17 @@ class CollaboratorModel {
 
     public function getInfoCollaboratorByNumPerso($numero_personal) {
         try {
-            $query = "SELECT SELECT 
-                c.numero_personal,
-                c.nombre,
-                r.nombre_rol AS rol,
-                c.telefono,
-                c.correo
+            $query = "SELECT
+                        c.numero_personal,
+                        c.nombre,
+                        r.nombre_rol AS rol,
+                        c.apellido_paterno,
+                        c.apellido_materno,
+                        c.curp,
+                        c.correo,
+                        c.telefono,
+                        c.fecha_contratacion,
+                        c.numero_sucursal
             FROM 
                 Colaboradores c
             JOIN 

@@ -11,6 +11,7 @@ export async function getPage(){
 export async function addFunctionality(){
     await addFunctionalityButtons();
     await addFunctionalityCreateUserModal();
+    await addFunctionalitySearch();
     addFunctionalityRows();
     return true;
 }
@@ -34,7 +35,6 @@ async function addFunctionalityButtons(){
     const newUserButton = document.getElementById('newUser');
     const editUserButton = document.getElementById('editUser');
     const deleteUserButton = document.getElementById('deleteUser');
-    const searchButton = document.getElementById('searchButton');
 
     const createUserModalButton = document.getElementById("btn-create");
     const modal = document.getElementById("title-create-user");
@@ -55,14 +55,19 @@ async function addFunctionalityButtons(){
                 let user = null;
                 try{
                     const module = await import('../api/users.js');
-                    user = module.getUser(user);
-                }catch(e){}
+                    user = await module.getUser(selectedUser);
+                    console.log(user);
+                }catch(e){
+                    console.log(e);
+                }
 
                 if(user){
                     try{
                         const module = await import('../validations/formsValidations/newUserValidations.js');
-                        await module.fillModalInfo(user);
-                    }catch(e){}
+                        await module.fillUserForm(user);
+                    }catch(e){
+                        console.log(e);
+                    }
 
                     openModalCreateUser();
                 }
@@ -70,9 +75,7 @@ async function addFunctionalityButtons(){
             }
         });
     }
-    
     deleteUserButton.addEventListener('click', deleteUser);
-    searchButton.addEventListener('click', searchUser);
 }
 
 async function addFunctionalityCreateUserModal(){
@@ -120,6 +123,17 @@ function addFunctionalityRows(){
         ); 
     })
 }
+
+async function addFunctionalitySearch(){
+    const searchButton = document.getElementById('searchButton');
+    const searchInput = document.getElementById('searchInput');
+    if(searchButton) searchButton.addEventListener('click', searchUsers);
+    if(searchInput) searchInput.addEventListener('change', searchUsersDinamic);
+
+}
+
+
+
 
 function openModalCreateUser(){
     const modal = document.getElementById('modal-create-user');
@@ -226,7 +240,7 @@ async function deleteUser(){
 
             if(deleted){
                 alert('Usuario eliminado exitosamente');
-                loadUsers();
+                reloadListUser();
                 if (selectedRow) {
                     selectedUser  = null;
                     selectedRow = null; 
@@ -242,44 +256,86 @@ async function deleteUser(){
 }
 
 
-async function searchUser() {
+async function searchUsers() {
     const searchInput = document.getElementById('searchInput').value.trim();
-    const userList = document.getElementById('user-table-body');
-
-    if (searchInput === "") {
-        loadUsers();
-        return;
-    }
-
-    let data = null;
+    if (searchInput === "" || !searchInput) return;
+    let users = null;
     try{
         const module = await import("../api/users.js");
-        data = await module.searchUsers(searchInput);
+        users = await module.searchUsers(searchInput);
     }catch(e){
     }
+    if(users) reloadListUserCustom(users);
+}
 
-    if (!data) {
-        loadUsers();
+async function searchUsersDinamic(){
+    const searchInput = document.getElementById('searchInput').value.trim();
+    if (searchInput === "" || !searchInput) {
+        reloadListUser();
         return;
     }
+    let users = null;
+    try{
+        const module = await import("../api/users.js");
+        users = await module.searchUsers(searchInput);
+    }catch(e){
+    }
+    if(users) reloadListUserCustom(users);
+}
 
-    userList.innerHTML = '';
+
+
+
+async function reloadListUser(){
+    let users = [];
+    const branch = localStorage.getItem("numero_sucursal");
     
-    data.forEach(user => {
-        const row = document.createElement('tr');
-        row.setAttribute('data-personal-number', user.numero_personal);
-        row.innerHTML = `
-            <td>${user.numero_personal}</td>
-            <td>${user.nombre}</td>
-            <td>${user.rol}</td>
-            <td>${user.telefono}</td>
-            <td>${user.correo}</td>
-        `;
-        row.style.cursor = 'pointer';
-        userList.appendChild(row);
-    });
+    try{
+        users = await fetchAllUsersOfBranch(branch);
+    }catch(e){}
 
-    addFunctionalityRows();
+    const table = document.getElementById("user-table-body");
+    if(users && table){
+        table.innerHTML = "";
+        users.forEach(user => {
+            let row = `<tr class="row-selectable" data-personal-number=${user.numero_personal}>`;
+            row = row + `
+                <td>${user.numero_personal}</td>
+                <td>${user.nombre}</td>
+                <td class="column-rol">${user.rol}</td>
+                <td class="column-correo">${user.correo}</td>
+            `;
+            userRows = userRows + row;
+        })
+        table.innerHTML= userRows;
+        addFunctionalityRows();
+    }  
+}
+
+async function reloadListUserCustom(users){
+    const table = document.getElementById("user-table-body");
+
+    if(users && table){
+        table.innerHTML = "";
+        let userRows = "";
+        users.forEach(user => {
+            let row = `<tr class="row-selectable" data-personal-number=${user.numero_personal}>`;
+            row = row + `
+                <td>${user.numero_personal}</td>
+                <td>${user.nombre}</td>
+                <td class="column-rol">${user.rol}</td>
+                <td class="column-correo">${user.correo}</td>
+            `;
+            userRows = userRows + row;
+        })
+        table.innerHTML= userRows;
+        addFunctionalityRows();
+    }  
+}
+
+async function cleanListUser(){
+    const table = document.getElementById("user-table-body");
+    table.innerHTML = "";
 }
 
 
