@@ -8,7 +8,7 @@ export function createHeader() {
         <div class="sessionCard sessionCardHidden" id="sessionCard">
             <div class="sessionCardInfoUsuario">
                 <div class="sessionCardPerfilImageContainer">
-                    <img class="sessionCardPerfilImage" src="./resources/icons/perfil-icon.svg" alt="Perfil">
+                    <img class="sessionCardPerfilImage" src="/app/resources/icons/perfil-icon.svg" alt="Perfil">
                 </div>
                 <div class="sessionCardData">
                     <span class="sessionCardUserName">${nombre}</span>
@@ -26,15 +26,15 @@ export function createHeader() {
 
     const headerBase = `
         <div class="nav-menu" id="nav-menu" title="menu">
-            <img class="menu-icon" src="resources/icons/menu.svg" alt="Menu Icon Header">
+            <img class="menu-icon" src="/app/resources/icons/menu.svg" alt="Menu Icon Header">
         </div>
         <div class="container-logo" id="logo" title="Delivery Fast">
-            <img class="logo-extendido" src="resources/brand/logotipo/logotipo-extendido.svg" alt="Delivery Fast Logo Header">
+            <img class="logo-extendido" src="/app/resources/brand/logotipo/logotipo-extendido.svg" alt="Delivery Fast Logo Header">
         </div>
         <div class="user-info-container">
             <h1 class="user-rol"> ${nombre} </h1>
             <div id="sessionButton">
-                <img class="user-logo" src="resources/icons/perfil-icon.svg" alt="Profile Picture">
+                <img class="user-logo" src="/app/resources/icons/perfil-icon.svg" alt="Profile Picture">
             </div>
         </div>
         ${sessionCard}

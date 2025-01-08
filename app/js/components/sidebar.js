@@ -108,7 +108,7 @@ function getNewShipmentButton(){
     return (`
         <div class="sidebar-card module-create">
             <button class="new-shupment-btn sidebar-clickeable" id="sb-bt-new-shipment">
-                <img class="new-shupment-btn-icon" src="resources/icons/nuevoFinal.svg"
+                <img class="new-shupment-btn-icon" src="/app/resources/icons/nuevoFinal.svg"
                     alt="crear nuevo envio">
                 Nuevo envío
             </button>
@@ -126,7 +126,7 @@ function getShipmentModule(home, search, earnings){
         shipmentModule = shipmentModule + `
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-home">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/inicio.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/inicio.svg" alt="">
             Inicio</span>
         </li>`
 
@@ -136,7 +136,7 @@ function getShipmentModule(home, search, earnings){
         shipmentModule = shipmentModule + `
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-search-shipment">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/lupa.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/lupa.svg" alt="">
             Buscar envíos</span>
         </li>
         `
@@ -146,7 +146,7 @@ function getShipmentModule(home, search, earnings){
         shipmentModule = shipmentModule + `
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-earnings">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/caja-registradora.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/caja-registradora.svg" alt="">
             Ingresos</span>
         </li>
         `
@@ -167,7 +167,7 @@ function getPackageModule(packages){
         packageModule = packageModule +`
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-package">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon sidebar-item-icon-car" src="resources/icons/buscar-envioFinal.svg" alt="">
+                <img class="sidebar-item-icon sidebar-item-icon-car" src="/app/resources/icons/buscar-envioFinal.svg" alt="">
             Paquetes</span>
         </li>`;
 
@@ -189,7 +189,7 @@ function getAdminstrationModule(users, info, about){
         administrationModule = administrationModule +`                    
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-users">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/editar.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/editar.svg" alt="">
             Usuarios</span>
         </li>`
     }
@@ -198,7 +198,7 @@ function getAdminstrationModule(users, info, about){
         administrationModule = administrationModule +`                    
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-about">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/informacion.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/informacion.svg" alt="">
             Acerca de</span>
         </li>`
     }
@@ -207,7 +207,7 @@ function getAdminstrationModule(users, info, about){
         administrationModule = administrationModule +`
         <li class="sidebar-item-li sidebar-clickeable" id="sb-bt-statistics">
             <span class="sidebar-item-a">
-                <img class="sidebar-item-icon" src="resources/icons/grafico-de-barras.svg" alt="">
+                <img class="sidebar-item-icon" src="/app/resources/icons/grafico-de-barras.svg" alt="">
             Reportes</span>
         </li>`
     }

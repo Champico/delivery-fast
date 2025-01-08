@@ -4,6 +4,7 @@ let selectedUser = null;
 let selectedRow = null;
 
 export async function getPage(){
+   await urlParser();
    return await getHtmlPage();
 }
 
@@ -13,6 +14,21 @@ export async function addFunctionality(){
     addFunctionalityRows();
     return true;
 }
+
+async function urlParser(){
+    const completePath = window.location.pathname;
+    const pathAndSearch= completePath.split("?");
+    const brokePath = pathAndSearch[0].split("/");
+    if(brokePath[4] || pathAndSearch[1]){
+        try{
+            const module = await import('../router.js');
+            await module.navigateTo("/app/not-found");
+        }catch(error){
+            window.location.href = "http://localhost/app/home";
+        }
+    }
+}
+
 
 async function addFunctionalityButtons(){
     const newUserButton = document.getElementById('newUser');
@@ -294,7 +310,7 @@ async function getHtmlPage(){
                             <div class="form-inline search-container">
                                 <input class="input" type="text" id="searchInput" placeholder="Buscar por nombre, número o rol" />
                                 <button class="button btnBuscar" id="searchButton"">
-                                    <img id="searchIcon" src="resources/icons/lupa.svg" alt="">
+                                    <img id="searchIcon" src="/app/resources/icons/lupa.svg" alt="">
                                     <span id="searchButtonText">Buscar</span>
                                 </button>
                             </div>

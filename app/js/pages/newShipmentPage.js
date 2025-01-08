@@ -2,6 +2,7 @@ let pageStepOne = null;
 let dataNewShipment = {};
 
 export async function getPage(){
+    await urlParser();
     if(!pageStepOne) pageStepOne = await getHtmlStepOne();
     return pageStepOne;
 }
@@ -10,6 +11,20 @@ export async function addFunctionality(){
     const boton = document.getElementById("btn-ns-p1-siguiente");
     if(boton) boton.addEventListener('click', await getPageStepTwo);
     return true;
+}
+
+async function urlParser(){
+    const completePath = window.location.pathname;
+    const pathAndSearch= completePath.split("?");
+    const brokePath = pathAndSearch[0].split("/");
+    if(brokePath[4] || pathAndSearch[1]){
+        try{
+            const module = await import('../router.js');
+            await module.navigateTo("/app/not-found");
+        }catch(error){
+            window.location.href = "http://localhost/app/home";
+        }
+    }
 }
 
 async function getPageStepTwo() {
@@ -427,7 +442,7 @@ function getStepOneBottom(){
                         </div>                          
                     </div>
                     <div class="form-group">
-                        <img src="resources/icons/dimensionesFinal.svg" alt="Caja con dimensiones">
+                        <img src="/app/resources/icons/dimensionesFinal.svg" alt="Caja con dimensiones">
                     </div>
                 </div>
             </form>

@@ -4,6 +4,7 @@ export let shipments = "";
 let searchParams = {};
 
 export async function getPage() {
+  await urlParser();
   cleanParams();
   return await getHtmlPage();
 }
@@ -12,6 +13,20 @@ export async function addFunctionality(){
     addFunctionalityToRows();
     addFunctionalityToFilters();
     return true;
+}
+
+async function urlParser(){
+  const completePath = window.location.pathname;
+  const pathAndSearch= completePath.split("?");
+  const brokePath = pathAndSearch[0].split("/");
+  if(brokePath[4] || pathAndSearch[1]){
+      try{
+          const module = await import('../router.js');
+          await module.navigateTo("/app/not-found");
+      }catch(error){
+          window.location.href = "http://localhost";
+      }
+  }
 }
 
 function addFunctionalityToRows(){

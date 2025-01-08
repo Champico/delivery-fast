@@ -146,5 +146,9 @@ export async function getHtmlPage(shipment) {
 
 
 async function getShipmentNotFoundPage(){
-    return '<h1 class="NotFound">Not found 404</h1>';
+    return `
+        <div class="form-inline-modal">
+            <img id="not-found-img" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
+            <span id="not-found-message">Envío no encontrado</span>
+        </div>`
 }

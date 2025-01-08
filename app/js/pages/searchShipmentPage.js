@@ -121,7 +121,7 @@ function getHtmlModal(){
                 <button id="close-modal-button">x</button>
                 <div class="form-group-modal">
                     <div class="form-inline-modal">
-                        <img id="not-found-img" src="resources/icons/not-found-shipment.svg" alt="No encontrado">
+                        <img id="not-found-img" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
                         <span id="not-found-message">Envío no encontrado</span>
                     </div>
                 </div>
