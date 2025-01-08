@@ -85,7 +85,7 @@ ____________________________________________________
 
 .main-table tr:hover{
     cursor: pointer;
-    background-color: #F7F7F7;
+    filter: brightness(0.97);
 }
 
 .isSelectedItemTable {

@@ -49,6 +49,7 @@ Servidor http: Apache (XAMPP)
 				stringValidations.js
 			index.js
 			router.js
+		> node_modules
 		> resources/
 			> brand/
 			> favicon/
@@ -58,8 +59,11 @@ Servidor http: Apache (XAMPP)
 		> styles/
 		> view
 			> temp/
+		.htaccess
 		app.html
 		info.txt
+		package-lock.json 
+		package.json
 	> backend/
 		> config/
 			.env (NO SUBIDO A GIT)
@@ -86,6 +90,8 @@ Servidor http: Apache (XAMPP)
 		> schemas
 			ShipmentSchema.php
 		.htaccess
+		composer.json
+		composer.lock
 		index.php
 		info.txt
 		Terminos y condiciones para generar Costos.txt		
@@ -103,9 +109,11 @@ Servidor http: Apache (XAMPP)
 
 -------------------------------------------------------------------
 			LIBRERIAS ADIONALES IMPLEMENTADAS
+Gestor de dependencias para php: composer
+Gestor de dependencias para js: npm
 
 {
-	Librerias adicionales:[
+	"Librerias php":[
 		
 		{
 			"Nombre": "composer/composer"
@@ -137,6 +145,20 @@ Servidor http: Apache (XAMPP)
 			"repositorio": https://github.com/picqer/php-barcode-generator
 			"Licencia": GNU Lesser General Public License v3.0
 			"Descripción": Permite generar codigos de barra a partir de texto plano
+		}
+
+	]
+
+	"Librerias js":[
+		
+		{
+			"Nombre": @faker-js/faker
+			"Version": 9.3.0
+			"repositorio": https://github.com/faker-js/faker
+			"npm-web": https://www.npmjs.com/package/@faker-js/faker
+			"web": https://fakerjs.dev/
+			"Licencia": MIT License
+			"Descripción": Permite generar datos falsos para probar las aplicaciones
 		}
 
 	]

@@ -26,9 +26,10 @@ VALUES
 ('00001', 'Viernes', '09:00:00', '19:00:00'),
 ('00001', 'Sábado', '10:00:00', '14:00:00');
 
--- U S U A R I O  A D M I N I S T R A D O R   /  S U C U R S A L  1 --
+-- U S U A R I O S  A D M I N I S T R A D O R   /  S U C U R S A L  1 --
 INSERT INTO Colaboradores (numero_personal, contrasena, nombre, apellido_paterno, apellido_materno, curp, correo, telefono, fecha_contratacion, id_rol, numero_sucursal)
-VALUES ('111111','password','Edgar Yael','Cortes','Carrillo','COCE010216HDFRRDA0','edgaryaelcc22@gmail.com','2281567570','2024-12-14',1,'00001');
+VALUES ('111111','password','Edgar Yael','Cortes','Carrillo','COCE010216HDFRRDA0','edgaryaelcc22@gmail.com','2281567570','2024-12-14',1,'00001'),
+VALUES ('222222','password','Julio Aldair','Morales','Romero','MORJ030625HVZRJEA0', 'julioaldair@gmail.com','2234846756','2024-12-14',1,'00001');
 
 -- D A T O S  F I S C A L E S --
 INSERT INTO Datos_fiscales (

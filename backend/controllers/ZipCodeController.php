@@ -102,6 +102,18 @@ class ZipCodeController{
             throw new Exception("Ocurrio un error al calcular la distancia entre el origen y el destino");
         }
     }
+
+
+
+    public function getLocationDataOfZipCode($zipCode){
+        try{
+            $locationData = $this->zipCodesModel->getLocationDataOfZipCode($zipCode);
+            return $locationData;
+        }catch(Exception $e){
+            throw new Exception($e->getMessage());
+        }
+    }
+
 }
 
 ?>

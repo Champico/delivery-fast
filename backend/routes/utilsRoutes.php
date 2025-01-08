@@ -22,6 +22,7 @@ switch ($method) {
             case 'states': $utilsController->getStatesOfMexico(); break;
             case 'services': $utilsController->getNameServices(); break;
             case 'status': $utilsController->getNameStatus(); break;
+            case 'location-data': $utilsController->getLocationDataOfZipCode($a2); break;
 
             default:
             http_response_code(404);

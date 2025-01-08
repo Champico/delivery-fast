@@ -20,18 +20,41 @@ async function addFunctionalityButtons(){
     const deleteUserButton = document.getElementById('deleteUser');
     const searchButton = document.getElementById('searchButton');
 
-    newUserButton.addEventListener('click', () =>{
-        const createUserButton = document.getElementById("btn-create");
-        createUserButton.setAttribute('action','create');
-        createUserButton.innerText = "Crear";
-        openModalCreateUser();
-    });
-    editUserButton.addEventListener('click', () =>{
-        const updateUserButton = document.getElementById("btn-create");
-        updateUserButton.setAttribute('action','update');
-        updateUserButton.innerText = "Modificar";
-        openModalCreateUser();
-    });
+    const createUserModalButton = document.getElementById("btn-create");
+    const modal = document.getElementById("title-create-user");
+    
+    if(createUserModalButton && modal){
+        newUserButton.addEventListener('click', () =>{
+            createUserModalButton.setAttribute('action','create');
+            createUserModalButton.innerText = "Crear";
+            modal.innerText = "Crear nuevo usuario";
+            openModalCreateUser();
+        });
+    
+        editUserButton.addEventListener('click', async () =>{
+            createUserModalButton.setAttribute('action','update');
+            createUserModalButton.innerText = "Modificar";
+            modal.innerText = "Modificar un usuario";
+            if(selectedUser){
+                let user = null;
+                try{
+                    const module = await import('../api/users.js');
+                    user = module.getUser(user);
+                }catch(e){}
+
+                if(user){
+                    try{
+                        const module = await import('../validations/formsValidations/newUserValidations.js');
+                        await module.fillModalInfo(user);
+                    }catch(e){}
+
+                    openModalCreateUser();
+                }
+               
+            }
+        });
+    }
+    
     deleteUserButton.addEventListener('click', deleteUser);
     searchButton.addEventListener('click', searchUser);
 }
@@ -67,12 +90,16 @@ async function addFunctionalityCreateUserModal(){
 function addFunctionalityRows(){
     const userTable = document.getElementById('user-table-body');
     const rows = userTable.querySelectorAll('tr');
+    const editUserButton = document.getElementById('editUser');
+    const deleteUserButton = document.getElementById('deleteUser');
     rows.forEach(row => { row.addEventListener('click', 
             () => {
                 if(selectedRow) selectedRow.classList.remove('row-selected');
                 row.classList.add('row-selected');
                 selectedRow = row;
-                selectedUser = row.getAttribute('data-personal-number')
+                selectedUser = row.getAttribute('data-personal-number');
+                editUserButton.disabled = false;
+                deleteUserButton.disabled = false;
             }
         ); 
     })
@@ -130,6 +157,10 @@ async function actionUser(action){
         break;
 
         case 'update':
+            if(!selectedUser){
+                alert("Seleccione un usuario");
+            }
+
             try{
                 const module = await import("../api/users.js");
                 userUpdate = await module.updateUser(selectedUser, data);
@@ -141,6 +172,10 @@ async function actionUser(action){
             if(userUpdate){
                 alert('Usuario modificado exitosamente');
                 hideModalCreateUser();
+                editUserButton.disabled = true;
+                deleteUserButton.disabled = true;
+                selectedUser = null;
+                selectedRow = null;
             }else{
                 alert('Error al modificar el usuario');
             }
@@ -252,8 +287,8 @@ async function getHtmlPage(){
 
                             <div class="form-inline">
                                 <button class="button" id="newUser">Nuevo</button>
-                                <button class="button" id="editUser">Modificar</button>
-                                <button class="button button-red" id="deleteUser">Eliminar</button>
+                                <button class="button" id="editUser" disabled>Modificar</button>
+                                <button class="button button-red" id="deleteUser" disabled>Eliminar</button>
                             </div>
 
                             <div class="form-inline search-container">
@@ -291,7 +326,12 @@ async function getHtmlPage(){
 
 
 async function buildUserList(){
-    const users = await fetchAllUsersOfBranch("000000");
+    let users = [];
+    const branch = localStorage.getItem("numero_sucursal");
+    
+    try{
+        users = await fetchAllUsersOfBranch(branch);
+    }catch(e){}
 
     let userRows = `<tbody id="user-table-body">`
 
@@ -323,7 +363,7 @@ function getModalCreateUser(){
             <div id="userModal" class="modal">
                 <div class="modal-content-large">
                     <div class="head-title-modal-container">    
-                        <h2 class="title-modal-user">Gestion de Usuario</h2>
+                        <h2 class="title-modal-user" id="title-create-user">Gestion de Usuario</h2>
                     </div>
                     <form class="form-container-modal" id="form-create-user">
                         <div class="form-group-modal">
@@ -399,6 +439,7 @@ function getModalCreateUser(){
                             <button type="button" class="cancel" id="btn-cancel">Cancelar</button>
                             <button type="button" class="create" id="btn-create">Crear</button>
                         </div>
+
                     </form>
                 </div>
             </div>

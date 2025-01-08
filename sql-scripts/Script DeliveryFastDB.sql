@@ -192,7 +192,7 @@ CREATE TABLE ticket (
     id INT AUTO_INCREMENT PRIMARY KEY,
     total DECIMAL(10,2) NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT NOW(),
-    metodo_de_pago ENUM("Efectivo", "Tarjeta de debito"),
+    metodo_de_pago ENUM("Efectivo", "Tarjeta_de_débito"),
     pago_con DECIMAL(10,2),
     cambio DECIMAL(10,2),
     guia CHAR(15),

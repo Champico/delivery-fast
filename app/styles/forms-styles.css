@@ -77,6 +77,17 @@ ____________________________________________________
   color: #fffbeb;
 }
 
+.button:disabled, .button-red:disabled{
+  cursor: not-allowed;
+}
+
+.button:disabled, .button:disabled:hover{
+  background-color: #ffe6b5;
+} 
+
+.button-red:disabled, .button-red:disabled:hover{
+  background-color: #ffbdbd;
+} 
 
 /*__________________________________________________  
          

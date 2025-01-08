@@ -124,3 +124,18 @@ function removeErrorMessageInput(id){
         }
     }
 }
+
+export function fillUserForm(user){
+    document.getElementById('name').value = user.nombre || "";
+    document.getElementById('lastName').value = user.apellido_paterno || "";
+    document.getElementById('secondLastName').value = user.apellido_materno || "";
+    document.getElementById('personalNumber').value = user.numero_personal || "";
+    document.getElementById('role').value = user.id_rol || 0;
+    document.getElementById('password').value = ""
+    document.getElementById('confirmPassword').value = ""
+    document.getElementById('email').value = user.correo || "";
+    document.getElementById('phone').value = user.telefono || "";
+    document.getElementById('curp').value = user.curp || "";
+}
+
+

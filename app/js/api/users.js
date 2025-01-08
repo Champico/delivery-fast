@@ -12,6 +12,8 @@ export async function fetchAllUsersOfBranch(data) {
 }
 
 export async function getUser(personalNumber) {
+  if(!personalNumber) return null;
+  
   try {
       const response = await fetch(`http://localhost/backend/users/${personalNumber}`, {
           method: 'GET',
@@ -30,6 +32,8 @@ export async function getUser(personalNumber) {
 }
 
 export async function createUser(data) {
+  if(!data) return null;
+
   try {
       const response = await fetch('http://localhost/backend/users', {
           method: 'POST',
@@ -69,8 +73,8 @@ export async function updateUser(personalNumber, data) {
   }
 }
 
-export async function deleteUser(selectedUser) {
-  const personalNumber = selectedUser;
+export async function deleteUser(personalNumber) {
+  if(!personalNumber) return false;
 
   try {
       const response = await fetch(`http://localhost/backend/users/${personalNumber}`, {

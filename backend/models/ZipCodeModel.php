@@ -101,7 +101,35 @@
             }
         }
 
-
+       
+        public function  getLocationDataOfZipCode($zip_code){
+            try {
+                $query = "SELECT
+                            a.id_asentamiento_sis AS c_asentamiento,
+                            a.cp,
+                            a.nombre,
+                            a.tipo,
+                            a.latitud_dec,
+                            a.longitud_dec,
+                            a.id_municipio_sis AS c_municipio,
+                            e.clave AS c_estado,
+                            e.nombre AS estado,
+                            m.nombre AS municipio
+                        FROM municipio AS m
+                        INNER JOIN asentamiento AS a ON m.id_municipio_sis = a.id_municipio_sis
+                        INNER JOIN estado AS e ON e.id_estado_sis = a.clave_estado
+                        WHERE a.cp=? LIMIT 1;";
+                 $stmt = $this->conexionDB->prepare($query);
+                 $stmt->bind_param("s", $zip_code);
+                 $stmt->execute();
+                 $resultado = $stmt->get_result();
+                 $locationData = $resultado->fetch_assoc();
+                 $stmt->close();
+                 return  $locationData ?  $locationData : null;
+            } catch(Exception $e){
+                return null;
+            }
+        }
     }
 
 ?>

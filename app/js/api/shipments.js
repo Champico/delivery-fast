@@ -57,7 +57,6 @@ export async function fetchCreateShipment(shipmentData) {
        
         return responseData;
     } catch (error) {
-        alert(error.message);
         return [];
     }
 }

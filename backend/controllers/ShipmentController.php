@@ -314,12 +314,12 @@ class ShipmentController
     {
         $conceptos_ticket = [];
 
-        if ($precio_guia = $this->getShippingGuidePrice($zona, $servicio)) {
-            $conceptos_ticket[] = [
-                "descripcion" => "precio_guia",
-                "valor" => $precio_guia
-            ];
-        }
+            if ($precio_guia = $this->getShippingGuidePrice($zona, $servicio)) {
+                $conceptos_ticket[] = [
+                    "descripcion" => "precio_guia",
+                    "valor" => $precio_guia
+                ];
+            }
 
         if ($costo_de_sobrepeso = $this->calculateOverWeigth($zona, $servicio, $peso, $largo, $ancho, $alto)) {
             $conceptos_ticket[] = [
@@ -388,12 +388,15 @@ class ShipmentController
 
     private function getCostoCombustible($costo)
     {
+        if(!is_numeric($costo)) throw new Exception("Error al calular los costos / Combustible");
+        $costo = (float) $costo;
+
         try {
             $porcentaje_por_combustible = (float) $this->shipmentModel->getAdditionalPercentageForFuel();
             $constante_por_combustible = $porcentaje_por_combustible / 100;
             return $constante_por_combustible * $costo;
         } catch (Exception $e) {
-            throw new Exception("Error al calular los costos / Combutible");
+            throw new Exception("Error al calular los costos / Combustible");
         }
     }
 

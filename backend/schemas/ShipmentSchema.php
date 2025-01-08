@@ -214,8 +214,13 @@ class ShipmentSchema
         }
 
         if (isset($ticket['metodo_de_pago']) && !in_array($ticket['metodo_de_pago'], ['Efectivo', 'Tarjeta de débito'], true)) {
-            $errors[] = "El método de pago debe ser 'Efectivo' o 'Tarjeta de débito'.";
+            $errors[] = "El método de pago debe ser 'Efectivo' o 'Tarjeta de débito' (Espacios con guion bajo)";
         }
+
+        if(isset($ticket['servicio']) && !in_array($ticket['servicio'], ['Express','Día_siguiente','2-5_Dias','Terrestre'], true)){
+            $errors[] = "El servicio debe ser 'Express','Día siguiente','2-5 Dias','Terrestre' (Espacios con guion bajo)";
+        }
+        
 
         return $errors;
     }
@@ -261,7 +266,16 @@ class ShipmentSchema
         $errors = [];
         if(empty($guide)) $errors[] = "Ingrese la guía";
         $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
-        if (isset($data["guia"]) && !$isNumericStringOfLength($data["guia"], 15)) $errors[] = "La guía debe ser de 15 dígitos";
+        if (isset($guide) && !$isNumericStringOfLength($guide, 15)) $errors[] = "La guía debe ser de 15 dígitos";
+        return $errors;
+    }
+
+    public static function validateZipCode($zipCode)
+    {
+        $errors = [];
+        if(empty($zipCode)) $errors[] = "Ingrese el código postal";
+        $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
+        if (isset($zipCode) && !$isNumericStringOfLength($zipCode, 5)) $errors[] = "El código postal debe ser de 5 digitos";
         return $errors;
     }
 
