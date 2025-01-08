@@ -361,6 +361,7 @@ class ShipmentModel{
             );
             return $stmt->execute();
         } catch (Exception $e) {
+            echo json_encode($e->getMessage());
             throw new Exception("Error al cargar los datos de contacto");
         }
     }

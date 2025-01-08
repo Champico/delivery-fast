@@ -129,9 +129,6 @@ class ShipmentSchema
                     $errors[] = $errorMessageMoreThanAllowed;
                 }
             }
-
-            if(empty($errors)) return null;
-            return $errors;
         }
 
         foreach (
