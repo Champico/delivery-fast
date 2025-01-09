@@ -59,7 +59,8 @@
 }
 
 
-.head-title-modal-container {
+.head-title-modal-container,
+.head-title-modal-branch-container {
     text-align: center;
     border-bottom: 2px solid #f0f0f0;
     padding-bottom: 10px;
@@ -310,4 +311,27 @@ button.create:hover,
 
 #cn-pass, #cn-confirm{
     position: relative;
+}
+
+
+.head-title-modal-branch-container{
+    text-align: start;
+}
+
+.strong-modal{
+    color: #373737;
+}
+
+.close-btn{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.close-btn img{
+    text-align: center;
+    width: 20px;
+    height: 20px;
 }

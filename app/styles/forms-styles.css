@@ -523,3 +523,14 @@ ____________________________________________________
   }
 
 }
+
+.branch-container{
+  padding: 10px;
+}
+
+.title-branch, .subtitle-branch{
+  color: #373737;
+}
+.subtitle-branch{
+  font-size: 22px;
+}
