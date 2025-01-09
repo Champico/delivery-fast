@@ -88,6 +88,8 @@ class ShipmentSchema
         $isNumericString = fn($value) => is_string($value) && ctype_digit($value);
         $isNumericStringOfLength = fn($value, $length) => is_string($value) && ctype_digit($value) && strlen($value) === $length;
 
+
+        // D A T O S  D E  I D E N T I F I C A C I O N
         foreach
         (
             [
@@ -106,6 +108,8 @@ class ShipmentSchema
             $errors[] = "El folio debe ser un número";
         }
 
+
+        // M E D I D A S  F L O T A N T E S
         foreach (
             [
                 'peso' => [0, ShipmentSchema::$maxWeight, 'Peso debe ser un número decimal','El peso no puede ser negativo', "El peso no puede ser mayor a " . ShipmentSchema::$maxWeight . " kg"],
@@ -131,29 +135,25 @@ class ShipmentSchema
             }
         }
 
+        // S T R I M G S  O B L I G A T O R I O S 
         foreach (
             [
-                'contenido' => [255, 'Contenido debe tener máximo 255 caracteres', 'Contenido debe ser una cadena de caracteres'],
                 'tipo' => [50, 'Tipo debe tener máximo 50 caracteres', 'Tipo debe ser una cadena de caracteres'],
                 'servicio' => [50, 'Servicio debe tener máximo 50 caracteres', 'Servicio debe ser una cadena de caracteres'],
                 'nombre_remitente' => [255, 'Nombre del remitente debe tener máximo 255 caracteres', 'Nombre del remitente debe ser una cadena de caracteres'],
-                'correo_remitente' => [255, 'Correo del remitente debe tener máximo 255 caracteres', 'Correo del remitente debe ser una cadena de caracteres'],
-                'telefono_remitente' => [13, 'Teléfono del remitente debe tener máximo 13 caracteres', 'Teléfono del remitente debe ser una cadena de caracteres'],
                 'calle_remitente' => [50, 'Calle del remitente debe tener máximo 50 caracteres', 'Calle del remitente debe ser una cadena de caracteres'],
                 'numeroExt_remitente' => [10, 'Número exterior del remitente debe tener máximo 10 caracteres', 'Número exterior del remitente debe ser una cadena de caracteres'],
-                'numeroInt_remitente' => [10, 'Número interior del remitente debe tener máximo 10 caracteres', 'Número interior del remitente debe ser una cadena de caracteres'],
+                
                 'colonia_remitente' => [50, 'Colonia del remitente debe tener máximo 50 caracteres', 'Colonia del remitente debe ser una cadena de caracteres'],
                 'ciudad_remitente' => [50, 'Ciudad del remitente debe tener máximo 50 caracteres', 'Ciudad del remitente debe ser una cadena de caracteres'],
                 'referencias_remitente' => [255, 'Referencias del remitente debe tener máximo 255 caracteres', 'Referencias del remitente debe ser una cadena de caracteres'],
                 'nombre_destinatario' => [255, 'Nombre del destinatario debe tener máximo 255 caracteres', 'Nombre del destinatario debe ser una cadena de caracteres'],
-                'correo_destinatario' => [255, 'Correo del destinatario debe tener máximo 255 caracteres', 'Correo del destinatario debe ser una cadena de caracteres'],
-                'telefono_destinatario' => [13, 'Teléfono del destinatario debe tener máximo 13 caracteres', 'Teléfono del destinatario debe ser una cadena de caracteres'],
+                
                 'calle_destinatario' => [50, 'Calle del destinatario debe tener máximo 50 caracteres', 'Calle del destinatario debe ser una cadena de caracteres'],
                 'numeroExt_destinatario' => [10, 'Número exterior del destinatario debe tener máximo 10 caracteres', 'Número exterior del destinatario debe ser una cadena de caracteres'],
-                'numeroInt_destinatario' => [10, 'Número interior del destinatario debe tener máximo 10 caracteres', 'Número interior del destinatario debe ser una cadena de caracteres'],
                 'colonia_destinatario' => [50, 'Colonia del destinatario debe tener máximo 50 caracteres', 'Colonia del destinatario debe ser una cadena de caracteres'],
                 'ciudad_destinatario' => [50, 'Ciudad del destinatario debe tener máximo 50 caracteres', 'Ciudad del destinatario debe ser una cadena de caracteres'],
-                'referencias_destinatario' => [255, 'Referencias del destinatario debe tener máximo 255 caracteres', 'Referencias del destinatario debe ser una cadena de caracteres'],
+               
             ] as $key => [$maxLength, $errorMessageMoreLengthThanAllowed, $errorMessageNotString]
         ) {
             if (isset($data[$key])){
@@ -171,6 +171,35 @@ class ShipmentSchema
             }
         }
 
+        // S T R I N G S  O P C I O N A L E S 
+        foreach (
+            [
+                'contenido' => [255, 'Contenido debe tener máximo 255 caracteres', 'Contenido debe ser una cadena de caracteres'],
+
+                'correo_remitente' => [255, 'Correo del remitente debe tener máximo 255 caracteres', 'Correo del remitente debe ser una cadena de caracteres'],
+                'telefono_remitente' => [13, 'Teléfono del remitente debe tener máximo 13 caracteres', 'Teléfono del remitente debe ser una cadena de caracteres'],
+                'numeroInt_remitente' => [10, 'Número interior del remitente debe tener máximo 10 caracteres', 'Número interior del remitente debe ser una cadena de caracteres'],
+
+                'correo_destinatario' => [255, 'Correo del destinatario debe tener máximo 255 caracteres', 'Correo del destinatario debe ser una cadena de caracteres'],
+                'telefono_destinatario' => [13, 'Teléfono del destinatario debe tener máximo 13 caracteres', 'Teléfono del destinatario debe ser una cadena de caracteres'],
+                'numeroInt_destinatario' => [10, 'Número interior del destinatario debe tener máximo 10 caracteres', 'Número interior del destinatario debe ser una cadena de caracteres'],
+                'referencias_destinatario' => [255, 'Referencias del destinatario debe tener máximo 255 caracteres', 'Referencias del destinatario debe ser una cadena de caracteres'],
+        ] as $key => [$maxLength, $errorMessageMoreLengthThanAllowed, $errorMessageNotString]
+        ) {
+            if (isset($data[$key])){
+                if(!is_string($data[$key])){
+                    $errors[] = $errorMessageNotString;
+                    continue;
+                }
+                if(strlen($data[$key]) > $maxLength){
+                    $errors[] = $errorMessageMoreLengthThanAllowed;
+                    continue;
+                }
+            }
+        }
+
+
+        // C O D I G O S  P O S T A L E S
         foreach(
             [
                 "cp_remitente" => ["El código postal del remitente deber ser un número", "El código postal del remitente debe tener 5 digitos"], 
@@ -217,7 +246,6 @@ class ShipmentSchema
         if(isset($ticket['servicio']) && !in_array($ticket['servicio'], ['Express','Día_siguiente','2-5_Dias','Terrestre'], true)){
             $errors[] = "El servicio debe ser 'Express','Día siguiente','2-5 Dias','Terrestre' (Espacios con guion bajo)";
         }
-        
 
         return $errors;
     }

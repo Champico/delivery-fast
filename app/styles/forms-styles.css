@@ -175,6 +175,10 @@ input:focus {
   color: #222222;
 }
 
+.label-cp{
+  text-overflow: ellipsis;
+}
+
 /* Mensaje de error de los datos */
 .input-message{
   font-family: 'Roboto', sans-serif;
@@ -391,6 +395,10 @@ ____________________________________________________
   flex: 1;
 }
 
+.form-inline .form-group-two-spaces{
+  flex: 2;
+}
+
 .form-edit-status{
   width: 100%;
   padding: 10px;
@@ -431,7 +439,7 @@ ____________________________________________________
   padding: 8px 12px;
   border: 1px solid #ccc;
   height: 34px;
-  width: 300px;
+  max-width: 300px;
 
 }
 
@@ -440,14 +448,14 @@ ____________________________________________________
   color: #333;
   padding: 8px 12px;
   border-radius: 8px;
-  width: 900px;
+  max-width: 900px;
 }
 
 .txta-input-new-notes{
   height: 100px;
 }
 .new-section1 .input[type="text"] {
-  width: 400px;
+  max-width: 400px;
 }
 
 .ship-titles{
@@ -456,11 +464,6 @@ ____________________________________________________
 
 .ship-subtitle{
   font-size: 24px;
-}
-
-.ship-info-text,.-text{ 
-  font-size: 16px;
-  padding: 0px;
 }
 
 #searchIcon{

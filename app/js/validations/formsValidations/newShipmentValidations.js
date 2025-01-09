@@ -177,6 +177,7 @@ export function validatePackageDataFields(){
         valueElementsCorrect[key] = validateFieldDataPackage(key, value, htmlElements[key]);
     });
 
+    console.log(errores, formatPackageData(valueElementsCorrect));
     return errores === 0 ? formatPackageData(valueElementsCorrect) : false;
 }
 
@@ -201,7 +202,6 @@ function validateFieldDataPackage(nameField,valueField,htmlElement){
 
 
 function formatPackageData(data){
-
     return {
         "sucursal":  data["sucursal"] || "",
         "peso":      data["peso-package"] || "",

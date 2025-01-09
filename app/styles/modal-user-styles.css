@@ -248,13 +248,10 @@ button.create:hover,
 .container-p-span-info-modal{
     margin: 5px;
     margin-left: 0px;
+    font-size: 22px;
+
 }
 
-.shipping-information-modal{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    padding: 10px;
-}
 .btnTerminar-container{
     display: flex;
     justify-content: end;

@@ -686,6 +686,21 @@ ________________________________________________________________________________
     color: #333;
 }
 
+
+#d1-sender, #d1-recipient, #d1-package{
+    font-weight: 400;
+}
+
+#d2-sender, #d2-recipient, #d2-package{
+    font-weight: 300;
+}
+
+.shipping-information-modal{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    padding: 10px;
+}
+
 /*_______________________________________________________________________________  
          
         D E L I V E R Y  V I E W  C O N T A I N E R
@@ -798,6 +813,10 @@ ____________________________________________________
         padding-left: 20px;
         font-size: 16px;
     }
+
+    #title-shipment-profile, #guide-shipment{
+        font-size: 22px;
+    }
 }
 
 @media screen and (max-width: 800px){
@@ -848,6 +867,14 @@ ____________________________________________________
 
     #background-sidebar-small.background-hide{
         display: none;
+    }
+
+    .shipping-information{
+        grid-template-columns: 1fr;
+    }
+
+    #title-shipment-profile, #guide-shipment{
+        font-size: 32px;
     }
 
 }

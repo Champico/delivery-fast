@@ -9,7 +9,7 @@ export async function getPage(){
 
 export async function addFunctionality(){
     const boton = document.getElementById("btn-ns-p1-siguiente");
-    if(boton) boton.addEventListener('click', await getPageStepTwo);
+    if(boton) boton.addEventListener('click', goToStepTwo);
     return true;
 }
 
@@ -27,6 +27,25 @@ async function urlParser(){
     }
 }
 
+/* F L U J O   N O R M A L
+1. goToStepTwo
+1. ValidateDataPageOne
+2. getPageTw0
+3. ValidateDataPageTwo
+4. getPageThree
+5. 
+*/
+
+async function goToStepTwo(){
+    
+}
+
+
+
+
+
+
+
 async function getPageStepTwo() {
     const boton = document.getElementById("btn-ns-p1-siguiente");
     let data = false;
@@ -38,7 +57,6 @@ async function getPageStepTwo() {
         const module = await import("../validations/formsValidations/newShipmentValidations.js");
         data = await module.validateShipmentDataFields();    
     }catch(e){
-        console.log("ERROR", e) 
         return;
     }
     
@@ -241,17 +259,20 @@ function getSenderForm(states){
         <div class="form-card form-sender">
             <h2 class="form-title">Enviar desde</h2>
             <form class="form">
+
                 <div class="form-group">
                     <label class="input-label" for="nombre-remitente">Nombre*</label>
                     <input class="input" type="text" id="nombre-remitente" placeholder="Ingrese el nombre completo del remitente">
                     <span class="input-message input-message-hide" id="nombre-remitente-msg"></span>
                 </div>
+
                 <div class="form-inline">
                     <div class="form-group">
-                        <label class="input-label" for="cp-remitente">Código postal*</label>
+                        <label class="input-label label-cp" for="cp-remitente">Código postal*</label>
                         <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140">
                         <span class="input-message input-message-hide" id="cp-remitente-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="estado-destinatario">Estado*</label>
                         <select class="form-select" id="estado-destinatario">
@@ -260,35 +281,39 @@ function getSenderForm(states){
                         </select>
                         <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="ciudad-remitente">Ciudad*</label>
                         <input class="input" type="text" id="ciudad-remitente">
                         <span class="input-message input-message-hide" id="ciudad-remitente-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="colonia-remitente">Colonia*</label>
                         <input class="input" type="text" id="colonia-remitente">
                         <span class="input-message input-message-hide" id="colonia-remitente-msg"></span>
                     </div>
+
                 </div>
-                <div class="form-group">
-                    <label class="input-label" for="calle-remitente">Calle*</label>
-                    <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente">
-                    <span class="input-message input-message-hide" id="calle-remitente-msg">Hola</span>
-                </div>
+
                 <div class="form-inline">
+                    <div class="form-group form-group-two-spaces">
+                        <label class="input-label" for="calle-remitente">Calle*</label>
+                        <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente">
+                        <span class="input-message input-message-hide" id="calle-remitente-msg">Hola</span>
+                    </div>
+
                     <div class="form-group">
                         <label class="input-label" for="noext-remitente">No. ext*</label>
                         <input class="input" type="text" id="noext-remitente">
                         <span class="input-message input-message-hide" id="noext-remitente-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="noint-remitente">No. int</label>
                         <input class="input" type="text" id="noint-remitente">
                         <span class="input-message input-message-hide" id="noint-remitente-msg"></span>
                     </div>
-                    <div class="form-group"> </div>
-                    <div class="form-group"> </div>
                 </div>
                 <div class="form-inline">
                     <div class="form-group">
@@ -311,17 +336,20 @@ function getRecipientForm(states){
         <div class="form-card form-recipient">
             <h2 class="form-title">Para</h2>
             <form>
+            
                 <div class="form-group">
                     <label class="input-label" for="nombre-destinatario">Nombre*</label>
                     <input class="input" type="text" id="nombre-destinatario" placeholder="Ingrese el nombre completo del destinatario">
                     <span class="input-message input-message-hide" id="nombre-destinatario-msg"></span>
                 </div>
+
                 <div class="form-inline">
                     <div class="form-group">
-                        <label class="input-label" for="cp-destinatario">Código postal*</label>
+                        <label class="input-label label-cp" for="cp-destinatario">Código postal*</label>
                         <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140">
                         <span class="input-message input-message-hide" id="cp-destinatario-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="estado-remitente">Estado*</label>
                         <select class="form-select" id="estado-remitente">
@@ -330,51 +358,64 @@ function getRecipientForm(states){
                         </select>
                         <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="ciudad-destinatario">Ciudad*</label>
                         <input class="input" type="text" id="ciudad-destinatario">
                         <span class="input-message input-message-hide" id="ciudad-destinatario-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="colonia-destinatario">Colonia*</label>
                         <input class="input" type="text" id="colonia-destinatario">
                         <span class="input-message input-message-hide" id="colonia-destinatario-msg"></span>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="input-label" for="calle-destinatario">Calle*</label>
-                    <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente">
-                    <span class="input-message input-message-hide" id="calle-destinatario-msg"></span>
-                </div>
+
                 <div class="form-inline">
+
+                    <div class="form-group form-group-two-spaces">
+                        <label class="input-label" for="calle-destinatario">Calle*</label>
+                        <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente">
+                        <span class="input-message input-message-hide" id="calle-destinatario-msg"></span>
+                    </div>
+
                     <div class="form-group">
                         <label class="input-label" for="noext-destinatario">No. ext*</label>
                         <input class="input" type="text" id="noext-destinatario">
                         <span class="input-message input-message-hide" id="noext-destinatario-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="noint-destinatario">No. int</label>
                         <input class="input" type="text" id="noint-destinatario">
                         <span class="input-message input-message-hide" id="noint-destinatario-msg"></span>
                     </div>
+
                 </div>
+
                 <div class="form-inline">
+
                     <div class="form-group">
                         <label class="input-label" for="correo-destinatario">Correo</label>
                         <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com">
                         <span class="input-message input-message-hide" id="correo-destinatario-msg"></span>
                     </div>
+
                     <div class="form-group">
                         <label class="input-label" for="telefono-destinatario">Teléfono</label>
                         <input class="input" type="text" id="telefono-destinatario">
                         <span class="input-message input-message-hide" id="telefono-destinatario-msg"></span>
                     </div>
+
                 </div>
+
                 <div class="form-group">
                     <label class="input-label" for="referencias">Referencias</label>
                     <textarea class="textarea" id="referencias" rows="3" placeholder="Breve descripción del lugar de destino..."></textarea>
                     <span class="input-message input-message-hide" id="referencias-destinatario-msg"></span>
                 </div>
+
             </form>
         </div> `
 }
