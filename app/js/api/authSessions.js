@@ -74,7 +74,7 @@ export async function logout(){
 
 export async function status(){
   try{
-    const url = "http://localhost/backend/auth/logout";
+    const url = "http://localhost/backend/auth/status";
     const response = await fetch(url);
     const responseData = await response.json();
     if(response.ok && responseData['sesion']) return true;
