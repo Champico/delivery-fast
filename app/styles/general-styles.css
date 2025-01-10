@@ -120,6 +120,7 @@ header{
     align-items: center;
     gap:10px;
     color: white;
+    padding-right: 20px;
 }
 
 /* Texto de informacion del usuario*/
@@ -201,7 +202,7 @@ ____________________________________________________
 }
 
 .sessionCardUserName {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 16px;
     color: #111;
@@ -533,6 +534,12 @@ ____________________________________________________
 .new-shupment-page-header{
     display: flex;
     justify-content: space-between;
+}
+
+/* Bottom de pagina de nuevo envio */
+.new-shupment-page-bottom{
+    display: flex;
+    justify-content: end;
 }
 
 /* Wizard */
@@ -877,5 +884,8 @@ ____________________________________________________
         font-size: 32px;
     }
 
+    #new-shipment-btn-siguiente-2{
+        flex: 1;
+    }
 }
 

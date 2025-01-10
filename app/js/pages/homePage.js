@@ -301,15 +301,14 @@ function generateTableRow(data) {
   const servicio = data.servicio || "";
   const destinatario = data.destinatario || "";
   const ciudad_destino = data.ciudad_destino || "";
-  const estado_destino = data.estado_destino || "";
+  const estado = data.abreviatura_informal || "";
   const estatus = data.estatus || "";
-  const numero_sucursal = data.numero_sucursal || "";
 
   return `<tr class="shipment-row" guide="${guia}">
             <td>${folio}</td>
             <td>${destinatario}</td>
-            <td class="column-estatus">${estatus}</td>
-            <td class="column-service">${servicio}</td>
-            <td class="column-city">${ciudad_destino}</td>
+            <td class="column-estatus">${estatus.replace(/_/g, ' ')}</td>
+            <td class="column-service">${servicio.replace(/_/g, ' ')}</td>
+            <td class="column-city">${ciudad_destino} ${estado}.</td>
         </tr>`;
 }

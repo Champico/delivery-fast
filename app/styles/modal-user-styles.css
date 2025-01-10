@@ -196,6 +196,8 @@ button.create:hover,
 } 
 
 
+
+/* M O D A L  C O B R A R  */
 .head-price-modal-container{
     display: flex;
     justify-content: center;
@@ -232,6 +234,15 @@ button.create:hover,
     font-weight: normal;
     line-height: 1;
 }
+
+.btn-cobrar{
+    flex: 1;
+}
+
+
+
+
+
 
 .ship-titles-modal{
     font-size: 28px;
@@ -270,17 +281,32 @@ button.create:hover,
   margin: 0;
 }
 
-#not-found-img{
-    width: 200px;
+
+
+
+
+
+/*
+M O D A L  D E  N O  E N C O N T R A D O  O  E R R O R
+
+*/
+
+.not-found-img-modal{
+    width: 180px;
 }
 
-#not-found-message{
-    font-size: 29px;
-    font-weight: 500;
+
+.not-found-message-modal {
+    max-width: 180px;
+    height: 160px;
     margin: 0;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
 
-#close-modal-button{
+.close-modal-button{
     position: absolute;
     padding: 0;
     margin: 0;
@@ -295,10 +321,23 @@ button.create:hover,
     color: #000;
 }
 
-#close-modal-button:hover{
+.close-modal-button:hover{
     color: #555;
 }
 
+#not-found-message-package{
+    font-size: 29px;
+    font-weight: 500;
+}
+
+#not-found-message-zip-code{
+    font-size: 30px;
+    font-weight: 400;
+}
+
+
+
+/* M O D A L  F O R M U L A R I O  D E  U S U A R I O */
 .eye-button{ 
     position: absolute;
     top: 22px;

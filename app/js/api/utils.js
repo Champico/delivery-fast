@@ -38,3 +38,19 @@ export async function fetchStatus() {
   if (!response.ok) return [];
   return responseData ? responseData : [];
 }
+
+
+export async function validateZipCode(zipCode) {
+  let response;
+  try {
+    const url = `http://localhost/backend/utils/location-data/${zipCode}`;
+    response = await fetch(url);
+  } catch (error) {
+    return false;
+  }
+
+  let responseData = await response.json();
+  if (!response.ok) return false;
+  return responseData ? responseData : false;
+}
+

@@ -67,7 +67,20 @@ export async function logout(){
     if(response.ok) return true;
     return false;
   }catch(e){
-    console.log(e)
+    return false;
   }
 
 }
+
+export async function status(){
+  try{
+    const url = "http://localhost/backend/auth/logout";
+    const response = await fetch(url);
+    const responseData = await response.json();
+    if(response.ok && responseData['sesion']) return true;
+    return false;
+  }catch(e){
+    return false;
+  }
+}
+

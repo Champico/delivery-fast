@@ -82,6 +82,18 @@ class AuthController
         }
     }
 
+    public function checkStatus(){
+        session_start();
+
+        if (isset($_SESSION) && !empty($_SESSION)) {
+            http_response_code(200);
+            echo json_encode(["mensaje"=>"La sesión esta activa", "sesion" => $_SESSION['user_id']]);
+        } else {
+            http_response_code(401);
+            echo json_encode(["No hay una sesión activa"]);
+        }
+    }
+
     private function validateData($inputData)
     {
         $numero_personal = $inputData['username'] ?? '';

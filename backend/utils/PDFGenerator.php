@@ -222,8 +222,9 @@ class PDFGenerator
 
         $dompdf = new Dompdf($options);
 
-        $html = ' <p> </p> 
-        <img src="data:image/png;base64,' . $code128 . '" alt="Código 128">';
+        $html = ' <p> Hola </p>'; 
+        
+        //'<img src="data:image/png;base64,' . $code128 . '" alt="Código 128">';
 
         $dompdf->loadHtml($html);
         $dompdf->setPaper([0, 0, (PDFGenerator::$widthGuide * 2.835), 0]);

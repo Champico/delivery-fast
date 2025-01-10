@@ -85,7 +85,11 @@ ____________________________________________________
 
 .main-table tr:hover{
     cursor: pointer;
-    filter: brightness(0.8);
+    background-color: #fff4e3;
+}
+
+.main-table thead tr:hover{
+    background: #fff;
 }
 
 .isSelectedItemTable {
@@ -100,10 +104,18 @@ ____________________________________________________
     background-color: var(--row-selected);
 }
 
+.row-selected:hover{
+    background-color: #ff9900;
+}
+
+
+
+
+
+
 /* Boton para seleccionar un periodo */
 .dropdown {
     position: relative;
-    z-index: 1;
     font-family: 'Roboto', sans-serif;
 }
   
@@ -126,7 +138,7 @@ ____________________________________________________
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #ccc;
     border-radius: 4px;
-    z-index: 8;
+    z-index: 1;
 }
   
 .dropdown:hover .dropdown-content {
@@ -218,6 +230,10 @@ ____________________________________________________
         display: none;
     }
 
+    .dropdown-button{
+        width: 100%;
+        text-align: left;
+    }
 }
 
 

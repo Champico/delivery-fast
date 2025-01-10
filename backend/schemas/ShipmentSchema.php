@@ -146,7 +146,6 @@ class ShipmentSchema
                 
                 'colonia_remitente' => [50, 'Colonia del remitente debe tener máximo 50 caracteres', 'Colonia del remitente debe ser una cadena de caracteres'],
                 'ciudad_remitente' => [50, 'Ciudad del remitente debe tener máximo 50 caracteres', 'Ciudad del remitente debe ser una cadena de caracteres'],
-                'referencias_remitente' => [255, 'Referencias del remitente debe tener máximo 255 caracteres', 'Referencias del remitente debe ser una cadena de caracteres'],
                 'nombre_destinatario' => [255, 'Nombre del destinatario debe tener máximo 255 caracteres', 'Nombre del destinatario debe ser una cadena de caracteres'],
                 
                 'calle_destinatario' => [50, 'Calle del destinatario debe tener máximo 50 caracteres', 'Calle del destinatario debe ser una cadena de caracteres'],
@@ -179,7 +178,8 @@ class ShipmentSchema
                 'correo_remitente' => [255, 'Correo del remitente debe tener máximo 255 caracteres', 'Correo del remitente debe ser una cadena de caracteres'],
                 'telefono_remitente' => [13, 'Teléfono del remitente debe tener máximo 13 caracteres', 'Teléfono del remitente debe ser una cadena de caracteres'],
                 'numeroInt_remitente' => [10, 'Número interior del remitente debe tener máximo 10 caracteres', 'Número interior del remitente debe ser una cadena de caracteres'],
-
+                'referencias_remitente' => [255, 'Referencias del remitente debe tener máximo 255 caracteres', 'Referencias del remitente debe ser una cadena de caracteres'],
+                
                 'correo_destinatario' => [255, 'Correo del destinatario debe tener máximo 255 caracteres', 'Correo del destinatario debe ser una cadena de caracteres'],
                 'telefono_destinatario' => [13, 'Teléfono del destinatario debe tener máximo 13 caracteres', 'Teléfono del destinatario debe ser una cadena de caracteres'],
                 'numeroInt_destinatario' => [10, 'Número interior del destinatario debe tener máximo 10 caracteres', 'Número interior del destinatario debe ser una cadena de caracteres'],

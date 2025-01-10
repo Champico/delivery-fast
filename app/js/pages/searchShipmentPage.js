@@ -7,7 +7,7 @@ export async function addFunctionality(){
     if(!boton) return;
     boton.addEventListener('click', searchShipmentWithGuide);
 
-    const closeModalButton = document.getElementById("close-modal-button");
+    const closeModalButton = document.getElementById("close-modal-button-not-found");
     if(closeModalButton) closeModalButton.addEventListener('click', hideModalNotFound);
 
     const aceptarButton = document.getElementById("btn-aceptar");
@@ -118,11 +118,11 @@ function getHtmlModal(){
     <div class="body-modal modal-hide" id="shipment-not-found-modal">
         <div id="notFoundModal" class="modal">
             <div class="modal-content-small">
-                <button id="close-modal-button">x</button>
+                <button class="close-modal-button" id="close-modal-button-not-found">x</button>
                 <div class="form-group-modal">
                     <div class="form-inline-modal">
-                        <img id="not-found-img" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
-                        <span id="not-found-message">Envío no encontrado</span>
+                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
+                        <span class="not-found-message-modal" id="not-found-message-package">Envío no encontrado</span>
                     </div>
                 </div>
                 <div class="form-group-modal">

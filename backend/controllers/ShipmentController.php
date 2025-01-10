@@ -251,6 +251,21 @@ class ShipmentController
         }
 
         $pdf = PDFGenerator::createGuidePDF($new_shipment);
+
+        
+        if(empty($pdf)){
+            http_response_code(404);
+            echo json_encode(["message" => "No se pudo generar el ticket"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        header('Content-Type: application/pdf');
+        header('Content-Disposition: inline; filename="ticket-' .$guia. '.pdf"');
+        header('Content-Transfer-Encoding: binary');
+        header('Content-Length: ' . strlen($pdf));
+
+        echo $pdf;
+        exit;
     }
 
 

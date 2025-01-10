@@ -27,11 +27,18 @@ switch ($method) {
     break;
 
     case 'GET':
-        if(isset($action) && $action="logout"){
-            $authController->logout();
+        if(isset($action)){
+            switch($action){
+                case "logout": $authController->logout(); break;
+                case "status": $authController->checkStatus(); break;
+                default:
+                http_response_code(405);
+                echo json_encode(['message' => 'Petición no encontrada']);
+            }
+            
         }else{
             http_response_code(405);
-            echo json_encode(['message' => 'Método no permitido']);
+            echo json_encode(['message' => 'Peticón no encontrada']);
         }
     break;
 

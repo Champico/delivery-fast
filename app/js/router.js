@@ -1,6 +1,5 @@
 /* V A R I A B L E S   G L O B A L E S */
 let header = null;
-let sideBar = null;
 let mainContainer = null;
 
 const routes = {
@@ -39,7 +38,7 @@ async function renderContent() {
         const module = await route();
         const page = await module.getPage();
         mainContainer.innerHTML = page;
-        sideBar.changeMenuButtonPresssed(path);
+        changeMenuButtonPresssed(path);
         await module.addFunctionality();
     }catch(error){
         console.log("El error es: ", error)
@@ -48,7 +47,6 @@ async function renderContent() {
             const page = await module.getPage();
             mainContainer.innerHTML = page;
         }catch(error){
-            console.log("No se encontro el componente")
             mainContainer.innerHTML = `<h1 class="NotFound">Not Found 404</h1>`;
         }
     }
@@ -89,5 +87,12 @@ async function hideLoadingScreen(){
     try{
         const module = await import("./components/loadingScreen.js");
         module.hideLoadingScreen();
+    }catch(e){}
+}
+
+async function changeMenuButtonPresssed(path){
+    try{
+        sideBar = await import("./components/sidebar.js");
+        await sideBar.changeMenuButtonPresssed(path);
     }catch(e){}
 }
