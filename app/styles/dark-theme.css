@@ -1,0 +1,144 @@
+/* G E N E R A L  S T Y L E S */
+
+:root {
+    --brand-orange-color: #433b2e;; /* Color principal */
+    --orange-color-higth-contrast: #463b23; /* Color principal con mayor contraste con la letra blanca */
+    --input-error: #3b0007; /* Color de los mensaje de error en los input */
+    --orange-ligth:  #31302e; /* Naranja claro de ventana de busqueda*/
+    --row-selected: #8e5602; /* Color de la fila seleccionada */
+    --filter-selected: #4b3603;
+}
+
+body{
+    background-color: #151515;
+}
+
+.new-shupment-btn{
+    background-color: #a7a7a7;
+}
+
+.new-shupment-btn:hover{
+    background-color: #d8d8d8;
+    box-shadow: 4px 2px 7px rgba(203, 203, 203, 0.4);
+}
+
+.title-section{
+    color:#ececec;
+}
+
+.shupment-home-content{
+    background-color:  #2d2d2d;
+}
+
+.sidebar-card{
+    width: 215px;
+    background-color: #2d2d2d;
+}
+
+.sidebar-item-icon{
+    fill: #fff;
+    filter: brightness(0) invert(1);
+}
+
+.sidebar-item-a{
+    color: #d7d7d7;
+}
+
+.sidebar-item-li:hover{
+    background-color: #6d6d6d;
+}
+
+.sidebar-item-li-selected{
+    background-color: #c7964e;
+}
+
+.sidebar-item-li-selected:hover{
+    background-color: #9b7640;
+}
+
+.guide-title{
+    color: #d9d9d9;
+}
+
+.guide-input{
+    background-color: #4f4f4f;
+    border: #1a1a1a;
+    color: #ecebeb;
+}
+
+
+
+
+
+
+/* F O R M S */
+.form-card{
+    background-color: #2d2d2d;
+}
+
+.button:hover{
+    background-color: #9e6d11;
+    color: #fffbeb;
+  }
+
+  .button:disabled, .button:disabled:hover{
+    background-color: #3c372d;
+  } 
+  
+  .button-red:disabled, .button-red:disabled:hover{
+    background-color: #1b1515;
+  } 
+  
+  .input,
+  .textarea {
+    border: 1px solid #1e1b1b;
+  }
+  
+  
+  /* Input base */
+  .input{
+    background-color: #464646;
+    color: #e3e3e3;
+  }
+
+  .input::placeholder {
+    color: #9e9e9e;
+  }
+  
+  /* Placeholder del text area*/
+  .textarea {
+    color: #9e9e9e;
+  }
+
+
+
+
+/* T A B L E S */
+
+.main-table{
+    color:#ececec;
+}
+
+.filter-selects{
+    color: rgb(237, 234, 234);
+    background-color: #4c4c4c;
+    border: 1px solid #1a1a1a;
+
+}
+
+.filter-selects-selected{
+  background-color: var(--filter-selected);
+  color: #888888;
+}
+
+.main-table th{
+    color: #ececec;
+}
+
+.main-table tr:hover{
+    background-color: #424242;
+}
+
+.main-table thead tr:hover{
+    background: #2d2d2d;
+}

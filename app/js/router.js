@@ -16,6 +16,7 @@ const routes = {
 };
 
 /* F L U J O  N O R M A L  I N I C I O */
+changeTheme();
 createHeader();
 createSideBar();
 mainContainer = document.getElementById('content-section');
@@ -95,4 +96,27 @@ async function changeMenuButtonPresssed(path){
         sideBar = await import("./components/sidebar.js");
         await sideBar.changeMenuButtonPresssed(path);
     }catch(e){}
+}
+
+
+export async function changeTheme(){
+    console.log("Se cambia el tema");
+    const cookies = document.cookie;
+    const theme = cookies
+    .split('; ')
+    .find(row => row.startsWith('theme='))
+    ?.split('=')[1];
+
+    if(theme && theme === "dark"){
+        const newStyleLink = document.createElement("link");
+        newStyleLink.rel = 'stylesheet';
+        newStyleLink.type = 'text/css';
+        newStyleLink.href = '/app/styles/dark-theme.css';
+        newStyleLink.id = 'darkcss';
+        document.head.appendChild(newStyleLink);
+    }else{
+        const linkDarkTheme = document.getElementById("darkcss");
+        if(linkDarkTheme) document.head.removeChild(linkDarkTheme);
+    }
+
 }

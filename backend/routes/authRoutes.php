@@ -31,6 +31,7 @@ switch ($method) {
             switch($action){
                 case "logout": $authController->logout(); break;
                 case "status": $authController->checkStatus(); break;
+                case "theme"; $authController->changeTheme(); break;
                 default:
                 http_response_code(405);
                 echo json_encode(['message' => 'Petición no encontrada']);

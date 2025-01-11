@@ -17,6 +17,9 @@ export function createHeader() {
             </div>
             <div class="sessionCardMenuContainer">
                 <ul class="sessionCardMenuList">
+                    <button class="sessionCardButton" id="themeButton">
+                        <span class="sessionCardButtonText">Cambiar tema</span>
+                    </button>
                     <button class="sessionCardButton" id="logoutButton">
                         <span class="sessionCardButtonText">Cerrar sesión</span>
                     </button>
@@ -65,6 +68,7 @@ function addFuncionalityToSessionCard(){
         }
     })
 
+    /* Boton cerrar sesión*/
     const logoutButton = document.getElementById("logoutButton");
     if(logoutButton){
         logoutButton.addEventListener('click', async () =>{
@@ -74,12 +78,33 @@ function addFuncionalityToSessionCard(){
                 if(success === true){
                     window.location.href = "http://localhost";
                 }
-            }catch(e){
-                console.log(e);
-            }
+            }catch(e){ }
         })
     }
-    
+
+    /* Boton cambiar tema*/
+    const themeButton = document.getElementById("themeButton");
+    if(themeButton){
+        themeButton.addEventListener('click', async () =>{
+            try{
+                let newTheme = "";
+                if(getCurrentTheme() === "dark"){
+                    newTheme = "light";
+                }else{
+                    newTheme = "dark";
+                }
+                const module = await import('../api/authSessions.js');
+                const success = await module.changeTheme(newTheme);
+
+                if(success){
+                    const module2 = await import('../router.js');
+                    await module2.changeTheme();   
+                }
+                
+            }catch(e){
+             }
+        });
+    }
 }
 
 function addFuncionalityToLogo(){
@@ -116,4 +141,22 @@ function addFuncionalityToMenuIcon(){
 
         }
     });
-} 
+}
+
+
+
+
+
+function getCurrentTheme(){
+    const cookies = document.cookie;
+    const theme = cookies
+    .split('; ')
+    .find(row => row.startsWith('theme='))
+    ?.split('=')[1];
+
+    if(theme && theme === "dark"){
+        return "dark";
+    }else{
+        return "light";
+    }
+}

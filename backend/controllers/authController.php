@@ -94,6 +94,42 @@ class AuthController
         }
     }
 
+
+    public function changeTheme(){
+        session_start();
+
+        if (isset($_SESSION) && !empty($_SESSION)) {
+
+            if(!isset($_GET['theme']) || empty($_GET['theme'])){
+                http_response_code(401);
+                echo json_encode(["message" => "Ingrese el tema al que quiere cambiar"]);
+                exit;
+            }
+
+            $theme = $_GET['theme'];
+
+            if(!is_string($theme) || !in_array($theme, ['dark', 'light'], true)){
+                http_response_code(401);
+                echo json_encode(["message" => "El tema debe ser dark o light"]);    
+                exit;
+            }
+
+            
+            setcookie('theme', $theme, time() + (86400 * 30), '/');
+            http_response_code(200);
+            echo json_encode(["message" => "Tema cambiado con exito a $theme"]);
+            exit;
+        } else {
+            http_response_code(401);
+            echo json_encode(["No hay una sesión activa"]);
+            exit;
+        }
+    }
+
+
+
+
+
     private function validateData($inputData)
     {
         $numero_personal = $inputData['username'] ?? '';

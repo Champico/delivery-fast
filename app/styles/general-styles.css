@@ -37,6 +37,7 @@ ____________________________________________________
 :root {
     --brand-orange-color: #FFAC13;; /* Color principal */
     --orange-color-higth-contrast: #DD9000; /* Color principal con mayor contraste con la letra blanca */
+    --orange-buttons: #DD9000; /*Color de botones naranjas */
     --input-error: #D0021B; /* Color de los mensaje de error en los input */
     --orange-ligth:  #FFE5CC; /* Naranja claro de ventana de busqueda*/
     --row-selected: #FFA726; /* Color de la fila seleccionada */

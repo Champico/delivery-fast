@@ -54,33 +54,43 @@ document.addEventListener("DOMContentLoaded", async function () {
 
 
 export async function logout(){
-
   try{
-    const url = "http://localhost/backend/auth/logout";
-    const response = await fetch(url);
+      const url = "http://localhost/backend/auth/logout";
+      const response = await fetch(url);
 
-    localStorage.removeItem("numero_personal");
-    localStorage.removeItem("id_rol");
-    localStorage.removeItem("numero_sucursal");
-    localStorage.removeItem("nombre");
+      localStorage.removeItem("numero_personal");
+      localStorage.removeItem("id_rol");
+      localStorage.removeItem("numero_sucursal");
+      localStorage.removeItem("nombre");
 
-    if(response.ok) return true;
-    return false;
-  }catch(e){
-    return false;
-  }
-
+      if(response.ok) return true;
+      return false;
+    }catch(e){
+      return false;
+    }
 }
 
 export async function status(){
-  try{
-    const url = "http://localhost/backend/auth/status";
-    const response = await fetch(url);
-    const responseData = await response.json();
-    if(response.ok && responseData['sesion']) return true;
-    return false;
-  }catch(e){
-    return false;
-  }
+    try{
+      const url = "http://localhost/backend/auth/status";
+      const response = await fetch(url);
+      const responseData = await response.json();
+      if(response.ok && responseData['sesion']) return true;
+      return false;
+    }catch(e){
+      return false;
+    }
 }
 
+export async function changeTheme(theme){
+  if(!theme) return;
+  try{
+      const url = `http://localhost/backend/auth/theme?theme=${theme}`;
+      const response = await fetch(url);
+      const responseData = await response.json();
+      if(response.ok) return true;
+      return false;
+    }catch(e){
+      return false;
+    }
+}

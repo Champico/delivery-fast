@@ -89,6 +89,7 @@ ____________________________________________________
 }
 
 .main-table thead tr:hover{
+    cursor: default;
     background: #fff;
 }
 

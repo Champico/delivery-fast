@@ -124,11 +124,26 @@ async function getPageStepOne(){
 }
 
 async function getPageStepTwo(){
-    return await getHtmlStepTwo();
+    if(dataNewShipment["ciudad_destinatario"] === null || dataNewShipment["cp_destinatario"] === null || dataNewShipment["calle_destinatario"] === null){
+        await navigateToInside("/app/new-shipment");
+        return await getHtmlStepOne();
+    }else{
+        return await getHtmlStepTwo();
+    }
 }
 
 async function getPageStepThree(){
-    return await getHtmlStepThree();
+    if(dataNewShipment["servicio"] === null || dataNewShipment["peso"] === null){
+        if(dataNewShipment["ciudad_destinatario"] === null || dataNewShipment["cp_destinatario"] === null || dataNewShipment["calle_destinatario"] === null){
+            await navigateToInside("/app/new-shipment");
+            return await getHtmlStepOne();
+        }else{
+            await navigateToInside("/app/new-shipment/package-info");
+            return await getHtmlStepTwo();
+        }
+    }else{
+        return await getHtmlStepThree();
+    }
 }
 
 
