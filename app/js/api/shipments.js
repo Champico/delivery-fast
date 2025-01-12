@@ -89,3 +89,21 @@ export async function verifyIfExistsShipmentByGuide(guide) {
      if (!response.ok) return null;
      return responseData ? responseData : null;
  }
+
+ export async function getInfoCustomer(type, guide){
+    const types = ["remitente", "destinatario"];
+
+    if(!types.includes(type)) return null;
+
+    let response;
+    try {
+        response = await fetch(`http://localhost/backend/shipment/customer?type=${type}&guide=${guide}`);
+    } catch (error) {
+        return null;
+    }
+
+    let responseData = await response.json();
+    console.log("Customer > ", responseData)
+    if (!response.ok) return null;
+    return responseData ? responseData : null;
+ }

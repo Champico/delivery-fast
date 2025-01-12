@@ -544,6 +544,38 @@ class ShipmentModel{
         }
     }
 
+    public function getCustomer($type, $guide){
+        try{
+            $query = "SELECT * FROM contactos WHERE guia=? AND tipo = ?";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("ss", $guide, $type);
+            $stmt->execute();
+
+            $resultado = $stmt->get_result();
+            $customer = $resultado->fetch_assoc();
+            
+            if($customer){
+                return $customer;
+            }else{
+                throw new Exception("No se encontro el ticket");
+            }
+        }catch(Exception $e){
+            throw new Exception("No se encontó el ticket");
+        }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
     private function createStatusWithDate($guia, $colaborador, $estatus, $datestamp){
 
         try{

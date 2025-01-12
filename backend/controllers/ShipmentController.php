@@ -269,6 +269,59 @@ class ShipmentController
     }
 
 
+    public function getCustomer(){
+        $type = $_GET["type"];
+        $guide = $_GET["guide"];
+    
+        if(empty($type)){
+            http_response_code(401);
+            echo json_encode(["message" => "Ingrese el tipo (Remitente o Destinatario)"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+        
+        if(empty($guide)){
+            http_response_code(401);
+            echo json_encode(["message" => "Ingrese la guia"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        $error = ShipmentSchema::validateGuide($guide);
+
+        if ($error && sizeof($error) > 0) {
+            http_response_code(422);
+            echo json_encode($error, JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        if(!in_array($type, ['remitente', 'destinatario'], true)){
+            http_response_code(422);
+            echo json_encode(["message" => "El tipo debe ser remitente o destinatario"], JSON_UNESCAPED_UNICODE);
+            exit();
+        }
+
+        try {
+            $envio = $this->shipmentModel->getCustomer($type, $guide);
+            echo json_encode($envio, JSON_UNESCAPED_UNICODE);
+            exit();
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     
 /*

@@ -110,6 +110,9 @@ body{
     color: #9e9e9e;
   }
 
+  .input-label{
+    color: #d1d1d1;
+  }
 
 
 
@@ -141,4 +144,23 @@ body{
 
 .main-table thead tr:hover{
     background: #2d2d2d;
+}
+
+
+
+/* M O D A L E S */
+.modal-content, .modal-content-small, .modal-content-large{
+    background-color: #3a3a3a;
+}
+
+.close-modal-button{
+    color:#e8e8e8;
+}
+
+
+
+/* Paginas */
+
+.shupment-home-content{
+    color: #efefef;
 }

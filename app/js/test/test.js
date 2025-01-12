@@ -1,10 +1,21 @@
 import { faker } from 'https://cdn.skypack.dev/@faker-js/faker/locale/es_MX';
 import { fetchCreateShipment } from '../api/shipments.js';
 
-async function createShipmentFakeData(){
+const btn = document.getElementById("btn-crear");
+const num = document.getElementById("numero-envios").value;
+btn.addEventListener('click', () =>{
+    console.log("Numero de envios a crear:", num)
+    createShipmentFakeData(num);
+})
+
+
+async function createShipmentFakeData(num){
+    if(!num || isNaN(num)) return;
+    if(num < 0 || num > 1000) return;
+    
     const body = document.getElementById("body");
 
-    for(let i=0; i<=50; i++){
+    for(let i=0; i<num; i++){
         let localidad_remitente = await getLocationDataOfXalapa();
         let localidad_destinatario = await getLocationData();
 
@@ -60,19 +71,26 @@ async function createShipmentFakeData(){
         }
 
         if(shipment && Object.keys(shipment).length > 0 && shipment["guia"]){
-            const nuevoElemento = document.createElement('p');
-            nuevoElemento.textContent = `Elemento ${i} : Creado con exito. Guia: ${shipment["guia"]}`;
-            body.appendChild(nuevoElemento);
+            const row = document.createElement('tr');
+
+            const folio = document.createElement('td');
+            const guia = document.createElement('td');
+            const destinatario = document.createElement('td');
+
+            folio.textContent = shipment["folio"];
+            guia.textContent = shipment["guia"];
+            destinatario.textContent = shipment["nombre_destinatario"];
+
+            row.appendChild(folio);
+            row.appendChild(guia);
+            row.appendChild(destinatario);
+            
+            body.appendChild(row);
         }else{
             const nuevoElemento = document.createElement('p');
             nuevoElemento.textContent = `Error al crear el envio, [${i}]`;
             body.appendChild(nuevoElemento);
         }
-
-        setTimeout(function() {
-            console.log("En espera para no gastar recursos...");
-          }, 2000); 
-    
     }
 }
 
@@ -263,7 +281,4 @@ const codigos_postales = ["01000","01010","01020","01029","01030","01040","01048
     "62900","62905","62906","62907","62908","62909","62910","62912","62913","62914","62915","62916","62917",
     "62920","62923","62924","62925","62926","62927","62930","62933","62934","62935","62936","62937","62940",
     "62943","62944","62950","62952","62953","62954"
-]
-
-
-createShipmentFakeData();
+];

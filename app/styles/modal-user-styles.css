@@ -374,3 +374,11 @@ M O D A L  D E  N O  E N C O N T R A D O  O  E R R O R
     width: 20px;
     height: 20px;
 }
+
+
+@media screen and (max-width: 800px){
+    .modal-content-large, .modal-content-small, .modal-content{
+        min-width: 90vw;
+
+    }
+}

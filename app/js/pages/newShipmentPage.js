@@ -725,14 +725,14 @@ function getSenderForm(){
 
                 <div class="form-group">
                     <label class="input-label" for="nombre-remitente">Nombre*</label>
-                    <input class="input" type="text" id="nombre-remitente" placeholder="Ingrese el nombre completo del remitente" value=${dataNewShipment["nombre_remitente"] || ""}>
+                    <input class="input" type="text" id="nombre-remitente" placeholder="Ingrese el nombre completo del remitente" value = "${dataNewShipment["nombre_remitente"] || ""}">
                     <span class="input-message input-message-hide" id="nombre-remitente-msg"></span>
                 </div>
 
                 <div class="form-inline">
                     <div class="form-group">
                         <label class="input-label label-cp" for="cp-remitente">Código postal*</label>
-                        <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140" value = ${dataNewShipment["cp_remitente"] || ""}>
+                        <input class="input" type="text" id="cp-remitente" placeholder="Ej. 91140" value = "${dataNewShipment["cp_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="cp-remitente-msg"></span>
                     </div>
 
@@ -747,13 +747,13 @@ function getSenderForm(){
 
                     <div class="form-group">
                         <label class="input-label" for="ciudad-remitente">Ciudad*</label>
-                        <input class="input" type="text" id="ciudad-remitente" value = ${dataNewShipment["ciudad_remitente"] || ""}>
+                        <input class="input" type="text" id="ciudad-remitente" value = "${dataNewShipment["ciudad_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="ciudad-remitente-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="colonia-remitente">Colonia*</label>
-                        <input class="input" type="text" id="colonia-remitente" value = ${dataNewShipment["colonia_remitente"] || ""}>
+                        <input class="input" type="text" id="colonia-remitente" value = "${dataNewShipment["colonia_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="colonia-remitente-msg"></span>
                     </div>
 
@@ -762,31 +762,31 @@ function getSenderForm(){
                 <div class="form-inline">
                     <div class="form-group form-group-two-spaces">
                         <label class="input-label" for="calle-remitente">Calle*</label>
-                        <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente" value = ${dataNewShipment["calle_remitente"] || ""}>
+                        <input class="input" type="text" id="calle-remitente" placeholder="Ingrese el domicilio del remitente" value = "${dataNewShipment["calle_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="calle-remitente-msg">Hola</span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="noext-remitente">No. ext*</label>
-                        <input class="input" type="text" id="noext-remitente" value = ${dataNewShipment["numeroExt_remitente"] || ""}>
+                        <input class="input" type="text" id="noext-remitente" value = "${dataNewShipment["numeroExt_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="noext-remitente-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="noint-remitente">No. int</label>
-                        <input class="input" type="text" id="noint-remitente" value = ${dataNewShipment["numeroInt_remitente"] || ""}>
+                        <input class="input" type="text" id="noint-remitente" value = "${dataNewShipment["numeroInt_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="noint-remitente-msg"></span>
                     </div>
                 </div>
                 <div class="form-inline">
                     <div class="form-group">
                         <label class="input-label" for="correo-remitente">Correo</label>
-                        <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com" value = ${dataNewShipment["correo_remitente"] || ""}>
+                        <input class="input" type="text" id="correo-remitente" placeholder="example@dominio.com" value = "${dataNewShipment["correo_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="correo-remitente-msg"></span>
                     </div>
                     <div class="form-group">
                         <label class="input-label" for="telefono-remitente">Teléfono</label>
-                        <input class="input" type="text" id="telefono-remitente" value = ${dataNewShipment["telefono_remitente"] || ""}>
+                        <input class="input" type="text" id="telefono-remitente" value = "${dataNewShipment["telefono_remitente"] || ""}">
                         <span class="input-message input-message-hide" id="telefono-remitente-msg"></span>
                     </div>
                 </div>
@@ -802,14 +802,14 @@ function getRecipientForm(){
             
                 <div class="form-group">
                     <label class="input-label" for="nombre-destinatario">Nombre*</label>
-                    <input class="input" type="text" id="nombre-destinatario" placeholder="Ingrese el nombre completo del destinatario" value = ${dataNewShipment["nombre_destinatario"] || ""}>
+                    <input class="input" type="text" id="nombre-destinatario" placeholder="Ingrese el nombre completo del destinatario" value = "${dataNewShipment["nombre_destinatario"] || ""}">
                     <span class="input-message input-message-hide" id="nombre-destinatario-msg"></span>
                 </div>
 
                 <div class="form-inline">
                     <div class="form-group">
                         <label class="input-label label-cp" for="cp-destinatario">Código postal*</label>
-                        <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140" value = ${dataNewShipment["cp_destinatario"] || ""}>
+                        <input class="input" type="text" id="cp-destinatario" placeholder="Ej. 91140" value = "${dataNewShipment["cp_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="cp-destinatario-msg"></span>
                     </div>
 
@@ -824,13 +824,13 @@ function getRecipientForm(){
 
                     <div class="form-group">
                         <label class="input-label" for="ciudad-destinatario">Ciudad*</label>
-                        <input class="input" type="text" id="ciudad-destinatario" value = ${dataNewShipment["ciudad_destinatario"] || ""}>
+                        <input class="input" type="text" id="ciudad-destinatario" value = "${dataNewShipment["ciudad_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="ciudad-destinatario-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="colonia-destinatario">Colonia*</label>
-                        <input class="input" type="text" id="colonia-destinatario" value = ${dataNewShipment["colonia_destinatario"] || ""}>
+                        <input class="input" type="text" id="colonia-destinatario" value = "${dataNewShipment["colonia_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="colonia-destinatario-msg"></span>
                     </div>
                 </div>
@@ -839,19 +839,19 @@ function getRecipientForm(){
 
                     <div class="form-group form-group-two-spaces">
                         <label class="input-label" for="calle-destinatario">Calle*</label>
-                        <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente" value = ${dataNewShipment["calle_destinatario"] || ""}>
+                        <input class="input" type="text" id="calle-destinatario" placeholder="Ingrese el domicilio del remitente" value = "${dataNewShipment["calle_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="calle-destinatario-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="noext-destinatario">No. ext*</label>
-                        <input class="input" type="text" id="noext-destinatario" value = ${dataNewShipment["numeroExt_destinatario"] || ""}>
+                        <input class="input" type="text" id="noext-destinatario" value = "${dataNewShipment["numeroExt_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="noext-destinatario-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="noint-destinatario">No. int</label>
-                        <input class="input" type="text" id="noint-destinatario" value = ${dataNewShipment["numeroInt_destinatario"] || ""}>
+                        <input class="input" type="text" id="noint-destinatario" value = "${dataNewShipment["numeroInt_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="noint-destinatario-msg"></span>
                     </div>
 
@@ -861,13 +861,13 @@ function getRecipientForm(){
 
                     <div class="form-group">
                         <label class="input-label" for="correo-destinatario">Correo</label>
-                        <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com" value = ${dataNewShipment["correo_destinatario"] || ""}>
+                        <input class="input" type="text" id="correo-destinatario" placeholder="example@dominio.com" value = "${dataNewShipment["correo_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="correo-destinatario-msg"></span>
                     </div>
 
                     <div class="form-group">
                         <label class="input-label" for="telefono-destinatario">Teléfono</label>
-                        <input class="input" type="text" id="telefono-destinatario" value = ${dataNewShipment["telefono_destinatario"] || ""}>
+                        <input class="input" type="text" id="telefono-destinatario" value = "${dataNewShipment["telefono_destinatario"] || ""}">
                         <span class="input-message input-message-hide" id="telefono-destinatario-msg"></span>
                     </div>
 
@@ -875,7 +875,7 @@ function getRecipientForm(){
 
                 <div class="form-group">
                     <label class="input-label" for="referencias">Referencias</label>
-                    <textarea class="textarea" id="referencias" rows="3" placeholder="Breve descripción del lugar de destino..." value = ${dataNewShipment["referencias_destinatario"] || ""}></textarea>
+                    <textarea class="textarea" id="referencias" rows="3" placeholder="Breve descripción del lugar de destino..." value = "${dataNewShipment["referencias_destinatario"] || ""}"></textarea>
                     <span class="input-message input-message-hide" id="referencias-destinatario-msg"></span>
                 </div>
 
