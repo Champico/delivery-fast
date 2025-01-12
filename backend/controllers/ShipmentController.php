@@ -210,6 +210,8 @@ class ShipmentController
         $tax_data = $this->taxController->getTaxDataToTicket();
         $sucursal = $this->shipmentModel->getSucursal($new_shipment['numero_sucursal']);
         $ticket = $this->getTicketCreated($guia);
+
+        echo error_log(json_encode(["TCKET EN SHIPMENT CONTROLLER> " => var_dump($ticket)]));
         
         $pdf = PDFGenerator::createTicketPDF($ticket, $tax_data, $sucursal, $new_shipment);
 
@@ -384,14 +386,14 @@ class ShipmentController
 
             if ($precio_guia = $this->getShippingGuidePrice($zona, $servicio)) {
                 $conceptos_ticket[] = [
-                    "descripcion" => "precio_guia",
+                    "descripcion" => "precio guía",
                     "valor" => $precio_guia
                 ];
             }
 
         if ($costo_de_sobrepeso = $this->calculateOverWeigth($zona, $servicio, $peso, $largo, $ancho, $alto)) {
             $conceptos_ticket[] = [
-                "descripcion" => "costo_de_sobrepeso",
+                "descripcion" => "costo de sobrepeso",
                 "valor" => $costo_de_sobrepeso
             ];
         }
@@ -410,7 +412,7 @@ class ShipmentController
                 $cargo_por_combustible = $this->getCostoCombustible($conceptos_ticket[0]["valor"]);
             }
             $conceptos_ticket[] = [
-                "descripcion" => "cargo_por_combustible",
+                "descripcion" => "cargo por combustible",
                 "valor" => $cargo_por_combustible
             ];
         }
@@ -422,7 +424,7 @@ class ShipmentController
         }
 
         $conceptos_ticket[] = [
-            "descripcion" => "costo_total",
+            "descripcion" => "costo total",
             "valor" => $costo_total
         ];
 
@@ -449,7 +451,7 @@ class ShipmentController
             $precios = $this->shipmentModel->getShippingGuidePrice($zona, $servicio);
             return  (float) $precios;
         } catch (Exception $e) {
-            if ($e->getMessage()) return $e->getMessage();
+            if ($e->getMessage()) throw new Exception($e->getMessage());
             throw new Exception("Error al calcular los costos / Zonas");
         }
     }

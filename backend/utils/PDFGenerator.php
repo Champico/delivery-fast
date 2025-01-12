@@ -11,6 +11,7 @@ class PDFGenerator
     public static $widthGuide = 160;
 
     public static function createTicketPDF($ticket, $tax_data, $sucursal, $shipment){
+        echo error_log(json_encode(["EL TICKET EN PDF CREATOR > " => var_dump($ticket)]));
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
@@ -82,6 +83,7 @@ class PDFGenerator
                     }
                 
                     table {
+                        font-size: 12px;
                         width: 90%;
                         border-collapse: collapse;
                         margin-top: 15px;
@@ -154,11 +156,11 @@ class PDFGenerator
                 
                     <div id='package-info'>
                         <p id='guia'>Guia:". htmlspecialchars($shipment['guia']) ."</p>
-                        <p>Contenido: ". htmlspecialchars($shipment['contenido']) ."</p>
-                        <p>Destinatario: ". htmlspecialchars($shipment['nombre_destinatario']) ."</p>
-                        <p>Destino: ". htmlspecialchars($shipment['ciudad_destinatario']) . htmlspecialchars($shipment['estado_destinatario']) . "</p>
-                        <p>Peso: " . htmlspecialchars($shipment['peso']) . "</p>
-                        <p>Referencias: " . htmlspecialchars($shipment['referencias_destinatario']) ."</p>
+                        <p>Contenido: ".     htmlspecialchars($shipment['contenido']) ."</p>
+                        <p>Destinatario: ".  htmlspecialchars($shipment['nombre_destinatario']) ."</p>
+                        <p>Destino: ".       htmlspecialchars($shipment['ciudad_destinatario']) . htmlspecialchars($shipment['estado_destinatario']) . "</p>
+                        <p>Peso: " .         htmlspecialchars($shipment['peso']) . "</p>
+                        <p>Referencias: " .  htmlspecialchars($shipment['referencias_destinatario']) ."</p>
                     <div>
                 
                     <table>
@@ -170,26 +172,11 @@ class PDFGenerator
                                 <th><p>Imp.</p></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td><p>1</p></td>
-                                <td><p>Guía</p></td>
-                                <td><p>$340</p></td>
-                                <td><p>$340</p></td>
-                            </tr>
-                            <tr>
-                                <td><p>1</p></td>
-                                <td><p>Costo por sobrepeso y un poco mas jaja</p></td>
-                                <td><p>$30</p></td>
-                                <td><p>$30</p></td>
-                            </tr>
-                            <tr>
-                                <td><p>1</p></td>
-                                <td><p>Costo por combustible</p></td>
-                                <td><p>$30</p></td>
-                                <td><p>$30</p></td>
-                            </tr>
-                        </tbody>
+                        <tbody>";
+
+    $html .= PDFGenerator::createConcepts($ticket);
+
+    $html .= "</tbody>
                     </table>
                 
                     <div class='total-grid'>
@@ -207,6 +194,26 @@ class PDFGenerator
         $dompdf->setPaper([0, 0, $width_points, 1800]);
         $dompdf->render();
         return $dompdf->output();
+    }
+
+    private static function createConcepts($ticket){
+
+        $htmlConceptos = "";
+
+        if($ticket){
+
+            foreach($ticket['conceptos_ticket'] as $indice => $concepto) {
+                $row = "<tr>";
+                $row .= "<td>" . htmlspecialchars($concepto['cantidad'])        . "</td>";
+                $row .= "<td>" . htmlspecialchars($concepto['descripcion'])     . "</td>";
+                $row .= "<td>" . htmlspecialchars($concepto['precio_unitario']) . "</td>";
+                $row .= "<td>" . htmlspecialchars($concepto['subtotal'])        . "</td>";
+                $row .="</tr>";
+                $htmlConceptos .= $row;
+            }
+
+        }
+        return $htmlConceptos;
     }
 
     public static function createGuidePDF($shipment){
