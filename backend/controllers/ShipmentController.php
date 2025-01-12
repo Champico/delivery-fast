@@ -211,8 +211,6 @@ class ShipmentController
         $sucursal = $this->shipmentModel->getSucursal($new_shipment['numero_sucursal']);
         $ticket = $this->getTicketCreated($guia);
 
-        echo error_log(json_encode(["TCKET EN SHIPMENT CONTROLLER> " => var_dump($ticket)]));
-        
         $pdf = PDFGenerator::createTicketPDF($ticket, $tax_data, $sucursal, $new_shipment);
 
         if(empty($pdf)){
