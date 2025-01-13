@@ -44,6 +44,7 @@ switch ($method) {
         if ($action) {
             switch($action){
                 case 'ticket' : $shipmentController->getTicketPreview(); break;
+                case 'update-status':$shipmentController->updateStatus($a2); break;
                 default: http_response_code(405);
                 echo json_encode(['error' => 'Dirección no encontrada']);
                 break;
@@ -55,11 +56,6 @@ switch ($method) {
         break;
 
     case 'PUT':
-        if ($action){
-            switch($action){
-                case 'update-status': $shipmentController->updateStatus($a2); break;
-            }
-        }
         $shipmentController->update($action);
         break;
 

@@ -557,12 +557,14 @@ public function getStatusHistory($guide) {
 public function updateStatus($guide){
     $data = json_decode(file_get_contents('php://input'), true);  // Obtener los datos JSON enviados
 
-    if (isset($data['new_status']) && isset($data['notes'])) {
-        $new_status = $data['new_status'];
-        $notes = $data['notes'];
+    // Verificar si los datos requeridos están presentes
+    if (isset($data['new_status']) && isset($data['notes']) && isset($data['colaborador'])) {
+        $new_status = $data['new_status'];  // Estatus nuevo
+        $notes = $data['notes'];            // Notas asociadas al cambio de estatus
+        $colaborador = $data['colaborador']; // Colaborador que realiza el cambio
 
         try {
-            $this->shipmentModel->updateStatus($guide, $new_status, $notes);
+            $this->shipmentModel->updateStatus($guide, $new_status, $colaborador, $notes);
             echo json_encode(['message' => 'Estatus actualizado correctamente']);
         } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
