@@ -101,7 +101,7 @@ export function isValidEmail(email) {
   if (email.includes("--")) return "El correo no puede tener dos guiones medios consecutivos";
   if (email.includes("__")) return "El correo no puede tener dos guiones consecutivos";
   const threeSameCharacters= /(.)\1\1/;
-  if(threeSameCharacters.test(cadena)) return "El correo no puede tener más de 2 caracteres iguales seguidos";
+  if(threeSameCharacters.test(email)) return "El correo no puede tener más de 2 caracteres iguales seguidos";
   const domain = email.split("@")[1];
   if (domain && (domain.includes("_") || domain.includes("-"))) return "El correo no puede tener guion en el dominio";
   return true;
