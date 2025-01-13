@@ -1,6 +1,6 @@
 // delivery-fast/js/bussines/general_validations
 
-import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween} from "./stringValidations.js";
+import {isOfSizeBetween,hasOnlyBasicCharacters,isIntegerOfSizeBetween,isIntegerOfSize, isInteger, isNumber, isFloatValueBetween, isValidEmail} from "./stringValidations.js";
 
 
 export function validateGuide(guide){
@@ -123,7 +123,11 @@ export function validateTelephone(num) {
 
 export function validateEmail(email) {
   if (email) {
-    const parts = email.split();
+    if(!isValidEmail(email)){
+      return "No es un email valido";
+    }
+
+    /*const parts = email.split();
 
     if (parts.length !== 2) {
       return "Formato de correo no válido";
@@ -146,6 +150,7 @@ export function validateEmail(email) {
     if (!regexDominio.test(parts[1])) {
       return "El dominio del correo no es válido";
     }
+  }*/
   }
   return true;
 }

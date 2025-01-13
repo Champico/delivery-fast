@@ -83,7 +83,7 @@ export async function validateSenderDataFields(fieldsToModify, guide){
 
 
 
-export async function validateRecipientDataFields(){
+export async function validateRecipientDataFields(fieldsToModify, guide){
     let htmlElements = {}
             
     if(fieldsToModify["nombre"])   htmlElements["nombre-destinatario"]     = document.getElementById("nombre-destinatario");  

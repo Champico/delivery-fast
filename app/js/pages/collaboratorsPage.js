@@ -30,6 +30,27 @@ async function urlParser(){
     }
 }
 
+async function cleanForm(){
+    const htmlElements = {
+        name :            document.getElementById('name'),
+        lastName :        document.getElementById('lastName'),
+        secondLastName :  document.getElementById('secondLastName'),
+        personalNumber :  document.getElementById('personalNumber'),
+        role :            document.getElementById('role'),
+        password :        document.getElementById('password'),
+        confirmPassword : document.getElementById('confirmPassword'),
+        email :           document.getElementById('email'),
+        phone :           document.getElementById('phone'),
+        curp :            document.getElementById('curp'),
+    }
+
+    Object.entries(htmlElements).forEach(([key, element]) => {
+        element.value = "";
+    });
+}
+
+
+
 
 async function addFunctionalityButtons(){
     const newUserButton = document.getElementById('newUser');
@@ -41,6 +62,7 @@ async function addFunctionalityButtons(){
     
     if(createUserModalButton && modal){
         newUserButton.addEventListener('click', () =>{
+            cleanForm();
             createUserModalButton.setAttribute('action','create');
             createUserModalButton.innerText = "Crear";
             modal.innerText = "Crear nuevo usuario";
@@ -51,6 +73,7 @@ async function addFunctionalityButtons(){
             createUserModalButton.setAttribute('action','update');
             createUserModalButton.innerText = "Modificar";
             modal.innerText = "Modificar un usuario";
+            
             if(selectedUser){
                 let user = null;
                 try{
@@ -156,23 +179,20 @@ function hideModalCreateUser(){
 async function actionUser(action){
     let data = null;
     let newUser = null;
+    let userUpdate = null;
 
-    try{
-        const module = await import("../validations/formsValidations/newUserValidations.js");
-        data = await module.validateUserDataFields();
-    }catch(e){
-        console.log(e);
-        return;
-    }
 
     if (data === false) return;
     if(!action) return;
 
     switch(action){
         case 'create':
+
+        let data2 = getData2();
+        
             try{
                 const module = await import("../api/users.js");
-                newUser = await module.createUser(data);
+                newUser = await module.createUser(data2);
             }catch(e){
                 console.log(e);
                 newUser = null;
@@ -191,11 +211,12 @@ async function actionUser(action){
                 alert("Seleccione un usuario");
             }
 
+            let data = getData();
             try{
                 const module = await import("../api/users.js");
                 userUpdate = await module.updateUser(selectedUser, data);
             }catch(e){
-                console.log(e);
+                console.log("El error fue", e);
                 userUpdate = null;
             }
         
@@ -207,11 +228,40 @@ async function actionUser(action){
                 selectedUser = null;
                 selectedRow = null;
             }else{
+                console.log("Seleccione un usuario", "data", data);
                 alert('Error al modificar el usuario');
             }
         break;
     }
 
+}
+
+function getData(){
+    return ({
+        name :            document.getElementById('name').value,
+        lastName :        document.getElementById('lastName').value,
+        secondLastName :  document.getElementById('secondLastName').value,
+        password :        document.getElementById('password').value,
+        confirmPassword : document.getElementById('confirmPassword').value,
+        email :           document.getElementById('email').value,
+        phone :           document.getElementById('phone').value,
+        curp :            document.getElementById('curp').value,
+    });
+}
+
+function getData2(){
+    return ({
+        name :            document.getElementById('name').value,
+        numero_personal:  document.getElementById('personalNumber').value,
+        lastName :        document.getElementById('lastName').value,
+        secondLastName :  document.getElementById('secondLastName').value,
+        password :        document.getElementById('password').value,
+        rol:              document.getElementById('role').value,
+        confirmPassword : document.getElementById('confirmPassword').value,
+        email :           document.getElementById('email').value,
+        phone :           document.getElementById('phone').value,
+        curp :            document.getElementById('curp').value,
+    });
 }
 
 function addUserToTable(user){
@@ -240,7 +290,7 @@ async function deleteUser(){
 
             if(deleted){
                 alert('Usuario eliminado exitosamente');
-                reloadListUser();
+                await reloadPage()
                 if (selectedRow) {
                     selectedUser  = null;
                     selectedRow = null; 
@@ -271,7 +321,7 @@ async function searchUsers() {
 async function searchUsersDinamic(){
     const searchInput = document.getElementById('searchInput').value.trim();
     if (searchInput === "" || !searchInput) {
-        reloadListUser();
+        await reloadPage()
         return;
     }
     let users = null;
@@ -284,7 +334,10 @@ async function searchUsersDinamic(){
 }
 
 
-
+async function reloadPage(){
+    const mainContainer = document.getElementById('content-section');
+    mainContainer.innerHTML = await getHtmlPage();
+}
 
 async function reloadListUser(){
     let users = [];

@@ -21,6 +21,11 @@ export async function addFunctionality(){
     addFuncionalityReturn();
     addFuncionalityModify();
 }
+
+function removeFuncionality(){
+    removeFuncionalityReturn();
+    removeFuncionalityModify();
+}
     
 
 function urlParser(){
@@ -209,13 +214,14 @@ function addFuncionalityRecipientModal(){
     };
 
     Object.entries(htmlElements).forEach(([key, element]) => {
-        element.addEventListener('input', ()=>{
-            newKey = key.split("-")[0];
-            if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
-            console.log("Este input ha sido modificado", newKey);
-        });
+        if(element){
+            element.addEventListener('input', ()=>{
+                let newKey = key.split("-")[0];
+                if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
+                console.log("Este input ha sido modificado", newKey);
+            });
+        }
     });
-
 }
 
 function removeFuncionalitySenderModal(){
@@ -452,9 +458,10 @@ async function goHomePage(){
   async function rechargePage(){
     try{
         const module = await import("../router.js");
+        removeFuncionality();
         await module.navigateTo(`/app/shipment/${guide}`);
     }catch(error){
-        await goHomePagePage()
+        await goHomePage()
         return;
     }
   }

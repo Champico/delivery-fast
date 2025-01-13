@@ -131,3 +131,9 @@ export async function verifyIfExistsShipmentByGuide(guide) {
         return false;
     }
 }
+
+
+
+
+
+

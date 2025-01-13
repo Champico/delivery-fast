@@ -65,22 +65,19 @@ class CollaboratorModel {
         }    
         try {
             $query = "INSERT INTO Colaboradores (numero_personal, contrasena, nombre, apellido_paterno, apellido_materno, curp, correo, telefono, fecha_contratacion, id_rol, numero_sucursal)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW(), ?, ?)";
     
             $stmt = $this->conexionDB->prepare($query);
     
-            $fecha_contratacion = date('Y-m-d', strtotime($data['fecha_contratacion']));  // Asegura el formato adecuado
-    
-            $stmt->bind_param("sssssssssis", 
+            $stmt->bind_param("ssssssssis", 
                 $data['numero_personal'], 
-                $data['contrasena'], 
-                $data['nombre'], 
+                $data['password'], 
+                $data['name'], 
                 $data['apellido_paterno'], 
                 $data['apellido_materno'], 
                 $data['curp'], 
                 $data['correo'], 
                 $data['telefono'],
-                $fecha_contratacion,   
                 $data['rol'],          
                 $numero_sucursal
             );
@@ -109,23 +106,22 @@ class CollaboratorModel {
                 apellido_paterno = ?, 
                 apellido_materno = ?, 
                 correo = ?, 
-                telefono = ?, 
-                id_rol = ? 
+                telefono = ?
                 WHERE numero_personal = ?";
             
             $stmt = $this->conexionDB->prepare($query);
-            $stmt->bind_param("ssssssi", 
-                $data['nombre'], 
+            $stmt->bind_param("ssssss", 
+                $data['name'], 
                 $data['apellido_paterno'], 
                 $data['apellido_materno'], 
                 $data['correo'], 
                 $data['telefono'], 
-                $data['rol'], 
                 $personalNumber
             );
 
             return $stmt->execute();
         } catch (Exception $e) {
+            echo json_encode($e->getMessage());
             throw new Exception("Error al actualizar el colaborador: " . $e->getMessage());
         }
     }
@@ -136,13 +132,15 @@ class CollaboratorModel {
                         c.numero_personal,
                         c.nombre,
                         r.nombre_rol AS rol,
+                        r.id_rol,
                         c.apellido_paterno,
                         c.apellido_materno,
                         c.curp,
                         c.correo,
                         c.telefono,
                         c.fecha_contratacion,
-                        c.numero_sucursal
+                        c.numero_sucursal,
+                        c.contrasena
             FROM 
                 Colaboradores c
             JOIN 

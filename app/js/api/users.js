@@ -43,7 +43,7 @@ export async function createUser(data) {
           body: JSON.stringify(data),
       });
 
-      if (!response.ok) throw new Error('Error al crear el usuario');
+      if (!response.ok) return false;
 
       const responseData = await response.json(); 
 
@@ -54,21 +54,31 @@ export async function createUser(data) {
 }
 
 export async function updateUser(personalNumber, data) {
+  console.log("Se envian los datos para actualixzasr", personalNumber, data);
+  let jsonData;
+  try {
+     jsonData = JSON.stringify(data);
+    console.log("JSON generado:", jsonData);
+} catch (error) {
+    console.error("Error al convertir a JSON:", error);
+}
+
   try {
       const response = await fetch(`http://localhost/backend/users/${personalNumber}`, {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json',
           },
-          body: JSON.stringify(data),
+          body: jsonData
       });
 
-      if (!response.ok) throw new Error('Error al actualizar el usuario');
-      
+      if (!response.ok) return false;
       const responseData = await response.json();
-
-      return responseData;
+    
+      console.log("aqui llega", responseData)
+      return true;
   } catch (error) {
+    console.error(error)
       return false;
   }
 }

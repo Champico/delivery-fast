@@ -120,7 +120,7 @@ export function validatePhone(phone) {
 }
 
 export function validateCurp(curp) {
-    const message = !isValidCurp(curp);
+    const message = isValidCurp(curp);
     if (message !== true) return message;
     return true;
 }
