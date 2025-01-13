@@ -204,8 +204,10 @@ DROP TABLE IF EXISTS Concepto_ticket;
 CREATE TABLE concepto_ticket (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_ticket INT,
-    nombre VARCHAR(255),
-    valor DECIMAL(10,2),
+    cantidad INT,
+    descripcion VARCHAR(255),
+    precio_unitario DECIMAL(10,2),
+    subtotal DECIMAL(10,2),
     FOREIGN KEY (id_ticket) REFERENCES ticket(id)
 );
 

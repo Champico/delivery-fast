@@ -151,6 +151,7 @@ body{
 /* M O D A L E S */
 .modal-content, .modal-content-small, .modal-content-large{
     background-color: #3a3a3a;
+    color: #e8e8e8;
 }
 
 .close-modal-button{
@@ -162,5 +163,9 @@ body{
 /* Paginas */
 
 .shupment-home-content{
+    color: #efefef;
+}
+
+.title-branch, .subtitle-branch{
     color: #efefef;
 }

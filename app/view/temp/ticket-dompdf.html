@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        * {
+            font-family: Lucida Console, Arial, sans-serif;
+            font-size: 16px;
+        }
+        html {
+            width: 80mm;
+            padding: 0;
+            margin: 0;
+        }
+        body {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        #logotipo {
+            width: 80mm;
+        }
+        img {
+            width: 100%;
+            fill: #000;
+        }
+        #ticket {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 3mm;
+            margin: 0;
+            border: 1px solid #000;
+        }
+        div {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info > p {
+            display: block;
+            margin: 0;
+            padding-top: 1px;
+            padding-bottom: 1px;
+            line-height: 1.1;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .info > p > span {
+            font-weight: 700;
+        }
+
+        #fiscal-info, #branch-info, #ticket-info {
+            padding-top: 2mm;
+            padding-bottom: 3mm;
+            border-bottom: solid 1px #000;
+        }
+        #package-info {
+            padding-top: 2mm;
+            padding-bottom: 3mm;
+            line-height: 3px;
+        }
+
+
+        /* T A B L A */
+        table {
+            position: relative;
+            top: 0;
+            left: 0;
+            font-size: 12px;
+            width: 79mm;
+            border-collapse: collapse;
+            margin-top: 15px;
+            border-bottom: solid 1px #666;
+        }
+
+        thead {
+            font-weight: bold;
+            background-color: transparent;
+            border-bottom: solid 1px #000;
+        }
+
+        thead > tr{
+            padding-bottom: 2px;
+            margin-bottom: 4px;
+        }
+
+        thead > tr > th > p{
+            line-height: 1;
+            margin-bottom: 2px;
+            margin-top: 2px;
+        }
+
+        tr{
+            min-height: 30px;
+            max-height: 80px;
+            height: 30px;
+            position: relative;
+        }
+
+        th, td{
+            display: inline-block;
+            text-align: left;
+            margin: 0;
+            font-size: 13px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            line-height: 1.5;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .c1{ width: 9%; }
+        .c2{ width: 43%;}
+        .c3{ width: 20%;}
+        .c4{ width: 20%;}
+
+        .c1 > span, .c2 > span, .c3 > span, .c4 > span{
+            position: absolute;
+            display: block;
+            top: 0;
+            font-size: 13px;
+        }
+
+        /* C O S T O  F I N A L */
+        .total-container{
+            padding-bottom: 20px;
+            border-bottom: solid 1px #000;
+            line-height: 3px;
+            height: 40px;
+            position: relative;
+        }
+
+        .total{
+            position: absolute;
+            background: transparent;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id='ticket'>
+        <div id='header'>
+            <div id='logotipo'>
+                <img src='../../resources/brand/logotipo/logotipo-extendido.svg' alt='Logotipo'>
+            </div>
+            <div class="info" id='fiscal-info'>
+                <p>Juan Pérez</p>
+                <p>Calle Principal 123</p>
+                <p>Colonia Centro CP75000</p>
+                <p>Puebla Puebla.</p>
+                <p>R.F.C XYZ12345678</p>
+            </div>
+            <div class="info" id='branch-info'>
+                <p><span>Sucursal:</span> Calle Secundaria 456</p>
+                <p>Ciudad de México, CDMX. CP.10000</p>
+            </div>
+            <div class="info" id='ticket-info'>
+                <p><span>No. Tiket:</span> 123456</p>
+                <p><span>Vendedor:</span> Generico</p>
+            </div>
+        </div>
+        <div class="info" id='package-info'>
+            <p id='guia'><span>Guia:</span>987654321</p>
+            <p><span>Contenido:</span> Un monton de cosas como ropa, zapatos, electronicos, trastes, un cartel de quieres ser mi novia</p>
+            <p><span>Destinatario:</span> María López</p>
+            <p><span>Destino:</span> Guadalajara Jalisco</p>
+            <p><span>Peso:</span> 1.5 kg</p>
+            <p><span>Referencias:</span> Referencia adicional</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th class="c1"><p>C.</p></th>
+                    <th class="c2"><p>Des.</p></th>
+                    <th class="c3"><p>Pre.</p></th>
+                    <th class="c4"><p>Imp.</p></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="c1"><span>1</span></td>
+                    <td class="c2">Producto Muy loco jajajajajajajaajajajajajajajajajaja</td>
+                    <td class="c3"><span>100.00</span></td>
+                    <td class="c4"><span>100.00</span></td>
+                </tr>
+                <tr>
+                    <td class="c1">2</td>
+                    <td class="c2">Producto B</td>
+                    <td class="c3"><span>50.00</span></td>
+                    <td class="c4"><span>100.00</span></td>
+                </tr>
+                <tr>
+                    <td class="c1">2</td>
+                    <td class="c2">Producto B</td>
+                    <td class="c3">50.00</td>
+                    <td class="c4">100.00</td>
+                </tr>
+                <tr>
+                    <td class="c1">2</td>
+                    <td class="c2">Producto B</td>
+                    <td class="c3">50.00</td>
+                    <td class="c4">100.00</td>
+                </tr>
+                <tr>
+                    <td class="c1">2</td>
+                    <td class="c2">Servicio de construcción de casas en minecraft en supervivencia, costo extra por que queria que su casa fuera de diamantes</td>
+                    <td class="c3">50.00</td>
+                    <td class="c4">100.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class='total-container'>
+            <div class='total'>
+                <p><span>Total:</span> 232.00</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

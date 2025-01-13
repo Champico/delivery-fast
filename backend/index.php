@@ -37,6 +37,10 @@ switch($resource){
         include_once 'routes/PackageEstatusRoutes.php';
         break;
 
+    case 'branch':
+        include_once 'routes/BranchRoutes.php';
+        break;
+
     default:
         http_response_code(404);
         echo json_encode(['message' => "Recurso no encontrado en raiz el recurso solicitad es $resource"]);
