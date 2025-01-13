@@ -133,11 +133,21 @@ const fieldsToModify = {
     "telefono": false
 }
 
+function cleanModify(){
+    Object.entries(fieldsToModify).forEach(([key, value]) => {
+        fieldsToModify[key] = false;
+    });
+}
+
 function addFuncionalitySenderModal(){
-    const closeModalButton = document.getElementById("close-modal-button-not-found");
-    const cancelButton = document.getElementById("btn-cancel");
+    const closeModalButton = document.getElementById("close-modal-button-sender");
+    const cancelButton = document.getElementById("btn-modal-cancel-sender");
+    const modifyButton = document.getElementById("btn-modal-modify-sender");
     if(closeModalButton) closeModalButton.addEventListener('click', hideSenderModal);
     if(cancelButton) cancelButton.addEventListener('click', hideSenderModal);
+    if(modifyButton) modifyButton.addEventListener('click', async() =>{
+        await modifyData("sender");
+    })
 
     const htmlElements = {
         "nombre-remitente":   document.getElementById("nombre-remitente"),
@@ -153,22 +163,18 @@ function addFuncionalitySenderModal(){
     };
 
     Object.entries(htmlElements).forEach(([key, element]) => {
-        element.addEventListener('click', ()=>{
-            newKey = key.split("-")[0];
-            if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
-        });
+        if(element){
+            element.addEventListener('click', ()=>{
+                let newKey = key.split("-")[0];
+                if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
+            });
+        }
     });
-
-    const modify = document.getElementById("btn-modify");
-    if(modify) modify.addEventListener('click', () =>{
-        modifyData("sender");
-    })
-
 }
 
 function addFuncionalityRecipientModal(){
-    const closeModalButton = document.getElementById("close-modal-button-not-found");
-    const cancelButton = document.getElementById("btn-cancel");
+    const closeModalButton = document.getElementById("close-modal-button-recipient");
+    const cancelButton = document.getElementById("btn-modal-cancel-recipient");
     if(closeModalButton) closeModalButton.addEventListener('click', hideRecipientModal);
     if(cancelButton) cancelButton.addEventListener('click', hideSenderModal);
 
@@ -202,7 +208,22 @@ function removeFuncionalityRecipientModal(){
 
 }
 
+function verifyFieldsToModifyConst(){
+    Object.entries(fieldsToModify).forEach(([key, value]) => {
+        if(fieldsToModify[key] = true); return true;
+    });
+    return false;
+}
+
 async function modifyData(type){
+    console.log("Modificando la info de ", type);
+    console.log("Fields modificados", fieldsToModify)
+
+    if(verifyFieldsToModifyConst() === false){
+        await showNoChangesDialog();
+        return;
+    }
+
     let newData = [];
 
     switch(type){
@@ -210,9 +231,11 @@ async function modifyData(type){
             try{
                 const module = await import("../validations/formsValidations/updateShipmentValidations.js");
                 newData = module.validateSenderDataFields(fieldsToModify);
-            }catch(error){}
+            }catch(error){
+                console.log(e);
+            }
 
-            if(Array.isArray(newData)){
+            if(Array.isArray(newData) && newData.length > 0){
                 await showConfirmDialog(newData);
             }else{
                 await showNoChangesDialog();
@@ -235,7 +258,6 @@ async function showConfirmDialog(newData){
 }
 
 async function hideConfirmDialog(){
-    removeFuncionalityRecipientModal();
     const modalContainer = document.getElementById("modify-modal-container");
     const modal = document.getElementById("confirm-modal");
     if(modalContainer && modal ) modalContainer.removeChild(modal);
@@ -252,6 +274,38 @@ function addFuncionalityConfirmDialog(){
 function removeFuncionalityConfirmDialog(){
 
 }
+
+function showNoChangesDialog(){
+    const modalContainer = document.getElementById("modify-modal-container");
+    modalContainer.innerHTML += getHtmlModalNoUpdates();
+    addFuncionalityNoChangesDialog();
+}
+
+function hideNoChangesDialog(){
+    const modalContainer = document.getElementById("modify-modal-container");
+    const modal = document.getElementById("no-changes-modal");
+    removeFuncionalityNoChangesDialog();
+    if(modalContainer && modal ) modalContainer.removeChild(modal);
+}
+
+function addFuncionalityNoChangesDialog(){
+    const closeModalButton = document.getElementById("close-modal-button-no-changes");
+    if(closeModalButton) closeModalButton.addEventListener('click',  hideNoChangesDialog);
+
+    const aceptarButton = document.getElementById("btn-aceptar-no-changes");
+    if(aceptarButton) aceptarButton.addEventListener('click',  hideNoChangesDialog);
+}
+
+function removeFuncionalityNoChangesDialog(){
+    const closeModalButton = document.getElementById("close-modal-button-no-changes");
+    if(closeModalButton) closeModalButton.addEventListener('click',  hideNoChangesDialog);
+
+    const aceptarButton = document.getElementById("btn-aceptar-no-changes");
+    if(aceptarButton) aceptarButton.addEventListener('click',  hideNoChangesDialog);
+}
+
+
+
 
 async function updateUser(){
 
@@ -398,12 +452,12 @@ function getModalUpdateInfoRecipient(dataRecipient){
         <div class="body-modal" id="recipient-modal">
             <div class="modal">
                 <div class="modal-content-large">
-                    <button class="close-modal-button" id="close-modal-button-not-found">x</button>
+                    <button class="close-modal-button" id="close-modal-button-recipient">x</button>
                     <div class="head-title-modal-container">    
                         <h2 class="title-modal-user">Modificar datos destinatario</h2>
                     </div>
 
-                    <form>
+                    <form class="form" id="form-modify-recipient">
 
                         <div class="form-group">
                             <label class="input-label" for="nombre-destinatario">Nombre*</label>
@@ -419,12 +473,12 @@ function getModalUpdateInfoRecipient(dataRecipient){
                             </div>
 
                             <div class="form-group">
-                                <label class="input-label" for="estado-remitente">Estado*</label>
-                                <select class="form-select" id="estado-remitente">
+                                <label class="input-label" for="estado-destinatario">Estado*</label>
+                                <select class="form-select" id="estado-destinatario">
                                     <option value="" disabled selected>Selecciona una opción</option>
                                     ${getSelectStates()}
                                 </select>
-                                <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
+                                <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
                             </div>
 
                             <div class="form-group">
@@ -487,8 +541,8 @@ function getModalUpdateInfoRecipient(dataRecipient){
                     </form>
 
                     <div class="button-group-modal">
-                        <button type="button" class="cancel" id="btn-cancel">Cancelar</button>
-                        <button type="button" class="create" id="btn-modify">Modificar</button>
+                        <button type="button" class="cancel" id="btn-modal-cancel-recipient">Cancelar</button>
+                        <button type="button" class="create" id="btn-modal-modify-recipient">Modificar</button>
                     </div>
 
                 </div>
@@ -504,12 +558,12 @@ function getModalUpdateInfoSender(dataSender){
         <div class="body-modal" id="sender-modal">
             <div class="modal">
                 <div class="modal-content-large">
-                    <button class="close-modal-button" id="close-modal-button-not-found">x</button>
+                    <button class="close-modal-button" id="close-modal-button-sender">x</button>
                     <div class="head-title-modal-container">    
                         <h2 class="title-modal-user">Modificar datos remitente</h2>
                     </div>
 
-                    <form class="form">
+                    <form class="form" id="form-modify-sender">
 
                         <div class="form-group">
                             <label class="input-label" for="nombre-remitente">Nombre*</label>
@@ -525,12 +579,12 @@ function getModalUpdateInfoSender(dataSender){
                             </div>
 
                             <div class="form-group">
-                                <label class="input-label" for="estado-destinatario">Estado*</label>
-                                <select class="form-select" id="estado-destinatario">
+                                <label class="input-label" for="estado-remitente">Estado*</label>
+                                <select class="form-select" id="estado-remitente">
                                     <option value="" disabled selected>Selecciona una opción</option>
                                     ${getSelectStates()}
                                 </select>
-                                <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
+                                <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
                             </div>
 
                             <div class="form-group">
@@ -582,8 +636,8 @@ function getModalUpdateInfoSender(dataSender){
                     </form>
 
                     <div class="button-group-modal">
-                        <button type="button" class="cancel" id="btn-cancel">Cancelar</button>
-                        <button type="button" class="create" id="btn-modify">Modificar</button>
+                        <button type="button" class="cancel" id="btn-modal-cancel-sender">Cancelar</button>
+                        <button type="button" class="create" id="btn-modal-modify-sender">Modificar</button>
                     </div>
 
                 </div>
@@ -606,36 +660,37 @@ function getSelectStates(){
 
 function getModalConfirm(newData){
     return ` 
-    <div class="body-modal" id="confirm-modal">
+    <div class="body-modal body-modal-layer-2" id="confirm-modal">
         <div class="modal">
+            <div class="modal-content-large">
+                
+                <h1>Tabla de Valores</h1>
 
-            <h1>Tabla de Valores</h1>
-
-               <table>
-                   <thead>
-                       <tr>
+                <table>
+                    <thead>
+                        <tr>
                            <th>Campo<th>
                            <th>Valor Anterior</th>
                            <th>Nuevo Valor</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       ${buildTableUpdateFields(newData)}
-                   </tbody>
-               </table>
+                        </tr>
+                    </thead>
 
-            <div class="modal-content>
+                    <tbody>
+                       ${buildTableUpdateFields(newData)}
+                    </tbody>
+                </table>
+
+            
                 <div class="button-group-modal">
-                <button type="button" class="cancel" id="btn-no">Cancelar</button>
-                <button type="button" class="create" id="btn-yes">Modificar</button>
+                    <button type="button" class="cancel" id="btn-no">Cancelar</button>
+                    <button type="button" class="create" id="btn-yes">Modificar</button>
+                </div>
+
             </div>
 
         </div>
 
-    </div>
-
-</div>
-`
+    </div>`
 }
 
 function buildTableUpdateFields(newData){
@@ -647,25 +702,27 @@ function buildTableUpdateFields(newData){
                         <td>${value["now"]}</td>
                     </tr>"`
     })
+    return tableRows;
 }
 
 
 function getHtmlModalNoUpdates(){
     return `
-    <div class="body-modal modal-hide" id="shipment-not-found-modal">
-        <div id="notFoundModal" class="modal">
+    <div class="body-modal body-modal-layer-2" id="no-changes-modal">
+        <div id="notChangesModal" class="modal">
             <div class="modal-content-small">
-                <button class="close-modal-button" id="close-modal-button-not-found">x</button>
+                <button class="close-modal-button" id="close-modal-button-no-changes">x</button>
                 <div class="form-group-modal">
                     <div class="form-inline-modal">
-                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
-                        <span class="not-found-message-modal" id="not-found-message-package">Envío no encontrado</span>
+                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/alert.svg" alt="No se modifico ningun campo">
+                        <span class="not-found-message-modal" id="not-found-message-package">No se modifico ningun campo</span>
                     </div>
                 </div>
                 <div class="form-group-modal">
-                    <button class=" button btn-aceptar" id="btn-aceptar">Aceptar</button>
+                    <button class=" button btn-aceptar" id="btn-aceptar-no-changes">Aceptar</button>
                 </div>
             </div>
         </div>
     </div>`
 }
+

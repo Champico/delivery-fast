@@ -16,6 +16,10 @@
     padding: 0;
 }
 
+body-modal-layer-2{
+    z-index: 60;
+}
+
 .modal {
     display: flex;
     justify-content: center;
@@ -52,7 +56,7 @@
     height: 80vh;
 }
 
-#form-create-user{
+#form-create-user, #form-modify-recipient, #form-modify-sender{
     height: 80%;
     padding-right: 10px;
     overflow-y: auto;
