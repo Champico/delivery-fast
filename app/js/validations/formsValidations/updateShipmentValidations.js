@@ -31,7 +31,7 @@ const keyHtmlParseRecipient = {
     "estado-destinatario":      "estado"
 }
 
-export function validateSenderDataFields(fieldsToModify){
+export async function validateSenderDataFields(fieldsToModify, guide){
         let htmlElements = {}
         
         if(fieldsToModify["nombre"])   htmlElements["nombre-remitente"]     = document.getElementById("nombre-remitente");  
@@ -54,24 +54,29 @@ export function validateSenderDataFields(fieldsToModify){
         validateFieldData(key, values[key], htmlElements[key]);
     });
 
-    if(errores === 0){
-        $originalData = getSenderData();
-        if(!$originalData) return;
+    console.log("Valores cambiados", values);
 
+    if(errores === 0){
+        let originalData = await getSenderData(guide);
+        if(!originalData) return;
+
+        console.log("Info original: ",originalData)
         let changes = [];
 
         Object.entries(values).forEach(([key, newText]) => {
-            if(values[key] != $originalData[keyHtmlParseSender[key]]){
+            if(values[key] != originalData[keyHtmlParseSender[key]]){
                 changes.push({
                     "html-key": key,
                     "data-key": keyHtmlParseSender[key],
-                    "before": $originalData[keyHtmlParseSender[key]],
+                    "before": originalData[keyHtmlParseSender[key]],
                     "now": newText
                 })
             }
         });
 
-        if(changes.length) return "No se modifico ningun campo";
+        console.log("Cambios", changes);
+
+        if(changes.length === 0) return "No se modifico ningun campo";
         
         return changes;
     }
@@ -175,22 +180,22 @@ function removeErrorMessageInput(id){
 
 
 
-async function getSenderData(){
+async function getSenderData(guide){
     let sender;
     try{
-        const module = await import("../api/shipments.js");
-        sender = module.getInfoCustomer("remitente", guide);
+        const module = await import("../../api/shipments.js");
+        sender = await module.getInfoCustomer("remitente", guide);
     }catch(e){
         sender = {};
     }
     return sender;
 }
 
-async function getRecipientData(){
+async function getRecipientData(guide){
     let recipient;
     try{
-        const module = await import("../api/shipments.js");
-        recipient = module.getInfoCustomer("destinatario", guide);
+        const module = await import("../../api/shipments.js");
+        recipient = await module.getInfoCustomer("destinatario", guide);
     }catch(e){
         recipient = {};
     }

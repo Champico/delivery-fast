@@ -91,7 +91,7 @@ async function getStates(){
     
     try{
         const module = await import("../api/utils.js");
-        states = module.fetchStates();
+        states = await module.fetchStates();
     }catch(e){
         states = [];
     }
@@ -164,9 +164,10 @@ function addFuncionalitySenderModal(){
 
     Object.entries(htmlElements).forEach(([key, element]) => {
         if(element){
-            element.addEventListener('click', ()=>{
+            element.addEventListener('input', ()=>{
                 let newKey = key.split("-")[0];
                 if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
+                console.log("Este input ha sido modificado", newKey);
             });
         }
     });
@@ -192,9 +193,10 @@ function addFuncionalityRecipientModal(){
     };
 
     Object.entries(htmlElements).forEach(([key, element]) => {
-        element.addEventListener('click', ()=>{
+        element.addEventListener('input', ()=>{
             newKey = key.split("-")[0];
             if(!fieldsToModify[newKey]) fieldsToModify[newKey] = true;
+            console.log("Este input ha sido modificado", newKey);
         });
     });
 
@@ -209,18 +211,21 @@ function removeFuncionalityRecipientModal(){
 }
 
 function verifyFieldsToModifyConst(){
+    let found = false;
     Object.entries(fieldsToModify).forEach(([key, value]) => {
-        if(fieldsToModify[key] = true); return true;
+        if(found === false){
+            if(fieldsToModify[key] = true); found = true;
+        }
     });
-    return false;
+    return found;
 }
 
 async function modifyData(type){
     console.log("Modificando la info de ", type);
-    console.log("Fields modificados", fieldsToModify)
+    console.log("Fields modificados ", verifyFieldsToModifyConst(),"Desglose:" , fieldsToModify)
 
     if(verifyFieldsToModifyConst() === false){
-        await showNoChangesDialog();
+        showNoChangesDialog();
         return;
     }
 
@@ -230,15 +235,17 @@ async function modifyData(type){
         case 'sender':
             try{
                 const module = await import("../validations/formsValidations/updateShipmentValidations.js");
-                newData = module.validateSenderDataFields(fieldsToModify);
+                newData = await module.validateSenderDataFields(fieldsToModify, guide);
             }catch(error){
-                console.log(e);
+                console.log(error);
             }
 
-            if(Array.isArray(newData) && newData.length > 0){
-                await showConfirmDialog(newData);
+            console.log("Llegamos aca", newData);
+
+            if(newData && Array.isArray(newData)){
+                showConfirmDialog(newData, "remitente");
             }else{
-                await showNoChangesDialog();
+                showNoChangesDialog();
             }
 
         break;
@@ -251,14 +258,14 @@ async function modifyData(type){
     }
 }
 
-async function showConfirmDialog(newData){
-    const modalContainer = document.getElementById("modify-modal-container");
-    modalContainer.innerHTML += getModalConfirm(newData);
+function showConfirmDialog(newData, type){
+    const modalContainer = document.getElementById("modal-layer2");
+    modalContainer.innerHTML += getModalConfirm(newData, type);
     addFuncionalityConfirmDialog();
 }
 
-async function hideConfirmDialog(){
-    const modalContainer = document.getElementById("modify-modal-container");
+function hideConfirmDialog(){
+    const modalContainer = document.getElementById("modal-layer2");
     const modal = document.getElementById("confirm-modal");
     if(modalContainer && modal ) modalContainer.removeChild(modal);
 }
@@ -268,21 +275,25 @@ function addFuncionalityConfirmDialog(){
     const no =  document.getElementById("btn-no");
 
     if(yes) yes.addEventListener('click', updateUser);
-    if(no) no.addEventListener('click', cancelUpdate)
+    if(no) no.addEventListener('click', cancelUpdate);
 }
 
 function removeFuncionalityConfirmDialog(){
+    const yes = document.getElementById("btn-yes");
+    const no =  document.getElementById("btn-no");
 
+    if(yes) yes.removeEventListener('click', updateUser);
+    if(no) no.removeEventListener('click', cancelUpdate);
 }
 
 function showNoChangesDialog(){
-    const modalContainer = document.getElementById("modify-modal-container");
+    const modalContainer = document.getElementById("modal-layer2");
     modalContainer.innerHTML += getHtmlModalNoUpdates();
     addFuncionalityNoChangesDialog();
 }
 
 function hideNoChangesDialog(){
-    const modalContainer = document.getElementById("modify-modal-container");
+    const modalContainer = document.getElementById("modal-layer2");
     const modal = document.getElementById("no-changes-modal");
     removeFuncionalityNoChangesDialog();
     if(modalContainer && modal ) modalContainer.removeChild(modal);
@@ -298,10 +309,10 @@ function addFuncionalityNoChangesDialog(){
 
 function removeFuncionalityNoChangesDialog(){
     const closeModalButton = document.getElementById("close-modal-button-no-changes");
-    if(closeModalButton) closeModalButton.addEventListener('click',  hideNoChangesDialog);
+    if(closeModalButton) closeModalButton.removeEventListener('click',  hideNoChangesDialog);
 
     const aceptarButton = document.getElementById("btn-aceptar-no-changes");
-    if(aceptarButton) aceptarButton.addEventListener('click',  hideNoChangesDialog);
+    if(aceptarButton) aceptarButton.removeEventListener('click',  hideNoChangesDialog);
 }
 
 
@@ -312,13 +323,15 @@ async function updateUser(){
 }
 
 function cancelUpdate(){
-    
+    hideConfirmDialog();
+    hideRecipientModal();
+    hideRecipientModal();
 }
 
 async function goHomePage(){
     try{
         const module = await import("../router.js");
-        module.navigateTo(`/app/home`);
+        await module.navigateTo("/app/home");
     }catch(error){
         return;
     }
@@ -343,6 +356,7 @@ export async function getHtmlPage(shipment) {
         <h1 class="title-section"><span id="title-shipment-profile">Envíos</span><span id="guide-shipment"> > ${shipment["guia"]}</span></h1>
         <div class="shupment-home-content">
             <div id="modify-modal-container"></div>
+            <div id="modal-layer2"></div>
             <div class="title-container">
                 <h2 class="ship-titles title-shipment-info">Datos del envío</h2>
             </div>
@@ -451,7 +465,7 @@ function getModalUpdateInfoRecipient(dataRecipient){
     return `
         <div class="body-modal" id="recipient-modal">
             <div class="modal">
-                <div class="modal-content-large">
+                <div class="modal-content">
                     <button class="close-modal-button" id="close-modal-button-recipient">x</button>
                     <div class="head-title-modal-container">    
                         <h2 class="title-modal-user">Modificar datos destinatario</h2>
@@ -476,7 +490,7 @@ function getModalUpdateInfoRecipient(dataRecipient){
                                 <label class="input-label" for="estado-destinatario">Estado*</label>
                                 <select class="form-select" id="estado-destinatario">
                                     <option value="" disabled selected>Selecciona una opción</option>
-                                    ${getSelectStates()}
+                                    ${getSelectStates(dataRecipient["estado"] || "")}
                                 </select>
                                 <span class="input-message input-message-hide" id="estado-destinatario-msg"></span>
                             </div>
@@ -582,7 +596,7 @@ function getModalUpdateInfoSender(dataSender){
                                 <label class="input-label" for="estado-remitente">Estado*</label>
                                 <select class="form-select" id="estado-remitente">
                                     <option value="" disabled selected>Selecciona una opción</option>
-                                    ${getSelectStates()}
+                                    ${getSelectStates(dataSender["estado"] || "")}
                                 </select>
                                 <span class="input-message input-message-hide" id="estado-remitente-msg"></span>
                             </div>
@@ -648,28 +662,32 @@ function getModalUpdateInfoSender(dataSender){
 }
 
 
-function getSelectStates(){
-    if(!states || !Array.isArray(states)) return "";
+function getSelectStates(selected) {
+    if (!states) return "";
     let statesOptions = "";
     states.forEach(state => {
-        statesOptions = statesOptions +`<option value="${state.clave}">${state.nombre}</option>`
+        const isSelected = state.clave === selected ? "selected" : "";
+        statesOptions += `<option value="${state.clave}" ${isSelected}>${state.nombre}</option>`;
     });
     return statesOptions;
 }
 
-
-function getModalConfirm(newData){
+function getModalConfirm(newData, type){
     return ` 
     <div class="body-modal body-modal-layer-2" id="confirm-modal">
         <div class="modal">
-            <div class="modal-content-large">
+            <div class="modal-content">
                 
-                <h1>Tabla de Valores</h1>
+                <div class="head-title-modal-container">    
+                    <h2 class="title-modal-user">Modificar ${type}</h2>
+                </div>
 
-                <table>
+                <p class="confirm-info"> Información que se va a modificar </p>
+
+                <table id="modified-fields">
                     <thead>
                         <tr>
-                           <th>Campo<th>
+                           <th>Campo</th>
                            <th>Valor Anterior</th>
                            <th>Nuevo Valor</th>
                         </tr>
@@ -680,10 +698,11 @@ function getModalConfirm(newData){
                     </tbody>
                 </table>
 
-            
+                <p class="confirm-info"> ¿Esta seguro que quiere modificar? </p>
+
                 <div class="button-group-modal">
                     <button type="button" class="cancel" id="btn-no">Cancelar</button>
-                    <button type="button" class="create" id="btn-yes">Modificar</button>
+                    <button type="button" class="create" id="btn-yes">Si</button>
                 </div>
 
             </div>
@@ -697,7 +716,7 @@ function buildTableUpdateFields(newData){
     let tableRows = "";
     newData.forEach( (value, index) => {
         tableRows += `<tr>        
-                        <td>${value["data-key"]}</td>
+                        <td>${value["data-key"].replace(/_/g, ' ')}</td>
                         <td>${value["before"]}</td>
                         <td>${value["now"]}</td>
                     </tr>"`

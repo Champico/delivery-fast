@@ -111,108 +111,23 @@ ____________________________________________________
 
 
 
-
-
-
-/* Boton para seleccionar un periodo */
-.dropdown {
-    position: relative;
-    font-family: 'Roboto', sans-serif;
+#modified-fields{
+    width: 100%;
+    text-align: center;
 }
-  
-.dropdown-button {
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 10px 15px;
+
+#modified-fields > tr{
+    border-bottom: solid 1px #9f9f9f;
+}
+
+#modified-fields > td{
+    height: 30px;
+}
+
+.confirm-info{
     font-size: 18px;
-    cursor: pointer;
+    margin-bottom: 4px;
 }
-  
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 250px;
-    background-color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    z-index: 1;
-}
-  
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-  
-  .dropdown-content ul {
-    list-style: none;
-    padding: 10px;
-  }
-  
-.dropdown-content ul li {
-    padding: 8px 10px;
-    cursor: pointer;
-}
-  
-.dropdown-content ul li:hover {
-    background-color: #f0f0f0;
-}
-  
-.dd-custom-period-panel {
-    display: none;
-    margin-top: 10px;
-}
-  
-.dd-custom-period:hover .dd-custom-period-panel {
-    display: block;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-}
-  
-.dd-custom-period-panel label {
-    display: block;
-    margin-bottom: 8px;
-}
-  
-.dd-custom-period-panel input[type="date"] {
-    width: calc(100% - 20px);
-    padding: 5px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-  
-.dd-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-  
-.dd-cancel-button,
-.dd-apply-button {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-  
-.dd-apply-button {
-    background-color: #4caf50;
-    color: white;
-}
-  
-.dd-apply-button:hover {
-    background-color: #45a049;
-}
-  
-.dd-cancel-button:hover {
-    background-color: #f0f0f0;
-}
-  
-
 
 @media screen and (max-width: 600px){
     .filter-container{
