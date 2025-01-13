@@ -534,4 +534,47 @@ class ShipmentController
             throw new Exception($e->getMessage());
         }
     }
+
+/*
+=========================================================================
+    S E C C I O N  D E  F U N C I O N E S  E S T A T U S
+=========================================================================
+*/
+
+// O b t e n e r  h i s t o r i a l   d e   e s t a t u s
+
+public function getStatusHistory($guide) {
+    try {
+        $statusHistory = $this->shipmentModel->getStatusHistory($guide);
+        echo json_encode($statusHistory, JSON_UNESCAPED_UNICODE);
+    } catch (Exception $e) {
+        http_response_code(422);
+        echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+    }
 }
+
+// A c t u a l i z a r   e l   e s t a d o   d e   u n   p a q u e te
+public function updateStatus($guide){
+    $data = json_decode(file_get_contents('php://input'), true);  // Obtener los datos JSON enviados
+
+    if (isset($data['new_status']) && isset($data['notes'])) {
+        $new_status = $data['new_status'];
+        $notes = $data['notes'];
+
+        try {
+            $this->shipmentModel->updateStatus($guide, $new_status, $notes);
+            echo json_encode(['message' => 'Estatus actualizado correctamente']);
+        } catch (Exception $e) {
+            echo json_encode(['error' => $e->getMessage()]);
+        }
+    } else {
+        echo json_encode(['error' => 'Faltan parámetros']);
+    }
+}
+
+
+
+
+}
+
+

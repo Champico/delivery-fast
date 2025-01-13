@@ -34,7 +34,7 @@ switch($resource){
         include_once 'routes/UtilsRoutes.php';
         break;
     case 'packageEstatus':
-        include_once 'routes/PackageEstatusRoutes.php';
+        include_once 'routes/EstatusRoutes.php';
         break;
 
     case 'branch':

@@ -425,6 +425,78 @@ class ShipmentModel{
         }
     }
 
+    /*╔═════════════════════════════════════════════╗
+      ║   O B T E N E R  E N V I O  E S T A T U S   ║
+      ╚═════════════════════════════════════════════╝*/
+
+public function getStatusHistory($guide) {
+    try {
+        $query = "SELECT ep.fecha, sp.nombre AS estatus, ep.notas
+                  FROM estatus_paquete ep
+                  INNER JOIN estatus sp ON ep.id_estatus = sp.id
+                  WHERE ep.guia = ?
+                  ORDER BY ep.fecha DESC";
+        $stmt = $this->conexionDB->prepare($query);
+        $stmt->bind_param("s", $guide);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $statusHistory = $result->fetch_all(MYSQLI_ASSOC);
+        return $statusHistory ?: [];
+    } catch (Exception $e) {
+        throw new Exception("Error al obtener el historial de estatus");
+    }
+}
+
+public function updateStatus($guide, $new_status, $notes){
+    try {
+        // Verificar si la guía ya tiene un estatus anterior
+        $query = "SELECT id_estatus, colaborador FROM estatus_paquete WHERE guia = ? ORDER BY fecha_cambio DESC LIMIT 1";
+        $stmt = $this->conexionDB->prepare($query);
+        $stmt->bind_param("s", $guide);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $lastStatus = $result->fetch_assoc();
+
+        if (!$lastStatus) {
+            throw new Exception("No se encontró el paquete para la guía proporcionada.");
+        }
+
+        //guardamos id_Estatus y colaborador
+
+        $lastStatusId = $lastStatus['id_estatus'];
+        $colaborador = $lastStatus['colaborador'];
+
+        // Verificar si el nuevo estatus es válido (debe estar en la tabla `estatus`)
+        $query = "SELECT id FROM estatus WHERE id = ?";
+        $stmt = $this->conexionDB->prepare($query);
+        $stmt->bind_param("s", $new_status);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $statusValid = $result->fetch_assoc();
+
+        if (!$statusValid) {
+            throw new Exception("El estatus proporcionado no es válido.");
+        }
+
+        // Insertar el nuevo estatus en la tabla `estatus_paquete`
+        $query = "INSERT INTO estatus_paquete (id_estatus, fecha_cambio, estatus, guia, colaborador, notas) 
+                VALUES (?, NOW(), ?, ?, ?, ?)";
+        $stmt = $this->conexionDB->prepare($query);
+        $stmt->bind_param("sssss", $lastStatusId, $new_status, $guide, $colaborador, $notes);
+        $stmt->execute();
+
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            throw new Exception("No se pudo registrar el cambio de estatus.");
+        }
+    } catch (Exception $e) {
+        throw new Exception("Error al actualizar el estatus: " . $e->getMessage());
+    }
+}
+
+
+
 
 
 
