@@ -189,7 +189,6 @@ async function getControlPanel() {
               ${getServicesFilter(services)}
               ${getStatusFilter(status)}
               ${getInsureFilter()}
-              ${getPeriodFilter()}
           </div>`;
 } 
 

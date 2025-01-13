@@ -27,29 +27,7 @@ class ShipmentController
 =============================================================================================
 */
 
-    public function getAll()
-    {
-        try {
-            $envios = $this->shipmentModel->getAll();
-            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
-        } catch (Exception $e) {
-            http_response_code(422);
-            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
-        }
-    }
-
-
-    public function getAllBranch($branch)
-    {
-        try {
-            $envios = $this->shipmentModel->getAllBranch($branch);
-            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
-        } catch (Exception $e) {
-            http_response_code(422);
-            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
-        }
-    }
-
+    /* O B T E N E R  U N  E N V I O  C O N  G U I A */
     public function get($guia)
     {
         try {
@@ -61,6 +39,57 @@ class ShipmentController
         }
     }
 
+    /* O B T E N E R   T O D O S  L O S  E N V Í O S */
+    public function getAll()
+    {
+        try {
+            $envios = $this->shipmentModel->getAll();
+            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    /* O B T E N E R  T O D O S  L O S  E N V Í O S  D E  U N A  S U C U R S A L*/
+    public function getAllBranch($branch)
+    {
+        try {
+            $envios = $this->shipmentModel->getAllBranch($branch);
+            echo json_encode($envios, JSON_UNESCAPED_UNICODE);
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+        }
+    }
+
+    /* O B T E N E R  P R E V I E W  D E L  T I C K E T*/
+    public function getTicketPreview()
+    {
+        try {
+            $data = validateJsonMiddleware();
+            $error = ShipmentSchema::validateDataToTicket($data);
+
+            if ($error && sizeof($error) > 0) {
+                http_response_code(422);
+                echo json_encode($error, JSON_UNESCAPED_UNICODE);
+                exit;
+            }
+
+            $ticket = $this->getTicketPrivate($data);
+
+            http_response_code(200);
+            echo json_encode(["ticket" => $ticket], JSON_UNESCAPED_UNICODE);
+            exit;
+        } catch (Exception $e) {
+            http_response_code(422);
+            echo json_encode(['error' => $e->getMessage() ?? "No se pudo crear el ticket"], JSON_UNESCAPED_UNICODE);
+            exit;
+        }
+    }
+
+
+    /* C R E A R  U N  E N V I O */
     public function create()
     {
         $data = validateJsonMiddleware();
@@ -113,30 +142,6 @@ class ShipmentController
         echo json_encode(['message' => "Se actualizo el envío " . $guia], JSON_UNESCAPED_UNICODE);
     }
 
-    public function getTicketPreview()
-    {
-        try {
-            $data = validateJsonMiddleware();
-            $error = ShipmentSchema::validateDataToTicket($data);
-
-            if ($error && sizeof($error) > 0) {
-                http_response_code(422);
-                echo json_encode($error, JSON_UNESCAPED_UNICODE);
-                exit();
-            }
-
-            $ticket = $this->getTicketPrivate($data);
-            echo json_encode(["ticket" => $ticket]);
-            exit();
-        } catch (Exception $e) {
-            http_response_code(422);
-            if ($e->getMessage()){
-                 echo json_encode(['error' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
-            }else{
-                echo json_encode(['error' => 'Error al crear el ticket'], JSON_UNESCAPED_UNICODE);
-            }
-        }
-    }
 
     public function exists($guia)
     {
@@ -188,7 +193,7 @@ class ShipmentController
     public function getTicketPDF($guia){
         if(empty($guia)){
             echo json_encode(["message" => "Ingrese la guia"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         $new_shipment = null;
@@ -198,13 +203,13 @@ class ShipmentController
         } catch (Exception $e) {
             http_response_code(404);
             echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         if(empty($new_shipment)){
             http_response_code(404);
             echo json_encode(["message" => "No se encontro el envío con esa guía"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         $tax_data = $this->taxController->getTaxDataToTicket();
@@ -216,7 +221,7 @@ class ShipmentController
         if(empty($pdf)){
             http_response_code(404);
             echo json_encode(["message" => "No se pudo generar el ticket"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         header('Content-Type: application/pdf');
@@ -224,14 +229,19 @@ class ShipmentController
         header('Content-Transfer-Encoding: binary');
         header('Content-Length: ' . strlen($pdf));
 
+        ob_clean(); //Comandos que limpan el buffer
+        flush();
         echo $pdf;
-        exit;
     }
+
+
+
+
 
     public function getGuidePDF($guia){
         if(empty($guia)){
             echo json_encode(["message" => "Ingrese la guia"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
         
         $new_shipment = null;
@@ -241,13 +251,13 @@ class ShipmentController
         } catch (Exception $e) {
             http_response_code(404);
             echo json_encode($e->getMessage(), JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         if(empty($new_shipment)){
             http_response_code(404);
             echo json_encode(["message" => "No se pudo generar la guía impresa"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         $pdf = PDFGenerator::createGuidePDF($new_shipment);
@@ -256,7 +266,7 @@ class ShipmentController
         if(empty($pdf)){
             http_response_code(404);
             echo json_encode(["message" => "No se pudo generar el ticket"], JSON_UNESCAPED_UNICODE);
-            exit();
+            exit;
         }
 
         header('Content-Type: application/pdf');
@@ -365,8 +375,7 @@ class ShipmentController
                 $data["seguro"],
             );
         } catch (Exception $e) {
-            if ($e->getMessage())  throw new Exception($e->getMessage());
-            throw new Exception("No se pudo crear el ticket");
+            throw new Exception($e->getMessage() ?? "");
         }
 
         if ($conceptos_ticket && !empty($conceptos_ticket)) {
@@ -403,8 +412,8 @@ class ShipmentController
             ];
         }
 
-        if (isset($conceptos_ticket[0]) && $conceptos_ticket[0]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[0]["valor"])) {
-            if (isset($conceptos_ticket[1]) && $conceptos_ticket[1]["descripcion"] === "precio_guia" && !empty($conceptos_ticket[1]["valor"])) {
+        if (isset($conceptos_ticket[0]) && $conceptos_ticket[0]["descripcion"] === "precio guía" && !empty($conceptos_ticket[0]["valor"])) {
+            if (isset($conceptos_ticket[1]) && $conceptos_ticket[1]["descripcion"] === "costo de sobrepeso" && !empty($conceptos_ticket[1]["valor"])) {
                 $cargo_por_combustible = $this->getCostoCombustible(($conceptos_ticket[0]["valor"] + $conceptos_ticket[1]["valor"]));
             } else {
                 $cargo_por_combustible = $this->getCostoCombustible($conceptos_ticket[0]["valor"]);

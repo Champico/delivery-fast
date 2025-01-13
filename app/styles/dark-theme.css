@@ -146,7 +146,17 @@ body{
     background: #2d2d2d;
 }
 
+.form-card{
+    color: #e8e8e8;
+}
 
+.details-shipment{
+    color: #e8e8e8;
+}
+
+.radio-label{
+    color: #e8e8e8;
+}
 
 /* M O D A L E S */
 .modal-content, .modal-content-small, .modal-content-large{
@@ -168,4 +178,9 @@ body{
 
 .title-branch, .subtitle-branch{
     color: #efefef;
+}
+
+.button-modals  img{
+    fill: #fff;
+    filter: brightness(0) invert(1);
 }

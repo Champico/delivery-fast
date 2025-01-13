@@ -376,6 +376,24 @@ M O D A L  D E  N O  E N C O N T R A D O  O  E R R O R
 }
 
 
+
+
+/* B O T O N  I M P R I M I R   T I C K E T   Y   G U I A*/
+
+.button-modals  img{
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    padding-right: 4px;
+}
+
+.button-modals{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 @media screen and (max-width: 800px){
     .modal-content-large, .modal-content-small, .modal-content{
         min-width: 90vw;

@@ -11,12 +11,11 @@ class PDFGenerator
     public static $widthGuide = 160;
 
     public static function createTicketPDF($ticket, $tax_data, $sucursal, $shipment){
-        echo error_log(json_encode(["EL TICKET EN PDF CREATOR > " => var_dump($ticket)]));
 
         $options = new Options();
         $options->set('isHtml5ParserEnabled', true);
         $options->set('isRemoteEnabled', true);
-        $options->setDefaultFont('Sans');
+        $options->set('defaultFont', 'Courier');
 
         $dompdf = new Dompdf($options);
 
@@ -103,7 +102,6 @@ class PDFGenerator
             </html>
         ";
 
-        error_log(json_encode($html, JSON_UNESCAPED_UNICODE));
         $dompdf->loadHtml($html);
         $dompdf->setPaper([0, 0, (Self::$widthTicket * 2.83465), 1800]);
         $dompdf->render();
@@ -132,7 +130,6 @@ class PDFGenerator
     }
 
     public static function createGuidePDF($shipment){
-        echo (["shipment" => $shipment]);
 
         $generator = //new BarcodeGeneratorPNG();
 

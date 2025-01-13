@@ -1136,8 +1136,14 @@ function getHtmlModalSucces() {
                         </div>
 
                         <div class=" form-inline form-group-modal">
-                            <button class="button-modals" id="btn-print-ticket">Imprimir ticket</button>
-                            <button class="button-modals" id="btn-print-guide">Imprimir guía</button>
+                            <button class="button-modals" id="btn-print-ticket">
+                                <img src="/app/resources/icons/ticket-print.svg" alt="Ticket">
+                                <span>Imprimir ticket</span>
+                            </button>
+                            <button class="button-modals" id="btn-print-guide">
+                                <img src="/app/resources/icons/guide-print.svg" alt="Giua">
+                                <span>Imprimir guía</span>
+                            </button>
                             <button class="button-modals" id="btn-finish">Terminar</button>
                         </div>
 

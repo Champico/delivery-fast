@@ -1,3 +1,4 @@
+
 let states = null;
 let guide = null;
 
@@ -86,7 +87,7 @@ async function hideSenderModal(){
 
 
 async function getStates(){
-    if(states !== null) return;
+    if(states !== null && states != []) return;
     
     try{
         const module = await import("../api/utils.js");
@@ -201,17 +202,64 @@ function removeFuncionalityRecipientModal(){
 
 }
 
-function modifyData(type){
-    
+async function modifyData(type){
+    let newData = [];
+
+    switch(type){
+        case 'sender':
+            try{
+                const module = await import("../validations/formsValidations/updateShipmentValidations.js");
+                newData = module.validateSenderDataFields(fieldsToModify);
+            }catch(error){}
+
+            if(Array.isArray(newData)){
+                await showConfirmDialog(newData);
+            }else{
+                await showNoChangesDialog();
+            }
+
+        break;
+        
+        case 'recipient':
+        console.log("Nada")
+        
+        break;
+
+    }
 }
 
+async function showConfirmDialog(newData){
+    const modalContainer = document.getElementById("modify-modal-container");
+    modalContainer.innerHTML += getModalConfirm(newData);
+    addFuncionalityConfirmDialog();
+}
 
-/*
-======================================================================================
-    S E C C I O N  D E  F U N C I O N E S  D E  L O G I C A  D E  N E G O C I O 
-======================================================================================
-*/
+async function hideConfirmDialog(){
+    removeFuncionalityRecipientModal();
+    const modalContainer = document.getElementById("modify-modal-container");
+    const modal = document.getElementById("confirm-modal");
+    if(modalContainer && modal ) modalContainer.removeChild(modal);
+}
 
+function addFuncionalityConfirmDialog(){
+    const yes = document.getElementById("btn-yes");
+    const no =  document.getElementById("btn-no");
+
+    if(yes) yes.addEventListener('click', updateUser);
+    if(no) no.addEventListener('click', cancelUpdate)
+}
+
+function removeFuncionalityConfirmDialog(){
+
+}
+
+async function updateUser(){
+
+}
+
+function cancelUpdate(){
+    
+}
 
 async function goHomePage(){
     try{
@@ -242,11 +290,11 @@ export async function getHtmlPage(shipment) {
         <div class="shupment-home-content">
             <div id="modify-modal-container"></div>
             <div class="title-container">
-                <h1 class="ship-titles title-shipment-info">Datos del envío</h1>
+                <h2 class="ship-titles title-shipment-info">Datos del envío</h2>
             </div>
             <div class="shipping-information">
                 <div class="ship-info sender-container">
-                    <h2 class="ship-subtitle sbt-sender">Remitente</h2>
+                    <h3 class="ship-subtitle sbt-sender">Remitente</h3>
                     <div class="container-p-span-info">
                         <p id="d1-sender">Nombre: <span id="d2-sender">${shipment["nombre_remitente"]}</span></p>
                         <p id="d1-sender">Dirección: <span id="d2-sender">${shipment["calle_remitente"]} #${shipment["numero_ext_remitente"]}${shipment["numero_int_remitente"] ? ' Int.' + shipment["numero_int_remitente"] : ''}, ${shipment["ciudad_remitente"]}, ${shipment["nombre_estado_remitente"]}. C.P ${shipment["cp_remitente"]}</span></p>
@@ -255,7 +303,7 @@ export async function getHtmlPage(shipment) {
                     <button class="button" id="btn-modify-sender">Modificar</button>    
                 </div>
                 <div class="ship-info recipient-container">
-                    <h2 class="ship-subtitle sbt-recipient">Destinatario</h2>
+                    <h3 class="ship-subtitle sbt-recipient">Destinatario</h3>
                     <div class="container-p-span-info">
                         <p id="d1-recipient">Nombre: <span id="d2-recipient">${shipment["nombre_destinatario"]}</span></p>
                         <p id="d1-recipient">Dirección: <span id="d2-recipient">${shipment["calle_destinatario"]} #${shipment["numero_ext_destinatario"]}${shipment["numero_int_destinatario"] ? ' Int.' + shipment["numero_int_destinatario"] : ''}, ${shipment["ciudad_destinatario"]}, ${shipment["nombre_estado_destinatario"]}. C.P ${shipment["cp_destinatario"]}</span></p>
@@ -264,20 +312,20 @@ export async function getHtmlPage(shipment) {
                     <button class="button" id="btn-modify-recipient">Modificar</button>
                 </div>
                 <div class="ship-info package-container">
-                    <h2 class="ship-subtitle sbt-package">Paquete</h2>
+                    <h3 class="ship-subtitle sbt-package">Paquete</h3>
                     <div class="container-p-span-info">
                         <p id="d1-package">Peso: <span id="d2-package">${shipment["peso"]} kg</span></p>
                         <p id="d1-package">Dimensiones: <span id="d2-package">${shipment["largo"]} x ${shipment["ancho"]} x ${shipment["alto"]} cm</span></p>
                     </div>
                 </div>
                 <div class="ship-info status-container">
-                    <h2 class="ship-subtitle sbt-status">Estado</h2>
+                    <h3 class="ship-subtitle sbt-status">Estado</h3>
                     <div class="container-p-span-info">
                         <p class="ship-info-text cont-status">Estado: <span class="ship-info-text cont-status">En camino</span></p>
                     </div>
                 </div>
                 <div class="ship-info service-container">
-                    <h2 class="ship-subtitle sbt-service">Servicio</h2>
+                    <h3 class="ship-subtitle sbt-service">Servicio</h3>
                     <div class="container-p-span-info">
                         <p class="ship-info-text cont-service">Servicio: <span class="ship-info-text cont-service">${shipment["servicio"]}</span></p>
                     </div>
@@ -286,7 +334,7 @@ export async function getHtmlPage(shipment) {
             <div class="edit-status-shipment">
                 <form class="form form-edit-status">
                     <div class="form-group">    
-                        <h1 class="ship-titles title-shipment-info">Cambiar Estado</h1>
+                        <h2 class="ship-titles title-shipment-info">Cambiar Estado</h2>
                     </div>
                     <div class="form-inline new-section1">
                         <div class="form-group">
@@ -312,6 +360,24 @@ export async function getHtmlPage(shipment) {
                     <div class="form-group">
                         <button class="button btn-change-status" type="">Cambiar estatus</button>
                     </div>
+
+
+                    <div class="form-group">    
+                        <h2 class="ship-titles title-shipment-info">Operaciones</h2>
+                    </div>
+
+                    <div class=" form-inline">
+                        <button class="button-modals" id="btn-print-ticket">
+                            <img src="/app/resources/icons/ticket-print.svg" alt="Ticket">
+                            <span>Imprimir ticket</span>
+                        </button>
+                        <button class="button-modals" id="btn-print-guide">
+                            <img src="/app/resources/icons/guide-print.svg" alt="Giua">
+                            <span>Imprimir guía</span>
+                        </button>
+                    </div>
+
+
                 </form>
             </div>                
         </div>`;
@@ -328,14 +394,13 @@ function getShipmentNotFoundPage(){
 }
 
 function getModalUpdateInfoRecipient(dataRecipient){
-    console.log(dataRecipient["nombre_completo"]);
     return `
         <div class="body-modal" id="recipient-modal">
             <div class="modal">
                 <div class="modal-content-large">
                     <button class="close-modal-button" id="close-modal-button-not-found">x</button>
                     <div class="head-title-modal-container">    
-                        <h2 class="title-modal-user">Enviar a</h2>
+                        <h2 class="title-modal-user">Modificar datos destinatario</h2>
                     </div>
 
                     <form>
@@ -441,7 +506,7 @@ function getModalUpdateInfoSender(dataSender){
                 <div class="modal-content-large">
                     <button class="close-modal-button" id="close-modal-button-not-found">x</button>
                     <div class="head-title-modal-container">    
-                        <h2 class="title-modal-user">Enviar desde</h2>
+                        <h2 class="title-modal-user">Modificar datos remitente</h2>
                     </div>
 
                     <form class="form">
@@ -536,4 +601,71 @@ function getSelectStates(){
         statesOptions = statesOptions +`<option value="${state.clave}">${state.nombre}</option>`
     });
     return statesOptions;
+}
+
+
+function getModalConfirm(newData){
+    return ` 
+    <div class="body-modal" id="confirm-modal">
+        <div class="modal">
+
+            <h1>Tabla de Valores</h1>
+
+               <table>
+                   <thead>
+                       <tr>
+                           <th>Campo<th>
+                           <th>Valor Anterior</th>
+                           <th>Nuevo Valor</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                       ${buildTableUpdateFields(newData)}
+                   </tbody>
+               </table>
+
+            <div class="modal-content>
+                <div class="button-group-modal">
+                <button type="button" class="cancel" id="btn-no">Cancelar</button>
+                <button type="button" class="create" id="btn-yes">Modificar</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+`
+}
+
+function buildTableUpdateFields(newData){
+    let tableRows = "";
+    newData.forEach( (value, index) => {
+        tableRows += `<tr>        
+                        <td>${value["data-key"]}</td>
+                        <td>${value["before"]}</td>
+                        <td>${value["now"]}</td>
+                    </tr>"`
+    })
+}
+
+
+function getHtmlModalNoUpdates(){
+    return `
+    <div class="body-modal modal-hide" id="shipment-not-found-modal">
+        <div id="notFoundModal" class="modal">
+            <div class="modal-content-small">
+                <button class="close-modal-button" id="close-modal-button-not-found">x</button>
+                <div class="form-group-modal">
+                    <div class="form-inline-modal">
+                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/not-found-shipment.svg" alt="No encontrado">
+                        <span class="not-found-message-modal" id="not-found-message-package">Envío no encontrado</span>
+                    </div>
+                </div>
+                <div class="form-group-modal">
+                    <button class=" button btn-aceptar" id="btn-aceptar">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>`
 }
