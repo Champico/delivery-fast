@@ -107,3 +107,27 @@ export async function verifyIfExistsShipmentByGuide(guide) {
     if (!response.ok) return null;
     return responseData ? responseData : null;
  }
+
+
+ export async function fetchUpdateCustomerData(customerData, guide, type) { 
+    let url = `http://localhost/backend/shipment/${type}/${guide}`;
+                
+    console.log("SE ENVIA A LA RUTA", url)
+    try {
+        const response = await fetch(url, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(customerData)
+        });
+        
+        const responseData = await response.json();
+        console.log("Respuesta del servidor", responseData);
+        if (!response.ok) if(responseData.message) throw new Error(responseData.message);
+       
+        return true;
+    } catch (error) {
+        return false;
+    }
+}

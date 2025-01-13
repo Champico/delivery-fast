@@ -74,10 +74,7 @@ export async function validateSenderDataFields(fieldsToModify, guide){
             }
         });
 
-        console.log("Cambios", changes);
-
         if(changes.length === 0) return "No se modifico ningun campo";
-        
         return changes;
     }
 }
@@ -86,30 +83,65 @@ export async function validateSenderDataFields(fieldsToModify, guide){
 
 
 
-export function validateRecipientDataFields(){
-
-    const htmlElements = {  
-        "nombre-destinatario":   document.getElementById("nombre-destinatario"), 
-        "cp-destinatario":       document.getElementById("cp-destinatario"),
-        "estado-destinatario":   document.getElementById("estado-destinatario"),
-        "ciudad-destinatario":   document.getElementById("ciudad-destinatario"),
-        "colonia-destinatario":  document.getElementById("colonia-destinatario"),
-        "calle-destinatario":    document.getElementById("calle-destinatario"),
-        "noext-destinatario":    document.getElementById("noext-destinatario"),
-        "noint-destinatario":    document.getElementById("noint-destinatario"),
-        "correo-destinatario":   document.getElementById("correo-destinatario"),
-        "telefono-destinatario": document.getElementById("telefono-destinatario")
-    };
-
+export async function validateRecipientDataFields(){
+    let htmlElements = {}
+            
+    if(fieldsToModify["nombre"])   htmlElements["nombre-destinatario"]     = document.getElementById("nombre-destinatario");  
+    if(fieldsToModify["cp"])       htmlElements["cp-destinatario"]         = document.getElementById("cp-destinatario");      
+    if(fieldsToModify["estado"])   htmlElements["estado-destinatario"]     = document.getElementById("estado-destinatario");  
+    if(fieldsToModify["ciudad"])   htmlElements["ciudad-destinatario"]     = document.getElementById("ciudad-destinatario");  
+    if(fieldsToModify["colonia"])  htmlElements["colonia-destinatario"]    = document.getElementById("colonia-destinatario"); 
+    if(fieldsToModify["calle"])    htmlElements["calle-destinatario"]      = document.getElementById("calle-destinatario");   
+    if(fieldsToModify["noext"])    htmlElements["noext-destinatario"]      = document.getElementById("noext-destinatario");   
+    if(fieldsToModify["noint"])    htmlElements["noint-destinatario"]      = document.getElementById("noint-destinatario");   
+    if(fieldsToModify["correo"])   htmlElements["correo-destinatario"]     = document.getElementById("correo-destinatario");  
+    if(fieldsToModify["telefono"]) htmlElements["telefono-destinatario"]   = document.getElementById("telefono-destinatario");
+    
+    if(Object.keys(htmlElements) === 0) return "No se modifico ningun campo";
+    
     let values = {}
-
+    
     Object.entries(htmlElements).forEach(([key, element]) => {
         values[key] = element.value || null;
         validateFieldData(key, values[key], htmlElements[key]);
     });
-
-    return errores === 0 ? values : false;
+    
+    console.log("Valores cambiados", values);
+    
+    if(errores === 0){
+        let originalData = await getRecipientData(guide);
+        if(!originalData) return;
+    
+        console.log("Info original: ",originalData)
+        let changes = [];
+    
+        Object.entries(values).forEach(([key, newText]) => {
+            if(values[key] != originalData[keyHtmlParseRecipient[key]]){
+                changes.push({
+                    "html-key": key,
+                    "data-key": keyHtmlParseRecipient[key],
+                    "before": originalData[keyHtmlParseRecipient[key]],
+                    "now": newText
+                })
+            }
+        });
+    
+        if(changes.length === 0) return "No se modifico ningun campo";
+        return changes;
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 function validateFieldData(nameField,valueField,htmlElement){
     const split = nameField.split("-");

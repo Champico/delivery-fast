@@ -114,14 +114,20 @@ ____________________________________________________
 #modified-fields{
     width: 100%;
     text-align: center;
+    border-collapse: collapse;
+    border-spacing: 0;    
 }
 
-#modified-fields > tr{
+#modified-fields > tbody > tr, #modified-fields > thead > tr {
     border-bottom: solid 1px #9f9f9f;
 }
 
-#modified-fields > td{
+#modified-fields > tbody > tr > td, #modified-fields > thead > tr > th{
     height: 30px;
+    border: solid 1px #9f9f9f;
+    white-space: nowrap;       
+    overflow: hidden;        
+    text-overflow: ellipsis;              
 }
 
 .confirm-info{

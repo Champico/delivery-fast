@@ -137,6 +137,8 @@ class ShipmentController
         echo json_encode($newShipment, JSON_UNESCAPED_UNICODE);
     }
 
+
+    /* F U N C I O N  P A R A  A C T U A L I Z A R */
     public function update($guia)
     {
         echo json_encode(['message' => "Se actualizo el envío " . $guia], JSON_UNESCAPED_UNICODE);
@@ -565,7 +567,6 @@ public function updateStatus($guide){
 
         try {
             $this->shipmentModel->updateStatus($guide, $new_status, $colaborador, $notes);
-            echo json_encode(['message' => 'Estatus actualizado correctamente']);
         } catch (Exception $e) {
             echo json_encode(['error' => $e->getMessage()]);
         }
@@ -577,6 +578,93 @@ public function updateStatus($guide){
 
 
 
+public function updateSender($a2){
+
+    if(empty($a2)){
+        http_response_code(404);
+        echo json_encode(['error' => "Debe ingresar la guía"]);
+        exit;
+    }
+
+
+    $data = validateJsonMiddleware();
+    $error = ShipmentSchema::validateDataToModifyContact($data);
+
+    if ($error && is_array($error) && sizeof($error) > 0) {
+        http_response_code(422);
+        echo json_encode([
+            "message" => "Error al validar los datos", 
+            "details" => $error], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    try {
+        $this->shipmentModel->updateSender($data, $a2);
+    } catch (Exception $e) {
+        http_response_code(402);
+        echo json_encode(['error' => $e->getMessage()],JSON_UNESCAPED_UNICODE);
+    }
+
+    http_response_code(200);
+
+    try {
+        $customer = $this->shipmentModel->getCustomer("remitente", $a2);
+        echo json_encode($customer, JSON_UNESCAPED_UNICODE);
+        exit;
+    } catch (Exception $e) {
+    }
+
+    echo json_encode("Datos actualizados");
+}
+
+public function updateRecipient($a2){
+
+    if(empty($a2)){
+        http_response_code(404);
+        echo json_encode(['error' => "Debe ingresar la guía"]);
+        exit;
+    }
+
+
+    $data = validateJsonMiddleware();
+    $error = ShipmentSchema::validateDataToModifyContact($data);
+
+    if ($error && is_array($error) && sizeof($error) > 0) {
+        http_response_code(422);
+        echo json_encode([
+            "message" => "Error al validar los datos", 
+            "details" => $error], JSON_UNESCAPED_UNICODE);
+        exit;
+    }
+
+    try {
+        $this->shipmentModel->updateRecipient($data, $a2);
+    } catch (Exception $e) {
+        http_response_code(402);
+        echo json_encode(['error' => $e->getMessage()]);
+    }
+
+    
+    http_response_code(200);
+
+    try {
+        $customer = $this->shipmentModel->getCustomer("destinatario", $a2);
+        echo json_encode($customer, JSON_UNESCAPED_UNICODE);
+        exit;
+    } catch (Exception $e) {
+    }
+
+    echo json_encode("Datos actualizados");
 }
 
 
+
+
+}
+
+
+
+
+
+
+?>

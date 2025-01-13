@@ -93,7 +93,7 @@ export function isValidEmail(email) {
   if (!charactersValidPattern.test(email)) return "El correo contiene caracteres no permitidos, se permiten letras(a-z), números, puntos y guiones";
   const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$/;
   if (!emailPattern.test(email)) return "El correo no es válido";
-  if (email.startsWith("_")) return "El correo no puede empezar con guion bajo";
+  /*if (email.startsWith("_")) return "El correo no puede empezar con guion bajo";
   if (email.startsWith("_")) return "El correo no puede empezar con guion";
   if (email.startsWith(".")) return "El correo no puede empezar con guion punto";
   if(/\d/.test(email.charAt(0))) return "El correo no puede empezar con números";
@@ -103,7 +103,7 @@ export function isValidEmail(email) {
   const threeSameCharacters= /(.)\1\1/;
   if(threeSameCharacters.test(email)) return "El correo no puede tener más de 2 caracteres iguales seguidos";
   const domain = email.split("@")[1];
-  if (domain && (domain.includes("_") || domain.includes("-"))) return "El correo no puede tener guion en el dominio";
+  if (domain && (domain.includes("_") || domain.includes("-"))) return "El correo no puede tener guion en el dominio";*/
   return true;
 }
 

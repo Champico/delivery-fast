@@ -497,6 +497,187 @@ public function updateStatus($guide, $new_status, $colaborador, $notes) {
         }
     }
 
+    public function updateSender($data, $guia){
+        $query = "UPDATE contactos ";
+        $sql_clauses = [];
+        $bind_types = "";
+
+        if(isset($data["nombre_completo"])) {
+            $sql_clauses[] = "nombre_completo = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["nombre_completo"];
+        }
+        
+        if(isset($data["cp"])){
+            $sql_clauses[] = "cp = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["cp"];
+        }
+
+        if(isset($data["estado"])){
+            $sql_clauses[] = "estao = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["estado"];
+        }
+
+        if(isset($data["ciudad"])){
+            $sql_clauses[] = "ciudad = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["ciudad"];
+        }
+
+        if(isset($data["colonia"])){
+            $sql_clauses[] = "colonia = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["colonia"];
+        }
+        if(isset($data["calle"])){
+            $sql_clauses[] = "calle = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["calle"];
+        }
+        if(isset($data["numero_ext"])){
+            $sql_clauses[] = "numero_ext = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["numero_ext"];
+        }
+        if(isset($data["numero_int"])){
+            $sql_clauses[] = "numero_int = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["numero_int"];
+        }
+        if(isset($data["telefono"])){
+            $sql_clauses[] = "telefono = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["telefono"];
+        }
+        if(isset($data["correo"])){
+            $sql_clauses[] = "correo = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["correo"];
+        }
+
+        if (count($sql_clauses) > 0) {
+            $query .= "SET " . implode(", ", $sql_clauses) . "";
+        }
+
+        $query .= " WHERE guia = ? AND tipo='remitente';";
+        $bind_types .= "s";
+        $bind_values[] = $guia;
+
+        error_log(json_encode($query));
+
+        try {
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param($bind_types, ...$bind_values );
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e){
+            throw new Exception("Ocurrio un error al actualizar los datos" . $e->getMessage());
+        }
+
+    }
+
+
+
+    
+    public function updateRecipient($data, $guia){
+        $query = "UPDATE contactos ";
+        $sql_clauses = [];
+        $bind_types = "";
+
+        if(isset($data["nombre_completo"])) {
+            $sql_clauses[] = "correo = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["nombre_completo"];
+        }
+        
+        if(isset($data["cp"])){
+            $sql_clauses[] = "cp = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["cp"];
+        }
+
+        if(isset($data["estado"])){
+            $sql_clauses[] = "estao = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["estado"];
+        }
+
+        if(isset($data["ciudad"])){
+            $sql_clauses[] = "ciudad = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["ciudad"];
+        }
+
+        if(isset($data["colonia"])){
+            $sql_clauses[] = "colonia = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["colonia"];
+        }
+        if(isset($data["calle"])){
+            $sql_clauses[] = "calle = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["calle"];
+        }
+        if(isset($data["numero_ext"])){
+            $sql_clauses[] = "numero_ext = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["numero_ext"];
+        }
+        if(isset($data["numero_int"])){
+            $sql_clauses[] = "numero_int = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["numero_int"];
+        }
+        if(isset($data["telefono"])){
+            $sql_clauses[] = "telefono = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["telefono"];
+        }
+        if(isset($data["correo"])){
+            $sql_clauses[] = "correo = ?";
+            $bind_types .= "s";
+            $bind_values[] = $data["correo"];
+        }
+
+        if (count($sql_clauses) > 0) {
+            $query .= "SET " . implode(", ", $sql_clauses) . "";
+        }
+
+        $query .= " WHERE guia = ? AND tipo='destinatario';";
+        $bind_types .= "s";
+        $bind_values[] = $guia;
+
+        error_log(json_encode($query));
+
+        try {
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param($bind_types, ...$bind_values );
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            if($result){
+                return true;
+            } else {
+                return false;
+            }
+        } catch(Exception $e){
+            throw new Exception("Ocurrio un error al actualizar los datos" . $e->getMessage());
+        }
+
+    }
+
+
+
+
+
     public function getCoordinatesOfBranch($id_branch){
         $coordinates = null;
         try {
@@ -596,9 +777,7 @@ public function updateStatus($guide, $new_status, $colaborador, $notes) {
             $stmt->close();
             $stmt2->close();
         }catch(Exception $e){}
-        echo error_log(json_encode(["EL TICKET EN model 1> " => $ticket]));
-        echo error_log(json_encode(["EL TICKET EN model 2> " => var_dump($ticket)]));
-        return $ticket;
+         return $ticket;
     }
 
     public function getSucursal($numero_sucursal){
@@ -862,3 +1041,9 @@ public function updateStatus($guide, $new_status, $colaborador, $notes) {
 
 
 }
+
+
+
+
+
+?>

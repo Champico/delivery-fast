@@ -82,6 +82,52 @@ class ShipmentSchema
         return $errors;
     }
 
+    public static function validateDataToModifyContact($data){
+        $errors = [];
+        
+        if(empty($data) || !is_array($data)){
+            $errors[] = "Debe enviar los datos necesarios";
+            return $errors;
+        }
+
+        foreach (
+            [
+                'nombre_completo' => [255, 'Nombre del remitente debe tener máximo 255 caracteres', 'Nombre del remitente debe ser una cadena de caracteres'],
+                'calle' => [50, 'Calle del remitente debe tener máximo 50 caracteres', 'Calle del remitente debe ser una cadena de caracteres'],
+                'numero_ext' => [10, 'Número exterior del remitente debe tener máximo 10 caracteres', 'Número exterior del remitente debe ser una cadena de caracteres'],
+                'numero_int' => [10, 'Número interior del remitente debe tener máximo 10 caracteres', 'Número exterior del remitente debe ser una cadena de caracteres'],
+                'colonia' => [50, 'Colonia del remitente debe tener máximo 50 caracteres', 'Colonia del remitente debe ser una cadena de caracteres'],
+                'ciudad' => [50, 'Ciudad del remitente debe tener máximo 50 caracteres', 'Ciudad del remitente debe ser una cadena de caracteres'],
+                'correo' => [255, 'Correo del remitente debe tener máximo 255 caracteres', 'Correo del remitente debe ser una cadena de caracteres'],
+                'telefono' => [13, 'Teléfono del remitente debe tener máximo 13 caracteres', 'Teléfono del remitente debe ser una cadena de caracteres'],
+                'referencias' => [255, 'Referencias del remitente debe tener máximo 255 caracteres', 'Referencias del remitente debe ser una cadena de caracteres'],
+        ] as $key => [$maxLength, $errorMessageMoreLengthThanAllowed, $errorMessageNotString]
+        ) {
+            if (isset($data[$key])){
+                if(!is_string($data[$key])){
+                    $errors[] = $errorMessageNotString;
+                    continue;
+                }
+                if(strlen($data[$key]) > $maxLength){
+                    $errors[] = $errorMessageMoreLengthThanAllowed;
+                    continue;
+                }
+            }
+        }
+
+        $isNumericString = fn($value) => is_string($value) && ctype_digit($value);
+        if(isset($data["estado"])){
+            if(!$isNumericString($data["estado"])){
+                $errors[] = "El estado debe ser el numero de entidad federativa";
+            }
+            if((float) $data["estado"] < 1 || (float) $data["estado"] >32){
+                $errors = "El estado debe estar entre 1 y 32";
+            }
+        }
+
+        return $errors;
+    }
+
     private static function validateShipment($data)
     {
         $errors = [];

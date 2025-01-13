@@ -30,7 +30,7 @@ switch ($method) {
                 case 'guide-pdf': $shipmentController->getGuidePDF($a2); break;
                 case 'exits' : $shipmentController->exists($a2); break;
                 case 'customer' : $shipmentController->getCustomer(); break;
-                case 'status-history':$shipmentController->getGuideStatusHistory($a2);break;
+                //case 'status-history':$shipmentController->getGuideStatusHistory($a2);break;
 
                 default: http_response_code(405);
                 echo json_encode(['error' => 'Dirección no encontrada']);
@@ -56,9 +56,17 @@ switch ($method) {
         break;
 
     case 'PUT':
-        $shipmentController->update($action);
+            $shipmentController->update($action);
         break;
-
+    
+    case 'PATCH':
+        if ($action) {
+            switch($action){
+                case 'sender' : $shipmentController->updateSender($a2); break;
+                case 'recipient':$shipmentController->updateRecipient($a2); break;
+            }
+        } 
+        break;
     case 'DELETE':
         http_response_code(405);
         echo json_encode(['error' => 'No se pueden eliminar los envíos']);
@@ -69,3 +77,5 @@ switch ($method) {
         echo json_encode(['error' => 'Método no permitido']);
         break;
 }
+
+?>

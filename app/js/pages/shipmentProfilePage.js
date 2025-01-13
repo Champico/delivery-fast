@@ -1,6 +1,9 @@
 
 let states = null;
 let guide = null;
+let type = null;
+let newData = [];
+let finalData = {};
 
 export async function getPage(){
     guide = urlParser();
@@ -56,6 +59,7 @@ function removeFuncionalityModify(){
 }
 
 async function showSenderModal(){
+    type = "sender";
     await getStates();
     const modalContainer = document.getElementById("modify-modal-container");
     const sender = await getSenderData();
@@ -64,6 +68,7 @@ async function showSenderModal(){
 }
 
 async function showRecipientModal(){
+    type ="recipient"
     await getStates();
     const modalContainer = document.getElementById("modify-modal-container");
     const recipient = await getRecipientData();
@@ -133,7 +138,12 @@ const fieldsToModify = {
     "telefono": false
 }
 
-function cleanModify(){
+function clean(){
+    newData = [];
+    finalData = {};
+    guide = null;
+    type = null;
+
     Object.entries(fieldsToModify).forEach(([key, value]) => {
         fieldsToModify[key] = false;
     });
@@ -146,7 +156,8 @@ function addFuncionalitySenderModal(){
     if(closeModalButton) closeModalButton.addEventListener('click', hideSenderModal);
     if(cancelButton) cancelButton.addEventListener('click', hideSenderModal);
     if(modifyButton) modifyButton.addEventListener('click', async() =>{
-        await modifyData("sender");
+        type = "sender"
+        await modifyData();
     })
 
     const htmlElements = {
@@ -176,8 +187,13 @@ function addFuncionalitySenderModal(){
 function addFuncionalityRecipientModal(){
     const closeModalButton = document.getElementById("close-modal-button-recipient");
     const cancelButton = document.getElementById("btn-modal-cancel-recipient");
+    const modifyButton = document.getElementById("btn-modal-modify-recipient");
     if(closeModalButton) closeModalButton.addEventListener('click', hideRecipientModal);
     if(cancelButton) cancelButton.addEventListener('click', hideSenderModal);
+    if(modifyButton) modifyButton.addEventListener('click', async() =>{
+        type = "recipient"
+        await modifyData();
+    });
 
     const htmlElements = {  
         "nombre-destinatario":   document.getElementById("nombre-destinatario"), 
@@ -220,7 +236,7 @@ function verifyFieldsToModifyConst(){
     return found;
 }
 
-async function modifyData(type){
+async function modifyData(){
     console.log("Modificando la info de ", type);
     console.log("Fields modificados ", verifyFieldsToModifyConst(),"Desglose:" , fieldsToModify)
 
@@ -229,38 +245,55 @@ async function modifyData(type){
         return;
     }
 
-    let newData = [];
 
     switch(type){
+
+
+
         case 'sender':
             try{
                 const module = await import("../validations/formsValidations/updateShipmentValidations.js");
                 newData = await module.validateSenderDataFields(fieldsToModify, guide);
             }catch(error){
                 console.log(error);
+                return;
             }
-
-            console.log("Llegamos aca", newData);
-
             if(newData && Array.isArray(newData)){
-                showConfirmDialog(newData, "remitente");
+                newData.forEach((value, index) => {
+                    finalData[value["data-key"]] = value["now"];
+                })
+                showConfirmDialog("remitente");
             }else{
-                showNoChangesDialog();
+                if(newData = "No se modifico ningun campo") showNoChangesDialog();   
             }
-
         break;
         
+
+
         case 'recipient':
-        console.log("Nada")
-        
+            try{
+                const module = await import("../validations/formsValidations/updateShipmentValidations.js");
+                newData = await module.validateRecipientDataFields(fieldsToModify, guide);
+            }catch(error){
+                console.log(error);
+                return;
+            }
+            if(newData && Array.isArray(newData)){
+                newData.forEach((value, index) => {
+                    finalData[value["data-key"]] = value["now"];
+                })
+                showConfirmDialog("destinatario");
+            }else{
+                if(newData = "No se modifico ningun campo") showNoChangesDialog();   
+            }
         break;
 
     }
 }
 
-function showConfirmDialog(newData, type){
+function showConfirmDialog(type){
     const modalContainer = document.getElementById("modal-layer2");
-    modalContainer.innerHTML += getModalConfirm(newData, type);
+    modalContainer.innerHTML += getModalConfirm(type);
     addFuncionalityConfirmDialog();
 }
 
@@ -285,6 +318,14 @@ function removeFuncionalityConfirmDialog(){
     if(yes) yes.removeEventListener('click', updateUser);
     if(no) no.removeEventListener('click', cancelUpdate);
 }
+
+
+
+
+
+
+
+
 
 function showNoChangesDialog(){
     const modalContainer = document.getElementById("modal-layer2");
@@ -318,14 +359,85 @@ function removeFuncionalityNoChangesDialog(){
 
 
 
-async function updateUser(){
 
+
+function showSuccessDialog(){
+    const modalContainer = document.getElementById("modal-layer2");
+    modalContainer.innerHTML += getHtmlSuccess();
+    addFuncionalitySuccessDialog();
+}
+
+function hideSuccessDialog(){
+    const modalContainer = document.getElementById("modal-layer2");
+    const modal = document.getElementById("success-modal");
+    removeFuncionalitySuccessDialog();
+    if(modalContainer && modal ) modalContainer.removeChild(modal);
+}
+
+function addFuncionalitySuccessDialog(){
+    const closeModalButton = document.getElementById("close-modal-button-success");
+    if(closeModalButton) closeModalButton.addEventListener('click',  async () =>{
+        hideSuccessDialog()
+        hideRecipientModal()
+        hideSenderModal()
+        await rechargePage();
+        clean();
+    });
+
+    const aceptarButton = document.getElementById("btn-aceptar-success");
+    if(aceptarButton) aceptarButton.addEventListener('click',  async () =>{
+        hideSuccessDialog()
+        hideRecipientModal()
+        hideSenderModal()
+        await rechargePage();
+        clean();
+    });
+
+}
+
+function removeFuncionalitySuccessDialog(){
+    const closeModalButton = document.getElementById("close-modal-button-success");
+    if(closeModalButton) closeModalButton.removeEventListener('click',  () =>{
+        hideSuccessDialog()
+        hideRecipientModal()
+        hideSenderModal()
+    });
+
+
+    const aceptarButton = document.getElementById("btn-aceptar-success");
+    if(aceptarButton) aceptarButton.removeEventListener('click',  () =>{
+        hideSuccessDialog()
+        hideRecipientModal()
+        hideSenderModal()
+    });
+
+}
+
+
+
+
+
+async function updateUser(){
+    try{
+        const module = await import("../api/shipments.js");
+        const success = await module.fetchUpdateCustomerData(finalData,guide,type);
+
+        if(success){
+            hideConfirmDialog();
+            showSuccessDialog();
+        }else{
+            alert("No se pudo modificar");
+        }
+    }catch(error){
+        alert("No se pudo modificar", error);
+    }
 }
 
 function cancelUpdate(){
     hideConfirmDialog();
     hideRecipientModal();
     hideRecipientModal();
+    clean();
 }
 
 async function goHomePage(){
@@ -333,6 +445,16 @@ async function goHomePage(){
         const module = await import("../router.js");
         await module.navigateTo("/app/home");
     }catch(error){
+        return;
+    }
+  }
+
+  async function rechargePage(){
+    try{
+        const module = await import("../router.js");
+        await module.navigateTo(`/app/shipment/${guide}`);
+    }catch(error){
+        await goHomePagePage()
         return;
     }
   }
@@ -672,7 +794,7 @@ function getSelectStates(selected) {
     return statesOptions;
 }
 
-function getModalConfirm(newData, type){
+function getModalConfirm(type){
     return ` 
     <div class="body-modal body-modal-layer-2" id="confirm-modal">
         <div class="modal">
@@ -694,7 +816,7 @@ function getModalConfirm(newData, type){
                     </thead>
 
                     <tbody>
-                       ${buildTableUpdateFields(newData)}
+                       ${buildTableUpdateFields()}
                     </tbody>
                 </table>
 
@@ -712,14 +834,15 @@ function getModalConfirm(newData, type){
     </div>`
 }
 
-function buildTableUpdateFields(newData){
+function buildTableUpdateFields(){
     let tableRows = "";
+    if (!Array.isArray(newData)) return;
     newData.forEach( (value, index) => {
         tableRows += `<tr>        
                         <td>${value["data-key"].replace(/_/g, ' ')}</td>
                         <td>${value["before"]}</td>
                         <td>${value["now"]}</td>
-                    </tr>"`
+                    </tr>`
     })
     return tableRows;
 }
@@ -733,12 +856,33 @@ function getHtmlModalNoUpdates(){
                 <button class="close-modal-button" id="close-modal-button-no-changes">x</button>
                 <div class="form-group-modal">
                     <div class="form-inline-modal">
-                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/alert.svg" alt="No se modifico ningun campo">
+                        <img class="success-img-modal" id="success" src="/app/resources/icons/alert.svg" alt="No se modifico ningun campo">
                         <span class="not-found-message-modal" id="not-found-message-package">No se modifico ningun campo</span>
                     </div>
                 </div>
                 <div class="form-group-modal">
                     <button class=" button btn-aceptar" id="btn-aceptar-no-changes">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>`
+}
+
+
+function getHtmlSuccess(){
+    return `
+    <div class="body-modal body-modal-layer-2" id="success-modal">
+        <div id="notChangesModal" class="modal">
+            <div class="modal-content-small">
+                <button class="close-modal-button" id="close-modal-button-success">x</button>
+                <div class="form-group-modal">
+                    <div class="form-inline-modal">
+                        <img class="not-found-img-modal" id="not-found-package" src="/app/resources/icons/success.svg" alt="No se modifico ningun campo">
+                        <span class="not-found-message-modal" id="not-found-message-package">Se modifico con exito</span>
+                    </div>
+                </div>
+                <div class="form-group-modal">
+                    <button class=" button btn-aceptar" id="btn-aceptar-success">Aceptar</button>
                 </div>
             </div>
         </div>
