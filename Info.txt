@@ -24,32 +24,37 @@ Servidor http: Apache (XAMPP)
 		> js/
 			> api/
 				authSession.js
-				createShipment.js
-				generateTicket.js
-				shipmentList.js
-				states.js
+				branch.js
+				shipment.js
+				ticket.js
+				users.js
+				utils.js
 			> components/
 				header.js
 				loadingScreen.js
 				sidebar.js
+				notFoundPage.js
 			> pages/
 				branchPage.js
+				collaboratorPage.js
 				earningsPage.js
 				homePage.js
 				newShipmentPage.js
+				notFoundPage.js
 				packageProfilePage.js
 				searchShipmentPage.js
 				shipmentProfilPage.js
 				statisticsPage.js
-				usersPage.js
 			> validations/
-				> pageValidations/
+				> formValidations/
 					newShipmentValidations.js
+					newUserValidation.js
+					updateShipmentValidation.js
 				shipmentValidations.js
 				stringValidations.js
+				newUserValidation.js
 			index.js
 			router.js
-		> node_modules
 		> resources/
 			> brand/
 			> favicon/
@@ -62,8 +67,6 @@ Servidor http: Apache (XAMPP)
 		.htaccess
 		app.html
 		info.txt
-		package-lock.json 
-		package.json
 	> backend/
 		> config/
 			.env (NO SUBIDO A GIT)
@@ -72,20 +75,26 @@ Servidor http: Apache (XAMPP)
 			LoaderEnv.php
 		> controllers/
 			AuthController.php
+			branchController.php
 			CollaboratorsControllers.php
 			ShipmentController.php
+			TaxController.php
 			UtilsController.php
 			ZipCodeController.php
 		> middlewares
 			ValidateJsonMiddleware.php
 		> models
+			AuthModel.php
+			branchModel.php
+			CollaboratorModel.php
 			ShipmentModel.php
-			UserModel.php
+			TaxModel.php
 			ZipCodeModel.php
 		> routes
 			AuthRoutes.php
+			branchRoutes.php
+			CollaboratorRoutes.php
 			ShipmentRoutes.php
-			UsersRoutes.php
 			UtilsRoutes.php
 		> schemas
 			ShipmentSchema.php

@@ -201,6 +201,7 @@ async function actionUser(action){
             if(newUser){
                 addUserToTable(newUser);
                 hideModalCreateUser();
+                await reloadPage()
             }else{
                 alert('Error al crear el usuario');
             }
@@ -275,6 +276,7 @@ function addUserToTable(user){
         <td>${user.correo}</td>
     `;
     tableBody.appendChild(row);
+
 }
 
 

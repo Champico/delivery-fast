@@ -1,30 +1,6 @@
-// delivery-fast/app/js/api/authSessions.js
 
-const message = document.getElementById("message");
-
-export async function login() {
-  const username = document.getElementById("numero-personal").value;
-  const password = document.getElementById("contrasena").value;
-
-  const usernameCasted = String(username);
-  const passwordCasted = String(password);
-
-  if(username === ""){
-    message.innerText = "Ingrese el nombre de usuario";
-    return;
-  }
-
-  if(password === ""){
-     message.innerText = "Ingrese el password";
-    return;
-  }
-
-
-  const data = {
-    username: usernameCasted,
-    password: passwordCasted
-  };
-
+export async function login(data) {
+  if(!data) return "Ingrese los datos";
 
   try {          
     const url = "http://localhost/backend/auth/login";
@@ -38,36 +14,21 @@ export async function login() {
       }
     );
 
-    if (!response.ok){
-      message.innerText = "El correo o la contraseña esta incorrecta"
-      return;
-    }
     const dataR = await response.json();
 
-    if (dataR) {
+    if (response.ok && dataR) {
       localStorage.setItem("numero_personal",dataR.session.numero_personal);
       localStorage.setItem("id_rol", dataR.session.id_rol);
       localStorage.setItem("numero_sucursal",dataR.session.numero_sucursal);
       localStorage.setItem("nombre", dataR.session.nombre);
-
-      window.location.href = "http://localhost/app/home";
+      return true;
     } else {
-      if(dataR.message) alert(dataR.message);
+      if(dataR.message) return dataR.message;
     }
   } catch (error) {
-    console.error("Error:", error);
+    return "Ocurrio un error de conexión con el servidor";
   }
 }
-
-document.addEventListener("DOMContentLoaded", async function () {
-  document
-    .getElementById("login-form")
-    .addEventListener("submit", async function (event) {
-      event.preventDefault();
-      await login();
-    });
-});
-
 
 export async function logout(){
   try{
