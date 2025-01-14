@@ -567,15 +567,30 @@ public function updateStatus($guide){
 
         try {
             $this->shipmentModel->updateStatus($guide, $new_status, $colaborador, $notes);
+            http_response_code(200);
+            echo json_encode(["Exito"]);
+            exit;
         } catch (Exception $e) {
+            http_response_code(422);
             echo json_encode(['error' => $e->getMessage()]);
+            exit;
         }
     } else {
+        http_response_code(422);
         echo json_encode(['error' => 'Faltan parámetros']);
+        exit;
     }
 }
 
-
+public function getLastStatus($guide) {
+    try {
+        $lastStatus = $this->shipmentModel->getLastStatus($guide);
+        echo json_encode($lastStatus, JSON_UNESCAPED_UNICODE);
+    } catch (Exception $e) {
+        http_response_code(422);
+        echo json_encode(['message' => $e->getMessage()], JSON_UNESCAPED_UNICODE);
+    }
+}
 
 
 public function updateSender($a2){

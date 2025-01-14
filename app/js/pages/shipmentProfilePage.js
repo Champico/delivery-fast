@@ -9,22 +9,28 @@ export async function getPage(){
     guide = urlParser();
     if(guide === "Not found") return getShipmentNotFoundPage(); 
     let shipment;
+    let lastStatus;
+
     try{
         const module = await import("../api/shipments.js");
-        shipment = await module.getShipment(guide); 
+        shipment = await module.getShipment(guide);
+        lastStatus = await module.getLastStatus(guide); 
     }catch(e){}
-    if(shipment) return await getHtmlPage(shipment);
+
+    if(shipment) return await getHtmlPage(shipment, lastStatus);
     return getShipmentNotFoundPage(); 
 }
 
 export async function addFunctionality(){
     addFuncionalityReturn();
     addFuncionalityModify();
+    addFuncionalityStatus();
 }
 
 function removeFuncionality(){
     removeFuncionalityReturn();
     removeFuncionalityModify();
+    removeFuncionalityStatus();
 }
     
 
@@ -94,6 +100,36 @@ async function hideSenderModal(){
     const modal = document.getElementById("sender-modal");
     if(modalContainer && modal ) modalContainer.removeChild(modal);
 }
+
+function addFuncionalityStatus(){
+    const btnChangeStatus = document.getElementById("change-status");
+    if(btnChangeStatus) btnChangeStatus.addEventListener('click', changeStatus);
+}
+
+
+
+async function changeStatus(e){
+    if(e) e.preventDefault();
+    const new_status = document.getElementById("new-status").value;
+    const notes = document.getElementById("new-observation").value;
+
+    if(!new_status) alert("Seleccione una opcion para cambiar el estatus");
+
+    let success = false; 
+    try{
+        const module = await import("../api/shipments.js");
+        
+        success = await module.fetchCreateNewStatus(new_status, notes, guide);
+        
+    }catch(e){
+        success = false;
+    }
+
+        if(success){
+        await rechargePage()
+        }
+}
+
 
 
 async function getStates(){
@@ -480,7 +516,7 @@ async function goHomePage(){
 */
 
 
-export async function getHtmlPage(shipment) {
+export async function getHtmlPage(shipment, lastStatus) {
     return `
         <h1 class="title-section"><span id="title-shipment-profile">Envíos</span><span id="guide-shipment"> > ${shipment["guia"]}</span></h1>
         <div class="shupment-home-content">
@@ -518,13 +554,13 @@ export async function getHtmlPage(shipment) {
                 <div class="ship-info status-container">
                     <h3 class="ship-subtitle sbt-status">Estado</h3>
                     <div class="container-p-span-info">
-                        <p class="ship-info-text cont-status">Estado: <span class="ship-info-text cont-status">En camino</span></p>
+                        <p class="ship-info-text cont-status">Estado: <span class="ship-info-text cont-status">${lastStatus["estatus"]}</span></p>
                     </div>
                 </div>
                 <div class="ship-info service-container">
                     <h3 class="ship-subtitle sbt-service">Servicio</h3>
                     <div class="container-p-span-info">
-                        <p class="ship-info-text cont-service">Servicio: <span class="ship-info-text cont-service">${shipment["servicio"]}</span></p>
+                        <p class="ship-info-text cont-service">Servicio: <span class="ship-info-text cont-service">${shipment["servicio"].replace(/_/g, ' ')}</span></p>
                     </div>
                 </div>
             </div>
@@ -536,14 +572,7 @@ export async function getHtmlPage(shipment) {
                     <div class="form-inline new-section1">
                         <div class="form-group">
                             <label class="input-label label-new-info-status" for="new-status">Nuevo estado*</label>
-                            <select class="status-selects" name="estatus" id="new-status">
-                                <option value="Estatus" disabled selected>Selecciona una opción</option>
-                                <option value="Pendiente">Pendiente</option>
-                                <option value="Transito">En tránsito</option>
-                                <option value="Detenido">Detenido</option>
-                                <option value="Entregado">Entregado</option>
-                                <option value="Cancelado">Cancelado</option>
-                            </select>
+                            ${await getSelectStatus()}
                         </div>
                         <div class="form-group">
                             <label class="input-label label-new-info-status" for="new-ubication">Ubicación</label>
@@ -555,7 +584,7 @@ export async function getHtmlPage(shipment) {
                         <textarea class="textarea txta-input-new-notes" id="new-observation" placeholder="Puede agregar notas adicionales necesarias"></textarea>
                     </div>
                     <div class="form-group">
-                        <button class="button btn-change-status" type="">Cambiar estatus</button>
+                        <button class="button btn-change-status" id="change-status">Cambiar estatus</button>
                     </div>
 
 
@@ -580,7 +609,20 @@ export async function getHtmlPage(shipment) {
         </div>`;
 }
 
+async function getSelectStatus(){
+    let status;
+    try{
+        const module = await import('../api/utils.js')
+        status = await module.fetchStatus();
+    }catch(error){}
 
+    let statusSelectOptions = `<select class="filter-selects" name="estatus" id="new-status">  <option value="" disabled selected>Estatus</option>`
+    status.forEach(status => {
+        statusSelectOptions = statusSelectOptions +`<option value="${status}">${status.replace(/_/g, ' ')}</option>`;
+    });
+    statusSelectOptions += `</select>`;
+    return statusSelectOptions;
+}
 
 function getShipmentNotFoundPage(){
     return `
@@ -684,7 +726,7 @@ function getModalUpdateInfoRecipient(dataRecipient){
                     </form>
 
                     <div class="button-group-modal">
-                        <button type="button" class="cancel" id="btn-modal-cancel-recipient">Cancelar</button>
+                        <button ync function changeStatus(){="button" class="cancel" id="btn-modal-cancel-recipient">Cancelar</button>
                         <button type="button" class="create" id="btn-modal-modify-recipient">Modificar</button>
                     </div>
 

@@ -1,11 +1,24 @@
 // delivery-fast/app/js/api/authSessions.js
 
+const message = document.getElementById("message");
+
 export async function login() {
   const username = document.getElementById("numero-personal").value;
   const password = document.getElementById("contrasena").value;
 
   const usernameCasted = String(username);
   const passwordCasted = String(password);
+
+  if(username === ""){
+    message.innerText = "Ingrese el nombre de usuario";
+    return;
+  }
+
+  if(password === ""){
+     message.innerText = "Ingrese el password";
+    return;
+  }
+
 
   const data = {
     username: usernameCasted,
@@ -25,7 +38,10 @@ export async function login() {
       }
     );
 
-    if (!response.ok) return;
+    if (!response.ok){
+      message.innerText = "El correo o la contraseña esta incorrecta"
+      return;
+    }
     const dataR = await response.json();
 
     if (dataR) {

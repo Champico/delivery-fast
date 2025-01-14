@@ -468,6 +468,19 @@ public function updateStatus($guide, $new_status, $colaborador, $notes) {
     }
 }
 
+public function getLastStatus($guide){
+        try {
+            $query = "SELECT * FROM ultimo_estatus WHERE guia= ?";
+            $stmt = $this->conexionDB->prepare($query);
+            $stmt->bind_param("s", $guide);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $shipment = $result->fetch_assoc();
+            return  $shipment ?  $shipment : null;
+        } catch (Exception $e) {
+            throw new Exception("Ocurrio un error en el servidor");
+        }
+    }
 
 
 

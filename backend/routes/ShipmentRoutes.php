@@ -30,7 +30,8 @@ switch ($method) {
                 case 'guide-pdf': $shipmentController->getGuidePDF($a2); break;
                 case 'exits' : $shipmentController->exists($a2); break;
                 case 'customer' : $shipmentController->getCustomer(); break;
-                case 'status-history':$shipmentController->getStatusHistory($a2);break;
+                case 'status-history': $shipmentController->getStatusHistory($a2);break;
+                case 'status-last': $shipmentController->getLastStatus($a2);break;
 
                 default: http_response_code(405);
                 echo json_encode(['error' => 'Dirección no encontrada']);

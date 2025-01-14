@@ -134,6 +134,46 @@ export async function verifyIfExistsShipmentByGuide(guide) {
 
 
 
+export async function fetchCreateNewStatus(new_status, notes, guide) {
+    console.log("datos que se envian", new_status, notes, guide)
+    const object = {
+        new_status: new_status || "",
+        colaborador: localStorage.getItem("numero_personal") || "00000",
+        notes: notes || ""
+    };
+
+    console.log("Se envia", JSON.stringify(object))
+
+    const url = `http://localhost/backend/shipment/update-status/${guide}`;
+
+    try {
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(object)
+        });
+        
+        if (!response.ok) return false;
+
+        return true;
+    } catch (error) {
+        return false;
+    }
+}
 
 
 
+export async function getLastStatus(guide) {
+    let response;
+       try {
+           response = await fetch(`http://localhost/backend/shipment/status-last/${guide}`);
+     } catch (error) {
+         return null;
+     }
+     console.log("STATUS",response);
+     let responseData = await response.json();
+     if (!response.ok) return null;
+     return responseData ? responseData : null;
+ }

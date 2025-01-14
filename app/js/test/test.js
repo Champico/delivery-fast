@@ -2,14 +2,16 @@ import { faker } from 'https://cdn.skypack.dev/@faker-js/faker/locale/es_MX';
 import { fetchCreateShipment } from '../api/shipments.js';
 
 const btn = document.getElementById("btn-crear");
-const num = document.getElementById("numero-envios").value;
+
 btn.addEventListener('click', () =>{
+    const num = document.getElementById("numero-envios").value;
     console.log("Numero de envios a crear:", num)
     createShipmentFakeData(num);
 })
 
 
 async function createShipmentFakeData(num){
+    num = Number(num);
     if(!num || isNaN(num)) return;
     if(num < 0 || num > 1000) return;
     
