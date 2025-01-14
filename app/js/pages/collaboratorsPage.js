@@ -306,17 +306,21 @@ async function deleteUser(){
 }
 
 
+
 async function searchUsers() {
     const searchInput = document.getElementById('searchInput').value.trim();
     if (searchInput === "" || !searchInput) return;
-    let users = null;
-    try{
+    let users;
+    try {
         const module = await import("../api/users.js");
         users = await module.searchUsers(searchInput);
-    }catch(e){
+        console.log('los usuarios regresados',users);
+    } catch (e) {
+        console.error("Error al buscar usuarios: ", e);
     }
-    if(users) reloadListUserCustom(users);
+    if (users) reloadListUserCustom(users);
 }
+
 
 async function searchUsersDinamic(){
     const searchInput = document.getElementById('searchInput').value.trim();
@@ -369,21 +373,29 @@ async function reloadListUserCustom(users){
     const table = document.getElementById("user-table-body");
 
     if(users && table){
-        table.innerHTML = "";
-        let userRows = "";
-        users.forEach(user => {
-            let row = `<tr class="row-selectable" data-personal-number=${user.numero_personal}>`;
-            row = row + `
-                <td>${user.numero_personal}</td>
-                <td>${user.nombre}</td>
-                <td class="column-rol">${user.rol}</td>
-                <td class="column-correo">${user.correo}</td>
+        table.innerHTML = ""; 
+
+        if (users.length === 0) {
+            table.innerHTML = "<tr><td colspan='4'>No se encontraron resultados</td></tr>";
+            return;
+        }
+
+        const userRows = users.map(user => {
+            return `
+                <tr class="row-selectable" data-personal-number="${user.numero_personal}">
+                    <td>${user.numero_personal}</td>
+                    <td>${user.nombre}</td>
+                    <td class="column-rol">${user.rol}</td>
+                    <td class="column-correo">${user.correo}</td>
+                </tr>
             `;
-            userRows = userRows + row;
-        })
-        table.innerHTML= userRows;
-        addFunctionalityRows();
-    }  
+        }).join('');
+
+        table.innerHTML = userRows; 
+        addFunctionalityRows(); 
+    } else {
+        console.error("Error: No se pudo actualizar la tabla, los usuarios o la tabla son nulos.");
+    }
 }
 
 async function cleanListUser(){

@@ -14,11 +14,9 @@ try{
 
 switch ($method) {
     case 'GET':
-        if (isset($uri[3])) {
-            $personalNumber = $uri[3]; 
-            $collaboratorController->getInfoCollaboratorByNumPerso($personalNumber);
-        } elseif (isset($_GET['search'])) {
-            $collaboratorController->searchCollaborators($searchTerm);
+        if (isset($_GET['search'])) {
+            $searchParams = $_GET['search'];
+            $collaboratorController->searchCollaborators($searchParams);
         } else {
             $collaboratorController->getAllCollaboratorsColab();
         }

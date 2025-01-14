@@ -105,19 +105,28 @@ export async function deleteUser(personalNumber) {
 }
 
 
-export async function searchUsers(data){
-    try {
+export async function searchUsers(searchInput) {
+  try {
       const response = await fetch(`http://localhost/backend/users?search=${encodeURIComponent(searchInput)}`, {
-        method: 'GET'
+          method: 'GET'
       });
-  
+
       if (!response.ok) {
-        throw new Error('La respuesta de la red no fue correcta ' + response.statusText);
+          throw new Error('La respuesta de la red no fue correcta ' + response.statusText);
       }
-  
-      const data = await response.json();
-      return data || [];
-    } catch (error) {
+
+      const rawData = await response.text();
+
+      const data = JSON.parse(rawData);
+      console.log("Datos procesados:", data);
+
+        if (Array.isArray(data) && data.length > 0) {
+          return data;
+        } else {
+          return [];
+        }
+          
+  } catch (error) {
       return [];
-    }
   }
+}

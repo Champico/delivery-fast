@@ -168,6 +168,10 @@ class CollaboratorModel {
 
     public function searchCollaborators($searchTerm) {
         try {
+            if (empty($searchTerm)) {
+                return [];
+            }
+    
             $query = "
                 SELECT 
                     c.numero_personal, 
@@ -183,21 +187,28 @@ class CollaboratorModel {
                     c.numero_personal LIKE ? 
                     OR c.nombre LIKE ? 
                     OR r.nombre_rol LIKE ?";
-
+    
             $stmt = $this->conexionDB->prepare($query);
             $searchTerm = '%' . $searchTerm . '%';
             $stmt->bind_param('sss', $searchTerm, $searchTerm, $searchTerm);
             $stmt->execute();
             $result = $stmt->get_result();
-            
+    
+            if ($result->num_rows === 0) {
+                return [];
+            }
+    
             $users = [];
             while ($row = $result->fetch_assoc()) {
                 $users[] = $row;
             }
+    
             return $users;
+    
         } catch (Exception $e) {
             throw new Exception("Error al buscar los colaboradores: " . $e->getMessage());
         }
     }
+    
 }
 ?>

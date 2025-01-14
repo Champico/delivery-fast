@@ -70,8 +70,11 @@ class CollaboratorController {
         }
     }
 
-    public function searchcollaborators($searchTerm) {
+    public function searchCollaborators($searchTerm) {
         try {
+            if(empty($searchTerm)){
+                throw new Exception('El termino de busqueda es invalido');
+            }
             $collaborators = $this->collaboratorModel->searchCollaborators($searchTerm);
             echo json_encode($collaborators, JSON_UNESCAPED_UNICODE);
         } catch (Exception $e) {
